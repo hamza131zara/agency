@@ -276,3 +276,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .form-status[data-state="error"]{color:#9c3927}.form-status[data-state="ready"]{color:#43642b}
 @media(max-width:1000px){.subpage-hero{gap:35px;padding-top:70px;padding-bottom:65px}.service-detail{padding:20px}.project-copy{padding:22px}.project-art{min-height:245px}}
 @media(max-width:720px){.subpage-hero{grid-template-columns:1fr;gap:26px;padding-top:55px;padding-bottom:58px;width:calc(100% - 36px)}.subpage-hero h1{font-size:clamp(42px,10vw,57px)}.subpage-hero>div:first-child>p:not(.eyebrow){font-size:12px}.subpage-side{min-height:unset;padding:20px;gap:16px}.service-detail-grid,.principle-grid{grid-template-columns:1fr}.service-detail{min-height:unset;padding:21px 18px}.project-item{grid-template-columns:1fr}.project-art{min-height:220px}.project-copy{padding:23px 19px}.contact-page-inner{padding-top:60px}.legal-copy h2{font-size:20px}}
+
+.muted-heading{color:#92968a;font-weight:600}
+.project-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:2px}
+.case-study-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:45px;align-items:start}
+.case-study-main h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.05em;line-height:1.2;margin:20px 0 12px}
+.case-study-main p{font-size:12px;line-height:1.95;color:#687066;margin:0 0 25px}
+.case-list{padding-left:20px;margin:0 0 30px;color:#4f594f;font-size:12px;line-height:2}
+.case-study-aside{background:#e9ece4;border:1px solid #d6ddd1;padding:22px;display:grid;gap:16px}
+.case-study-aside>small{font:9px var(--mono);letter-spacing:.1em;color:#7b8476;border-bottom:1px solid #cbd4c7;padding-bottom:13px}
+.case-study-aside>div{display:grid;gap:4px}
+.case-study-aside b{font-size:10px}
+.case-study-aside span{font-size:10px;line-height:1.7;color:#687166}
+.case-study-aside a{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px;color:#4f6141}
+@media(max-width:760px){.case-study-grid{grid-template-columns:1fr;gap:25px}}

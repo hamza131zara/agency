@@ -28,7 +28,7 @@ class Parser(HTMLParser):
   if tag=="title": self.in_title=False
  def handle_data(self,data):
   if self.in_title: self.title+=data.strip()
-html_files=sorted(ROOT.glob("*.html"))
+html_files=sorted([*ROOT.glob("*.html"), *ROOT.glob("work/*.html")])
 pages={}
 for file in html_files:
  parser=Parser()
