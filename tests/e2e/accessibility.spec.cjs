@@ -8,10 +8,10 @@ const PAGES = [
 ];
 
 for (const route of PAGES) {
-  test(\`automated WCAG accessibility scan: \${route}\`, async ({ page }) => {
+  test('automated WCAG accessibility scan: ' + route, async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(route, { waitUntil: 'domcontentloaded' });
-    await page.evaluate(() => document.fonts?.ready);
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
@@ -28,7 +28,7 @@ for (const route of PAGES) {
           summary: node.failureSummary
         }))
       })),
-      \`WCAG accessibility violations on \${route}\`
+      'WCAG accessibility violations on ' + route
     ).toEqual([]);
   });
 }

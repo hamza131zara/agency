@@ -20,13 +20,13 @@ test('key pages do not create document-level horizontal overflow', async ({ page
       }));
       expect(
         dimensions.document,
-        \`\${route} has horizontal overflow at \${viewport.name}: \${JSON.stringify(dimensions)}\`
+        route + ' has horizontal overflow at ' + viewport.name + ': ' + JSON.stringify(dimensions)
       ).toBeLessThanOrEqual(dimensions.viewport + 1);
     }
   }
 });
 
-test('captures desktop and mobile review screenshots of home and contact', async ({ page }, testInfo) => {
+test('captures desktop and mobile visual-review screenshots', async ({ page }, testInfo) => {
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 1000 },
     { name: 'mobile', width: 390, height: 844 }
@@ -34,7 +34,8 @@ test('captures desktop and mobile review screenshots of home and contact', async
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     for (const route of ['/', '/services.html', '/work.html', '/contact.html']) {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
-      const file = \`\${route === '/' ? 'home' : route.slice(1).replace(/\.html$/, '')}-\${viewport.name}.png\`;
+      const routeName = route === '/' ? 'home' : route.slice(1).replace(/\\.html$/, '');
+      const file = routeName + '-' + viewport.name + '.png';
       await page.screenshot({ path: testInfo.outputPath(file), fullPage: true, animations: 'disabled' });
     }
   }
