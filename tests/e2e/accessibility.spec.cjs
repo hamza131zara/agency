@@ -11,6 +11,17 @@ for (const route of PAGES) {
   test('automated WCAG accessibility scan: ' + route, async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(route, { waitUntil: 'domcontentloaded' });
+    // Wait until the real site stylesheet is loaded before measuring computed colors.
+    await page.waitForFunction(() => {
+      const stylesheet = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+        .find(link => /assets\/css\/styles\.css/.test(link.href));
+      return Boolean(stylesheet && stylesheet.sheet);
+    });
+    // About-page contrast depends on this rule; assert it has taken effect before running axe.
+    await page.waitForFunction(() => {
+      const processNumber = document.querySelector('.approach-list article > span');
+      return !processNumber || getComputedStyle(processNumber).color === 'rgb(80, 88, 78)';
+    });
     await page.addStyleTag({ content: '.reveal { opacity: 1 !important; transform: none !important; }' });
     await page.evaluate(() => document.fonts.ready.then(() => true));
     const results = await new AxeBuilder({ page })
