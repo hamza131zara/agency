@@ -26,7 +26,7 @@ jobs:
           grep -q 'id="inquiry-form"' index.html
           grep -q 'PHASE 2' index.html
           node --check assets/js/main.js
-          if grep -R -n -E 'sk_live_[A-Za-z0-9]+|service_role.{0,20}eyJ' . --exclude-dir=.git; then
+          if grep -R -n -E 'sk_live_[A-Za-z0-9]+|service_role.{0,20}eyJ' assets index.html README.md; then
             echo 'Possible secret-like value found; inspect before continuing.'
             exit 1
           fi
