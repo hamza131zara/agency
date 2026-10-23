@@ -22,7 +22,13 @@ for (const route of PAGES) {
       const processNumber = document.querySelector('.approach-list article > span');
       return !processNumber || getComputedStyle(processNumber).color === 'rgb(80, 88, 78)';
     });
-    await page.addStyleTag({ content: '.reveal { opacity: 1 !important; transform: none !important; }' });
+    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; } .reveal { opacity: 1 !important; transform: none !important; }' });
+    await page.waitForFunction(() => {
+      const reveal = document.querySelector('.reveal');
+      if (!reveal) return true;
+      const style = getComputedStyle(reveal);
+      return style.opacity === '1' && style.transitionDuration.split(',').every(value => Number.parseFloat(value) === 0);
+    });
     await page.evaluate(() => document.fonts.ready.then(() => true));
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
