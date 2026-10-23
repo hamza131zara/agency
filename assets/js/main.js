@@ -30,6 +30,89 @@ if (year) year.textContent = String(new Date().getFullYear());
 const form = document.querySelector('#inquiry-form');
 const status = document.querySelector('#form-status');
 const setStatus = (message, state='') => { if (status) { status.textContent = message; status.dataset.state = state; } };
+
+const localInquiryTools = document.querySelector('#local-inquiry-tools');
+const localInquiryStatus = document.querySelector('#local-inquiry-status');
+const downloadInquiryButton = document.querySelector('#download-inquiry');
+const copyInquiryButton = document.querySelector('#copy-inquiry');
+const showLocalInquiryTools = (show, message='') => {
+  if (localInquiryTools) localInquiryTools.hidden = !show;
+  if (message && localInquiryStatus) localInquiryStatus.textContent = message;
+};
+const setLocalInquiryStatus = (message, state='') => {
+  if (localInquiryStatus) {
+    localInquiryStatus.textContent = message;
+    localInquiryStatus.dataset.state = state;
+  }
+};
+const buildLocalInquiryText = () => {
+  const read = key => String(form.elements.namedItem(key)?.value || '').trim();
+  const name = read('name');
+  const email = read('email');
+  const service = read('interest');
+  const message = read('message');
+  if (![name, email, service, message].some(value => value.length > 0)) {
+    setLocalInquiryStatus('Add some inquiry details before creating a local copy.', 'error');
+    return '';
+  }
+  const date = new Date().toISOString().slice(0, 10);
+  return [
+    'AGENCY — PROJECT INQUIRY',
+    'Prepared locally on ' + date,
+    '',
+    'Name: ' + (name || 'Not provided'),
+    'Email: ' + (email || 'Not provided'),
+    'Service: ' + (service || 'Not selected'),
+    '',
+    'PROJECT DETAILS',
+    message || 'Not provided',
+    '',
+    'Local copy only. This text was not submitted by the download/copy action. Confirm receipt separately before assuming the inquiry was delivered.'
+  ].join('\n');
+};
+downloadInquiryButton?.addEventListener('click', () => {
+  const contents = buildLocalInquiryText();
+  if (!contents) return;
+  const blobUrl = URL.createObjectURL(new Blob([contents], {type:'text/plain;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = blobUrl;
+  link.download = 'agency-inquiry-' + new Date().toISOString().slice(0, 10) + '.txt';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  setLocalInquiryStatus('A text copy was prepared locally. It has not been sent to the agency.', 'ready');
+});
+copyInquiryButton?.addEventListener('click', async () => {
+  const contents = buildLocalInquiryText();
+  if (!contents) return;
+  try {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(contents);
+      setLocalInquiryStatus('Inquiry copied to the clipboard. It has not been sent.', 'ready');
+      return;
+    }
+  } catch (error) {
+    // Fall back to a direct browser copy attempt below.
+  }
+  const temporary = document.createElement('textarea');
+  temporary.value = contents;
+  temporary.setAttribute('aria-label', 'Local inquiry copy text');
+  temporary.style.position = 'fixed';
+  temporary.style.opacity = '0';
+  temporary.style.pointerEvents = 'none';
+  document.body.appendChild(temporary);
+  temporary.focus();
+  temporary.select();
+  let copied = false;
+  try { copied = document.execCommand('copy'); } catch (error) { copied = false; }
+  temporary.remove();
+  setLocalInquiryStatus(
+    copied ? 'Inquiry copied to the clipboard. It has not been sent.' : 'Clipboard access is unavailable in this browser. Use Download inquiry (.txt) instead.',
+    copied ? 'ready' : 'error'
+  );
+});
+
 if (form && status) {
   let csrfToken = '';
   let ready = false;
@@ -70,16 +153,20 @@ if (form && status) {
       const deliveryStatus = data.configured
         ? 'Form connected. The server will confirm whether your inquiry was accepted for email processing.'
         : 'The form endpoint is reachable, but the official inbox is not configured. Your inquiry will not be reported as sent until hosting is configured.';
+      showLocalInquiryTools(!data.configured);
       setStatus(
         briefHandoffLoaded
           ? 'A project summary was added to the form. Your inquiry has not been sent. ' + deliveryStatus
           : deliveryStatus,
         data.configured ? '' : 'error'
       );
+      if (!data.configured) setLocalInquiryStatus('The official inbox is not configured. Use copy or download to keep a local copy; neither action sends your inquiry.', 'error');
     } catch (err) {
       ready = false;
       if (submitButton) submitButton.disabled = false;
-      setStatus(briefHandoffLoaded ? 'A project summary is prefilled, but the inquiry endpoint could not be reached. It has not been sent.' : 'The form endpoint could not be reached. This form requires the PHP-enabled website; a static preview will not claim to send messages.','error');
+      showLocalInquiryTools(true, 'The inquiry endpoint is unreachable. You can keep a local copy while delivery is unavailable.');
+      setStatus(briefHandoffLoaded ? 'A project summary is prefilled, but the inquiry endpoint could not be reached. It has not been sent.' : 'The form endpoint could not be reached. Your inquiry has not been sent.','error');
+      setLocalInquiryStatus('The form endpoint is unavailable. Copy or download stays in this browser and does not submit your message.', 'error');
     }
   }
   form.addEventListener('submit', async e => {
@@ -102,6 +189,10 @@ if (form && status) {
       const result = await response.json();
       if (!response.ok || !result.ok) {
         setStatus(result.message || 'The server could not accept the inquiry. Your message has not been reported as sent.','error');
+        if (['not_configured', 'mail_failed'].includes(result.code) || response.status === 502 || response.status === 503) {
+          showLocalInquiryTools(true, 'Delivery failed or is not configured. Keep a local copy while you review your next step.');
+          setLocalInquiryStatus('The server did not confirm delivery. Copy or download the inquiry locally; these actions will not retry or submit it.', 'error');
+        }
         if (result.code === 'csrf_failed') { ready = false; await initialize(); }
         return;
       }
