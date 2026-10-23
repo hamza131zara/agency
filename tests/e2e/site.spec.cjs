@@ -165,4 +165,26 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByLabel('Generated project brief')).toHaveValue('');
   });
 
+
+  test('project brief handoff prefills contact form but never submits the inquiry', async ({ page }) => {
+    const postRequests = [];
+    page.on('request', request => {
+      if (request.method() === 'POST' && request.url().includes('/contact.php')) postRequests.push(request.url());
+    });
+    await page.goto('/brief-builder.html');
+    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
+    await page.getByLabel('Goal or problem to solve').fill('Build a customer portal where clients can track their service requests.');
+    await page.getByLabel('Project name').fill('Contact handoff test');
+    await page.getByRole('button', { name: 'Generate project brief' }).click();
+    await page.getByRole('button', { name: /Continue to contact/i }).click();
+
+    await expect(page).toHaveURL(/contact\.html\?service=Full-stack%20development&from=brief-builder$/);
+    await expect(page.locator('textarea[name="message"]')).toHaveValue(/Contact handoff test/);
+    await expect(page.locator('textarea[name="message"]')).toHaveValue(/customer portal/);
+    await expect(page.locator('#form-status')).toContainText(/inquiry has not been sent/i);
+    expect(await page.evaluate(() => sessionStorage.getItem('agency-project-brief-draft'))).toBeNull();
+    expect(postRequests).toEqual([]);
+  });
+
 });
