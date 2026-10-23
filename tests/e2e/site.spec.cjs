@@ -1,5 +1,17 @@
 const { test, expect } = require('@playwright/test');
 
+const ALLOWED_SERVICES = [
+  'Full-stack development',
+  'AI / LLM / agent development',
+  'AI integration',
+  'Cybersecurity / secure engineering',
+  'Debugging / performance',
+  'UI/UX and product design',
+  'Digital marketing / growth',
+  'Workflow automation consulting',
+  'Something else'
+];
+
 const PAGES = [
   '/', '/services.html', '/work.html', '/about.html', '/contact.html',
   '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html',
@@ -54,6 +66,16 @@ test.describe('Phase I route and content checks', () => {
     await page.goto('/');
     await page.keyboard.press('Tab');
     await expect(page.locator('.skip-link')).toBeFocused();
+  });
+
+  test('homepage and contact inquiry services match the PHP allow-list', async ({ page }) => {
+    for (const route of ['/', '/contact.html']) {
+      await page.goto(route);
+      const services = await page.locator('select[name="interest"] option').evaluateAll(options =>
+        options.filter(option => option.value !== '').map(option => option.value)
+      );
+      expect(services, 'Service options must match contact.php on ' + route).toEqual(ALLOWED_SERVICES);
+    }
   });
 
   test('inquiry page labels fields and reports missing mail configuration honestly', async ({ page }) => {
