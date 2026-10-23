@@ -24,7 +24,7 @@ test.describe('Phase I route and content checks', () => {
     for (const route of ['/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
-        links.filter(link => !/\\bnoopener\\b/.test(link.rel) || !/\\bnoreferrer\\b/.test(link.rel))
+        links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
           .map(link => ({ href: link.href, rel: link.rel }))
       );
       expect(unsafeLinks, 'Unsafe target=_blank links on ' + route).toEqual([]);
@@ -44,7 +44,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(toggle).toBeFocused();
     await toggle.click();
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services' }).click();
-    await expect(page).toHaveURL(/\\/services\\.html$/);
+    await expect(page).toHaveURL(/\/services\.html$/);
     await expect(page.locator('#primary-nav')).not.toBeVisible();
   });
 
