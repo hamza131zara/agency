@@ -101,3 +101,124 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   const observer = new IntersectionObserver((entries, obs) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } }), {threshold:.08});
   nodes.forEach(n => observer.observe(n));
 }
+
+/* Portfolio discovery: search, project type and status. */
+const portfolioExplorer = document.querySelector('.portfolio-explorer');
+if (portfolioExplorer) {
+  const cards = Array.from(document.querySelectorAll('[data-project-card]'));
+  const search = document.querySelector('#project-search');
+  const statusFilter = document.querySelector('#project-status');
+  const filterButtons = Array.from(document.querySelectorAll('[data-project-filter]'));
+  const resultCount = document.querySelector('#project-result-count');
+  const clearButton = document.querySelector('#clear-project-filters');
+  const emptyMessage = document.querySelector('#project-empty-state');
+  let category = 'all';
+  const applyFilters = () => {
+    const query = (search?.value || '').trim().toLowerCase();
+    const statusValue = statusFilter?.value || 'all';
+    let visible = 0;
+    cards.forEach(card => {
+      const show = (category === 'all' || card.dataset.category === category)
+        && (statusValue === 'all' || card.dataset.status === statusValue)
+        && (!query || card.textContent.toLowerCase().includes(query));
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    if (resultCount) resultCount.textContent = visible === cards.length ? 'Showing all ' + visible + ' projects.' : 'Showing ' + visible + ' of ' + cards.length + ' projects.';
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
+  };
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    category = button.dataset.projectFilter || 'all';
+    filterButtons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    applyFilters();
+  }));
+  search?.addEventListener('input', applyFilters);
+  statusFilter?.addEventListener('change', applyFilters);
+  clearButton?.addEventListener('click', () => {
+    category = 'all';
+    if (search) search.value = '';
+    if (statusFilter) statusFilter.value = 'all';
+    filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.projectFilter === 'all')));
+    applyFilters();
+    search?.focus();
+  });
+  applyFilters();
+}
+
+/* Project Brief Builder runs locally and does not submit or persist answers. */
+const briefForm = document.querySelector('#brief-form');
+if (briefForm) {
+  const output = document.querySelector('#brief-output');
+  const briefStatus = document.querySelector('#brief-status');
+  const copyButton = document.querySelector('#copy-brief');
+  const downloadButton = document.querySelector('#download-brief');
+  const fieldValue = name => String(briefForm.elements.namedItem(name)?.value || '').trim();
+  const selectedValues = name => Array.from(briefForm.querySelectorAll('input[name="' + name + '"]:checked')).map(input => input.value);
+  const setBriefStatus = (message, state='') => { if (briefStatus) { briefStatus.textContent = message; briefStatus.dataset.state = state; } };
+  const setExportEnabled = enabled => { if (copyButton) copyButton.disabled = !enabled; if (downloadButton) downloadButton.disabled = !enabled; };
+  let generated = false;
+  const emptyOutput = 'Your formatted brief will appear here after you complete the required fields and generate the draft.';
+  const buildText = () => {
+    const now = new Date();
+    const date = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    const priorities = selectedValues('priorities');
+    const row = (label, value) => label + ': ' + (value || 'Not specified');
+    return [
+      'PROJECT BRIEF', 'Generated locally on ' + date, '',
+      row('Project',fieldValue('projectName')),row('Company / organization',fieldValue('organization')),
+      row('Main service',fieldValue('service')),row('Current stage',fieldValue('stage')), '',
+      'GOAL / PROBLEM TO SOLVE',fieldValue('objective'), '',
+      'TARGET USERS',fieldValue('audience') || 'Not specified', '',
+      'PRIORITIES',priorities.length ? priorities.map(item => '- ' + item).join('\n') : 'No specific priorities selected yet', '',
+      'EXISTING TOOLS / TECHNOLOGY',fieldValue('existingStack') || 'Not specified', '',
+      'SYSTEMS / INTEGRATIONS',fieldValue('integrations') || 'Not specified', '',
+      row('Preferred timeline',fieldValue('timeline')),row('Indicative budget (not a quote)',fieldValue('budget')), '',
+      'SUCCESS CRITERIA',fieldValue('success') || 'To be defined together', '',
+      'OPEN QUESTIONS / ASSUMPTIONS',
+      '- Validate scope, dependencies, security/privacy needs and acceptance criteria during discovery.',
+      '- Timeline and budget are user-provided planning inputs, not commitments or a proposal.', '',
+      'Prepared with the Agency Project Brief Builder. This document reflects user-provided inputs and has not been submitted or reviewed by the agency.'
+    ].join('\n');
+  };
+  const generate = announce => {
+    if (!briefForm.checkValidity()) {
+      briefForm.reportValidity(); generated = false; setExportEnabled(false);
+      if (announce) setBriefStatus('Complete the required fields before generating the brief.','error');
+      return false;
+    }
+    if (output) output.value = buildText();
+    generated = true; setExportEnabled(true);
+    if (announce) setBriefStatus('Brief generated in this browser tab. Review it, then copy or download when ready.','ready');
+    return true;
+  };
+  briefForm.addEventListener('submit', event => { event.preventDefault(); if (generate(true)) output?.focus(); });
+  briefForm.addEventListener('input', () => {
+    if (!generated) return;
+    if (briefForm.checkValidity()) generate(false);
+    else { generated=false; if (output) output.value=emptyOutput; setExportEnabled(false); setBriefStatus('A required field needs attention before the brief can be refreshed.','error'); }
+  });
+  briefForm.addEventListener('reset', () => window.setTimeout(() => {
+    generated=false; if (output) output.value=''; setExportEnabled(false); setBriefStatus('Answers cleared. Complete the required fields to generate a new brief.');
+  },0));
+  copyButton?.addEventListener('click', async () => {
+    if (!generated || !output?.value) return;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(output.value); setBriefStatus('Project brief copied to the clipboard.','ready'); return;
+      }
+      output.focus(); output.select();
+      const ok=document.execCommand('copy');
+      setBriefStatus(ok?'Project brief copied to the clipboard.':'Select the preview text and copy it manually.',ok?'ready':'error');
+    } catch (error) {
+      output.focus(); output.select(); setBriefStatus('Clipboard access was blocked. The brief is selected so you can copy it manually.','error');
+    }
+  });
+  downloadButton?.addEventListener('click', () => {
+    if (!generated || !output?.value) return;
+    const slug=(fieldValue('projectName')||'agency-project-brief').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+    const url=URL.createObjectURL(new Blob([output.value],{type:'text/plain;charset=utf-8'}));
+    const link=document.createElement('a'); link.href=url; link.download=(slug||'agency-project-brief')+'.txt'; document.body.appendChild(link); link.click(); link.remove();
+    window.setTimeout(()=>URL.revokeObjectURL(url),1000); setBriefStatus('Your text file download has been prepared locally.','ready');
+  });
+  if (output) output.value='';
+}
