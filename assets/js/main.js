@@ -42,6 +42,22 @@ if (form && status) {
     const match = Array.from(interest.options).find(o => o.value === requestedService || o.textContent.trim() === requestedService);
     if (match) interest.value = match.value;
   }
+  // This is an explicit, one-time browser-session handoff from the Project Brief Builder.
+  // Read it into the message field, then immediately remove it; nothing is submitted here.
+  let briefHandoffLoaded = false;
+  try {
+    const pendingBrief = sessionStorage.getItem('agency-project-brief-draft');
+    if (pendingBrief) {
+      const messageField = form.elements.namedItem('message');
+      if (messageField && typeof messageField.value === 'string') {
+        messageField.value = pendingBrief;
+        briefHandoffLoaded = true;
+      }
+      sessionStorage.removeItem('agency-project-brief-draft');
+    }
+  } catch (error) {
+    // Storage can be disabled by the browser; the form stays usable without prefill.
+  }
   async function initialize() {
     if (submitButton) submitButton.disabled = true;
     setStatus('Connecting to the website inquiry service…');
@@ -51,14 +67,19 @@ if (form && status) {
       if (!response.ok || !data.csrf_token) throw new Error('No valid form token.');
       csrfToken = data.csrf_token; ready = true;
       if (submitButton) submitButton.disabled = false;
-      setStatus(data.configured
+      const deliveryStatus = data.configured
         ? 'Form connected. The server will confirm whether your inquiry was accepted for email processing.'
-        : 'The form endpoint is reachable, but the official inbox is not configured. Your inquiry will not be reported as sent until hosting is configured.',
-        data.configured ? '' : 'error');
+        : 'The form endpoint is reachable, but the official inbox is not configured. Your inquiry will not be reported as sent until hosting is configured.';
+      setStatus(
+        briefHandoffLoaded
+          ? 'A project summary was added to the form. Your inquiry has not been sent. ' + deliveryStatus
+          : deliveryStatus,
+        data.configured ? '' : 'error'
+      );
     } catch (err) {
       ready = false;
       if (submitButton) submitButton.disabled = false;
-      setStatus('The form endpoint could not be reached. This form requires the PHP-enabled website; a static preview will not claim to send messages.','error');
+      setStatus(briefHandoffLoaded ? 'A project summary is prefilled, but the inquiry endpoint could not be reached. It has not been sent.' : 'The form endpoint could not be reached. This form requires the PHP-enabled website; a static preview will not claim to send messages.','error');
     }
   }
   form.addEventListener('submit', async e => {
@@ -152,10 +173,15 @@ if (briefForm) {
   const briefStatus = document.querySelector('#brief-status');
   const copyButton = document.querySelector('#copy-brief');
   const downloadButton = document.querySelector('#download-brief');
+  const continueButton = document.querySelector('#continue-to-contact');
   const fieldValue = name => String(briefForm.elements.namedItem(name)?.value || '').trim();
   const selectedValues = name => Array.from(briefForm.querySelectorAll('input[name="' + name + '"]:checked')).map(input => input.value);
   const setBriefStatus = (message, state='') => { if (briefStatus) { briefStatus.textContent = message; briefStatus.dataset.state = state; } };
-  const setExportEnabled = enabled => { if (copyButton) copyButton.disabled = !enabled; if (downloadButton) downloadButton.disabled = !enabled; };
+  const setExportEnabled = enabled => {
+    if (copyButton) copyButton.disabled = !enabled;
+    if (downloadButton) downloadButton.disabled = !enabled;
+    if (continueButton) continueButton.disabled = !enabled;
+  };
   let generated = false;
   const emptyOutput = 'Your formatted brief will appear here after you complete the required fields and generate the draft.';
   const buildText = () => {
@@ -219,6 +245,44 @@ if (briefForm) {
     const url=URL.createObjectURL(new Blob([output.value],{type:'text/plain;charset=utf-8'}));
     const link=document.createElement('a'); link.href=url; link.download=(slug||'agency-project-brief')+'.txt'; document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(()=>URL.revokeObjectURL(url),1000); setBriefStatus('Your text file download has been prepared locally.','ready');
+  });
+  continueButton?.addEventListener('click', () => {
+    if (!generated) {
+      setBriefStatus('Generate the brief before continuing to contact.','error');
+      return;
+    }
+    const priorities = selectedValues('priorities');
+    const lines = [
+      fieldValue('projectName') ? 'Project: ' + fieldValue('projectName') : '',
+      fieldValue('organization') ? 'Organization: ' + fieldValue('organization') : '',
+      'Service: ' + fieldValue('service'),
+      'Stage: ' + fieldValue('stage'),
+      '',
+      'Goal / problem:',
+      fieldValue('objective'),
+      fieldValue('audience') ? '\nUsers: ' + fieldValue('audience') : '',
+      priorities.length ? '\nPriorities: ' + priorities.join(', ') : '',
+      fieldValue('existingStack') ? '\nExisting technology: ' + fieldValue('existingStack') : '',
+      fieldValue('integrations') ? '\nIntegrations: ' + fieldValue('integrations') : '',
+      fieldValue('timeline') ? '\nPreferred timeline: ' + fieldValue('timeline') : '',
+      fieldValue('budget') ? '\nIndicative budget (not a quote): ' + fieldValue('budget') : '',
+      fieldValue('success') ? '\nSuccess criteria: ' + fieldValue('success') : ''
+    ].filter(Boolean).join('\n');
+    const suffix = '\n\n[Summary may be shortened to fit the contact form. Download the full brief above.]';
+    const encoder = new TextEncoder();
+    let handoff = lines;
+    if (encoder.encode(handoff).length > 2600) {
+      const chars = Array.from(handoff);
+      while (chars.length && encoder.encode(chars.join('')).length > 2600 - encoder.encode(suffix).length) chars.pop();
+      handoff = chars.join('').trimEnd() + suffix;
+    }
+    try {
+      sessionStorage.setItem('agency-project-brief-draft', handoff);
+    } catch (error) {
+      setBriefStatus('Browser session storage is unavailable. Copy or download your brief and paste the summary into Contact instead.','error');
+      return;
+    }
+    window.location.href = 'contact.html?service=' + encodeURIComponent(fieldValue('service')) + '&from=brief-builder';
   });
   if (output) output.value='';
 }
