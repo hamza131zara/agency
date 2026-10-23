@@ -620,3 +620,47 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .service-finder-options { grid-template-columns: 1fr; }
   .service-finder-result { padding: 20px; }
 }
+
+
+/* Print-only brief sheet; screen UI remains unchanged. */
+.brief-print-sheet { display: none; }
+@media print {
+  @page { margin: 16mm; }
+  html, body { background: #ffffff !important; color: #171d18 !important; }
+  body * { visibility: hidden !important; }
+  .brief-print-sheet,
+  .brief-print-sheet * { visibility: visible !important; }
+  .brief-print-sheet {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #171d18 !important;
+  }
+  .brief-print-sheet h2 {
+    margin: 0 0 8mm !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 22pt !important;
+    letter-spacing: -0.03em !important;
+  }
+  .brief-print-meta {
+    margin: 0 0 7mm !important;
+    font: 9pt/1.5 Arial, sans-serif !important;
+    color: #424a3f !important;
+  }
+  #brief-print-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #171d18 !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    font: 9pt/1.55 "Courier New", monospace !important;
+  }
+}

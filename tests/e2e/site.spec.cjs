@@ -206,10 +206,34 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('button', { name: 'Copy brief' })).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
 
+    await page.evaluate(() => {
+      window.__printCalledForTest = false;
+      window.print = () => { window.__printCalledForTest = true; };
+    });
+    await page.getByRole('button', { name: 'Print / Save PDF' }).click();
+    await expect(page.locator('#brief-print-content')).toContainText('Support Assistant');
+    expect(await page.evaluate(() => window.__printCalledForTest)).toBe(true);
+
     const downloadEvent = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Download .txt' }).click();
     const download = await downloadEvent;
     expect(download.suggestedFilename()).toBe('support-assistant.txt');
+
+    await expect(page.getByRole('button', { name: 'Download JSON' })).toBeEnabled();
+    const jsonDownloadEvent = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Download JSON' }).click();
+    const jsonDownload = await jsonDownloadEvent;
+    expect(jsonDownload.suggestedFilename()).toBe('support-assistant.json');
+    const jsonPath = await jsonDownload.path();
+    expect(jsonPath).toBeTruthy();
+    const structured = JSON.parse(await fs.readFile(jsonPath, 'utf8'));
+    expect(structured.schemaVersion).toBe('1.0');
+    expect(structured.documentType).toBe('agency-project-brief');
+    expect(structured.project.name).toBe('Support Assistant');
+    expect(structured.project.service).toBe('AI / LLM / agent development');
+    expect(structured.priorities).toContain('Security and privacy');
+    expect(structured.submitted).toBe(false);
+    expect(structured.notAQuote).toBe(true);
 
     await page.getByLabel('Project name').fill('Internal Knowledge Assistant');
     await expect(output).toHaveValue(/Internal Knowledge Assistant/);
@@ -226,6 +250,8 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
     await page.getByRole('button', { name: 'Reset answers' }).click();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Download JSON' })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Print / Save PDF' })).toBeDisabled();
     await expect(page.getByLabel('Generated project brief')).toHaveValue('');
   });
 
