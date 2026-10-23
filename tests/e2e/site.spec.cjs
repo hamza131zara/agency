@@ -192,7 +192,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('button', { name: 'Copy brief' })).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
 
-    await page.addInitScript(() => {
+    await page.evaluate(() => {
       window.__printCalledForTest = false;
       window.print = () => { window.__printCalledForTest = true; };
     });
