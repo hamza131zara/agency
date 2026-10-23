@@ -303,3 +303,140 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mixer-flow span{padding:11px 12px;background:#fff5ed;border:1px solid #e4beaa;font:8px var(--mono)}
 .mixer-flow span:nth-of-type(2){background:#d9e8df}.mixer-flow span:nth-of-type(3){background:#d7fc62}
 .mixer-flow b{font-weight:400;color:#b36f4c}
+
+
+/* QA remediation: use stronger contrast for secondary labels and muted display text. */
+.brand-name small,
+.hero-note,
+.hero-footer,
+.intro-band p,
+.section-heading > p,
+.work-note,
+.work-meta small,
+.work-meta p,
+.form-top,
+.form-bottom p,
+.subpage-kicker,
+.subpage-side > p,
+.service-detail > small,
+.service-detail p,
+.service-detail ul,
+.project-copy > small,
+.project-copy p,
+.work-disclaimer,
+.case-study-aside > small,
+.case-study-aside span,
+.principle-grid article > small,
+.principle-grid p,
+.approach-list article > span,
+.approach-list p,
+.legal-status,
+.legal-copy p,
+.orbit-node small,
+.art-label,
+.art-bottom {
+  color: #50584e;
+}
+.hero h1 span,
+.section-heading h2 em,
+.contact-copy h2 em,
+.muted-heading {
+  color: #646b60;
+}
+.phase-copy h2 em {
+  color: #b9c1b1;
+}
+.eyebrow > span:first-child:not(.status-dot) {
+  color: #50584e;
+}
+.phase-copy .eyebrow span {
+  color: var(--lime);
+}
+.contact-copy .eyebrow span {
+  color: #46552e;
+}
+.json-window pre span {
+  color: #85391f;
+}
+.json-window pre em {
+  color: #2f5f39;
+}
+
+
+/* Final contrast tuning across illustrated UI cards and dark/light roadmap panels. */
+.service-featured .card-top small {
+  color: #3e482a;
+}
+.service-card p,
+.service-roadmap p {
+  color: #50584e;
+}
+.service-roadmap .card-top small {
+  color: #50584e;
+}
+.service-detail-roadmap > small,
+.service-detail-roadmap p,
+.service-detail-roadmap ul {
+  color: #b9c1b1;
+}
+.phase-copy .eyebrow > span:first-child:not(.status-dot) {
+  color: var(--lime);
+}
+.mock-toolbar span {
+  color: #50584e;
+}
+.visual-regex .mock-toolbar span {
+  color: #a5acb5;
+}
+.json-sidebar b {
+  color: #50584e;
+}
+.json-sidebar b:first-child {
+  color: #171b19;
+}
+.json-window pre i,
+.project-jotjson pre i {
+  color: #85391f;
+}
+.json-window pre em,
+.project-jotjson pre b {
+  color: #2f5f39;
+}
+.pulse-label {
+  color: #3f5d50;
+}
+.mixer-node small {
+  color: #59483e;
+}
+.mixer-caption {
+  color: #684b3a;
+}
+
+
+/* Final QA contrast fixes for card metadata, the dark roadmap and project previews. */
+.service-card .card-top small {
+  color: #50584e;
+}
+.service-card .tags span {
+  color: #50584e;
+}
+.service-featured .card-top small {
+  color: #3e482a;
+}
+.service-featured .tags span {
+  color: #3e482a;
+}
+.mock-content > small,
+.mock-content > span {
+  color: #4c583f;
+}
+.regex-tabs {
+  color: #aeb6c1;
+}
+.automation-row > span {
+  color: #9ba593;
+}
+.approach-list article > span,
+.approach-list article > div > p {
+  color: #50584e !important;
+}
