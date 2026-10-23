@@ -133,10 +133,11 @@ test.describe('Phase I route and content checks', () => {
     await page.getByRole('button', { name: 'Generate project brief' }).click();
 
     const output = page.getByLabel('Generated project brief');
-    await expect(output).toContainText('Support Assistant');
-    await expect(output).toContainText('AI / LLM / agent development');
-    await expect(output).toContainText('Security and privacy');
-    await expect(output).toContainText('AI quality and evaluation');
+    const generatedBrief = await output.inputValue();
+    expect(generatedBrief).toContain('Support Assistant');
+    expect(generatedBrief).toContain('AI / LLM / agent development');
+    expect(generatedBrief).toContain('Security and privacy');
+    expect(generatedBrief).toContain('AI quality and evaluation');
     await expect(page.locator('#brief-status')).toContainText('generated in this browser tab');
     await expect(page.getByRole('button', { name: 'Copy brief' })).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
@@ -147,8 +148,8 @@ test.describe('Phase I route and content checks', () => {
     expect(download.suggestedFilename()).toBe('support-assistant.txt');
 
     await page.getByLabel('Project name').fill('Internal Knowledge Assistant');
-    await expect(output).toContainText('Internal Knowledge Assistant');
-    await expect(output).not.toContainText('Support Assistant');
+    await expect(output).toHaveValue(/Internal Knowledge Assistant/);
+    await expect(output).not.toHaveValue(/Support Assistant/);
     expect(serviceRequests).toEqual([]);
   });
 
