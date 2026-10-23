@@ -303,3 +303,61 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mixer-flow span{padding:11px 12px;background:#fff5ed;border:1px solid #e4beaa;font:8px var(--mono)}
 .mixer-flow span:nth-of-type(2){background:#d9e8df}.mixer-flow span:nth-of-type(3){background:#d7fc62}
 .mixer-flow b{font-weight:400;color:#b36f4c}
+
+
+/* QA remediation: use stronger contrast for secondary labels and muted display text. */
+.brand-name small,
+.hero-note,
+.hero-footer,
+.intro-band p,
+.section-heading > p,
+.work-note,
+.work-meta small,
+.work-meta p,
+.form-top,
+.form-bottom p,
+.subpage-kicker,
+.subpage-side > p,
+.service-detail > small,
+.service-detail p,
+.service-detail ul,
+.project-copy > small,
+.project-copy p,
+.work-disclaimer,
+.case-study-aside > small,
+.case-study-aside span,
+.principle-grid article > small,
+.principle-grid p,
+.approach-list article > span,
+.approach-list p,
+.legal-status,
+.legal-copy p,
+.orbit-node small,
+.art-label,
+.art-bottom {
+  color: #50584e;
+}
+.hero h1 span,
+.section-heading h2 em,
+.contact-copy h2 em,
+.muted-heading {
+  color: #646b60;
+}
+.phase-copy h2 em {
+  color: #b9c1b1;
+}
+.eyebrow > span:first-child:not(.status-dot) {
+  color: #50584e;
+}
+.phase-copy .eyebrow span {
+  color: var(--lime);
+}
+.contact-copy .eyebrow span {
+  color: #46552e;
+}
+.json-window pre span {
+  color: #85391f;
+}
+.json-window pre em {
+  color: #2f5f39;
+}

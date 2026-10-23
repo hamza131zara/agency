@@ -34,13 +34,15 @@ test.describe('Phase I route and content checks', () => {
   test('home-page mobile navigation opens, closes with Escape, and follows links', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    const toggle = page.getByRole('button', { name: 'Open navigation' });
+    const toggle = page.locator('.menu-toggle');
     await expect(toggle).toBeVisible();
     await toggle.click();
     await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services' })).toBeVisible();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(toggle).toHaveAttribute('aria-label', 'Close navigation');
     await page.keyboard.press('Escape');
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toHaveAttribute('aria-label', 'Open navigation');
     await expect(toggle).toBeFocused();
     await toggle.click();
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services' }).click();

@@ -34,6 +34,7 @@ test('captures desktop and mobile visual-review screenshots', async ({ page }, t
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     for (const route of ['/', '/services.html', '/work.html', '/contact.html']) {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
+      await page.addStyleTag({ content: '.reveal { opacity: 1 !important; transform: none !important; }' });
       const routeName = route === '/' ? 'home' : route.slice(1).replace(/\.html$/, '');
       const file = routeName + '-' + viewport.name + '.png';
       await page.screenshot({ path: testInfo.outputPath(file), fullPage: true, animations: 'disabled' });
