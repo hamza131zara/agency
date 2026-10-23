@@ -7,7 +7,7 @@ Responsive public portfolio for a software and AI agency. It is independent from
 - Full-stack development, AI/LLM/agent work, integrations, cybersecurity, debugging/performance, product design and digital growth.
 - Selected project showcases without fabricated testimonials or quantified outcomes.
 - Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
-- Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry.
+- Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry, plus browser-only copy/download fallback to preserve the visitor's draft.
 - Phase 2 roadmap for SMS, Instagram/social publishing, webhooks, approvals and automation workspaces. Those products are not available in Phase 1.
 - SEO metadata, favicon, robots/sitemap template, 404 page, restrictive CSP and shared-hosting security headers, detailed project notes and GitHub Actions checks.
 
@@ -32,4 +32,5 @@ Phase 1 is the portfolio/services site plus a configured inquiry path. SMS, Inst
 ## Interactive Phase I features
 - Work page: client-side search, category filters and status filters with accessible result counts.
 - Project Brief Builder: creates a structured project brief in the current browser page and offers explicit copy/download actions. It makes no server request and stores no brief data; it works while domain, hosting and mailbox setup are deferred.
-- Optional brief-to-contact handoff passes only a concise summary via temporary session storage; the contact page consumes and clears it, and no message is submitted automatically.\n
+- Optional brief-to-contact handoff passes only a concise summary via temporary session storage; the contact page consumes and clears it, and no message is submitted automatically.
+- When delivery is unconfigured/unreachable, Contact offers explicit browser-local copy/download actions that never POST the inquiry.

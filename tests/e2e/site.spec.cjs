@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('node:fs/promises');
 
 const ALLOWED_SERVICES = [
   'Full-stack development',
@@ -85,6 +86,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByLabel('What can we help with?')).toBeVisible();
     await expect(page.getByLabel('A little about the project')).toBeVisible();
     await expect(page.locator('#form-status')).toContainText(/inbox is not configured/i);
+    await expect(page.locator('#local-inquiry-tools')).toBeVisible();
 
     await page.locator('input[name="name"]').fill('Test Visitor');
     await page.locator('input[name="email"]').fill('visitor@example.org');
@@ -93,6 +95,37 @@ test.describe('Phase I route and content checks', () => {
     await page.getByRole('button', { name: /send inquiry/i }).click();
     await expect(page.locator('#form-status')).toContainText(/your inquiry has not been sent/i);
     await expect(page.locator('#form-status')).not.toContainText(/accepted by the website mail service/i);
+  });
+
+
+  test('contact page exports a local inquiry copy without posting it', async ({ page }) => {
+    const postRequests = [];
+    page.on('request', request => {
+      if (request.method() === 'POST' && request.url().includes('/contact.php')) postRequests.push(request.url());
+    });
+    await page.goto('/contact.html');
+    await expect(page.locator('#local-inquiry-tools')).toBeVisible();
+    await page.getByLabel('Your name').fill('Local Copy Test');
+    await page.getByLabel('Email address').fill('local-copy@example.org');
+    await page.getByLabel('What can we help with?').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('A little about the project').fill('Please build a local draft that can be saved without sending any message.');
+
+    const downloadEvent = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Download inquiry (.txt)' }).click();
+    const download = await downloadEvent;
+    expect(download.suggestedFilename()).toMatch(/^agency-inquiry-\d{4}-\d{2}-\d{2}\.txt$/);
+    const filePath = await download.path();
+    expect(filePath).toBeTruthy();
+    const contents = await fs.readFile(filePath, 'utf8');
+    expect(contents).toContain('Local Copy Test');
+    expect(contents).toContain('local-copy@example.org');
+    expect(contents).toContain('Full-stack development');
+    expect(contents).toContain('Please build a local draft');
+    expect(contents).toContain('was not submitted');
+
+    await page.getByRole('button', { name: 'Copy inquiry' }).click();
+    await expect(page.locator('#local-inquiry-status')).toContainText(/copied to the clipboard|download your inquiry instead/i);
+    expect(postRequests).toEqual([]);
   });
 
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
