@@ -642,7 +642,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     background: #ffffff !important;
     color: #171d18 !important;
   }
-  .brief-print-sheet h1 {
+  .brief-print-sheet h2 {
     margin: 0 0 8mm !important;
     font-family: Arial, sans-serif !important;
     font-size: 22pt !important;
