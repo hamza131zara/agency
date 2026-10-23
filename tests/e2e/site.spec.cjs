@@ -34,7 +34,7 @@ test.describe('Phase I route and content checks', () => {
   }
 
   test('internal page links use safe attributes when opening new tabs', async ({ page }) => {
-    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html']) {
+    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
         links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
@@ -128,6 +128,20 @@ test.describe('Phase I route and content checks', () => {
     expect(postRequests).toEqual([]);
   });
 
+
+
+  test('project showcases expose the verified source links and do not imply an unconfirmed demo', async ({ page }) => {
+    await page.goto('/work.html');
+    const regexCard = page.locator('[data-project-card]').filter({ hasText: 'RegexLab' });
+    await expect(regexCard.getByRole('link', { name: /View source/i })).toHaveAttribute('href', 'https://github.com/Hafiz-Hamza-Liaqat/RegexLab');
+
+    const mixerCard = page.locator('[data-project-card]').filter({ hasText: 'Free AI Mixer' });
+    await expect(mixerCard.getByRole('link', { name: /View source/i })).toHaveAttribute('href', 'https://github.com/hamza131zara/Free-AI-Mixer');
+
+    await page.goto('/work/free-ai-mixer.html');
+    await expect(page.locator('.case-study-aside')).toContainText(/No public demo confirmed/i);
+    await expect(page.getByRole('link', { name: /View public source/i })).toHaveAttribute('rel', /noopener noreferrer/);
+  });
 
   test('service finder recommends a service and carries the selection into the project brief', async ({ page }) => {
     await page.goto('/services.html');

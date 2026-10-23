@@ -5,7 +5,7 @@ Responsive public portfolio for a software and AI agency. It is independent from
 ## Phase 1 scope
 - Home plus Services, Work, About/Approach, Contact and Privacy pages, with an interactive Service Finder, portfolio explorer and local-only Project Brief Builder.
 - Full-stack development, AI/LLM/agent work, integrations, cybersecurity, debugging/performance, product design and digital growth.
-- Selected project showcases without fabricated testimonials or quantified outcomes.
+- Selected project showcases without fabricated testimonials or quantified outcomes, with source links for verified public repositories and no unconfirmed demo claims.
 - Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
 - Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry, plus browser-only copy/download fallback to preserve the visitor's draft.
 - Phase 2 roadmap for SMS, Instagram/social publishing, webhooks, approvals and automation workspaces. Those products are not available in Phase 1.
