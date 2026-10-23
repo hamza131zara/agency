@@ -1,7 +1,7 @@
-name: Phase 1 quality checks
+name: Phase I release checks
 on:
   push:
-    branches: [main, "feat/**"]
+    branches: [main, "feat/**", "qa/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/setup-php@v2
         with:
           php-version: "8.2"
           coverage: none
@@ -31,3 +31,31 @@ jobs:
         run: python tests/test_contact_endpoint.py
       - name: Compile Python test helpers
         run: python -m py_compile scripts/validate_site.py tests/test_contact_endpoint.py
+
+  browser-and-accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - uses: actions/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+      - name: Install browser-test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium and OS dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run browser, responsive and WCAG accessibility checks
+        run: npm run test:e2e
+      - name: Upload screenshots, traces and reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: phase-one-browser-review
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14

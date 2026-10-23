@@ -6,3 +6,6 @@ Thumbs.db
 .env.*
 !.env.example
 /config.php
+node_modules/
+playwright-report/
+test-results/

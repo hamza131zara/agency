@@ -8,8 +8,10 @@
 - [x] Contact endpoint refuses success when the inbox is not configured or mail is rejected.
 - [x] Metadata, favicon, sitemap/robots template, 404 page, host headers and deployment notes.
 - [x] CI checks for metadata/links, JavaScript/PHP syntax and contact endpoint smoke tests.
-- [ ] Browser visual tests at desktop/tablet/mobile sizes.
-- [ ] Manual keyboard/screen-reader and contrast audit.
+- [x] Automated Playwright coverage for routes, mobile navigation, narrow-width overflow and contact failure states.
+- [x] Automated axe scans for serious/critical WCAG 2.1 A/AA violations, with browser screenshots uploaded as CI artifacts.
+- [ ] Review the generated desktop/mobile screenshots and manually keyboard/screen-reader test.
+- [ ] Perform a manual contrast/accessibility audit; automated scanning is not proof of full WCAG conformance.
 - [ ] Real email delivery test on the final Hostinger domain.
 
 ## Owner input before launch
