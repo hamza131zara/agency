@@ -3,7 +3,7 @@
 Responsive public portfolio for a software and AI agency. It is independent from the older Skill-Sphere Agency application. The site uses semantic HTML, CSS, browser JavaScript and a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger.
 
 ## Phase 1 scope
-- Home plus Services, Work, About/Approach, Contact and Privacy pages, with an interactive portfolio explorer and local-only Project Brief Builder.
+- Home plus Services, Work, About/Approach, Contact and Privacy pages, with an interactive Service Finder, portfolio explorer and local-only Project Brief Builder.
 - Full-stack development, AI/LLM/agent work, integrations, cybersecurity, debugging/performance, product design and digital growth.
 - Selected project showcases without fabricated testimonials or quantified outcomes.
 - Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
@@ -30,6 +30,7 @@ Phase 1 is the portfolio/services site plus a configured inquiry path. SMS, Inst
 
 
 ## Interactive Phase I features
+- Services page: a guided Service Finder recommends a starting service and carries it into the brief builder/contact page without submission.
 - Work page: client-side search, category filters and status filters with accessible result counts.
 - Project Brief Builder: creates a structured project brief in the current browser page and offers explicit copy/download actions. It makes no server request and stores no brief data; it works while domain, hosting and mailbox setup are deferred.
 - Optional brief-to-contact handoff passes only a concise summary via temporary session storage; the contact page consumes and clears it, and no message is submitted automatically.

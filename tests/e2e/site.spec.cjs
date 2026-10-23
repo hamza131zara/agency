@@ -128,6 +128,23 @@ test.describe('Phase I route and content checks', () => {
     expect(postRequests).toEqual([]);
   });
 
+
+  test('service finder recommends a service and carries the selection into the project brief', async ({ page }) => {
+    await page.goto('/services.html');
+    const result = page.locator('#service-finder-result');
+    await expect(result).toBeHidden();
+    await page.locator('input[name="serviceNeed"][value="AI integration"]').check();
+    await expect(result).toBeVisible();
+    await expect(page.locator('#service-finder-result-title')).toHaveText('AI and platform integration');
+    await expect(page.locator('#service-finder-status')).toContainText(/AI and platform integration/i);
+    await expect(page.locator('#service-finder-brief')).toHaveAttribute('href', 'brief-builder.html?service=AI%20integration');
+    await expect(page.locator('#service-finder-contact')).toHaveAttribute('href', 'contact.html?service=AI%20integration');
+
+    await page.getByRole('link', { name: /Build a project brief/i }).click();
+    await expect(page).toHaveURL(/brief-builder\.html\?service=AI%20integration$/);
+    await expect(page.locator('#brief-service')).toHaveValue('AI integration');
+  });
+
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
     await page.goto('/work.html');
     const visibleCards = page.locator('[data-project-card]:visible');

@@ -214,6 +214,84 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   nodes.forEach(n => observer.observe(n));
 }
 
+
+/* Service Finder: recommend a conversation starter, then carry it into the brief. */
+const serviceFinderForm = document.querySelector('#service-finder-form');
+if (serviceFinderForm) {
+  const resultPanel = document.querySelector('#service-finder-result');
+  const resultTitle = document.querySelector('#service-finder-result-title');
+  const resultDescription = document.querySelector('#service-finder-result-description');
+  const resultRelated = document.querySelector('#service-finder-related');
+  const briefLink = document.querySelector('#service-finder-brief');
+  const contactLink = document.querySelector('#service-finder-contact');
+  const finderStatus = document.querySelector('#service-finder-status');
+  const serviceRecommendations = {
+    'Full-stack development': {
+      title: 'Full-stack development',
+      description: 'A useful starting point for a new website, application, API or an existing product that needs meaningful new functionality.',
+      related: 'UI/UX and product design · AI integration'
+    },
+    'AI / LLM / agent development': {
+      title: 'AI, LLM and agent development',
+      description: 'Start here for an AI assistant, model-powered feature, retrieval workflow or an agent that uses tools to complete defined tasks.',
+      related: 'AI integration · Full-stack development'
+    },
+    'AI integration': {
+      title: 'AI and platform integration',
+      description: 'A fit when existing products or services need to exchange data, call providers reliably or connect through APIs and webhooks.',
+      related: 'Full-stack development · Workflow automation consulting'
+    },
+    'Cybersecurity / secure engineering': {
+      title: 'Cybersecurity and secure engineering',
+      description: 'A starting point for reviewing application code, authentication, permissions, dependencies and risky configuration choices.',
+      related: 'Debugging / performance · Full-stack development'
+    },
+    'Debugging / performance': {
+      title: 'Debugging and performance',
+      description: 'Start with reproduction and root-cause analysis when a codebase is failing, slow, unstable or difficult to change safely.',
+      related: 'Full-stack development · Cybersecurity / secure engineering'
+    },
+    'UI/UX and product design': {
+      title: 'UI/UX and product design',
+      description: 'A fit when users struggle to complete tasks, information is hard to navigate or a product needs clearer responsive interactions.',
+      related: 'Full-stack development · Digital marketing / growth'
+    },
+    'Digital marketing / growth': {
+      title: 'Digital marketing and growth',
+      description: 'Start here to improve discoverability, technical SEO, content structure, landing pages and the journey from visit to action.',
+      related: 'UI/UX and product design · Full-stack development'
+    },
+    'Workflow automation consulting': {
+      title: 'Workflow and business automation consulting',
+      description: 'A starting point for identifying repetitive work and mapping triggers, tools, approvals and integrations. Self-serve SMS and social-publishing products remain planned for Phase 2.',
+      related: 'AI integration · Full-stack development'
+    },
+    'Something else': {
+      title: 'Project discovery',
+      description: 'You do not need a finished solution to start. Describe the situation, constraints and desired outcome, and refine the scope during discovery.',
+      related: 'The right service will depend on the problem and constraints.'
+    }
+  };
+  const updateServiceRecommendation = () => {
+    const selected = new FormData(serviceFinderForm).get('serviceNeed');
+    const recommendation = serviceRecommendations[selected];
+    if (!recommendation) {
+      if (resultPanel) resultPanel.hidden = true;
+      if (finderStatus) finderStatus.textContent = 'Choose one option to see a suggested starting point.';
+      return;
+    }
+    if (resultTitle) resultTitle.textContent = recommendation.title;
+    if (resultDescription) resultDescription.textContent = recommendation.description;
+    if (resultRelated) resultRelated.textContent = recommendation.related;
+    if (briefLink) briefLink.href = 'brief-builder.html?service=' + encodeURIComponent(String(selected));
+    if (contactLink) contactLink.href = 'contact.html?service=' + encodeURIComponent(String(selected));
+    if (resultPanel) resultPanel.hidden = false;
+    if (finderStatus) finderStatus.textContent = 'Suggested starting point: ' + recommendation.title + '. You can change your choice at any time.';
+  };
+  serviceFinderForm.addEventListener('change', updateServiceRecommendation);
+  updateServiceRecommendation();
+}
+
 /* Portfolio discovery: search, project type and status. */
 const portfolioExplorer = document.querySelector('.portfolio-explorer');
 if (portfolioExplorer) {
@@ -265,6 +343,16 @@ if (briefForm) {
   const copyButton = document.querySelector('#copy-brief');
   const downloadButton = document.querySelector('#download-brief');
   const continueButton = document.querySelector('#continue-to-contact');
+
+  const requestedBriefService = new URLSearchParams(window.location.search).get('service');
+  const briefServiceSelect = briefForm.elements.namedItem('service');
+  if (requestedBriefService && briefServiceSelect) {
+    const serviceOption = Array.from(briefServiceSelect.options).find(option =>
+      option.value === requestedBriefService || option.textContent.trim() === requestedBriefService
+    );
+    if (serviceOption) briefServiceSelect.value = serviceOption.value;
+  }
+
   const fieldValue = name => String(briefForm.elements.namedItem(name)?.value || '').trim();
   const selectedValues = name => Array.from(briefForm.querySelectorAll('input[name="' + name + '"]:checked')).map(input => input.value);
   const setBriefStatus = (message, state='') => { if (briefStatus) { briefStatus.textContent = message; briefStatus.dataset.state = state; } };
