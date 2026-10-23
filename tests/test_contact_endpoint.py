@@ -27,6 +27,13 @@ def main():
    raise AssertionError("missing CSRF token was accepted")
   except urllib.error.HTTPError as error:
    assert error.code==403 and json.loads(error.read().decode())["code"]=="csrf_failed"
+  array_fields={"csrf_token":token,"email":"test@example.org","interest":"Full-stack development","message":"This is a smoke test of the contact form endpoint.","website":""}
+  array_fields["name[]"]="Injected array"
+  try:
+   opener.open(urllib.request.Request(base+"/contact.php",data=urllib.parse.urlencode(array_fields).encode(),method="POST"),timeout=2)
+   raise AssertionError("array-shaped form field unexpectedly succeeded")
+  except urllib.error.HTTPError as error:
+   assert error.code==422 and json.loads(error.read().decode())["code"]=="validation_failed"
   fields={"csrf_token":token,"name":"Test User","email":"test@example.org","interest":"Full-stack development","message":"This is a smoke test of the contact form endpoint.","website":""}
   try:
    opener.open(urllib.request.Request(base+"/contact.php",data=urllib.parse.urlencode(fields).encode(),method="POST"),timeout=2)

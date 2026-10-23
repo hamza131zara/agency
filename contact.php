@@ -31,8 +31,10 @@ if ($origin!=='') {
 }
 $posted=$_POST['csrf_token']??''; $session=$_SESSION['csrf_token']??'';
 if (!is_string($posted)||!is_string($session)||$session===''||!hash_equals($session,$posted)) respond(403,['ok'=>false,'code'=>'csrf_failed','message'=>'Your form session expired. Refresh the page and try again.']);
-if (trim((string)($_POST['website']??''))!=='') respond(400,['ok'=>false,'code'=>'invalid_submission','message'=>'We could not process this submission. Review the form and try again.']);
-$name=trim((string)($_POST['name']??'')); $email=trim((string)($_POST['email']??'')); $service=trim((string)($_POST['interest']??'')); $message=trim((string)($_POST['message']??''));
+function post_text(string $key): string { $value=$_POST[$key]??''; return is_string($value)?$value:''; }
+$honeypot=$_POST['website']??'';
+if (!is_string($honeypot)||trim($honeypot)!=='') respond(400,['ok'=>false,'code'=>'invalid_submission','message'=>'We could not process this submission. Review the form and try again.']);
+$name=trim(post_text('name')); $email=trim(post_text('email')); $service=trim(post_text('interest')); $message=trim(post_text('message'));
 $name=preg_replace('/[\x00-\x1F\x7F]/u',' ',$name)??''; $message=preg_replace('/\x00/u','',$message)??'';
 $allowed=['Full-stack development','AI / LLM / agent development','AI integration','Cybersecurity / secure engineering','Debugging / performance','UI/UX and product design','Digital marketing / growth','Workflow automation consulting','Something else'];
 if ($name===''||strlen($name)>100||!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>254||!in_array($service,$allowed,true)||strlen($message)<20||strlen($message)>3000) respond(422,['ok'=>false,'code'=>'validation_failed','message'=>'Please review the fields. Provide your name, a valid email, a service and at least 20 characters about the project.']);

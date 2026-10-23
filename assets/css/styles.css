@@ -290,3 +290,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .case-study-aside span{font-size:10px;line-height:1.7;color:#687166}
 .case-study-aside a{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px;color:#4f6141}
 @media(max-width:760px){.case-study-grid{grid-template-columns:1fr;gap:25px}}
+
+.visual-mixer{background:#f0e2d7}
+.mixer-ui{height:calc(100% - 34px);display:flex;align-items:center;justify-content:center;gap:9px;position:relative;padding:20px}
+.mixer-node{width:68px;height:62px;display:grid;place-items:center;text-align:center;border:1px solid #dfb9a1;background:#fff6ef;font:9px var(--mono);color:#50453d}
+.mixer-node small{font:7px var(--mono);color:#88766a}
+.mixer-node-b{background:#d9e8df;border-color:#9fbdac}.mixer-node-c{background:#d7fc62;border-color:#b2d34c}
+.mixer-connector{font-size:13px;color:#b06d4b}
+.mixer-caption{position:absolute;bottom:15px;left:15px;font:7px var(--mono);letter-spacing:.07em;color:#8d725f}
+.project-mixer{background:#f0e2d7;color:#51433a}
+.mixer-flow{display:flex;align-items:center;gap:8px;margin-top:15px}
+.mixer-flow span{padding:11px 12px;background:#fff5ed;border:1px solid #e4beaa;font:8px var(--mono)}
+.mixer-flow span:nth-of-type(2){background:#d9e8df}.mixer-flow span:nth-of-type(3){background:#d7fc62}
+.mixer-flow b{font-weight:400;color:#b36f4c}
