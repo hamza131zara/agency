@@ -192,6 +192,14 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('button', { name: 'Copy brief' })).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
 
+    await page.addInitScript(() => {
+      window.__printCalledForTest = false;
+      window.print = () => { window.__printCalledForTest = true; };
+    });
+    await page.getByRole('button', { name: 'Print / Save PDF' }).click();
+    await expect(page.locator('#brief-print-content')).toContainText('Support Assistant');
+    expect(await page.evaluate(() => window.__printCalledForTest)).toBe(true);
+
     const downloadEvent = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Download .txt' }).click();
     const download = await downloadEvent;
@@ -229,6 +237,7 @@ test.describe('Phase I route and content checks', () => {
     await page.getByRole('button', { name: 'Reset answers' }).click();
     await expect(page.getByRole('button', { name: 'Download .txt' })).toBeDisabled();
     await expect(page.getByRole('button', { name: 'Download JSON' })).toBeDisabled();
+    await expect(page.getByRole('button', { name: 'Print / Save PDF' })).toBeDisabled();
     await expect(page.getByLabel('Generated project brief')).toHaveValue('');
   });
 

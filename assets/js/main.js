@@ -343,6 +343,8 @@ if (briefForm) {
   const copyButton = document.querySelector('#copy-brief');
   const downloadButton = document.querySelector('#download-brief');
   const jsonDownloadButton = document.querySelector('#download-brief-json');
+  const printButton = document.querySelector('#print-brief');
+  const printContent = document.querySelector('#brief-print-content');
   const continueButton = document.querySelector('#continue-to-contact');
 
   const requestedBriefService = new URLSearchParams(window.location.search).get('service');
@@ -361,6 +363,7 @@ if (briefForm) {
     if (copyButton) copyButton.disabled = !enabled;
     if (downloadButton) downloadButton.disabled = !enabled;
     if (jsonDownloadButton) jsonDownloadButton.disabled = !enabled;
+    if (printButton) printButton.disabled = !enabled;
     if (continueButton) continueButton.disabled = !enabled;
   };
   let generated = false;
@@ -468,6 +471,12 @@ if (briefForm) {
     link.remove();
     window.setTimeout(()=>URL.revokeObjectURL(url),1000);
     setBriefStatus('Your structured JSON brief has been prepared locally. It has not been submitted.','ready');
+  });
+  printButton?.addEventListener('click', () => {
+    if (!generated || !output?.value || !printContent) return;
+    printContent.textContent = output.value;
+    setBriefStatus('The print dialog is opening. Choose your printer or “Save as PDF” in your browser; nothing is uploaded.','ready');
+    window.print();
   });
   continueButton?.addEventListener('click', () => {
     if (!generated) {
