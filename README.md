@@ -9,7 +9,7 @@ Responsive public portfolio for a software and AI agency. It is independent from
 - Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
 - Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry.
 - Phase 2 roadmap for SMS, Instagram/social publishing, webhooks, approvals and automation workspaces. Those products are not available in Phase 1.
-- SEO metadata, favicon, robots/sitemap template, 404 page, shared-hosting security headers and GitHub Actions checks.
+- SEO metadata, favicon, robots/sitemap template, 404 page, restrictive CSP and shared-hosting security headers, detailed project notes and GitHub Actions checks.
 
 ## Local checks
 Run \`python scripts/validate_site.py\`, \`node --check assets/js/main.js\`, \`php -l contact.php\`, \`php -l config.example.php\`, and \`python tests/test_contact_endpoint.py\`. The endpoint smoke test does not send real email.
