@@ -411,3 +411,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .mixer-caption {
   color: #684b3a;
 }
+
+
+/* Final QA contrast fixes for card metadata, the dark roadmap and project previews. */
+.service-card .card-top small {
+  color: #50584e;
+}
+.service-card .tags span {
+  color: #50584e;
+}
+.service-featured .card-top small {
+  color: #3e482a;
+}
+.service-featured .tags span {
+  color: #3e482a;
+}
+.mock-content > small,
+.mock-content > span {
+  color: #4c583f;
+}
+.regex-tabs {
+  color: #aeb6c1;
+}
+.automation-row > span {
+  color: #9ba593;
+}
+.approach-list article > span,
+.approach-list article > div > p {
+  color: #50584e !important;
+}
