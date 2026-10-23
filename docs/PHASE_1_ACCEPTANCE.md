@@ -11,6 +11,8 @@
 - [x] Automated Playwright coverage for routes, mobile navigation, narrow-width overflow and contact failure states.
 - [x] Homepage and Contact inquiry categories match the PHP server-side allow-list.
 - [x] Automated axe scans for serious/critical WCAG 2.1 A/AA violations, with browser screenshots uploaded as CI artifacts.
+- [x] Root-level Hostinger package builder refuses config.php/secrets and excludes development-only files.
+- [ ] Generate and inspect the Hostinger bundle from a successful main-branch CI run.
 - [ ] Review the generated desktop/mobile screenshots and manually keyboard/screen-reader test.
 - [ ] Perform a manual contrast/accessibility audit; automated scanning is not proof of full WCAG conformance.
 - [ ] Real email delivery test on the final Hostinger domain.

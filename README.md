@@ -14,6 +14,11 @@ Responsive public portfolio for a software and AI agency. It is independent from
 ## Local checks
 Run \`python scripts/validate_site.py\`, \`node --check assets/js/main.js\`, \`php -l contact.php\`, \`php -l config.example.php\`, and \`python tests/test_contact_endpoint.py\`. The endpoint smoke test does not send real email.
 
+## Hostinger upload package
+After the package workflow is merged into `main`, a successful main-branch run creates the root-level upload bundle `agency-hostinger-phase1-template.zip` and its SHA-256 checksum. Open GitHub Actions → latest successful **Phase I release checks** run on `main` → Artifacts, and download `agency-hostinger-phase1-upload`. The bundle intentionally includes placeholders and an upload instruction file; it is not production-ready until the real domain, brand, legal/privacy details and server-only email config are completed.
+
+For a local package check, run `python scripts/package_hostinger.py --output ./dist`. The script refuses to package `config.php` and verifies that development-only files are excluded.
+
 ## Hostinger setup — only after launch approval
 1. Confirm the agency name/logo, final domain, recipient inbox and legal operator details.
 2. Use a PHP-enabled Hostinger plan. Back up existing public_html content before replacing files.

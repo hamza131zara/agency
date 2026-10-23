@@ -30,7 +30,9 @@ jobs:
       - name: Smoke-test contact endpoint without real email
         run: python tests/test_contact_endpoint.py
       - name: Compile Python test helpers
-        run: python -m py_compile scripts/validate_site.py tests/test_contact_endpoint.py
+        run: python -m py_compile scripts/validate_site.py scripts/package_hostinger.py tests/test_contact_endpoint.py
+      - name: Build and validate Hostinger upload package
+        run: python scripts/package_hostinger.py --output /tmp/agency-package-check
 
   browser-and-accessibility:
     runs-on: ubuntu-latest
@@ -59,3 +61,25 @@ jobs:
             playwright-report/
           if-no-files-found: ignore
           retention-days: 14
+
+
+  package-hostinger:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [validate, browser-and-accessibility]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build root-level Hostinger upload package
+        run: python scripts/package_hostinger.py --output dist
+      - name: Upload verified Phase I package
+        uses: actions/upload-artifact@v5
+        with:
+          name: agency-hostinger-phase1-upload
+          path: |
+            dist/agency-hostinger-phase1-template.zip
+            dist/agency-hostinger-phase1-template.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
