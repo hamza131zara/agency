@@ -53,13 +53,16 @@ for source,parser in pages.items():
   target=target.resolve()
   if not target.exists(): errors.append(f"{Path(source).name}: broken local {kind} {raw}"); continue
   if url.fragment and target in pages and url.fragment not in pages[target].ids: errors.append(f"{Path(source).name}: missing fragment target {raw}")
-required=["index.html","services.html","work.html","about.html","contact.html","privacy.html","404.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/favicon.svg",".github/workflows/quality.yml"]
+required=["index.html","services.html","work.html","about.html","contact.html","brief-builder.html","privacy.html","404.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/favicon.svg",".github/workflows/quality.yml"]
 for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")
 if "contact.php?csrf=1" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("browser form is not wired to PHP endpoint")
 if "hash_equals" not in (ROOT/"contact.php").read_text(encoding="utf-8"): errors.append("CSRF check missing")
 if "PHASE 2" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home does not identify Phase 2 scope")
+if "data-project-filter" not in (ROOT/"work.html").read_text(encoding="utf-8"): errors.append("portfolio category filters missing")
+if "brief-form" not in (ROOT/"brief-builder.html").read_text(encoding="utf-8"): errors.append("project brief builder form missing")
+if "URL.createObjectURL" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("brief download behavior missing")
 if errors:
  print("Site validation FAILED:")
  for message in errors: print(" - "+message)

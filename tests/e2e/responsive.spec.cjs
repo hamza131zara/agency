@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const ROUTES = ['/', '/services.html', '/work.html', '/contact.html', '/work/free-ai-mixer.html'];
+const ROUTES = ['/', '/services.html', '/work.html', '/contact.html', '/work/free-ai-mixer.html', '/brief-builder.html'];
 const VIEWPORTS = [
   { name: 'small mobile', width: 320, height: 780 },
   { name: 'mobile', width: 390, height: 844 },
