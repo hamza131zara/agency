@@ -4,7 +4,7 @@ const AxeBuilder = require('@axe-core/playwright').default;
 const PAGES = [
   '/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html',
   '/404.html', '/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html',
-  '/work/siteintel-pulse.html', '/work/free-ai-mixer.html'
+  '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
 ];
 
 for (const route of PAGES) {

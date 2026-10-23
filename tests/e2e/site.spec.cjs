@@ -15,7 +15,7 @@ const ALLOWED_SERVICES = [
 const PAGES = [
   '/', '/services.html', '/work.html', '/about.html', '/contact.html',
   '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html',
-  '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html'
+  '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
 ];
 
 test.describe('Phase I route and content checks', () => {
@@ -94,4 +94,74 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#form-status')).toContainText(/your inquiry has not been sent/i);
     await expect(page.locator('#form-status')).not.toContainText(/accepted by the website mail service/i);
   });
+
+  test('portfolio search, category and status filters combine and reset', async ({ page }) => {
+    await page.goto('/work.html');
+    const visibleCards = page.locator('[data-project-card]:visible');
+    await expect(page.locator('[data-project-card]')).toHaveCount(5);
+    await expect(page.locator('#project-result-count')).toContainText('all 5 projects');
+
+    await page.getByRole('button', { name: 'Developer tools' }).click();
+    await expect(visibleCards).toHaveCount(2);
+    await expect(page.locator('#project-result-count')).toContainText('2 of 5');
+
+    await page.getByRole('searchbox', { name: 'Search projects' }).fill('RegexLab');
+    await expect(visibleCards).toHaveCount(1);
+    await expect(page.locator('#project-result-count')).toContainText('1 of 5');
+
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(visibleCards).toHaveCount(5);
+    await page.getByLabel('Current status').selectOption('development');
+    await expect(visibleCards).toHaveCount(2);
+    await expect(page.locator('#project-result-count')).toContainText('2 of 5');
+  });
+
+  test('project brief builder creates a local draft and supports text download', async ({ page }) => {
+    const serviceRequests = [];
+    page.on('request', request => {
+      if (request.url().includes('/contact.php') || request.url().includes('/api/')) serviceRequests.push(request.url());
+    });
+    await page.goto('/brief-builder.html');
+    expect(await page.locator('#brief-form').evaluate(form => form.checkValidity())).toBe(false);
+    await page.getByLabel('Main area of help').selectOption({ label: 'AI / LLM / agent development' });
+    await page.getByLabel('Where are you now?').selectOption({ label: 'Planning an MVP' });
+    await page.getByLabel('Goal or problem to solve').fill('Create an AI support assistant that helps answer common product questions.');
+    await page.getByLabel('Project name').fill('Support Assistant');
+    await page.getByLabel('Who will use it?').fill('Customers and internal support staff');
+    await page.getByLabel('Security & privacy').check();
+    await page.getByLabel('AI quality & evaluation').check();
+    await page.getByRole('button', { name: 'Generate project brief' }).click();
+
+    const output = page.getByLabel('Generated project brief');
+    await expect(output).toContainText('Support Assistant');
+    await expect(output).toContainText('AI / LLM / agent development');
+    await expect(output).toContainText('Security and privacy');
+    await expect(output).toContainText('AI quality and evaluation');
+    await expect(page.locator('#brief-status')).toContainText('generated in this browser tab');
+    await expect(page.getByRole('button', { name: 'Copy brief' })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
+
+    const downloadEvent = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Download .txt' }).click();
+    const download = await downloadEvent;
+    expect(download.suggestedFilename()).toBe('support-assistant.txt');
+
+    await page.getByLabel('Project name').fill('Internal Knowledge Assistant');
+    await expect(output).toContainText('Internal Knowledge Assistant');
+    await expect(output).not.toContainText('Support Assistant');
+    expect(serviceRequests).toEqual([]);
+  });
+
+  test('project brief builder reset clears draft output and disables export actions', async ({ page }) => {
+    await page.goto('/brief-builder.html');
+    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
+    await page.getByLabel('Goal or problem to solve').fill('We need a responsive portal to help our customers manage requests.');
+    await page.getByRole('button', { name: 'Generate project brief' }).click();
+    await expect(page.getByRole('button', { name: 'Download .txt' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Reset answers' }).click();
+    await expect(page.getByRole('button', { name: 'Download .txt' })).toBeDisabled();
+    await expect(page.getByLabel('Generated project brief')).toHaveValue('');
+  });
+
 });

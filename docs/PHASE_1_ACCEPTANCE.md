@@ -10,10 +10,13 @@
 - [x] CI checks for metadata/links, JavaScript/PHP syntax and contact endpoint smoke tests.
 - [x] Automated Playwright coverage for routes, mobile navigation, narrow-width overflow and contact failure states.
 - [x] Homepage and Contact inquiry categories match the PHP server-side allow-list.
+- [x] Portfolio explorer supports search, category and status filters with an accessible live result count.
+- [x] Project Brief Builder creates a structured local draft and supports copy/download without server submission or local storage.
+- [x] E2E regression tests cover the portfolio explorer and project-brief flow.
 - [x] Automated axe scans for serious/critical WCAG 2.1 A/AA violations, with browser screenshots uploaded as CI artifacts.
 - [ ] Review the generated desktop/mobile screenshots and manually keyboard/screen-reader test.
 - [ ] Perform a manual contrast/accessibility audit; automated scanning is not proof of full WCAG conformance.
-- [ ] Real email delivery test on the final Hostinger domain.
+- [ ] Real email delivery test on the final Hostinger domain (deferred until the domain, hosting and mailbox are purchased).
 
 ## Owner input before launch
 - [ ] Confirm official agency name/logo.
@@ -26,4 +29,4 @@
 ## Not in Phase 1
 SMS product; Instagram/social scheduling or publishing; client dashboards; workflow builder; approval queue; webhook control plane; payment or analytics integrations.
 
-No deployment is included. Hostinger publishing remains a separate approval step.
+No deployment is included. Domain, hosting, mailbox setup and Hostinger publishing are deliberately deferred until the owner is ready.
