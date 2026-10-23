@@ -361,3 +361,53 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .json-window pre em {
   color: #2f5f39;
 }
+
+
+/* Final contrast tuning across illustrated UI cards and dark/light roadmap panels. */
+.service-featured .card-top small {
+  color: #3e482a;
+}
+.service-card p,
+.service-roadmap p {
+  color: #50584e;
+}
+.service-roadmap .card-top small {
+  color: #50584e;
+}
+.service-detail-roadmap > small,
+.service-detail-roadmap p,
+.service-detail-roadmap ul {
+  color: #b9c1b1;
+}
+.phase-copy .eyebrow > span:first-child:not(.status-dot) {
+  color: var(--lime);
+}
+.mock-toolbar span {
+  color: #50584e;
+}
+.visual-regex .mock-toolbar span {
+  color: #a5acb5;
+}
+.json-sidebar b {
+  color: #50584e;
+}
+.json-sidebar b:first-child {
+  color: #171b19;
+}
+.json-window pre i,
+.project-jotjson pre i {
+  color: #85391f;
+}
+.json-window pre em,
+.project-jotjson pre b {
+  color: #2f5f39;
+}
+.pulse-label {
+  color: #3f5d50;
+}
+.mixer-node small {
+  color: #59483e;
+}
+.mixer-caption {
+  color: #684b3a;
+}
