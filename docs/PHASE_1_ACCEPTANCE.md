@@ -14,6 +14,7 @@
 - [x] Project Brief Builder creates a structured local draft and supports copy/download without server submission or persistent storage.
 - [x] Explicit Continue-to-contact handoff prefills a concise summary through temporary session storage and removes it on contact-page load.
 - [x] Contact page provides local copy/download fallback when the inbox is unconfigured or the inquiry endpoint is unreachable.
+- [x] Services page includes a guided Service Finder and carries the selection into the local Project Brief Builder.
 - [x] E2E regression tests cover the portfolio explorer and project-brief flow.
 - [x] Automated axe scans for serious/critical WCAG 2.1 A/AA violations, with browser screenshots uploaded as CI artifacts.
 - [ ] Review the generated desktop/mobile screenshots and manually keyboard/screen-reader test.
