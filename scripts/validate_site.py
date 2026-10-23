@@ -62,6 +62,8 @@ if "hash_equals" not in (ROOT/"contact.php").read_text(encoding="utf-8"): errors
 if "PHASE 2" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home does not identify Phase 2 scope")
 if "data-project-filter" not in (ROOT/"work.html").read_text(encoding="utf-8"): errors.append("portfolio category filters missing")
 if "brief-form" not in (ROOT/"brief-builder.html").read_text(encoding="utf-8"): errors.append("project brief builder form missing")
+if 'id="download-brief-json"' not in (ROOT/"brief-builder.html").read_text(encoding="utf-8"): errors.append("project brief JSON export button missing")
+if "buildStructuredBrief" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("project brief structured JSON export missing")
 if 'id="service-finder-form"' not in (ROOT/"services.html").read_text(encoding="utf-8"): errors.append("service finder form missing")
 if "serviceRecommendations" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("service finder recommendation logic missing")
 if "requestedBriefService" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("project brief service prefill is missing")

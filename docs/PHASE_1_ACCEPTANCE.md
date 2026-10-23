@@ -11,7 +11,7 @@
 - [x] Automated Playwright coverage for routes, mobile navigation, narrow-width overflow and contact failure states.
 - [x] Homepage and Contact inquiry categories match the PHP server-side allow-list.
 - [x] Portfolio explorer supports search, category and status filters with an accessible live result count.
-- [x] Project Brief Builder creates a structured local draft and supports copy/download without server submission or persistent storage.
+- [x] Project Brief Builder creates a structured local draft and supports copy, plain-text download and structured JSON export without server submission or persistent storage.
 - [x] Explicit Continue-to-contact handoff prefills a concise summary through temporary session storage and removes it on contact-page load.
 - [x] Contact page provides local copy/download fallback when the inbox is unconfigured or the inquiry endpoint is unreachable.
 - [x] Services page includes a guided Service Finder and carries the selection into the local Project Brief Builder.

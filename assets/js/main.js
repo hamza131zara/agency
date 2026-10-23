@@ -342,6 +342,7 @@ if (briefForm) {
   const briefStatus = document.querySelector('#brief-status');
   const copyButton = document.querySelector('#copy-brief');
   const downloadButton = document.querySelector('#download-brief');
+  const jsonDownloadButton = document.querySelector('#download-brief-json');
   const continueButton = document.querySelector('#continue-to-contact');
 
   const requestedBriefService = new URLSearchParams(window.location.search).get('service');
@@ -359,6 +360,7 @@ if (briefForm) {
   const setExportEnabled = enabled => {
     if (copyButton) copyButton.disabled = !enabled;
     if (downloadButton) downloadButton.disabled = !enabled;
+    if (jsonDownloadButton) jsonDownloadButton.disabled = !enabled;
     if (continueButton) continueButton.disabled = !enabled;
   };
   let generated = false;
@@ -385,6 +387,34 @@ if (briefForm) {
       'Prepared with the Agency Project Brief Builder. This document reflects user-provided inputs and has not been submitted or reviewed by the agency.'
     ].join('\n');
   };
+  const buildStructuredBrief = () => ({
+    schemaVersion: '1.0',
+    documentType: 'agency-project-brief',
+    generatedAt: new Date().toISOString(),
+    project: {
+      name: fieldValue('projectName'),
+      organization: fieldValue('organization') || null,
+      service: fieldValue('service'),
+      stage: fieldValue('stage')
+    },
+    problem: {
+      goal: fieldValue('objective'),
+      targetAudience: fieldValue('audience') || null
+    },
+    priorities: selectedValues('priorities'),
+    existingTechnology: fieldValue('existingStack') || null,
+    integrations: fieldValue('integrations') || null,
+    preferredTimeline: fieldValue('timeline') || null,
+    indicativeBudget: fieldValue('budget') || null,
+    successCriteria: fieldValue('success') || null,
+    assumptionsAndReview: [
+      'Validate scope, dependencies, security/privacy needs and acceptance criteria during discovery.',
+      'Timeline and budget are user-provided planning inputs, not commitments or a proposal.'
+    ],
+    notAQuote: true,
+    submitted: false,
+    storage: 'generated locally in the browser; not submitted by this export'
+  });
   const generate = announce => {
     if (!briefForm.checkValidity()) {
       briefForm.reportValidity(); generated = false; setExportEnabled(false);
@@ -424,6 +454,20 @@ if (briefForm) {
     const url=URL.createObjectURL(new Blob([output.value],{type:'text/plain;charset=utf-8'}));
     const link=document.createElement('a'); link.href=url; link.download=(slug||'agency-project-brief')+'.txt'; document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(()=>URL.revokeObjectURL(url),1000); setBriefStatus('Your text file download has been prepared locally.','ready');
+  });
+  jsonDownloadButton?.addEventListener('click', () => {
+    if (!generated) return;
+    const slug=(fieldValue('projectName')||'agency-project-brief').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+    const jsonText=JSON.stringify(buildStructuredBrief(),null,2);
+    const url=URL.createObjectURL(new Blob([jsonText],{type:'application/json;charset=utf-8'}));
+    const link=document.createElement('a');
+    link.href=url;
+    link.download=(slug||'agency-project-brief')+'.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(()=>URL.revokeObjectURL(url),1000);
+    setBriefStatus('Your structured JSON brief has been prepared locally. It has not been submitted.','ready');
   });
   continueButton?.addEventListener('click', () => {
     if (!generated) {
