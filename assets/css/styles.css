@@ -440,3 +440,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .approach-list article > div > p {
   color: #50584e !important;
 }
+
+
+/* Final exact-pair contrast overrides found by the merged Playwright/axe checks. */
+.service-roadmap > .card-top > small,
+.service-roadmap > p {
+  color: #424a3f !important;
+}
+.visual-stride .mock-content > small,
+.visual-stride .mock-content > span {
+  color: #354126 !important;
+}
+.visual-regex .regex-output > small {
+  color: #c2cad4 !important;
+}
+.visual-siteintel .pulse-label {
+  color: #315246 !important;
+}
