@@ -32,3 +32,4 @@ Phase 1 is the portfolio/services site plus a configured inquiry path. SMS, Inst
 ## Interactive Phase I features
 - Work page: client-side search, category filters and status filters with accessible result counts.
 - Project Brief Builder: creates a structured project brief in the current browser page and offers explicit copy/download actions. It makes no server request and stores no brief data; it works while domain, hosting and mailbox setup are deferred.
+- Optional brief-to-contact handoff passes only a concise summary via temporary session storage; the contact page consumes and clears it, and no message is submitted automatically.\n

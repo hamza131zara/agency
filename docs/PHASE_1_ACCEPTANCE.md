@@ -11,7 +11,8 @@
 - [x] Automated Playwright coverage for routes, mobile navigation, narrow-width overflow and contact failure states.
 - [x] Homepage and Contact inquiry categories match the PHP server-side allow-list.
 - [x] Portfolio explorer supports search, category and status filters with an accessible live result count.
-- [x] Project Brief Builder creates a structured local draft and supports copy/download without server submission or local storage.
+- [x] Project Brief Builder creates a structured local draft and supports copy/download without server submission or persistent storage.
+- [x] Explicit Continue-to-contact handoff prefills a concise summary through temporary session storage and removes it on contact-page load.
 - [x] E2E regression tests cover the portfolio explorer and project-brief flow.
 - [x] Automated axe scans for serious/critical WCAG 2.1 A/AA violations, with browser screenshots uploaded as CI artifacts.
 - [ ] Review the generated desktop/mobile screenshots and manually keyboard/screen-reader test.
