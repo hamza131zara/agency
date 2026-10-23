@@ -3,6 +3,7 @@
 ## Implemented
 - [x] Responsive portfolio home and Services, Work, About, Contact and Privacy pages.
 - [x] Project showcases without fabricated testimonials or quantified outcomes.
+- [x] Public source links are provided for verified RegexLab and Free AI Mixer repositories; the in-development AI Mixer page makes no live-demo claim.
 - [x] Phase 2 automation items labeled planned, not available.
 - [x] Server-side contact validation, CSRF token, origin check, honeypot and basic per-session throttling.
 - [x] Contact endpoint refuses success when the inbox is not configured or mail is rejected.
