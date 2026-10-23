@@ -1,28 +1,29 @@
 # Agency — Phase 1 Portfolio Platform
 
-A responsive, dependency-light public website for showcasing the agency's software, AI, security, design and growth capabilities.
+Responsive public portfolio for a software and AI agency. It is independent from the older Skill-Sphere Agency application. The site uses semantic HTML, CSS, browser JavaScript and a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger.
 
-## Included
+## Phase 1 scope
+- Home plus Services, Work, About/Approach, Contact and Privacy pages.
+- Full-stack development, AI/LLM/agent work, integrations, cybersecurity, debugging/performance, product design and digital growth.
+- Selected project showcases without fabricated testimonials or quantified outcomes.
+- Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
+- Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry.
+- Phase 2 roadmap for SMS, Instagram/social publishing, webhooks, approvals and automation workspaces. Those products are not available in Phase 1.
+- SEO metadata, favicon, robots/sitemap template, 404 page, restrictive CSP and shared-hosting security headers, detailed project notes and GitHub Actions checks.
 
-- Landing page, service overview, selected work, delivery approach, FAQs and project inquiry form.
-- Responsive navigation, semantic headings, keyboard accessibility and reduced-motion support.
-- Project links for STRIDETO, RegexLab, JotJSON and SiteIntel Pulse. No fabricated testimonials or numerical outcomes.
-- A clear Phase 2 roadmap for SMS and social publishing automation, integrations, approvals and client automation dashboards.
-- SEO metadata, SVG favicon, robots/sitemap placeholders and GitHub Actions static checks.
-- No authentication, private client portal, database or automation products in Phase 1.
+## Local checks
+Run \`python scripts/validate_site.py\`, \`node --check assets/js/main.js\`, \`php -l contact.php\`, \`php -l config.example.php\`, and \`python tests/test_contact_endpoint.py\`. The endpoint smoke test does not send real email.
 
-## Run locally
+## Hostinger setup — only after launch approval
+1. Confirm the agency name/logo, final domain, recipient inbox and legal operator details.
+2. Use a PHP-enabled Hostinger plan. Back up existing public_html content before replacing files.
+3. Upload approved site files into the document root so index.html is at the root.
+4. Copy config.example.php to config.php on the server only. Set recipient_email to the monitored inbox and from_email to a verified sender on the final domain. Never commit config.php.
+5. Configure domain mail/DNS records from your mail host, including SPF/DKIM where available. PHP mail() acceptance does not guarantee final inbox delivery.
+6. Replace YOUR-DOMAIN.example in robots.txt and sitemap.xml. Enable SSL and verify it before forcing HTTPS.
+7. Review the privacy notice, project descriptions and approved screenshots. Follow docs/HOSTINGER_DEPLOYMENT.md and docs/PHASE_1_ACCEPTANCE.md.
 
-Open \`index.html\` in a browser or serve the repository with any static HTTP server.
+The visible name AGENCY and domain values are deliberate placeholders. Project artwork is illustrative, not production screenshots. Summaries do not claim unverified outcomes, credentials or contributions.
 
-## Before launch
-
-1. Replace the generic "AGENCY" wordmark with the confirmed brand name and approved logo.
-2. Set \`CONTACT_EMAIL\` in \`assets/js/main.js\` to the verified official agency inbox. Until configured, the form clearly states that inquiries are not sent. Once configured, it prepares an email in the visitor's email app; the visitor must press Send.
-3. Replace \`YOUR-DOMAIN.example\` in \`robots.txt\` and \`sitemap.xml\` with the final canonical domain.
-4. Review each project description, add approved project screenshots, and verify each listed contribution before launch.
-5. Add only confirmed contact details and social links. Do not add unsupported certifications, testimonials, client names or results.
-
-## Scope
-
-Phase 1 is the public portfolio and services website. SMS delivery, Instagram/social scheduling and publishing, webhooks, approval workflows and client automation workspaces are roadmap items, not implemented features.
+## Phase boundary
+Phase 1 is the portfolio/services site plus a configured inquiry path. SMS, Instagram/social publishing, webhook flows, approvals and client automation workspaces are Phase 2 items.

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://YOUR-DOMAIN.example/</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/about.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/contact.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/privacy.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work/strideto.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work/regexlab.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work/jotjson.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work/siteintel-pulse.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/work/free-ai-mixer.html</loc></url>
 </urlset>
