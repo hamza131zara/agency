@@ -45,7 +45,9 @@ The current validated platform contains 25 HTML routes: 14 root pages, six servi
 - `docs/DELIVERY_METHODOLOGY.md` — workflows, Git practices, QA and release methodology.
 - `docs/PHASE_1_EXECUTION_PLAN.md` — current Phase 1 scope, work packages and acceptance.
 - `docs/PHASE_1_ACCEPTANCE.md` — acceptance checklist.
-- `docs/PHASE_2_EXECUTION_PLAN.md` — premium visual identity and 3D execution plan.
+- `docs/PHASE_2_EXECUTION_PLAN.md` — accepted premium visual identity and 3D implementation record.
+- `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` — evidence review for project and product visuals.
+- `docs/PHASE_3_EXECUTION_PLAN.md` — service depth, positioning and team profile governance.
 - `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
 - `docs/PORTFOLIO_CONTENT_EVIDENCE.md` — repository-backed product descriptions, owner-provided claims and final verification checklist.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
@@ -70,7 +72,7 @@ The CI workflow also runs HTML/link/site validation across root, service-detail 
 
 ## Phase boundaries
 
-The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phase 1 (multi-page platform foundation) is complete at the repository implementation level; PR #14 is merged and its exact PR-head CI passed. Human accessibility, final identity, legal, inbox, project-permission and launch approvals remain pre-launch gates. Phase 2 (premium visual identity and purposeful 3D) is now in progress under `docs/PHASE_2_EXECUTION_PLAN.md`. Customer accounts, payments, licences, and live automation integrations are later phases and require their own security and owner approval gates.
+The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phase 1 (multi-page platform foundation) is complete at the repository implementation level; PR #14 is merged and its exact PR-head CI passed. Phase 2 (premium visual identity and purposeful 3D) is complete: PR #15 merged at `d069caaf` and post-merge CI #41864959360 passed both required jobs. Human assistive-technology review, official legal identity, canonical domain, inbox, project permission and launch approvals remain pre-launch gates. Phase 3 (service depth, positioning and team profiles) is now in progress under `docs/PHASE_3_EXECUTION_PLAN.md`. Customer accounts, payments, licences, and live automation integrations are later phases and require their own security and owner approval gates.
 
 ## Hosting and release
 
