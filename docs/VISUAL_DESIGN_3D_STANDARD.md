@@ -166,13 +166,13 @@ For every major page or scene:
 
 The first refinement keeps the existing CSS-only service map and adds a more sculptural central hub, layered orbital geometry, restrained inner lighting and clearer depth on the six service cards. Hover, focus-visible and active states remain attached to the real HTML links. The visual has no continuous rotation and does not capture or hijack scrolling.
 
-A mobile screenshot review identified that the central hub's longer caption was clipped by the circular shape at 390px. The label was shortened to **“Six disciplines”** for desktop. Because the circular hub still clipped this caption in the 390px follow-up screenshot, the nonessential caption is now hidden on small screens; the header still states that six disciplines are connected, and all six destination cards remain visible. The latest screenshot and responsive/browser checks must verify this final treatment.
+A mobile screenshot review identified that the central hub's longer caption was clipped by the circular shape at 390px. The label was shortened to **“Six disciplines”** for desktop and the nonessential caption was hidden on small screens. The additional 320px capture then exposed clipping of the left/right service cards. A `max-width: 380px` layout now narrows the cards, moves the side cards to 25%/75%, and reduces the hub to 92px so the service cards sit inside the frame. A Playwright regression check now tests the four side-card bounding boxes against the map frame at both 320px and 390px. Final screenshot review and exact-head CI are required before acceptance.
 
 ### Runtime and asset impact
 
-- The shared stylesheet grew from **58,136 to 60,324 characters** compared with `main` at the time of this increment (**+2,188 characters**).
+- The shared stylesheet grew from **58,136 to 61,129 characters** compared with `main` at the time of this increment (**+2,993 characters**).
 - No image, font, model, texture or other asset was added by this increment.
-- No JavaScript, package manifest, 3D engine or WebGL runtime was added or changed.
+- No production browser JavaScript, package manifest, 3D engine or WebGL runtime was added or changed. The change adds only Playwright regression coverage in the test suite.
 - The hub and orbital geometry are CSS pseudo-elements; service labels, explanations and destinations remain HTML.
 
 The current colour direction and “AGENCY.” mark are still provisional. These implementation notes do not represent final brand approval, a full performance score, or a human assistive-technology audit.
