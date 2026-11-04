@@ -47,6 +47,9 @@ for file in html_files:
  if parser.dupes: errors.append(f"{file.name}: duplicate IDs {sorted(parser.dupes)}")
  if parser.missing_alt: errors.append(f"{file.name}: image alt is missing {parser.missing_alt}")
 for source,parser in pages.items():
+ source_content=Path(source).read_text(encoding="utf-8")
+ if "PHASE 1" in source_content or "PHASE 2" in source_content:
+  errors.append(f"{Path(source).name}: internal release phase label must not appear in public website content")
  for kind,raw in parser.links:
   if raw.startswith("#"):
    if len(raw)>1 and raw[1:] not in parser.ids: errors.append(f"{Path(source).name}: broken fragment {raw}")

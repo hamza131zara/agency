@@ -419,4 +419,13 @@ test.describe('Phase I route and content checks', () => {
     expect(xml).not.toContain('/404.html');
   });
 
+  test('public pages do not expose internal release-phase labels', async ({ page }) => {
+    for (const route of PAGES) {
+      await page.goto(route);
+      const visibleText = await page.locator('body').innerText();
+      expect(visibleText, 'Internal release labels must stay in project documentation: ' + route)
+        .not.toMatch(/\\bPHASE\\s*[12]\\b/i);
+    }
+  });
+
 });
