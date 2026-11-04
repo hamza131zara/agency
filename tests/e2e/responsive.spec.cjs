@@ -1,6 +1,14 @@
 const { test, expect } = require('@playwright/test');
 
-const ROUTES = ['/', '/services.html', '/work.html', '/contact.html', '/work/free-ai-mixer.html', '/brief-builder.html'];
+const ROUTES = [
+  '/', '/services.html',
+  '/services/software-engineering.html', '/services/ai-automation.html',
+  '/services/blockchain-web3.html', '/services/creative-design.html',
+  '/services/digital-growth.html', '/services/ecommerce-operations.html',
+  '/work.html', '/products.html', '/automation.html', '/about.html',
+  '/approach.html', '/team.html', '/contact.html', '/privacy.html',
+  '/work/free-ai-mixer.html', '/brief-builder.html'
+];
 const VIEWPORTS = [
   { name: 'small mobile', width: 320, height: 780 },
   { name: 'mobile', width: 390, height: 844 },
@@ -32,10 +40,10 @@ test('captures desktop and mobile visual-review screenshots', async ({ page }, t
     { name: 'mobile', width: 390, height: 844 }
   ]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    for (const route of ['/', '/services.html', '/work.html', '/contact.html']) {
+    for (const route of ['/', '/services.html', '/services/software-engineering.html', '/services/ai-automation.html', '/services/blockchain-web3.html', '/services/creative-design.html', '/services/digital-growth.html', '/services/ecommerce-operations.html', '/products.html', '/automation.html', '/work.html', '/contact.html']) {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await page.addStyleTag({ content: '.reveal { opacity: 1 !important; transform: none !important; }' });
-      const routeName = route === '/' ? 'home' : route.slice(1).replace(/\.html$/, '');
+      const routeName = route === '/' ? 'home' : route.slice(1).replace(/\.html$/, '').replace(/\//g, '-');
       const file = routeName + '-' + viewport.name + '.png';
       await page.screenshot({ path: testInfo.outputPath(file), fullPage: true, animations: 'disabled' });
     }
