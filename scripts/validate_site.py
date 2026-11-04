@@ -62,14 +62,14 @@ for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")
 if "contact.php?csrf=1" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("browser form is not wired to PHP endpoint")
-for legal_page in ("privacy.html","terms.html","disclaimer.html"):
- content=(ROOT/legal_page).read_text(encoding="utf-8")
+for non_indexable_page in ("privacy.html","terms.html","disclaimer.html","404.html"):
+ content=(ROOT/non_indexable_page).read_text(encoding="utf-8")
  if '<meta name="robots" content="noindex, nofollow">' not in content:
-  errors.append(f"{legal_page}: draft legal page must remain noindex until approved")
+  errors.append(f"{non_indexable_page}: non-indexable page must retain its noindex directive")
 sitemap_content=(ROOT/"sitemap.xml").read_text(encoding="utf-8")
-for legal_page in ("terms.html","disclaimer.html"):
- if legal_page in sitemap_content:
-  errors.append(f"{legal_page}: draft legal page must remain outside the sitemap until approved")
+for non_indexable_page in ("privacy.html","terms.html","disclaimer.html","404.html"):
+ if non_indexable_page in sitemap_content:
+  errors.append(f"{non_indexable_page}: non-indexable page must remain outside the sitemap")
 if "hash_equals" not in (ROOT/"contact.php").read_text(encoding="utf-8"): errors.append("CSRF check missing")
 if "PHASE 2" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home does not identify Phase 2 scope")
 if "data-project-filter" not in (ROOT/"work.html").read_text(encoding="utf-8"): errors.append("portfolio category filters missing")
