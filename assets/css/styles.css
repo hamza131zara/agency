@@ -835,3 +835,66 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .atlas-ring-one { width: 250px; height: 190px; }
   .atlas-ring-two { width: 300px; height: 230px; }
 }
+
+/* Phase 2 / tablet layout: collapse navigation before it crowds the header. */
+@media (min-width: 761px) and (max-width: 850px) {
+  .site-header { height: 91px; padding: 0 30px; }
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 17px;
+    height: 1px;
+    margin: auto;
+    background: var(--ink);
+    transition: transform .2s;
+  }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 30px;
+    right: 30px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 16px 18px 22px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 14px 20px #171b190b;
+  }
+  .primary-nav.is-open { display: flex; }
+  .primary-nav > a:not(.nav-cta) { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav-cta { margin-top: 14px; text-align: center; }
+}
+
+/* Keep the six-card spatial map balanced inside the narrower tablet hero column. */
+@media (min-width: 761px) and (max-width: 850px) {
+  .service-atlas { min-height: 430px; height: 430px; }
+  .atlas-node { width: 118px; min-height: 60px; padding: 8px; }
+  .atlas-node strong { font-size: 8px; line-height: 1.25; }
+  .atlas-node small,
+  .atlas-node span { font-size: 6px; }
+  .atlas-growth,
+  .atlas-design { left: 21%; }
+  .atlas-ai,
+  .atlas-web3 { left: 79%; }
+  .atlas-hub { width: 106px; height: 106px; }
+  .atlas-hub-mark { width: 34px; height: 34px; font-size: 21px; }
+  .atlas-hub strong { font-size: 14px; }
+  .atlas-ring-one { width: 225px; height: 175px; }
+  .atlas-ring-two { width: 275px; height: 215px; }
+  .atlas-ring-three { width: 195px; height: 155px; }
+}
