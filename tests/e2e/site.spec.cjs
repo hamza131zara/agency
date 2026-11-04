@@ -28,6 +28,8 @@ const PAGES = [
   '/automation.html',
   '/contact.html',
   '/privacy.html',
+  '/terms.html',
+  '/disclaimer.html',
   '/404.html',
   '/work/strideto.html',
   '/work/regexlab.html',
@@ -52,7 +54,7 @@ test.describe('Phase I route and content checks', () => {
   }
 
   test('internal page links use safe attributes when opening new tabs', async ({ page }) => {
-    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html', '/privacy.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
+    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html', '/privacy.html', '/terms.html', '/disclaimer.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
         links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
@@ -302,6 +304,41 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#form-status')).toContainText(/inquiry has not been sent/i);
     expect(await page.evaluate(() => sessionStorage.getItem('agency-project-brief-draft'))).toBeNull();
     expect(postRequests).toEqual([]);
+  });
+
+  test('terms and disclaimer drafts are reachable, clearly marked, and not indexable', async ({ page }) => {
+    for (const [route, heading] of [['/terms.html','Clear terms for'],['/disclaimer.html','Know what the']]) {
+      await page.goto(route);
+      await expect(page.locator('h1')).toContainText(heading);
+      await expect(page.locator('.legal-status')).toContainText(/DRAFT ONLY|DRAFT TERMS|DRAFT DISCLAIMER/i);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
+      await expect(page.locator('footer a[href="terms.html"]')).toHaveCount(0);
+      await expect(page.locator('footer a[href="/terms.html"], footer a[href="../terms.html"], footer a[href="terms.html"]')).toHaveCount(1);
+    }
+  });
+
+  test('footer exposes privacy, terms and disclaimer from the platform pages', async ({ page }) => {
+    for (const route of ['/', '/services.html', '/work.html', '/products.html', '/automation.html', '/about.html', '/approach.html', '/team.html', '/contact.html', '/brief-builder.html', '/privacy.html']) {
+      await page.goto(route);
+      await expect(page.locator('footer a[href="terms.html"]')).toHaveCount(1);
+      await expect(page.locator('footer a[href="disclaimer.html"]')).toHaveCount(1);
+      await expect(page.locator('footer a[href="privacy.html"]')).toHaveCount(1);
+    }
+  });
+
+  test('3D service map links are keyboard reachable and respect reduced motion', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.hero-actions a').last().focus();
+    await page.keyboard.press('Tab');
+    const links = page.locator('#service-atlas .atlas-node');
+    await expect(links).toHaveCount(6);
+    for (let i=0;i<6;i++) {
+      await expect(links.nth(i)).toBeFocused();
+      if (i<5) await page.keyboard.press('Tab');
+    }
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const transition = await links.first().evaluate(el => getComputedStyle(el).transitionDuration);
+    expect(transition).toBe('0s');
   });
 
 });
