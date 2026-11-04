@@ -367,4 +367,35 @@ test.describe('Phase I route and content checks', () => {
     expect(xml).not.toContain('/disclaimer.html');
   });
 
+  test('mobile visitors can tap a service-map node and reach its detail page', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.locator('#service-atlas .atlas-software').tap();
+    await expect(page).toHaveURL(/services\\/software-engineering\\.html$/);
+    await expect(page.locator('h1')).toContainText('Websites and platforms');
+  });
+
+  test('service and project detail pages provide working breadcrumbs', async ({ page }) => {
+    const routes = [
+      ['/services/software-engineering.html','/services.html'],
+      ['/services/ai-automation.html','/services.html'],
+      ['/services/blockchain-web3.html','/services.html'],
+      ['/services/creative-design.html','/services.html'],
+      ['/services/digital-growth.html','/services.html'],
+      ['/services/ecommerce-operations.html','/services.html'],
+      ['/work/strideto.html','/work.html'],
+      ['/work/regexlab.html','/work.html'],
+      ['/work/jotjson.html','/work.html'],
+      ['/work/siteintel-pulse.html','/work.html'],
+      ['/work/free-ai-mixer.html','/work.html']
+    ];
+    for (const [route,parent] of routes) {
+      await page.goto(route);
+      await expect(page.locator('.breadcrumb')).toBeVisible();
+      await expect(page.locator('.breadcrumb a').first()).toHaveAttribute('href', route.startsWith('/services/') ? '../index.html' : '../index.html');
+      await expect(page.locator('.breadcrumb a').nth(1)).toHaveAttribute('href', parent === '/services.html' ? '../services.html' : '../work.html');
+      await expect(page.locator('.breadcrumb [aria-current="page"]')).toBeVisible();
+    }
+  });
+
 });
