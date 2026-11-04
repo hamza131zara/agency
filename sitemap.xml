@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
  <url><loc>https://YOUR-DOMAIN.example/</loc></url>
  <url><loc>https://YOUR-DOMAIN.example/services.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/software-engineering.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/ai-automation.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/blockchain-web3.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/creative-design.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/digital-growth.html</loc></url>
+ <url><loc>https://YOUR-DOMAIN.example/services/ecommerce-operations.html</loc></url>
  <url><loc>https://YOUR-DOMAIN.example/work.html</loc></url>
  <url><loc>https://YOUR-DOMAIN.example/products.html</loc></url>
  <url><loc>https://YOUR-DOMAIN.example/automation.html</loc></url>
