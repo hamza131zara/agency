@@ -175,9 +175,9 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 - [x] Desktop and mobile screenshots were captured and manually reviewed for all 25 HTML routes.
 
 ### Quality and release
-- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #140.
-- [ ] Keyboard-only navigation and key form flows pass manual tests.
-- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #140; manual review remains open.
+- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #151.
+- [x] Automated keyboard/focus/touch navigation and key form journeys pass Playwright coverage in exact-head CI run #151; human assistive-technology review remains a separate pre-launch task.
+- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #151; manual review remains open.
 - [x] Contact flow retains explicit unsent/local-fallback wording when mail is unavailable; automated contact endpoint smoke tests pass. The real inbox delivery test remains an owner configuration step.
 - [ ] Owner accepts public identity, claims, visuals and project content after reviewing the evidence register and team-claim permissions.
 - [x] Deployment remains deferred until a separate explicit approval.
