@@ -215,7 +215,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(nav.getByRole('link', { name: 'Services' })).toBeVisible();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await nav.getByRole('link', { name: 'Services' }).click();
-    await expect(page).toHaveURL(/\\/services\\.html$/);
+    await expect(page).toHaveURL(/services[.]html$/);
     await expect(nav).not.toBeVisible();
   });
 
