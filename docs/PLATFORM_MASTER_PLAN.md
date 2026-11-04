@@ -144,6 +144,17 @@ Each module has its own page(s), navigation destination, page metadata, content 
 
 ## 5. Master phase roadmap
 
+### Execution status — 4 November 2026
+
+| Phase | Status | Evidence / boundary |
+|---|---|---|
+| Phase 0 — Strategy, documentation and governance | COMPLETE | Planning baseline merged through PR #13. |
+| Phase 1 — Multi-page platform foundation | COMPLETE — implementation | PR #14 merged into `main` at [`17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609); exact PR-head CI run #151 passed both required jobs. Owner/legal and human accessibility items remain pre-launch gates in `docs/PHASE_1_ACCEPTANCE.md`. |
+| Phase 2 — Premium visual identity and 3D experience | IN PROGRESS | Execution is tracked in `docs/PHASE_2_EXECUTION_PLAN.md`; current identity remains provisional pending owner approval. |
+| Phases 3–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
+
+A phase status distinguishes repository implementation from public-release readiness. A merge does not complete legal approvals, human accessibility reviews, external delivery tests or deployment.
+
 Phases are release gates. A phase is complete only when its acceptance criteria, QA evidence and owner decisions are recorded. A phase may contain small implementation increments; do not silently move unfinished work into a completed status.
 
 ### Phase 0 — Strategy, documentation and governance
@@ -186,6 +197,8 @@ Exit criteria:
 ### Phase 2 — Premium visual identity and 3D experience
 
 **Purpose:** deepen the visual language and introduce purposeful spatial interaction.
+
+**Execution plan:** `docs/PHASE_2_EXECUTION_PLAN.md`.
 
 Deliverables:
 - Approved brand direction, typography, colour, spacing, components and motion rules.
