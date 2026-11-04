@@ -226,51 +226,13 @@ if (serviceFinderForm) {
   const contactLink = document.querySelector('#service-finder-contact');
   const finderStatus = document.querySelector('#service-finder-status');
   const serviceRecommendations = {
-    'Full-stack development': {
-      title: 'Full-stack development',
-      description: 'A useful starting point for a new website, application, API or an existing product that needs meaningful new functionality.',
-      related: 'UI/UX and product design · AI integration'
-    },
-    'AI / LLM / agent development': {
-      title: 'AI, LLM and agent development',
-      description: 'Start here for an AI assistant, model-powered feature, retrieval workflow or an agent that uses tools to complete defined tasks.',
-      related: 'AI integration · Full-stack development'
-    },
-    'AI integration': {
-      title: 'AI and platform integration',
-      description: 'A fit when existing products or services need to exchange data, call providers reliably or connect through APIs and webhooks.',
-      related: 'Full-stack development · Workflow automation consulting'
-    },
-    'Cybersecurity / secure engineering': {
-      title: 'Cybersecurity and secure engineering',
-      description: 'A starting point for reviewing application code, authentication, permissions, dependencies and risky configuration choices.',
-      related: 'Debugging / performance · Full-stack development'
-    },
-    'Debugging / performance': {
-      title: 'Debugging and performance',
-      description: 'Start with reproduction and root-cause analysis when a codebase is failing, slow, unstable or difficult to change safely.',
-      related: 'Full-stack development · Cybersecurity / secure engineering'
-    },
-    'UI/UX and product design': {
-      title: 'UI/UX and product design',
-      description: 'A fit when users struggle to complete tasks, information is hard to navigate or a product needs clearer responsive interactions.',
-      related: 'Full-stack development · Digital marketing / growth'
-    },
-    'Digital marketing / growth': {
-      title: 'Digital marketing and growth',
-      description: 'Start here to improve discoverability, technical SEO, content structure, landing pages and the journey from visit to action.',
-      related: 'UI/UX and product design · Full-stack development'
-    },
-    'Workflow automation consulting': {
-      title: 'Workflow and business automation consulting',
-      description: 'A starting point for identifying repetitive work and mapping triggers, tools, approvals and integrations. Self-serve SMS and social-publishing products remain planned for Phase 2.',
-      related: 'AI integration · Full-stack development'
-    },
-    'Something else': {
-      title: 'Project discovery',
-      description: 'You do not need a finished solution to start. Describe the situation, constraints and desired outcome, and refine the scope during discovery.',
-      related: 'The right service will depend on the problem and constraints.'
-    }
+    'Software & website development': { title:'Software and website development', description:'A starting point for a new website or platform—from a business site or e-commerce store to a marketplace, portal, SaaS product, dashboard or custom web application. The technology stack is selected for the project.', related:'UI/UX and product design · Digital marketing and growth' },
+    'AI, LLM & intelligent automation': { title:'AI, LLM and intelligent automation', description:'A fit for AI-powered features, chatbots, agents, RAG workflows, model integrations or process automation with appropriate safeguards and human review.', related:'Software and website development · API integrations' },
+    'Blockchain & Web3': { title:'Blockchain and Web3 engineering', description:'Start here for smart contracts, decentralized applications, DAO governance, wallet connections or on-chain product integrations.', related:'Software engineering · Security and testing' },
+    'Graphic design & creative services': { title:'Graphic design and creative services', description:'A fit for brand identity, marketing creatives, social graphics, presentations, product visuals or a more consistent visual system.', related:'UI/UX and product design · Digital marketing and growth' },
+    'Digital marketing & growth': { title:'Digital marketing and growth', description:'Start here to improve search visibility, AEO/GEO discoverability, content, affiliate channels, paid advertising or conversion paths.', related:'Software and website development · Creative design' },
+    'E-commerce & marketplace operations': { title:'E-commerce and marketplace operations', description:'A fit for marketplace setup, listings, catalogue operations, marketplace SEO, ads, inventory or multi-channel workflows.', related:'Software and website development · Digital marketing and growth' },
+    'Something else': { title:'Project discovery', description:'You do not need to know which service is right. Describe the problem, your audience and the result you need, and we can clarify the scope together.', related:'The best starting point depends on your goals and constraints.' }
   };
   const updateServiceRecommendation = () => {
     const selected = new FormData(serviceFinderForm).get('serviceNeed');
