@@ -45,7 +45,7 @@ The Project Brief Builder can be linked as a utility CTA within Contact/Services
 | `team.html` — Team | Establish people and expertise | Approved names, roles, biographies, skills and credentials; no invented profiles |
 | `brief-builder.html` — Project brief | Help a visitor prepare a useful brief | Guided requirements, local draft/export and explicit handoff |
 | `contact.html` — Contact | Receive project inquiries | Clear categories, consent/privacy text, validation, delivery status and safe fallback |
-| `privacy.html` — Privacy | Disclose real data handling | Actual operator, collection, purposes, retention, processors, rights and contact |
+| `privacy.html` — Privacy | Disclose real data handling | Draft-only and noindex until actual operator, collection, purposes, retention, processors, rights and contact are confirmed |
 | `terms.html` — Terms | Define site and service terms | Draft-only, noindex until legal operator, jurisdiction, scope, intellectual property, warranties and liability wording are reviewed and approved |
 | `disclaimer.html` — Disclaimer | Clarify limitations | Draft-only, noindex until claims, service scope, professional-advice and jurisdiction-specific wording are reviewed and approved |
 | `404.html` | Recover from invalid routes | Clear message and links to Home, Services, Work and Contact |
