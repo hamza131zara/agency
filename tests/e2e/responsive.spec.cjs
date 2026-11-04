@@ -1,13 +1,16 @@
 const { test, expect } = require('@playwright/test');
 
 const ROUTES = [
-  '/', '/services.html',
+  '/', '/services.html', '/work.html',
   '/services/software-engineering.html', '/services/ai-automation.html',
   '/services/blockchain-web3.html', '/services/creative-design.html',
   '/services/digital-growth.html', '/services/ecommerce-operations.html',
-  '/work.html', '/products.html', '/automation.html', '/about.html',
-  '/approach.html', '/team.html', '/contact.html', '/privacy.html', '/terms.html', '/disclaimer.html',
-  '/work/free-ai-mixer.html', '/brief-builder.html'
+  '/about.html', '/approach.html', '/team.html', '/products.html',
+  '/automation.html', '/contact.html', '/privacy.html', '/terms.html',
+  '/disclaimer.html', '/404.html',
+  '/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html',
+  '/work/siteintel-pulse.html', '/work/free-ai-mixer.html',
+  '/brief-builder.html'
 ];
 const VIEWPORTS = [
   { name: 'small mobile', width: 320, height: 780 },
