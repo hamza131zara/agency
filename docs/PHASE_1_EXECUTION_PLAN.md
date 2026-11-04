@@ -1,9 +1,10 @@
 # Phase 1 — Multi-page Platform Foundation & Experience
 
-**Status:** Phase 1 implementation is ready for owner review; automated checks and visual review are complete; owner/legal sign-off remains pending  
-**Implementation branch:** `phase1/multipage-foundation`  
-**Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
-**Latest CI:** [Run #150 — validation and browser/accessibility passed on the current PR head](https://github.com/hamza131zara/agency/actions/runs/41812983514)  
+**Status:** COMPLETE — repository implementation merged to `main` on 4 November 2026. Pre-launch owner and human-review gates remain open and are tracked separately.  
+**Implementation branch:** `phase1/multipage-foundation` (merged into `main`)  
+**Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14) — merged 4 November 2026  
+**Merge commit:** [`17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609)  
+**Latest exact-head CI:** [Run #151 — `validate` and `browser-and-accessibility` both passed](https://github.com/hamza131zara/agency/actions/runs/41813251619) on PR head `602b1cb245cf38b2dc4a8276738c00b427712a56`  
 **Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
@@ -40,7 +41,7 @@ Current gaps from the reviewed source:
 
 ## 2A. Implementation progress (4 November 2026)
 
-The Phase 1 implementation is on branch `phase1/multipage-foundation` and open as PR #14 against `main`. The completed implementation includes:
+The Phase 1 implementation was delivered on `phase1/multipage-foundation` and merged through PR #14 into `main` at `17637e7`. The completed implementation includes:
 
 - Shared header/footer navigation across the multi-page platform.
 - Home is a concise overview, not the entire website.
@@ -78,7 +79,7 @@ The Phase 1 implementation is on branch `phase1/multipage-foundation` and open a
 
 ### Remaining acceptance boundary
 
-The implementation cannot truthfully close the final Phase 1 acceptance gate without owner/human inputs:
+The repository implementation and automated acceptance evidence are complete. The following owner/human items remain mandatory before public launch or before the relevant claims/features are published; they are not represented as completed by the merge:
 
 - Confirm official agency/legal operator name, business address, jurisdiction and official legal contact. Until then, Privacy/Terms/Disclaimer remain drafts and noindex.
 - Supply and approve the canonical domain, final brand/logo and social preview assets. The sitemap retains `YOUR-DOMAIN.example` until the domain is known.
@@ -86,7 +87,7 @@ The implementation cannot truthfully close the final Phase 1 acceptance gate wit
 - Approve public team claims (designer's experience/qualification and e-commerce team size) and any biography/portrait.
 - Confirm project ownership, agency contribution, current release status and permission to publish each project screenshot/description.
 - Complete a human screen-reader/assistive-technology review and final owner visual/brand sign-off. Automated axe and Playwright checks are not a substitute for that review.
-- Obtain owner approval to merge/release. Production deployment, DNS and Hostinger configuration remain outside this phase and have not been performed.
+- Production deployment, DNS and Hostinger configuration remain outside this phase and have not been performed; they require separate explicit launch approval.
 
 ## 3. Work packages
 
@@ -174,9 +175,9 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 - [x] Desktop and mobile screenshots were captured and manually reviewed for all 25 HTML routes.
 
 ### Quality and release
-- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #140.
-- [ ] Keyboard-only navigation and key form flows pass manual tests.
-- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #140; manual review remains open.
+- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #151.
+- [x] Automated keyboard/focus/touch navigation and key form journeys pass Playwright coverage in exact-head CI run #151; human assistive-technology review remains a separate pre-launch task.
+- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #151; manual review remains open.
 - [x] Contact flow retains explicit unsent/local-fallback wording when mail is unavailable; automated contact endpoint smoke tests pass. The real inbox delivery test remains an owner configuration step.
 - [ ] Owner accepts public identity, claims, visuals and project content after reviewing the evidence register and team-claim permissions.
 - [x] Deployment remains deferred until a separate explicit approval.
@@ -194,12 +195,4 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 
 ## 7. Evidence required for phase completion
 
-The Phase 1 pull request must include:
-- Summary of user-visible changes.
-- List of changed files.
-- Automated test output or CI links.
-- Desktop and mobile screenshots.
-- Accessibility/manual review notes.
-- 3D fallback/reduced-motion verification.
-- Known limitations and deferred items.
-- Owner decisions still required.
+Completion evidence is recorded in merged [PR #14](https://github.com/hamza131zara/agency/pull/14), including the implementation scope, test links, route inventory, responsive/axe/Playwright coverage, screenshot artifact review, 3D fallback/reduced-motion behavior and remaining owner/human gates. The exact PR head passed [CI run #151](https://github.com/hamza131zara/agency/actions/runs/41813251619).

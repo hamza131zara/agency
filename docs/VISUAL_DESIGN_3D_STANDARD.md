@@ -157,3 +157,29 @@ For every major page or scene:
 - [ ] WebGL failure does not break the page.
 - [ ] Assets and bundles are measured and reasonably optimized.
 - [ ] Screenshots have been manually reviewed on desktop and mobile.
+
+## 11. Phase 2 implementation notes — first visual increment
+
+**Review branch:** `phase2/premium-visual-identity-3d`  
+**Pull request:** [#15 — Premium visual identity and purposeful 3D](https://github.com/hamza131zara/agency/pull/15)  
+**Reviewed scope:** homepage service constellation at 320px, 390px, 768px and 1440px; full route set at 390px and 1440px.
+
+The first refinement keeps the existing CSS-only service map and adds a more sculptural central hub, layered orbital geometry, restrained inner lighting and clearer depth on the six service cards. Hover, focus-visible and active states remain attached to the real HTML links. The visual has no continuous rotation and does not capture or hijack scrolling.
+
+Screenshot review exposed clipping of the nonessential central-hub caption at 390px, so it is hidden on small screens while the six-disciplines heading remains. The 320px capture then exposed side-card clipping; a max-width: 380px layout narrows the cards, positions the four side cards at 25%/75%, and reduces the hub to 92px. The 768px capture exposed a crowded desktop navigation and oversized constellation cards in the narrower tablet hero column. A 761–850px tablet rule now collapses navigation behind the existing accessible menu toggle and narrows/repositions all six nodes. The latest CI screenshot artifact `13329888450` shows Home at 320/390/768/1440px, and automated geometry assertions pass for all six nodes at all four widths.
+
+### Runtime and asset impact
+
+- The shared stylesheet grew from **58,136 to 63,204 characters** compared with `main` at the time of this increment (**+5,068 characters**). This is a source character count, not a compressed transfer-size or performance score.
+- No image, font, model, texture or other asset was added by this increment.
+- No production browser JavaScript, package manifest, 3D engine, WebGL runtime or external visual asset was added or changed. Playwright regression coverage was extended in `tests/e2e`.
+- The hub and orbital geometry are CSS pseudo-elements; service labels, explanations and destinations remain HTML.
+
+The current colour direction and “AGENCY.” mark are still provisional. PR #15 is technically ready for owner review but does not represent final brand approval, a full performance score, or a human assistive-technology audit.
+
+
+## 12. Project/product visual evidence
+
+Project previews are not production screenshots unless they are captured from a verified product build and approved for publication. The work index and project detail pages must label conceptual artwork clearly. The current project-by-project visual audit, evidence gaps and owner inputs are recorded in `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md`.
+
+Do not invent dashboards, provider outputs, customer metrics or screenshots to fill a visual gap. A clearly labelled conceptual composition is preferable to a deceptive product screen. Keep a verified current live URL and development status close to each preview.

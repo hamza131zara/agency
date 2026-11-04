@@ -1,6 +1,6 @@
 # Phase 1 Acceptance — Multi-page Platform Foundation
 
-Phase 1 is the current website foundation release gate. It expands the original portfolio scope into a coherent, English-only, multi-page agency platform. A checklist item is complete only when its implementation and evidence exist.
+Phase 1 repository implementation is **COMPLETE** as of 4 November 2026. PR #14 is merged into `main` at `17637e7`, and the exact PR head passed both required CI jobs in run #151. This checklist separates completed implementation evidence from owner/human actions that remain mandatory before public launch.
 
 ## Existing implementation baseline
 
@@ -21,12 +21,12 @@ Phase 1 is the current website foundation release gate. It expands the original 
 
 The documentation set has been added/updated and merged through PR #13. These boxes are owner review/approval items, not checks that the files exist.
 
-- [ ] Review and approve `docs/PLATFORM_MASTER_PLAN.md`.
-- [ ] Review and approve `docs/INFORMATION_ARCHITECTURE.md`.
-- [ ] Review and approve `docs/VISUAL_DESIGN_3D_STANDARD.md`.
-- [ ] Review and approve `docs/DELIVERY_METHODOLOGY.md`.
-- [ ] Review and approve `docs/PHASE_1_EXECUTION_PLAN.md`.
-- [ ] Review and approve `docs/PRODUCT_AUTOMATION_GOVERNANCE.md`.
+- [x] Review and approve `docs/PLATFORM_MASTER_PLAN.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
+- [x] Review and approve `docs/INFORMATION_ARCHITECTURE.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
+- [x] Review and approve `docs/VISUAL_DESIGN_3D_STANDARD.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
+- [x] Review and approve `docs/DELIVERY_METHODOLOGY.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
+- [x] Review and approve `docs/PHASE_1_EXECUTION_PLAN.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
+- [x] Review and approve `docs/PRODUCT_AUTOMATION_GOVERNANCE.md`. (merged through PR #13; Phase 1 updates merged through PR #14)
 
 ## Phase 1 implementation acceptance
 
@@ -69,12 +69,12 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - [x] PHP lint checks pass in the latest branch-head CI run.
 - [x] Contact endpoint smoke test passes without sending real email in the latest branch-head CI run.
 - [x] Playwright E2E, responsive and automated axe checks cover all 25 routes; responsive widths are 320/390/768/1440px. Suite includes mobile 3D-map touch, keyboard/reduced-motion, breadcrumb, service-to-contact, legal-policy and 404 noindex/sitemap checks (latest branch-head CI).
-- [ ] Human screen-reader/assistive-technology review and a final human keyboard/contrast review are still required. Automated Playwright keyboard, touch, focus and reduced-motion checks plus axe scans pass; they are not claimed as a substitute for a human screen-reader review.
+- [ ] Human screen-reader/assistive-technology review and a final human keyboard/contrast review remain required before public launch. Automated Playwright keyboard, touch, focus and reduced-motion checks plus axe scans pass; they are not a substitute for human assistive-technology review.
 - [x] No critical/high-severity automated functional/accessibility blocker was reported in latest branch-head CI run #148; human assistive-technology review remains open.
 
 ## Owner input and manual acceptance before public launch
 
-- [ ] Complete human keyboard/screen-reader review of header, menus, filters, forms and project brief flow. Automated checks cover mobile menu open/close, Escape/focus return, skip link, 3D-map keyboard traversal, touch navigation, service handoff and reduced motion.
+- [ ] Complete the human keyboard/screen-reader review of header, menus, filters, forms and project brief flow before launch. Automated checks cover mobile menu open/close, Escape/focus return, skip link, 3D-map keyboard traversal, touch navigation, service handoff and reduced motion.
 - [ ] Complete human screen-reader naming/reading-order review and any remaining manual contrast/reduced-motion review; automated axe/Playwright coverage is not a substitute.
 - [x] Review the latest all-route desktop/mobile screenshot contact sheet and representative full-size captures. [ ] Owner still approves final visual identity/brand assets.
 - [ ] Owner confirms project ownership, agency contribution/attribution, technologies, external link uptime and permissions to publish screenshots. Repository-backed product descriptions are registered in `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
@@ -102,14 +102,14 @@ The documentation set has been added/updated and merged through PR #13. These bo
 
 ## Current evidence (4 November 2026)
 
-- Phase 1 implementation PR: [#14](https://github.com/hamza131zara/agency/pull/14) (open; not merged; owner review required).
+- Phase 1 implementation PR: [#14](https://github.com/hamza131zara/agency/pull/14) — merged on 4 November 2026 into `main` at [commit `17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609).
 - Current route inventory: 25 HTML routes (14 root, six service details, five project details); 21 URLs in sitemap.
 - Privacy, Terms, Disclaimer and 404 are noindex and omitted from the 21-URL sitemap.
 - Product/repository factual notes and owner-claim review list: `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
-- Latest branch-head CI is tracked at [Run #150](https://github.com/hamza131zara/agency/actions/runs/41812983514) — validation and browser/accessibility jobs both passed on commit `93e3e506ff47e81a92973eb080c9bd855f6278ea`.
+- Latest exact PR-head CI is [Run #151](https://github.com/hamza131zara/agency/actions/runs/41813251619) — `validate` and `browser-and-accessibility` jobs both completed successfully on `602b1cb245cf38b2dc4a8276738c00b427712a56`.
 - Browser artifact captures all 25 routes at desktop and mobile sizes (50 screenshots). The contact sheet and representative full-size captures were manually reviewed.
 - Automated coverage includes 25-route metadata/local-link validation, responsive checks at 320/390/768/1440px, axe checks across 25 routes, service CTA preselection, breadcrumbs, keyboard/touch/reduced-motion, a 25-route public-copy guard against internal phase labels, and legal/404 indexing rules.
 
 ## Completion evidence
 
-The Phase 1 pull request must include the changed-file summary, passing CI links, desktop/mobile screenshots, manual accessibility/interaction notes, 3D fallback/reduced-motion evidence, known limitations and recorded owner approvals.
+The merged Phase 1 pull request contains the changed-file implementation and evidence summary, passing CI links, desktop/mobile screenshot review, automated accessibility/interaction coverage, 3D fallback/reduced-motion evidence and remaining owner/human gates. Open pre-launch tasks above remain open until real approvals and checks are completed.

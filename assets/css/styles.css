@@ -713,3 +713,188 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .service-detail-fit p{margin:17px 0;color:#4e584a;font-size:12px;line-height:1.85}
 .service-detail-fit a{display:block;margin-top:17px;color:#293529;font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:760px){.service-detail-intro,.service-detail-body{grid-template-columns:1fr}.service-detail-intro h1{font-size:clamp(40px,12vw,58px)}.service-detail-aside{padding:19px}.service-detail-body{padding-top:30px;padding-bottom:65px}.service-capabilities{grid-template-columns:1fr}.service-detail-fit{position:static}}
+
+
+/* Phase 2 / first visual refinement: sculptural hub, clearer spatial depth and interaction. */
+.service-atlas {
+  background:
+    radial-gradient(ellipse at 50% 44%, #f7f8ef 0%, #e8ece1 48%, #d8e0d5 100%);
+}
+.atlas-hub {
+  isolation: isolate;
+  transform-style: preserve-3d;
+  background:
+    radial-gradient(circle at 34% 25%, #536153 0%, #303b32 42%, #171d19 78%);
+  box-shadow:
+    0 22px 44px #18251d38,
+    0 0 0 1px #91a08c,
+    inset 0 1px 0 #ffffff38,
+    inset 0 -12px 20px #070b0870;
+}
+.atlas-hub::before,
+.atlas-hub::after {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border: 1px solid #a8b99e;
+  border-radius: 50%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+.atlas-hub::before {
+  transform: rotateX(72deg) rotateZ(27deg) translateZ(-10px);
+  box-shadow: 0 0 0 6px #ffffff18;
+}
+.atlas-hub::after {
+  inset: -25px;
+  border-color: #c58c70;
+  border-style: dashed;
+  transform: rotateX(72deg) rotateZ(-38deg) translateZ(-22px);
+}
+.atlas-hub > * {
+  position: relative;
+  z-index: 1;
+}
+.atlas-hub-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #d7fc62a8;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, #3a4938, #151c17 76%);
+  box-shadow: 0 5px 14px #070b0870, inset 0 1px 0 #ffffff30;
+  color: #d7fc62;
+  text-shadow: 0 1px 12px #d7fc6266;
+}
+.atlas-node {
+  border-color: #c2cdbd;
+  box-shadow:
+    0 13px 28px #1e302018,
+    inset 0 1px 0 #ffffffd9;
+}
+.atlas-node:hover {
+  border-color: #71894f;
+  box-shadow:
+    0 19px 34px #1e30202b,
+    inset 0 1px 0 #ffffff;
+}
+.atlas-node:focus-visible {
+  outline: 3px solid #52730a;
+  outline-offset: 5px;
+  border-color: #52730a;
+  box-shadow: 0 18px 32px #1e30202b;
+}
+.atlas-node:active {
+  box-shadow: 0 7px 15px #1e30201d;
+}
+@media (max-width: 420px) {
+  .atlas-hub::before { inset: -11px; }
+  .atlas-hub::after { inset: -18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-node,
+  .atlas-node:hover,
+  .atlas-node:focus-visible,
+  .atlas-node:active {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .atlas-hub small { display: none; }
+}
+
+/* Phase 2 / narrow-phone map layout: keep all six service cards inside the frame. */
+@media (max-width: 380px) {
+  .atlas-node {
+    width: 124px;
+    min-height: 58px;
+    padding: 7px 8px;
+  }
+  .atlas-node strong { font-size: 9px; }
+  .atlas-node small,
+  .atlas-node span { font-size: 6px; }
+  .atlas-software { left: 50%; top: 10%; }
+  .atlas-ai { left: 75%; top: 24%; }
+  .atlas-web3 { left: 75%; top: 82%; }
+  .atlas-ecommerce { left: 50%; top: 90%; }
+  .atlas-design { left: 25%; top: 82%; }
+  .atlas-growth { left: 25%; top: 24%; }
+  .atlas-hub {
+    width: 92px;
+    height: 92px;
+  }
+  .atlas-hub-mark {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+  .atlas-hub strong { font-size: 13px; }
+  .atlas-hub small { display: none; }
+  .atlas-ring-one { width: 250px; height: 190px; }
+  .atlas-ring-two { width: 300px; height: 230px; }
+}
+
+/* Phase 2 / tablet layout: collapse navigation before it crowds the header. */
+@media (min-width: 761px) and (max-width: 850px) {
+  .site-header { height: 91px; padding: 0 30px; }
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 17px;
+    height: 1px;
+    margin: auto;
+    background: var(--ink);
+    transition: transform .2s;
+  }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 30px;
+    right: 30px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 16px 18px 22px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 14px 20px #171b190b;
+  }
+  .primary-nav.is-open { display: flex; }
+  .primary-nav > a:not(.nav-cta) { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav-cta { margin-top: 14px; text-align: center; }
+}
+
+/* Keep the six-card spatial map balanced inside the narrower tablet hero column. */
+@media (min-width: 761px) and (max-width: 850px) {
+  .service-atlas { min-height: 430px; height: 430px; }
+  .atlas-node { width: 118px; min-height: 60px; padding: 8px; }
+  .atlas-node strong { font-size: 8px; line-height: 1.25; }
+  .atlas-node small,
+  .atlas-node span { font-size: 6px; }
+  .atlas-growth,
+  .atlas-design { left: 21%; }
+  .atlas-ai,
+  .atlas-web3 { left: 79%; }
+  .atlas-hub { width: 106px; height: 106px; }
+  .atlas-hub-mark { width: 34px; height: 34px; font-size: 21px; }
+  .atlas-hub strong { font-size: 14px; }
+  .atlas-ring-one { width: 225px; height: 175px; }
+  .atlas-ring-two { width: 275px; height: 215px; }
+  .atlas-ring-three { width: 195px; height: 155px; }
+}
