@@ -274,7 +274,7 @@ test.describe('Phase I route and content checks', () => {
     await page.getByRole('button', { name: 'Generate project brief' }).click();
     await page.getByRole('button', { name: /Continue to contact/i }).click();
 
-    await expect(page).toHaveURL(/contact\.html\?service=Full-stack%20development&from=brief-builder$/);
+    await expect(page).toHaveURL(/contact\.html\?service=Software%20%26%20website%20development&from=brief-builder$/);
     await expect(page.locator('textarea[name="message"]')).toHaveValue(/Contact handoff test/);
     await expect(page.locator('textarea[name="message"]')).toHaveValue(/customer portal/);
     await expect(page.locator('#form-status')).toContainText(/inquiry has not been sent/i);
