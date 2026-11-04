@@ -12,7 +12,7 @@ class Parser(HTMLParser):
   super().__init__(convert_charrefs=True); self.ids=set(); self.dupes=set(); self.links=[]; self.title=""; self.in_title=False; self.h1=0; self.lang=False; self.viewport=False; self.description=False; self.missing_alt=[]
  def handle_starttag(self,tag,attrs):
   a=dict(attrs)
-  if tag=="html": self.lang=bool(a.get("lang"))
+  if tag=="html": self.lang=a.get("lang","").strip().lower()=="en"
   if tag=="title": self.in_title=True
   if tag=="h1": self.h1+=1
   if tag=="meta":
@@ -30,11 +30,15 @@ class Parser(HTMLParser):
   if self.in_title: self.title+=data.strip()
 html_files=sorted([*ROOT.glob("*.html"), *ROOT.glob("services/*.html"), *ROOT.glob("work/*.html")])
 pages={}
+seen_titles={}
 for file in html_files:
  parser=Parser()
  try: parser.feed(file.read_text(encoding="utf-8")); parser.close()
  except Exception as exc: errors.append(f"{file.name}: parse error {exc}"); continue
  pages[file.resolve()]=parser
+ title_key=parser.title.strip().lower()
+ if title_key in seen_titles: errors.append(f"{file.name}: duplicate page title also used by {seen_titles[title_key]}")
+ else: seen_titles[title_key]=file.name
  if not parser.lang: errors.append(f"{file.name}: html lang is missing")
  if not parser.title.strip(): errors.append(f"{file.name}: page title is missing")
  if not parser.viewport: errors.append(f"{file.name}: viewport metadata is missing")
@@ -58,6 +62,14 @@ for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")
 if "contact.php?csrf=1" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("browser form is not wired to PHP endpoint")
+for legal_page in ("terms.html","disclaimer.html"):
+ content=(ROOT/legal_page).read_text(encoding="utf-8")
+ if '<meta name="robots" content="noindex, nofollow">' not in content:
+  errors.append(f"{legal_page}: draft legal page must remain noindex until approved")
+sitemap_content=(ROOT/"sitemap.xml").read_text(encoding="utf-8")
+for legal_page in ("terms.html","disclaimer.html"):
+ if legal_page in sitemap_content:
+  errors.append(f"{legal_page}: draft legal page must remain outside the sitemap until approved")
 if "hash_equals" not in (ROOT/"contact.php").read_text(encoding="utf-8"): errors.append("CSRF check missing")
 if "PHASE 2" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home does not identify Phase 2 scope")
 if "data-project-filter" not in (ROOT/"work.html").read_text(encoding="utf-8"): errors.append("portfolio category filters missing")
