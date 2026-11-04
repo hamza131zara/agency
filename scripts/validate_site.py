@@ -28,7 +28,7 @@ class Parser(HTMLParser):
   if tag=="title": self.in_title=False
  def handle_data(self,data):
   if self.in_title: self.title+=data.strip()
-html_files=sorted([*ROOT.glob("*.html"), *ROOT.glob("work/*.html")])
+html_files=sorted([*ROOT.glob("*.html"), *ROOT.glob("services/*.html"), *ROOT.glob("work/*.html")])
 pages={}
 for file in html_files:
  parser=Parser()
@@ -53,7 +53,7 @@ for source,parser in pages.items():
   target=target.resolve()
   if not target.exists(): errors.append(f"{Path(source).name}: broken local {kind} {raw}"); continue
   if url.fragment and target in pages and url.fragment not in pages[target].ids: errors.append(f"{Path(source).name}: missing fragment target {raw}")
-required=["index.html","services.html","work.html","about.html","approach.html","team.html","products.html","automation.html","contact.html","brief-builder.html","privacy.html","404.html","services/software-engineering.html","services/ai-automation.html","services/blockchain-web3.html","services/creative-design.html","services/digital-growth.html","services/ecommerce-operations.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/favicon.svg",".github/workflows/quality.yml"]
+required=["index.html","services.html","work.html","about.html","approach.html","team.html","products.html","automation.html","contact.html","brief-builder.html","privacy.html","terms.html","disclaimer.html","404.html","services/software-engineering.html","services/ai-automation.html","services/blockchain-web3.html","services/creative-design.html","services/digital-growth.html","services/ecommerce-operations.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/favicon.svg",".github/workflows/quality.yml"]
 for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")
