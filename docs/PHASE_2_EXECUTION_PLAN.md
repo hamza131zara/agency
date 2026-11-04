@@ -56,7 +56,7 @@ The existing warm-neutral palette, lime/orange accents, Manrope/DM Mono typograp
 
 ### P2.5 — Performance, accessibility and regression
 
-- Capture and review screenshots at 320, 390, 768 and 1440px for changed routes.
+- Capture and review screenshots at 320, 390, 768 and 1440px for changed routes; the homepage visual-review artifact now captures all four widths, while the full route set remains captured at 390 and 1440px.
 - Test keyboard, visible focus, touch, zoom/reflow and reduced-motion behavior.
 - Validate the static/no-WebGL experience and ensure navigation/content still work when effects are unavailable.
 - Measure image/asset additions and avoid increasing runtime dependencies without a documented reason.
@@ -101,15 +101,14 @@ Each Phase 2 pull request must record: changed routes/assets, design rationale, 
 ## 8. Current progress snapshot — 4 November 2026
 
 **Active PR:** [#15](https://github.com/hamza131zara/agency/pull/15)  
-**Current head:** `4446d928c35ada4a7478e431a54c4ee533abb1d8`  
-**Latest run:** [CI #41835653951](https://github.com/hamza131zara/agency/actions/runs/41835653951) — static validation passed; browser/responsive/accessibility job is still running.
+**Current review state:** The exact head SHA and latest check results are available in PR #15. Because every code, test or evidence-document update creates a new CI revision, older green runs are not treated as final evidence for a later head. The PR must have all required checks green on its latest head before acceptance.
 
 | Work package | Progress | Evidence / next check |
 |---|---|---|
 | P2.1 — Visual baseline and art direction | Baseline reviewed; current palette/wordmark explicitly remain provisional. | Screenshot review at 1440px and 390px; design notes in `docs/VISUAL_DESIGN_3D_STANDARD.md`. |
-| P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | Desktop/mobile captures reviewed; the nonessential hub caption was hidden on mobile after the shortened caption still clipped in the 390px screenshot; verify the final screenshot in the latest CI run. |
-| P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Existing keyboard/touch test coverage; verify latest run before closing this work package. |
+| P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | Desktop/mobile captures reviewed; the nonessential hub caption was hidden on mobile after the shortened caption still clipped in the 390px screenshot; final treatment remains subject to the latest exact-head screenshot artifact. |
+| P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Existing keyboard/touch test coverage; final exact-head CI result required before closing this work package. |
 | P2.4 — Evidence-led work/product visuals | Not started; current project mockups remain illustrative. | Await approved project screenshots and contribution/usage permissions. Do not add unverified assets. |
-| P2.5 — Performance, accessibility and regression | In progress. | CSS increased by 2,188 characters versus `main`; no new assets, JavaScript or runtime dependencies. Latest browser/responsive/axe run must pass and screenshots must be reviewed. |
+| P2.5 — Performance, accessibility and regression | In progress. | CSS increased by 2,188 characters versus `main`; no new assets, JavaScript or runtime dependencies. Latest browser/responsive/axe run must pass on the exact PR head; review all four homepage breakpoint screenshots plus representative full-route captures. |
 
 This is a progress record, not a Phase 2 completion declaration. The acceptance checklist above remains open until final CI and owner visual review are recorded.
