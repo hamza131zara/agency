@@ -20,7 +20,7 @@ for (const route of PAGES) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => {
       const stylesheet = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-        .find(link => /assets\\/css\\/styles\\.css/.test(link.href));
+        .find(link => link.href.includes('/assets/css/styles.css'));
       return Boolean(stylesheet && stylesheet.sheet);
     });
     await page.waitForFunction(() => {
