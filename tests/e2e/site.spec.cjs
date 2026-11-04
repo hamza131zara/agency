@@ -405,4 +405,13 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+  test('404 page is noindex and excluded from the sitemap', async ({ page }) => {
+    await page.goto('/404.html');
+    await expect(page.locator('h1')).toContainText('This page took a wrong turn');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
+    const response = await page.request.get('/sitemap.xml');
+    const xml = await response.text();
+    expect(xml).not.toContain('/404.html');
+  });
+
 });
