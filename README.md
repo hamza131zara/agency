@@ -60,9 +60,11 @@ php -l config.example.php
 python tests/test_contact_endpoint.py
 npm install
 npm run test:e2e
+npm run test:a11y
+npm run test:responsive
 ```
 
-The CI workflow also runs HTML/link/site validation, JavaScript/PHP syntax checks, contact endpoint smoke tests, Playwright browser tests and axe accessibility scans. Automated accessibility scans do not replace manual keyboard, screen-reader, contrast and screenshot review.
+The CI workflow also runs HTML/link/site validation across root, service-detail and case-study routes, JavaScript/PHP syntax checks, contact endpoint smoke tests, Playwright browser tests, responsive checks at 320/390/768/1440px and axe accessibility scans across the full 25-page route set. Automated accessibility scans do not replace manual keyboard, screen-reader, contrast and screenshot review.
 
 ## Phase boundaries
 
