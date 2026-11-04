@@ -46,6 +46,7 @@ The expanded page hierarchy, six service divisions, visual/3D system and product
 - `docs/PHASE_1_EXECUTION_PLAN.md` — current Phase 1 scope, work packages and acceptance.
 - `docs/PHASE_1_ACCEPTANCE.md` — acceptance checklist.
 - `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
+- `docs/PORTFOLIO_CONTENT_EVIDENCE.md` — repository-backed product descriptions, owner-provided claims and final verification checklist.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
 
 ## Local checks
