@@ -36,7 +36,7 @@ $honeypot=$_POST['website']??'';
 if (!is_string($honeypot)||trim($honeypot)!=='') respond(400,['ok'=>false,'code'=>'invalid_submission','message'=>'We could not process this submission. Review the form and try again.']);
 $name=trim(post_text('name')); $email=trim(post_text('email')); $service=trim(post_text('interest')); $message=trim(post_text('message'));
 $name=preg_replace('/[\x00-\x1F\x7F]/u',' ',$name)??''; $message=preg_replace('/\x00/u','',$message)??'';
-$allowed=['Full-stack development','AI / LLM / agent development','AI integration','Cybersecurity / secure engineering','Debugging / performance','UI/UX and product design','Digital marketing / growth','Workflow automation consulting','Something else'];
+$allowed=['Software & website development','AI, LLM & intelligent automation','Blockchain & Web3','Graphic design & creative services','Digital marketing & growth','E-commerce & marketplace operations','Something else'];
 if ($name===''||strlen($name)>100||!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>254||!in_array($service,$allowed,true)||strlen($message)<20||strlen($message)>3000) respond(422,['ok'=>false,'code'=>'validation_failed','message'=>'Please review the fields. Provide your name, a valid email, a service and at least 20 characters about the project.']);
 if (preg_match('/[\r\n]/',$email)) respond(422,['ok'=>false,'code'=>'invalid_email','message'=>'Please enter a valid email address.']);
 $config=load_config();
