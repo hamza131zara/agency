@@ -802,9 +802,5 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 
 @media (max-width: 760px) {
-  .atlas-hub small {
-    font-size: 6px;
-    letter-spacing: 0;
-    white-space: nowrap;
-  }
+  .atlas-hub small { display: none; }
 }
