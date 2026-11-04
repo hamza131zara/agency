@@ -37,14 +37,17 @@ test('key pages do not create document-level horizontal overflow', async ({ page
   }
 });
 
-test('captures desktop and mobile visual-review screenshots', async ({ page }, testInfo) => {
+test('captures desktop, tablet and mobile visual-review screenshots', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
-  for (const viewport of [
-    { name: 'desktop', width: 1440, height: 1000 },
-    { name: 'mobile', width: 390, height: 844 }
-  ]) {
+  const screenshots = [
+    { name: 'desktop', width: 1440, height: 1000, routes: ROUTES },
+    { name: 'mobile', width: 390, height: 844, routes: ROUTES },
+    { name: 'small-mobile', width: 320, height: 780, routes: ['/'] },
+    { name: 'tablet', width: 768, height: 1024, routes: ['/'] }
+  ];
+  for (const viewport of screenshots) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    for (const route of ROUTES) {
+    for (const route of viewport.routes) {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await page.addStyleTag({ content: '.reveal { opacity: 1 !important; transform: none !important; }' });
       const routeName = route === '/' ? 'home' : route.slice(1).replace(/\.html$/, '').replace(/\//g, '-');
