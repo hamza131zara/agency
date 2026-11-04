@@ -70,7 +70,7 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - [x] Contact endpoint smoke test passes without sending real email in the latest branch-head CI run.
 - [x] Playwright E2E, responsive and automated axe checks cover all 25 routes; responsive widths are 320/390/768/1440px. Suite includes mobile 3D-map touch, keyboard/reduced-motion, breadcrumb, service-to-contact, legal-policy and 404 noindex/sitemap checks (latest branch-head CI).
 - [ ] Manual keyboard, focus, screen-reader naming, contrast and reduced-motion review is recorded.
-- [x] No critical/high-severity automated functional/accessibility blocker was reported in CI run #86; manual review remains open.
+- [x] No critical/high-severity automated functional/accessibility blocker was reported in CI run #140; manual review remains open.
 
 ## Owner input and manual acceptance before public launch
 
@@ -104,9 +104,9 @@ The documentation set has been added/updated and merged through PR #13. These bo
 
 - Phase 1 implementation PR: [#14](https://github.com/hamza131zara/agency/pull/14) (open; not merged; owner review required).
 - Current route inventory: 25 HTML routes (14 root, six service details, five project details); 21 URLs in sitemap.
-- Privacy, Terms, Disclaimer and 404 are noindex and omitted from the sitemap.
+- Privacy, Terms, Disclaimer and 404 are noindex and omitted from the 21-URL sitemap.
 - Product/repository factual notes and owner-claim review list: `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
-- Latest branch-head CI is tracked at [Run #137](https://github.com/hamza131zara/agency/actions/runs/41808527626); update this reference only after both jobs finish successfully.
+- Latest branch-head CI is tracked at [Run #140](https://github.com/hamza131zara/agency/actions/runs/41809019489) — current branch-head validation and browser/accessibility jobs both passed.
 - Browser artifact captures all 25 routes at desktop and mobile sizes (50 screenshots). The contact sheet and representative full-size captures were manually reviewed.
 - Automated coverage includes 25-route metadata/local-link validation, responsive checks at 320/390/768/1440px, axe checks across 25 routes, service CTA preselection, breadcrumbs, keyboard/touch/reduced-motion and legal/404 indexing rules.
 
