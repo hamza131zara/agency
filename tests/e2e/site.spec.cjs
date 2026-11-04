@@ -188,19 +188,35 @@ test.describe('Phase I route and content checks', () => {
     await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
-  test('3D service cards stay within the map frame on narrow phones', async ({ page }) => {
-    for (const width of [320, 390]) {
-      await page.setViewportSize({ width, height: 844 });
+  test('all six service cards stay inside the spatial map at every review breakpoint', async ({ page }) => {
+    const nodes = ['.atlas-software', '.atlas-ai', '.atlas-web3', '.atlas-ecommerce', '.atlas-design', '.atlas-growth'];
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
       await page.goto('/');
       const frame = await page.locator('#service-atlas').boundingBox();
-      expect(frame).not.toBeNull();
-      for (const selector of ['.atlas-growth', '.atlas-ai', '.atlas-design', '.atlas-web3']) {
+      expect(frame, 'map frame should be measurable at ' + width + 'px').not.toBeNull();
+      for (const selector of nodes) {
         const card = await page.locator('#service-atlas ' + selector).boundingBox();
         expect(card, selector + ' should have a visible layout box at ' + width + 'px').not.toBeNull();
         expect(card.x, selector + ' should not be clipped on the left at ' + width + 'px').toBeGreaterThanOrEqual(frame.x - 1);
         expect(card.x + card.width, selector + ' should not be clipped on the right at ' + width + 'px').toBeLessThanOrEqual(frame.x + frame.width + 1);
       }
     }
+  });
+
+  test('tablet navigation collapses cleanly and remains usable at 768px', async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await page.goto('/');
+    const toggle = page.locator('.menu-toggle');
+    const nav = page.getByRole('navigation', { name: 'Main navigation' });
+    await expect(toggle).toBeVisible();
+    await expect(nav).not.toBeVisible();
+    await toggle.click();
+    await expect(nav.getByRole('link', { name: 'Services' })).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await nav.getByRole('link', { name: 'Services' }).click();
+    await expect(page).toHaveURL(/\\/services\\.html$/);
+    await expect(nav).not.toBeVisible();
   });
 
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
