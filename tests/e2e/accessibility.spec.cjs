@@ -2,22 +2,27 @@ const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
 const PAGES = [
-  '/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html',
-  '/404.html', '/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html',
-  '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
+  '/', '/services.html', '/work.html',
+  '/services/software-engineering.html', '/services/ai-automation.html',
+  '/services/blockchain-web3.html', '/services/creative-design.html',
+  '/services/digital-growth.html', '/services/ecommerce-operations.html',
+  '/about.html', '/approach.html', '/team.html', '/products.html',
+  '/automation.html', '/contact.html', '/privacy.html', '/terms.html',
+  '/disclaimer.html', '/404.html', '/work/strideto.html',
+  '/work/regexlab.html', '/work/jotjson.html',
+  '/work/siteintel-pulse.html', '/work/free-ai-mixer.html',
+  '/brief-builder.html'
 ];
 
 for (const route of PAGES) {
   test('automated WCAG accessibility scan: ' + route, async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(route, { waitUntil: 'domcontentloaded' });
-    // Wait until the real site stylesheet is loaded before measuring computed colors.
     await page.waitForFunction(() => {
       const stylesheet = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-        .find(link => /assets\/css\/styles\.css/.test(link.href));
+        .find(link => /assets\\/css\\/styles\\.css/.test(link.href));
       return Boolean(stylesheet && stylesheet.sheet);
     });
-    // About-page contrast depends on this rule; assert it has taken effect before running axe.
     await page.waitForFunction(() => {
       const processNumber = document.querySelector('.approach-list article > span');
       return !processNumber || getComputedStyle(processNumber).color === 'rgb(80, 88, 78)';
