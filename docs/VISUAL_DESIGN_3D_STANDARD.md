@@ -59,6 +59,8 @@ Every interactive visual must provide:
 - No essential content available only through hover or canvas rendering.
 - A reset/recenter control for rotatable scenes.
 - A way to pause or avoid movement.
+
+For a static CSS service constellation with no user-controlled rotation and no continuous animation, reset/recenter and pause controls are not applicable. Document that no persistent movement occurs; retain normal link focus, touch targets and reduced-motion behavior.
 - No forced motion, sudden camera movement or disorienting zoom.
 - No use of colour alone to communicate state.
 - A semantic text summary and relevant accessible labels.
@@ -139,7 +141,7 @@ For every major page or scene:
 - [ ] 3D has a defined purpose and visible instructions if interactive.
 - [ ] A static fallback preserves all essential information.
 - [ ] Reduced-motion mode is usable.
-- [ ] Keyboard and touch interactions work.
+- [ ] Keyboard and touch interactions work. A static, non-rotating map does not require reset/pause controls; test that its links remain reachable and that reduced-motion removes its hover transition.
 - [ ] WebGL failure does not break the page.
 - [ ] Assets and bundles are measured and reasonably optimized.
 - [ ] Screenshots have been manually reviewed on desktop and mobile.
