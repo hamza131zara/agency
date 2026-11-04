@@ -804,3 +804,34 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media (max-width: 760px) {
   .atlas-hub small { display: none; }
 }
+
+/* Phase 2 / narrow-phone map layout: keep all six service cards inside the frame. */
+@media (max-width: 380px) {
+  .atlas-node {
+    width: 124px;
+    min-height: 58px;
+    padding: 7px 8px;
+  }
+  .atlas-node strong { font-size: 9px; }
+  .atlas-node small,
+  .atlas-node span { font-size: 6px; }
+  .atlas-software { left: 50%; top: 10%; }
+  .atlas-ai { left: 75%; top: 24%; }
+  .atlas-web3 { left: 75%; top: 82%; }
+  .atlas-ecommerce { left: 50%; top: 90%; }
+  .atlas-design { left: 25%; top: 82%; }
+  .atlas-growth { left: 25%; top: 24%; }
+  .atlas-hub {
+    width: 92px;
+    height: 92px;
+  }
+  .atlas-hub-mark {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+  .atlas-hub strong { font-size: 13px; }
+  .atlas-hub small { display: none; }
+  .atlas-ring-one { width: 250px; height: 190px; }
+  .atlas-ring-two { width: 300px; height: 230px; }
+}
