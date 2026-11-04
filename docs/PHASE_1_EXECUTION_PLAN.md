@@ -1,9 +1,9 @@
 # Phase 1 — Multi-page Platform Foundation & Experience
 
-**Status:** Implementation pull request open; automated CI passed; owner/manual acceptance remains pending  
+**Status:** Phase 1 implementation is ready for owner review; automated checks and visual review are complete; owner/legal sign-off remains pending  
 **Implementation branch:** `phase1/multipage-foundation`  
 **Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
-**Latest complete CI run:** [Run #86 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41801289514)  
+**Latest CI:** [Run #137 — current branch-head validation/browser checks](https://github.com/hamza131zara/agency/actions/runs/41808527626) (see workflow result before merge)  
 **Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
@@ -40,34 +40,52 @@ Current gaps from the reviewed source:
 
 ## 2A. Implementation progress (4 November 2026)
 
-The first Phase 1 implementation slice is on the feature branch and open for review. The following work has been implemented:
+The Phase 1 implementation is on branch `phase1/multipage-foundation` and open as PR #14 against `main`. The completed implementation includes:
 
-- Shared page navigation/footer destinations are connected across the platform.
-- Home remains an overview and now links visitors to independent platform destinations.
-- Six service divisions have an overview and their own detail routes under `services/`.
-- About, Approach and Team are separate pages.
-- Products and Automation are separate pages with explicit lifecycle labels; planned automation is not represented as operational.
-- The homepage has a CSS 3D service constellation. Its six nodes are real HTML links to the dedicated service detail pages. The visual uses no WebGL runtime or external 3D library; the content and navigation remain usable as ordinary HTML.
-- Service choices are aligned across Home, Contact, Project Brief Builder, Service Finder and the PHP endpoint allow-list.
-- Route validation, sitemap entries, E2E route checks and responsive screenshot coverage include the expanded pages.
+- Shared header/footer navigation across the multi-page platform.
+- Home is a concise overview, not the entire website.
+- Six service divisions on Home and Services, with six standalone detail pages under `services/`.
+- Separate About, Approach and Team pages.
+- Separate Products and Automation destinations, with truthful lifecycle/status labels.
+- A CSS 3D six-discipline service constellation on Home. Its nodes are real HTML links to dedicated service pages; it uses no WebGL runtime or external 3D library.
+- Service-specific contact CTAs and consistent categories across Home, Contact, Project Brief Builder, Service Finder and the server-side PHP allow-list.
+- Breadcrumbs on all six service detail pages and all five project detail pages.
+- Privacy, Terms and Disclaimer draft pages linked in the footer but marked `noindex, nofollow`; the 404 page is also `noindex, nofollow`. All four are excluded from the sitemap.
+- A portfolio evidence register at `docs/PORTFOLIO_CONTENT_EVIDENCE.md`, distinguishing repository-backed facts from owner-provided claims.
 
-The platform currently covers 23 public HTML routes: 12 primary pages, six service detail pages and five project detail pages. The 404 route is included in route validation but is not listed as an indexable sitemap destination.
+### Current route and indexing inventory
 
-### Verified engineering evidence
+- **25 HTML routes are validated:** 14 root pages (including Privacy, Terms, Disclaimer and 404), six service detail pages and five project detail pages.
+- **21 URLs are in the sitemap.** Privacy, Terms, Disclaimer and 404 remain outside it until their legal/publication status is approved.
+- All routes are English-only, with page-specific titles, descriptions and H1s, checked local links/fragments and unique IDs.
+- The 3D CSS visual remains progressively enhanced: its labels and links are normal HTML, no canvas/WebGL is required, reduced-motion is respected, and touch/keyboard interaction is covered by tests.
 
-- GitHub Actions run #86 completed with both `validate` and `browser-and-accessibility` jobs passing.
-- The run includes Python site validation, JavaScript syntax, PHP lint, the contact endpoint smoke test, Playwright E2E checks, responsive checks at 320/390/768/1440px and automated axe checks.
-- The screenshot artifact includes desktop and mobile captures for Home, Services, all six service detail pages, Products, Automation, Work and Contact.
-- Desktop/mobile samples from Home, Services, a service detail page, Products and Automation were manually inspected. The remaining page-by-page visual review and manual assistive-technology checks remain open.
+### Content and trust review
 
-### Still required before Phase 1 acceptance
+- Service pages describe scope, capabilities, deliverables and appropriate limitations.
+- Product descriptions have been compared with the public project READMEs. SiteIntel Pulse is explicitly described as having a static GitHub Pages showcase while the full scanner runs separately on Node.js. Free AI Mixer is described as requiring a configured generation API. STRIDETO is not described as globally available without evidence.
+- Auto-Trading-Agent remains marked in development/unavailable to buy or install; live trading is not authorized.
+- No client revenue, usage numbers, ranking guarantees, independent audit claims or other unsupported outcomes have been added.
+- Team credentials and size claims remain owner-provided and require approval/consent; see the evidence register.
 
-- Complete the manual keyboard, focus order, screen-reader naming, contrast and reduced-motion review across primary journeys.
-- Review remaining screenshots/page details and confirm final visual identity and brand assets.
-- Confirm and approve public service/team credentials and the project ownership, contribution, stack, status and screenshot claims.
-- Finalize Terms and Disclaimer content with the actual legal operator/jurisdiction; do not publish invented legal details.
-- Confirm canonical domain, monitored inquiry inbox and verified sender. The sitemap/domain placeholders remain intentionally unresolved.
-- Obtain owner approval for the public content and release. Production deployment remains out of scope and unauthorized in this phase.
+### Browser and visual evidence
+
+- The latest full-page screenshot artifact captures **all 25 routes at desktop and mobile sizes** (50 captures).
+- The full contact sheet has been manually reviewed for route/page consistency, responsive layout, visible clipping and navigation hierarchy; representative full-size desktop/mobile captures were also inspected.
+- CI covers all 25 routes at 320, 390, 768 and 1440 pixel widths, automated axe checks on all 25 routes, route/navigation/form regressions, breadcrumb behavior, mobile touch activation of the 3D map, keyboard traversal, reduced-motion behavior, service-to-contact preselection, legal noindex/sitemap rules and the 404 noindex rule.
+- Static validation covers nested service pages and project pages, exact English language declarations, page metadata, local links/fragments, non-indexable page rules, JavaScript syntax, PHP lint and the contact endpoint smoke test.
+
+### Remaining acceptance boundary
+
+The implementation cannot truthfully close the final Phase 1 acceptance gate without owner/human inputs:
+
+- Confirm official agency/legal operator name, business address, jurisdiction and official legal contact. Until then, Privacy/Terms/Disclaimer remain drafts and noindex.
+- Supply and approve the canonical domain, final brand/logo and social preview assets. The sitemap retains `YOUR-DOMAIN.example` until the domain is known.
+- Configure a monitored recipient inbox and verified sender, then perform a real inquiry delivery test. No mail configuration or production inbox was invented.
+- Approve public team claims (designer's experience/qualification and e-commerce team size) and any biography/portrait.
+- Confirm project ownership, agency contribution, current release status and permission to publish each project screenshot/description.
+- Complete a human screen-reader/assistive-technology review and final owner visual/brand sign-off. Automated axe and Playwright checks are not a substitute for that review.
+- Obtain owner approval to merge/release. Production deployment, DNS and Hostinger configuration remain outside this phase and have not been performed.
 
 ## 3. Work packages
 
@@ -134,7 +152,7 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 ### Platform structure
 - [ ] Website has clear, consistent, usable navigation across dedicated pages.
 - [x] Home is an overview, not the only substantive page.
-- [ ] Services, Work, About, Approach, Contact and legal destinations are independent pages.
+- [x] Services, Work, About, Approach, Contact, Privacy, Terms and Disclaimer have independent destinations; the legal pages remain draft-only until owner/legal approval.
 - [x] Products and Automation have dedicated navigation/page destinations; unavailable capabilities are labelled as planned or in development.
 - [x] Primary navigation uses independent page destinations; homepage 3D service nodes and service cards link to dedicated service detail pages.
 - [x] English-only language policy is applied consistently across the 23 audited routes.
@@ -142,24 +160,24 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 ### Content
 - [x] Website copy explicitly says the agency can build all kinds of websites/platforms across different technologies.
 - [x] Six service divisions are represented consistently across Home, Services, service detail pages and inquiry routes.
-- [ ] Project and product status claims are checked.
-- [ ] No fabricated client proof, metrics, credentials or testimonials.
-- [ ] Any conceptual mockup is labelled illustrative.
+- [x] Project/product descriptions and lifecycle labels were compared with public project README evidence and recorded in `docs/PORTFOLIO_CONTENT_EVIDENCE.md`; owner confirmation of public attribution and permission remains required.
+- [x] No fabricated client testimonials, metrics or guarantees were introduced. Owner-provided team credentials/size remain separately flagged for approval.
+- [x] Conceptual project UI previews are labelled illustrative.
 
 ### Theme and visuals
-- [ ] Shared visual system is consistent across routes.
-- [ ] Typography, spacing, colour and interactive states are readable and coherent.
+- [x] Shared page shell, navigation, typography, card, breadcrumb and footer patterns are reused across the 25-route platform.
+- [x] Full-route desktop/mobile screenshots were visually reviewed as a contact sheet and with representative full-size captures. Final brand/palette approval remains an owner decision.
 - [x] The homepage CSS 3D service constellation explains the six divisions and links directly to each detail page.
 - [x] The 3D effect is progressive CSS only: labels and links remain normal HTML, there is no WebGL dependency, and reduced-motion disables hover transitions.
-- [ ] The website remains fully navigable if WebGL is unavailable.
-- [ ] Desktop and mobile screenshot review is complete.
+- [x] The 3D map has no WebGL dependency; all six nodes are ordinary HTML links and the surrounding content remains available without a 3D runtime.
+- [x] Desktop and mobile screenshots were captured and manually reviewed for all 25 HTML routes.
 
 ### Quality and release
 - [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #86.
 - [ ] Keyboard-only navigation and key form flows pass manual tests.
 - [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #86; manual review remains open.
-- [ ] Contact behavior continues to report unsent inquiries honestly when delivery is not configured.
-- [ ] Owner accepts public identity, claims, visuals and project content.
+- [x] Contact flow retains explicit unsent/local-fallback wording when mail is unavailable; automated contact endpoint smoke tests pass. The real inbox delivery test remains an owner configuration step.
+- [ ] Owner accepts public identity, claims, visuals and project content after reviewing the evidence register and team-claim permissions.
 - [x] Deployment remains deferred until a separate explicit approval.
 
 ## 6. Out of scope for Phase 1
