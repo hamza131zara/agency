@@ -202,7 +202,7 @@ test.describe('Phase I route and content checks', () => {
       expect(count).toBeGreaterThanOrEqual(2);
       for (let i = 0; i < count; i++) {
         const href = await links.nth(i).getAttribute('href');
-        expect(href).toMatch(/^\\.\\.\\/services\\/[a-z0-9-]+\\.html$/);
+        expect(href).toMatch(/^\.\.\/services\/[a-z0-9-]+\.html$/);
         const response = await page.request.get(new URL(href, page.url()).toString());
         expect(response.status(), route + ' related link ' + href).toBe(200);
       }
@@ -212,7 +212,7 @@ test.describe('Phase I route and content checks', () => {
   test('team page does not publish unverified numerical credentials or team size', async ({ page }) => {
     await page.goto('/team.html');
     const body = await page.locator('main').innerText();
-    expect(body).not.toMatch(/8\\+ years|bachelor'?s degree in graphic design|10\\+ team members/i);
+    expect(body).not.toMatch(/8\+ years|bachelor'?s degree in graphic design|10\+ team members/i);
     await expect(page.locator('.team-profile-note')).toContainText(/consent and owner approval/i);
   });
 
