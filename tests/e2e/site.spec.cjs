@@ -368,11 +368,17 @@ test.describe('Phase I route and content checks', () => {
   });
 
   test('mobile visitors can tap a service-map node and reach its detail page', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/');
-    await page.locator('#service-atlas .atlas-software').tap();
-    expect(new URL(page.url()).pathname).toBe('/services/software-engineering.html');
-    await expect(page.locator('h1')).toContainText('Websites and platforms');
+    const context = await page.context().browser().newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true
+    });
+    const mobilePage = await context.newPage();
+    await mobilePage.goto('/');
+    await mobilePage.locator('#service-atlas .atlas-software').tap();
+    expect(new URL(mobilePage.url()).pathname).toBe('/services/software-engineering.html');
+    await expect(mobilePage.locator('h1')).toContainText('Websites and platforms');
+    await context.close();
   });
 
   test('service and project detail pages provide working breadcrumbs', async ({ page }) => {
