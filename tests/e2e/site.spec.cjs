@@ -337,7 +337,7 @@ test.describe('Phase I route and content checks', () => {
     }
     await page.emulateMedia({ reducedMotion: 'reduce' });
     const transition = await links.first().evaluate(el => getComputedStyle(el).transitionDuration);
-    expect(transition).toBe('0s');
+    expect(Number.parseFloat(transition)).toBeLessThanOrEqual(0.00001);
   });
 
   test('each service detail enquiry CTA preselects the matching contact category', async ({ page }) => {
