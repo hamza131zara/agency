@@ -340,4 +340,29 @@ test.describe('Phase I route and content checks', () => {
     expect(transition).toBe('0s');
   });
 
+  test('each service detail enquiry CTA preselects the matching contact category', async ({ page }) => {
+    const services = [
+      ['/services/software-engineering.html','Software & website development'],
+      ['/services/ai-automation.html','AI, LLM & intelligent automation'],
+      ['/services/blockchain-web3.html','Blockchain & Web3'],
+      ['/services/creative-design.html','Graphic design & creative services'],
+      ['/services/digital-growth.html','Digital marketing & growth'],
+      ['/services/ecommerce-operations.html','E-commerce & marketplace operations']
+    ];
+    for (const [route, service] of services) {
+      await page.goto(route);
+      await page.getByRole('link', { name: /Discuss this service/i }).first().click();
+      await expect(page).toHaveURL(/contact\\.html\\?service=/);
+      await expect(page.locator('select[name="interest"]')).toHaveValue(service);
+    }
+  });
+
+  test('draft legal pages are intentionally excluded from the sitemap', async ({ page }) => {
+    const response = await page.request.get('/sitemap.xml');
+    expect(response.status()).toBe(200);
+    const xml = await response.text();
+    expect(xml).not.toContain('/terms.html');
+    expect(xml).not.toContain('/disclaimer.html');
+  });
+
 });
