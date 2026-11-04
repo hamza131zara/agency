@@ -26,7 +26,19 @@ The design direction is a premium digital studio aesthetic:
 - Consistent component geometry, spacing, borders, radii and icon treatment.
 - A balance of light information surfaces and darker/high-impact visual sections where they improve focus.
 
-The final exact palette, type scale and logo treatment are to be approved during Phase 1 design work. Do not invent an official brand identity or logo.
+The current implementation uses a working UI palette and typography system; this is a design baseline, not a confirmed legal/brand identity. Final logo treatment, official agency name and any brand-specific adjustments still require owner approval. Do not invent an official brand identity or logo.
+
+Current implemented CSS tokens in `assets/css/styles.css`:
+
+| Token group | Values / purpose |
+|---|---|
+| Core colours | `--paper: #f4f3ee`, `--ink: #171b19`, `--muted: #747872`, `--line: #d8d9d1`, `--lime: #d7fc62`, `--orange: #f0784c`, `--white: #fff` |
+| Typography | `--sans: "Manrope", Arial, sans-serif`; `--mono: "DM Mono", monospace` |
+| Layout | `--max: 1220px` content width |
+| Spacing | `--space-1` through `--space-16` (4, 8, 12, 16, 20, 24, 32, 40, 48 and 64px) |
+| Shape/motion | `--radius-sm: 2px`, `--radius-md: 4px`, `--motion-fast: 160ms ease` |
+
+Use these shared tokens for new page components and extend them only when a real component need is documented. Existing established page styles may retain a one-off value where changing it would harm layout or regression stability.
 
 ## 3. 3D and spatial visual use cases
 
