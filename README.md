@@ -35,7 +35,7 @@ Existing pages and features include:
 - PHP inquiry endpoint with validation and safe unsent fallback behavior.
 - SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
 
-The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. The Terms and Disclaimer pages are draft-only, marked noindex and intentionally excluded from the sitemap until owner/legal review. Not every planned product module is implemented yet.
+The current validated platform contains 25 HTML routes: 14 root pages, six service detail pages and five project detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap currently contains 21 URLs and must be updated with the owner-approved canonical domain before launch. Not every planned product module is implemented yet.
 
 ## Documentation index
 
