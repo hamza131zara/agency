@@ -2,21 +2,41 @@ const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 
 const ALLOWED_SERVICES = [
-  'Full-stack development',
-  'AI / LLM / agent development',
-  'AI integration',
-  'Cybersecurity / secure engineering',
-  'Debugging / performance',
-  'UI/UX and product design',
-  'Digital marketing / growth',
-  'Workflow automation consulting',
+  'Software & website development',
+  'AI, LLM & intelligent automation',
+  'Blockchain & Web3',
+  'Graphic design & creative services',
+  'Digital marketing & growth',
+  'E-commerce & marketplace operations',
   'Something else'
 ];
 
 const PAGES = [
-  '/', '/services.html', '/work.html', '/about.html', '/contact.html',
-  '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html',
-  '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
+  '/',
+  '/services.html',
+  '/work.html',
+  '/services/software-engineering.html',
+  '/services/ai-automation.html',
+  '/services/blockchain-web3.html',
+  '/services/creative-design.html',
+  '/services/digital-growth.html',
+  '/services/ecommerce-operations.html',
+  '/about.html',
+  '/approach.html',
+  '/team.html',
+  '/products.html',
+  '/automation.html',
+  '/contact.html',
+  '/privacy.html',
+  '/terms.html',
+  '/disclaimer.html',
+  '/404.html',
+  '/work/strideto.html',
+  '/work/regexlab.html',
+  '/work/jotjson.html',
+  '/work/siteintel-pulse.html',
+  '/work/free-ai-mixer.html',
+  '/brief-builder.html'
 ];
 
 test.describe('Phase I route and content checks', () => {
@@ -34,7 +54,7 @@ test.describe('Phase I route and content checks', () => {
   }
 
   test('internal page links use safe attributes when opening new tabs', async ({ page }) => {
-    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
+    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html', '/privacy.html', '/terms.html', '/disclaimer.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
         links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
@@ -90,7 +110,7 @@ test.describe('Phase I route and content checks', () => {
 
     await page.locator('input[name="name"]').fill('Test Visitor');
     await page.locator('input[name="email"]').fill('visitor@example.org');
-    await page.locator('select[name="interest"]').selectOption({ label: 'Full-stack development' });
+    await page.locator('select[name="interest"]').selectOption({ label: 'Software & website development' });
     await page.locator('textarea[name="message"]').fill('This is a browser smoke test and must never be delivered.');
     await page.getByRole('button', { name: /send inquiry/i }).click();
     await expect(page.locator('#form-status')).toContainText(/your inquiry has not been sent/i);
@@ -107,7 +127,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#local-inquiry-tools')).toBeVisible();
     await page.getByLabel('Your name').fill('Local Copy Test');
     await page.getByLabel('Email address').fill('local-copy@example.org');
-    await page.getByLabel('What can we help with?').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('What can we help with?').selectOption({ label: 'Software & website development' });
     await page.getByLabel('A little about the project').fill('Please build a local draft that can be saved without sending any message.');
 
     const downloadEvent = page.waitForEvent('download');
@@ -119,7 +139,7 @@ test.describe('Phase I route and content checks', () => {
     const contents = await fs.readFile(filePath, 'utf8');
     expect(contents).toContain('Local Copy Test');
     expect(contents).toContain('local-copy@example.org');
-    expect(contents).toContain('Full-stack development');
+    expect(contents).toContain('Software & website development');
     expect(contents).toContain('Please build a local draft');
     expect(contents).toContain('was not submitted');
 
@@ -143,20 +163,29 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('link', { name: /View public source/i })).toHaveAttribute('rel', /noopener noreferrer/);
   });
 
-  test('service finder recommends a service and carries the selection into the project brief', async ({ page }) => {
+  test('service divisions have working anchors and the finder carries its choice', async ({ page }) => {
     await page.goto('/services.html');
+    for (const id of ['software','ai','web3','design','growth','ecommerce']) await expect(page.locator('#'+id)).toHaveCount(1);
+    for (const href of ['services/software-engineering.html','services/ai-automation.html','services/blockchain-web3.html','services/creative-design.html','services/digital-growth.html','services/ecommerce-operations.html']) await expect(page.locator('a[href="'+href+'"]')).toHaveCount(1);
     const result = page.locator('#service-finder-result');
     await expect(result).toBeHidden();
-    await page.locator('input[name="serviceNeed"][value="AI integration"]').check();
+    await page.locator('input[name="serviceNeed"][value="Blockchain & Web3"]').check();
     await expect(result).toBeVisible();
-    await expect(page.locator('#service-finder-result-title')).toHaveText('AI and platform integration');
-    await expect(page.locator('#service-finder-status')).toContainText(/AI and platform integration/i);
-    await expect(page.locator('#service-finder-brief')).toHaveAttribute('href', 'brief-builder.html?service=AI%20integration');
-    await expect(page.locator('#service-finder-contact')).toHaveAttribute('href', 'contact.html?service=AI%20integration');
+    await expect(page.locator('#service-finder-result-title')).toHaveText('Blockchain and Web3 engineering');
+    await expect(page.locator('#service-finder-status')).toContainText(/Blockchain and Web3 engineering/i);
+    await expect(page.locator('#service-finder-brief')).toHaveAttribute('href','brief-builder.html?service=Blockchain%20%26%20Web3');
+    await expect(page.locator('#service-finder-contact')).toHaveAttribute('href','contact.html?service=Blockchain%20%26%20Web3');
+    await page.getByRole('link',{name:/Build a project brief/i}).click();
+    await expect(page).toHaveURL(/brief-builder\.html\?service=Blockchain%20%26%20Web3$/);
+    await expect(page.locator('#brief-service')).toHaveValue('Blockchain & Web3');
+  });
 
-    await page.getByRole('link', { name: /Build a project brief/i }).click();
-    await expect(page).toHaveURL(/brief-builder\.html\?service=AI%20integration$/);
-    await expect(page.locator('#brief-service')).toHaveValue('AI integration');
+  test('homepage 3D service map links to all six dedicated service pages', async ({ page }) => {
+    await page.goto('/');
+    const atlas=page.locator('#service-atlas');
+    await expect(atlas).toBeVisible();
+    for (const href of ['services/software-engineering.html','services/ai-automation.html','services/blockchain-web3.html','services/creative-design.html','services/digital-growth.html','services/ecommerce-operations.html']) await expect(atlas.locator('a[href="'+href+'"]')).toHaveCount(1);
+    await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
@@ -187,7 +216,7 @@ test.describe('Phase I route and content checks', () => {
     });
     await page.goto('/brief-builder.html');
     expect(await page.locator('#brief-form').evaluate(form => form.checkValidity())).toBe(false);
-    await page.getByLabel('Main area of help').selectOption({ label: 'AI / LLM / agent development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'AI, LLM & intelligent automation' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Planning an MVP' });
     await page.getByLabel('Goal or problem to solve').fill('Create an AI support assistant that helps answer common product questions.');
     await page.getByLabel('Project name').fill('Support Assistant');
@@ -199,7 +228,7 @@ test.describe('Phase I route and content checks', () => {
     const output = page.getByLabel('Generated project brief');
     const generatedBrief = await output.inputValue();
     expect(generatedBrief).toContain('Support Assistant');
-    expect(generatedBrief).toContain('AI / LLM / agent development');
+    expect(generatedBrief).toContain('AI, LLM & intelligent automation');
     expect(generatedBrief).toContain('Security and privacy');
     expect(generatedBrief).toContain('AI quality and evaluation');
     await expect(page.locator('#brief-status')).toContainText('generated in this browser tab');
@@ -230,7 +259,7 @@ test.describe('Phase I route and content checks', () => {
     expect(structured.schemaVersion).toBe('1.0');
     expect(structured.documentType).toBe('agency-project-brief');
     expect(structured.project.name).toBe('Support Assistant');
-    expect(structured.project.service).toBe('AI / LLM / agent development');
+    expect(structured.project.service).toBe('AI, LLM & intelligent automation');
     expect(structured.priorities).toContain('Security and privacy');
     expect(structured.submitted).toBe(false);
     expect(structured.notAQuote).toBe(true);
@@ -243,7 +272,7 @@ test.describe('Phase I route and content checks', () => {
 
   test('project brief builder reset clears draft output and disables export actions', async ({ page }) => {
     await page.goto('/brief-builder.html');
-    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'Software & website development' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
     await page.getByLabel('Goal or problem to solve').fill('We need a responsive portal to help our customers manage requests.');
     await page.getByRole('button', { name: 'Generate project brief' }).click();
@@ -262,19 +291,141 @@ test.describe('Phase I route and content checks', () => {
       if (request.method() === 'POST' && request.url().includes('/contact.php')) postRequests.push(request.url());
     });
     await page.goto('/brief-builder.html');
-    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'Software & website development' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
     await page.getByLabel('Goal or problem to solve').fill('Build a customer portal where clients can track their service requests.');
     await page.getByLabel('Project name').fill('Contact handoff test');
     await page.getByRole('button', { name: 'Generate project brief' }).click();
     await page.getByRole('button', { name: /Continue to contact/i }).click();
 
-    await expect(page).toHaveURL(/contact\.html\?service=Full-stack%20development&from=brief-builder$/);
+    await expect(page).toHaveURL(/contact\.html\?service=Software%20%26%20website%20development&from=brief-builder$/);
     await expect(page.locator('textarea[name="message"]')).toHaveValue(/Contact handoff test/);
     await expect(page.locator('textarea[name="message"]')).toHaveValue(/customer portal/);
     await expect(page.locator('#form-status')).toContainText(/inquiry has not been sent/i);
     expect(await page.evaluate(() => sessionStorage.getItem('agency-project-brief-draft'))).toBeNull();
     expect(postRequests).toEqual([]);
+  });
+
+  test('terms and disclaimer drafts are reachable, clearly marked, and not indexable', async ({ page }) => {
+    for (const [route, heading] of [['/privacy.html','Privacy, in'],['/terms.html','Clear terms for'],['/disclaimer.html','Know what the']]) {
+      await page.goto(route);
+      await expect(page.locator('h1')).toContainText(heading);
+      await expect(page.locator('.legal-status').first()).toContainText(/DRAFT NOTICE|DRAFT ONLY|DRAFT TERMS|DRAFT DISCLAIMER/i);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
+      await expect(page.locator('footer a[href="/terms.html"], footer a[href="../terms.html"], footer a[href="terms.html"]')).toHaveCount(1);
+    }
+  });
+
+  test('footer exposes privacy, terms and disclaimer from the platform pages', async ({ page }) => {
+    for (const route of PAGES) {
+      await page.goto(route);
+      await expect(page.locator('footer a[href$="terms.html"]')).toHaveCount(1);
+      await expect(page.locator('footer a[href$="disclaimer.html"]')).toHaveCount(1);
+      await expect(page.locator('footer a[href$="privacy.html"]')).toHaveCount(1);
+    }
+  });
+
+  test('3D service map links are keyboard reachable and respect reduced motion', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.hero-actions a').last().focus();
+    await page.keyboard.press('Tab');
+    const links = page.locator('#service-atlas .atlas-node');
+    await expect(links).toHaveCount(6);
+    for (let i=0;i<6;i++) {
+      await expect(links.nth(i)).toBeFocused();
+      if (i<5) await page.keyboard.press('Tab');
+    }
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const transition = await links.first().evaluate(el => getComputedStyle(el).transitionDuration);
+    expect(Number.parseFloat(transition)).toBeLessThanOrEqual(0.00001);
+  });
+
+  test('each service detail enquiry CTA preselects the matching contact category', async ({ page }) => {
+    const services = [
+      ['/services/software-engineering.html','Software & website development'],
+      ['/services/ai-automation.html','AI, LLM & intelligent automation'],
+      ['/services/blockchain-web3.html','Blockchain & Web3'],
+      ['/services/creative-design.html','Graphic design & creative services'],
+      ['/services/digital-growth.html','Digital marketing & growth'],
+      ['/services/ecommerce-operations.html','E-commerce & marketplace operations']
+    ];
+    for (const [route, service] of services) {
+      await page.goto(route);
+      await page.getByRole('link', { name: /Discuss this service/i }).first().click();
+      expect(new URL(page.url()).pathname).toBe('/contact.html');
+      expect(new URL(page.url()).searchParams.has('service')).toBe(true);
+      await expect(page.locator('select[name="interest"]')).toHaveValue(service);
+    }
+  });
+
+  test('draft legal pages are intentionally excluded from the sitemap', async ({ page }) => {
+    const response = await page.request.get('/sitemap.xml');
+    expect(response.status()).toBe(200);
+    const xml = await response.text();
+    expect(xml).not.toContain('/privacy.html');
+    expect(xml).not.toContain('/terms.html');
+    expect(xml).not.toContain('/disclaimer.html');
+  });
+
+  test('mobile visitors can tap a service-map node and reach its detail page', async ({ page }) => {
+    const context = await page.context().browser().newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true
+    });
+    const mobilePage = await context.newPage();
+    await mobilePage.goto('/');
+    await mobilePage.locator('#service-atlas .atlas-software').tap();
+    await mobilePage.waitForURL(url => url.pathname === '/services/software-engineering.html');
+    expect(new URL(mobilePage.url()).pathname).toBe('/services/software-engineering.html');
+    await expect(mobilePage.locator('h1')).toContainText('Websites and platforms');
+    await context.close();
+  });
+
+  test('service and project detail pages provide working breadcrumbs', async ({ page }) => {
+    const routes = [
+      ['/services/software-engineering.html','/services.html'],
+      ['/services/ai-automation.html','/services.html'],
+      ['/services/blockchain-web3.html','/services.html'],
+      ['/services/creative-design.html','/services.html'],
+      ['/services/digital-growth.html','/services.html'],
+      ['/services/ecommerce-operations.html','/services.html'],
+      ['/work/strideto.html','/work.html'],
+      ['/work/regexlab.html','/work.html'],
+      ['/work/jotjson.html','/work.html'],
+      ['/work/siteintel-pulse.html','/work.html'],
+      ['/work/free-ai-mixer.html','/work.html']
+    ];
+    for (const [route,parent] of routes) {
+      await page.goto(route);
+      await expect(page.locator('.breadcrumb')).toBeVisible();
+      await expect(page.locator('.breadcrumb a').first()).toHaveAttribute('href', route.startsWith('/services/') ? '../index.html' : '../index.html');
+      await expect(page.locator('.breadcrumb a').nth(1)).toHaveAttribute('href', parent === '/services.html' ? '../services.html' : '../work.html');
+      await expect(page.locator('.breadcrumb [aria-current="page"]')).toBeVisible();
+    }
+  });
+
+  test('404 page is noindex and excluded from the sitemap', async ({ page }) => {
+    await page.goto('/404.html');
+    const heading = (await page.locator('h1').innerText())
+      .replaceAll(String.fromCharCode(10), '')
+      .replaceAll(String.fromCharCode(13), '')
+      .replaceAll(' ', '')
+      .toLowerCase();
+    expect(heading).toBe('thispagetookawrongturn.');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
+    const response = await page.request.get('/sitemap.xml');
+    const xml = await response.text();
+    expect(xml).not.toContain('/404.html');
+  });
+
+  test('public pages do not expose internal release-phase labels', async ({ page }) => {
+    for (const route of PAGES) {
+      await page.goto(route);
+      const visibleText = await page.locator('body').innerText();
+      expect(visibleText, 'Internal release labels must stay in project documentation: ' + route)
+        .not.toMatch(/\\bPHASE\\s*[12]\\b/i);
+    }
   });
 
 });

@@ -172,8 +172,8 @@ Deliverables:
 - Homepage that introduces and routes visitors to dedicated sections; it is not the only substantive page.
 - Properly connected Services, Work, About/Approach, Contact, Project Brief and legal destinations.
 - Clear page hierarchy, breadcrumbs where useful, metadata and active navigation states.
-- Service wording that explicitly covers all kinds of websites across different technologies.
-- Initial design-system direction and one useful, accessible 3D/interactive visual experience with a reliable fallback.
+- Six initial service detail pages with wording that explicitly covers all kinds of websites across different technologies.
+- Initial shared design tokens and a useful, accessible CSS 3D service map with keyboard/touch navigation and reduced-motion behavior.
 - Verified content and project-status labels; no invented claims.
 
 Exit criteria:
@@ -199,20 +199,23 @@ Exit criteria:
 - Performance, mobile usability, keyboard access and visual consistency pass review.
 - No decorative animation obscures content or creates interaction traps.
 
-### Phase 3 — Service divisions, detail pages and team profiles
+### Phase 3 — Service depth, positioning and team profiles
 
-**Purpose:** make the agency's breadth understandable and credible.
+**Purpose:** deepen the six service areas already established in Phase 1, improve their conversion journeys and publish approved team expertise.
+
+Phase 1 provides the six service-detail routes and the initial Service Finder. Phase 3 is an enhancement phase; it must build on those pages rather than recreate them.
 
 Deliverables:
-- A dedicated overview and detail page for each of the six service divisions.
-- Service-specific deliverables, process, typical fit, boundaries, FAQs and calls to action.
-- Verified team/role profiles and experience details with approved biographies.
-- Service Finder updated to cover the full service taxonomy.
+- Expand each service page with validated examples, industry/use-case guidance, FAQs based on real customer questions and clearer engagement boundaries.
+- Improve cross-linking between related services, relevant case studies, products and useful editorial guides.
+- Refine the Service Finder using inquiry feedback and evidence about visitor intent.
+- Publish individual team/role profiles, biographies and credentials only after consent and owner approval.
+- Add service-specific process, scope and handover details where they materially help buyers understand delivery.
 
 Exit criteria:
-- Each service page explains what is delivered and how a client starts.
-- Claims, team size, experience and qualifications have evidence/approval.
-- Forms and inquiry categories map correctly to the service pages.
+- Each service page clearly differentiates its capabilities and typical engagement fit.
+- All public team and experience claims have evidence/permission or are omitted.
+- Service links, inquiry preselection and related-content links remain consistent.
 
 ### Phase 4 — Portfolio and case-study system
 

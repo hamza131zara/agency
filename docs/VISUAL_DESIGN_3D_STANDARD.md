@@ -5,7 +5,7 @@
 
 ## 1. Experience principles
 
-The agency website should feel confident, contemporary, technically capable and human. Use strong typography, deliberate spacing, clear content hierarchy, high-quality imagery/diagrams and restrained motion.
+The agency website should feel confident, contemporary, technically capable and human. Use strong typography, deliberate spacing, clear content hierarchy, high-quality imagery/diagrams and restrained motion. The current implementation uses the working token set recorded above consistently across the primary, service-detail, product, automation and project pages.
 
 Visuals must help a visitor understand at least one of:
 - What the agency builds.
@@ -26,7 +26,19 @@ The design direction is a premium digital studio aesthetic:
 - Consistent component geometry, spacing, borders, radii and icon treatment.
 - A balance of light information surfaces and darker/high-impact visual sections where they improve focus.
 
-The final exact palette, type scale and logo treatment are to be approved during Phase 1 design work. Do not invent an official brand identity or logo.
+The current implementation uses a working UI palette and typography system; this is a design baseline, not a confirmed legal/brand identity. Final logo treatment, official agency name and any brand-specific adjustments still require owner approval. Do not invent an official brand identity or logo.
+
+Current implemented CSS tokens in `assets/css/styles.css`:
+
+| Token group | Values / purpose |
+|---|---|
+| Core colours | `--paper: #f4f3ee`, `--ink: #171b19`, `--muted: #747872`, `--line: #d8d9d1`, `--lime: #d7fc62`, `--orange: #f0784c`, `--white: #fff` |
+| Typography | `--sans: "Manrope", Arial, sans-serif`; `--mono: "DM Mono", monospace` |
+| Layout | `--max: 1220px` content width |
+| Spacing | `--space-1` through `--space-16` (4, 8, 12, 16, 20, 24, 32, 40, 48 and 64px) |
+| Shape/motion | `--radius-sm: 2px`, `--radius-md: 4px`, `--motion-fast: 160ms ease` |
+
+Use these shared tokens for new page components and extend them only when a real component need is documented. Existing established page styles may retain a one-off value where changing it would harm layout or regression stability.
 
 ## 3. 3D and spatial visual use cases
 
@@ -59,6 +71,8 @@ Every interactive visual must provide:
 - No essential content available only through hover or canvas rendering.
 - A reset/recenter control for rotatable scenes.
 - A way to pause or avoid movement.
+
+For a static CSS service constellation with no user-controlled rotation and no continuous animation, reset/recenter and pause controls are not applicable. Document that no persistent movement occurs; retain normal link focus, touch targets and reduced-motion behavior.
 - No forced motion, sudden camera movement or disorienting zoom.
 - No use of colour alone to communicate state.
 - A semantic text summary and relevant accessible labels.
@@ -139,7 +153,7 @@ For every major page or scene:
 - [ ] 3D has a defined purpose and visible instructions if interactive.
 - [ ] A static fallback preserves all essential information.
 - [ ] Reduced-motion mode is usable.
-- [ ] Keyboard and touch interactions work.
+- [ ] Keyboard and touch interactions work. A static, non-rotating map does not require reset/pause controls; test that its links remain reachable and that reduced-motion removes its hover transition.
 - [ ] WebGL failure does not break the page.
 - [ ] Assets and bundles are measured and reasonably optimized.
 - [ ] Screenshots have been manually reviewed on desktop and mobile.

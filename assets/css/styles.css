@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
-:root{--paper:#f4f3ee;--ink:#171b19;--muted:#747872;--line:#d8d9d1;--lime:#d7fc62;--orange:#f0784c;--white:#fff;--mono:"DM Mono",monospace;--sans:"Manrope",Arial,sans-serif;--max:1220px}
+:root{--paper:#f4f3ee;--ink:#171b19;--muted:#747872;--line:#d8d9d1;--lime:#d7fc62;--orange:#f0784c;--white:#fff;--mono:"DM Mono",monospace;--sans:"Manrope",Arial,sans-serif;--max:1220px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:2px;--radius-md:4px;--motion-fast:160ms ease}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:95px}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
@@ -664,3 +664,52 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     font: 9pt/1.55 "Courier New", monospace !important;
   }
 }
+
+
+/* Phase 1: useful CSS 3D service atlas and responsive catalogue cards. */
+.home-services-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.home-services-grid .service-card{min-height:270px}.home-services-grid .service-card h3{min-height:52px}
+.service-atlas{height:480px;min-height:460px;padding:0;overflow:hidden;background:radial-gradient(circle at 50% 48%,#f5f7ec 0,#e5e9dd 48%,#dce2d7 100%);border:1px solid #d0d7ca;perspective:1150px;isolation:isolate}
+.service-atlas:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#2531250c 1px,transparent 1px),linear-gradient(90deg,#2531250c 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}
+.atlas-heading,.atlas-footer{position:absolute;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#646d60;font:8px var(--mono);letter-spacing:.08em;z-index:5}.atlas-heading{top:20px}.atlas-footer{bottom:18px}
+.atlas-scene{position:absolute;left:0;right:0;top:48px;bottom:45px;transform-style:preserve-3d;transform:rotateX(3deg) rotateY(-5deg)}
+.atlas-ring{position:absolute;left:50%;top:50%;border:1px solid #aab6a6;border-radius:50%;transform-style:preserve-3d;pointer-events:none}
+.atlas-ring-one{width:320px;height:250px;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(-12deg)}.atlas-ring-two{width:405px;height:310px;border-style:dashed;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(27deg)}.atlas-ring-three{width:270px;height:220px;border-color:#bf8e73;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(78deg)}
+.atlas-hub{position:absolute;left:50%;top:50%;width:138px;height:138px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;text-align:center;border-radius:50%;color:#f7f8f1;background:linear-gradient(145deg,#343e35,#171d19);border:5px solid #f4f5ec;box-shadow:0 18px 38px #18251d30,0 0 0 1px #889682;transform:translate(-50%,-50%) translateZ(50px)}
+.atlas-hub-mark{font:800 25px var(--sans);color:#d7fc62;letter-spacing:-.08em}.atlas-hub strong{font-size:18px;line-height:1.02;letter-spacing:-.04em}.atlas-hub small{font:7px var(--mono);color:#c1cbbd}
+.atlas-node{position:absolute;display:flex;flex-direction:column;gap:var(--space-1);width:166px;min-height:68px;padding:var(--space-3) 13px;background:#f8f9f3;border:1px solid #c8d0c3;box-shadow:0 10px 22px #1e30200d;color:#202820;transform-style:preserve-3d;transition:transform .22s,box-shadow .22s,border-color .22s}
+.atlas-node:hover,.atlas-node:focus-visible{border-color:#7b9458;box-shadow:0 17px 28px #1e302021;transform:translate(-50%,-50%) translateZ(28px) scale(1.035)}
+.atlas-node small{color:#727d6b;font:7px var(--mono);letter-spacing:.08em}.atlas-node strong{font-size:11px;line-height:1.35}.atlas-node span{color:#788173;font:7px var(--mono)}
+.atlas-software{left:50%;top:9%;transform:translate(-50%,-50%) translateZ(48px)}.atlas-ai{left:83%;top:30%;transform:translate(-50%,-50%) translateZ(22px)}.atlas-web3{left:78%;top:76%;transform:translate(-50%,-50%) translateZ(38px)}.atlas-ecommerce{left:50%;top:94%;transform:translate(-50%,-50%) translateZ(16px)}.atlas-design{left:22%;top:76%;transform:translate(-50%,-50%) translateZ(42px)}.atlas-growth{left:17%;top:30%;transform:translate(-50%,-50%) translateZ(24px)}
+.service-division-grid,.product-catalogue-grid,.automation-roadmap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}.service-division,.product-card,.automation-roadmap-grid article{min-width:0;padding:clamp(20px,3vw,30px);border:1px solid var(--line);background:#f8f8f3}
+.service-division{scroll-margin-top:var(--space-16)}.service-division:nth-child(3n+1),.product-card:nth-child(3n+1){background:#eef0e7}.service-division>small,.product-card-top small{display:block;color:#596354;font:8px var(--mono);letter-spacing:.07em}
+.service-division h2{margin:24px 0 12px;font-size:clamp(22px,2.5vw,30px);line-height:1.16;letter-spacing:-.05em}.service-division p,.product-card p,.automation-roadmap-grid p{color:#5b6358;font-size:11px;line-height:1.85}
+.service-division ul{padding-left:17px;margin:17px 0 22px;color:#51594f;font-size:11px;line-height:1.9}.service-division li{padding-left:3px;margin:4px 0}.service-division>a,.product-card>a{display:inline-flex;margin:11px 14px 0 0;color:#293529;font-size:10px;font-weight:800;text-decoration:underline;text-decoration-color:#a8b58f;text-underline-offset:4px}.service-division .service-note{padding:12px 14px;border-left:2px solid var(--orange);background:#f0f0e8;color:#5b6358;font-size:10px}
+.product-card{display:flex;flex-direction:column;min-height:275px}.product-card h2{margin:25px 0 8px;font-size:27px;letter-spacing:-.05em}.product-card p{flex:1}.product-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.product-status{display:inline-flex;align-items:center;padding:6px 8px;font:7px var(--mono);letter-spacing:.07em;border:1px solid #c9d0c0;background:#eef0e7;color:#465241}.status-live{border-color:#9db77b;background:#eef5e5;color:#38542a}.status-development{border-color:#d4b288;background:#fbf1e4;color:#7b5128}.status-planned{border-color:#c8cfc1;background:#f0f1ec;color:#62695d}.product-disclaimer{max-width:900px;margin:26px auto 0}.automation-roadmap-grid article h3{margin:17px 0 7px;font-size:18px;letter-spacing:-.03em}
+@media(max-width:1050px){.service-atlas{height:450px;min-height:450px}.atlas-node{width:150px;padding:10px 11px}.atlas-ring-one{width:295px;height:225px}.atlas-ring-two{width:365px;height:275px}.home-services-grid .service-card{min-height:285px}}
+@media(max-width:760px){.home-services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-services-grid .service-card{min-height:245px}.service-atlas{height:430px;min-height:430px}.atlas-scene{top:47px;bottom:42px}.atlas-node{width:137px;min-height:62px;padding:9px}.atlas-node strong{font-size:9px}.atlas-node small,.atlas-node span{font-size:6px}.atlas-software{top:10%}.atlas-ai{left:82%;top:31%}.atlas-web3{left:80%;top:75%}.atlas-ecommerce{top:91%}.atlas-design{left:20%;top:75%}.atlas-growth{left:18%;top:31%}.atlas-hub{width:112px;height:112px}.atlas-hub strong{font-size:15px}.atlas-ring-one{width:245px;height:195px}.atlas-ring-two{width:315px;height:245px}.atlas-ring-three{width:215px;height:175px}.service-division-grid,.product-catalogue-grid,.automation-roadmap-grid{grid-template-columns:1fr}.service-division h2{font-size:25px}}
+@media(max-width:390px){.service-atlas{height:410px;min-height:410px}.atlas-heading,.atlas-footer{left:12px;right:12px;font-size:6px}.atlas-node{width:123px;padding:8px}.atlas-node strong{font-size:8px}.atlas-hub{width:98px;height:98px}.atlas-hub strong{font-size:13px}.atlas-ring-one{width:210px;height:168px}.atlas-ring-two{width:275px;height:215px}}
+@media(prefers-reduced-motion:reduce){.atlas-node{transition:none}}
+
+
+/* Dedicated service detail pages and breadcrumb hierarchy. */
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin:var(--space-5) 0 35px;color:#626a60;font-size:10px}
+.breadcrumb a{color:#394436;text-decoration:underline;text-underline-offset:4px}
+.breadcrumb [aria-current="page"]{color:#343c32}
+.service-detail-intro{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.7fr);gap:clamp(28px,6vw,82px);align-items:start}
+.service-detail-intro h1{max-width:790px;font-size:clamp(42px,6.3vw,78px);line-height:.98;letter-spacing:-.075em}
+.service-detail-lead{max-width:700px;margin:24px 0;color:#535d51;font-size:14px;line-height:1.9}
+.service-detail-aside,.service-detail-fit{padding:25px;border:1px solid var(--line);background:#eef0e7}
+.service-detail-aside>small,.service-detail-fit>small{font:8px var(--mono);letter-spacing:.1em;color:#596354}
+.service-detail-aside ul{list-style:none;padding:0;margin:20px 0 0}
+.service-detail-aside li{padding:12px 0;border-top:1px solid #d5dacd;color:#4e584a;font-size:11px;line-height:1.7}
+.service-detail-body{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:clamp(25px,6vw,80px);padding-top:56px;padding-bottom:100px}
+.service-detail-main h2{margin:15px 0 25px;font-size:clamp(28px,4vw,42px);letter-spacing:-.06em}
+.service-capabilities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 26px;padding:0;list-style:none}
+.service-capabilities li{position:relative;padding:14px 0 14px 22px;border-top:1px solid var(--line);color:#4b5549;font-size:12px;line-height:1.75}
+.service-capabilities li:before{content:"↗";position:absolute;left:0;top:13px;color:var(--orange)}
+.service-detail-note{margin-top:25px;padding:18px 20px;background:#f0f0e8;border-left:2px solid var(--orange);color:#4e584a;font-size:11px;line-height:1.8}
+.service-detail-fit{align-self:start;position:sticky;top:25px}
+.service-detail-fit p{margin:17px 0;color:#4e584a;font-size:12px;line-height:1.85}
+.service-detail-fit a{display:block;margin-top:17px;color:#293529;font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:760px){.service-detail-intro,.service-detail-body{grid-template-columns:1fr}.service-detail-intro h1{font-size:clamp(40px,12vw,58px)}.service-detail-aside{padding:19px}.service-detail-body{padding-top:30px;padding-bottom:65px}.service-capabilities{grid-template-columns:1fr}.service-detail-fit{position:static}}
