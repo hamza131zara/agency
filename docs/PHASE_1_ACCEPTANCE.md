@@ -106,7 +106,7 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - Current route inventory: 25 HTML routes (14 root, six service details, five project details); 21 URLs in sitemap.
 - Privacy, Terms, Disclaimer and 404 are noindex and omitted from the 21-URL sitemap.
 - Product/repository factual notes and owner-claim review list: `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
-- Latest branch-head CI is tracked at [Run #148](https://github.com/hamza131zara/agency/actions/runs/41812453643) — validation and browser/accessibility jobs both passed on commit `0c3b4d91b96fdee230306a10bc486e875632c51a`.
+- Latest branch-head CI is tracked at [Run #150](https://github.com/hamza131zara/agency/actions/runs/41812983514) — validation and browser/accessibility jobs both passed on commit `93e3e506ff47e81a92973eb080c9bd855f6278ea`.
 - Browser artifact captures all 25 routes at desktop and mobile sizes (50 screenshots). The contact sheet and representative full-size captures were manually reviewed.
 - Automated coverage includes 25-route metadata/local-link validation, responsive checks at 320/390/768/1440px, axe checks across 25 routes, service CTA preselection, breadcrumbs, keyboard/touch/reduced-motion, a 25-route public-copy guard against internal phase labels, and legal/404 indexing rules.
 

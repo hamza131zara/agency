@@ -3,7 +3,7 @@
 **Status:** Phase 1 implementation is ready for owner review; automated checks and visual review are complete; owner/legal sign-off remains pending  
 **Implementation branch:** `phase1/multipage-foundation`  
 **Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
-**Latest CI:** [Run #148 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41812453643)  
+**Latest CI:** [Run #150 — validation and browser/accessibility passed on the current PR head](https://github.com/hamza131zara/agency/actions/runs/41812983514)  
 **Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
