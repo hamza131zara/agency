@@ -108,7 +108,14 @@ Each Phase 2 pull request must record: changed routes/assets, design rationale, 
 | P2.1 — Visual baseline and art direction | Baseline reviewed; current palette/wordmark explicitly remain provisional. | Screenshot review at 1440px and 390px; design notes in `docs/VISUAL_DESIGN_3D_STANDARD.md`. |
 | P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | The desktop/mobile screenshots exposed two mobile clipping issues; the hub caption is hidden on mobile and a max-width: 380px layout now keeps the four side cards inside the 320px map frame. Review the 320/390/768/1440px screenshots from the latest exact-head run. |
 | P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Keyboard/touch coverage remains; a new Playwright regression asserts the four side cards remain within the 3D map frame at 320px and 390px. Require latest exact-head CI before closing. |
-| P2.4 — Evidence-led work/product visuals | Not started; current project mockups remain illustrative. | Await approved project screenshots and contribution/usage permissions. Do not add unverified assets. |
+| P2.4 — Evidence-led work/product visuals | Evidence audit complete; authentic screenshot replacements deferred pending owner-selected source captures and publishing permission. | `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` records all five projects plus the service constellation, current preview status, source evidence and replacement decisions. Free AI Mixer detail page now labels its flow as conceptual. No unapproved images or invented UI added. |
 | P2.5 — Performance, accessibility and regression | In progress. | CSS increased by 2,993 characters versus `main`; no new assets, production browser JavaScript or runtime dependencies. The visual-review artifact now captures Home at 320/390/768/1440px, keeps the full route set at 390/1440px, and tests side-card containment at 320/390px. Latest browser/responsive/axe run must pass on the exact PR head and all breakpoint screenshots must be reviewed. |
 
 This is a progress record, not a Phase 2 completion declaration. The acceptance checklist above remains open until final CI and owner visual review are recorded.
+
+
+### P2.4 audit outcome — 4 November 2026
+
+The preview audit is recorded in `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md`. The existing work-index notice already classifies the UI previews as illustrative; STRIDETO, RegexLab, JotJSON and SiteIntel Pulse project pages do the same. Free AI Mixer now explicitly says its prompt-to-media flow is conceptual, not a production screen or available demo.
+
+No authentic screenshot was added because the repository does not contain approved source captures or written project-image publishing approvals. This completes P2.4's audit/classification work and deliberately defers image replacement; it does not claim the missing assets are available.
