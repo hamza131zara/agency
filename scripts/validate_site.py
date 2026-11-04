@@ -71,7 +71,7 @@ for non_indexable_page in ("privacy.html","terms.html","disclaimer.html","404.ht
  if non_indexable_page in sitemap_content:
   errors.append(f"{non_indexable_page}: non-indexable page must remain outside the sitemap")
 if "hash_equals" not in (ROOT/"contact.php").read_text(encoding="utf-8"): errors.append("CSRF check missing")
-if "PHASE 2" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home does not identify Phase 2 scope")
+if "FUTURE AUTOMATION TOOLS" not in (ROOT/"index.html").read_text(encoding="utf-8"): errors.append("home must identify future automation tools as a roadmap, not a released phase")
 if "data-project-filter" not in (ROOT/"work.html").read_text(encoding="utf-8"): errors.append("portfolio category filters missing")
 if "brief-form" not in (ROOT/"brief-builder.html").read_text(encoding="utf-8"): errors.append("project brief builder form missing")
 if 'id="download-brief-json"' not in (ROOT/"brief-builder.html").read_text(encoding="utf-8"): errors.append("project brief JSON export button missing")
