@@ -87,10 +87,10 @@ For all six service detail pages:
 
 | Work package | Status | Evidence / next action |
 |---|---|---|
-| P3.1 — Service page depth | IN PROGRESS | Six current service detail pages have baseline capabilities, fit statements and delivery-focus summaries. Add tailored engagement paths, FAQs and scope decisions. |
-| P3.2 — Related journeys | PLANNED | The current finder prints related service names as text. Convert them to accessible internal links and add cross-links on detail pages. |
-| P3.3 — Team profiles | IN PROGRESS | Team page currently contains graphic designer 8+ years/bachelor's degree and e-commerce 10+ specialist claims. Evidence register says these are owner-provided but unverified; replace with capability-only wording until consent and confirmation. |
+| P3.1 — Service page depth | FIRST INCREMENT IMPLEMENTED | All six service pages now include a tailored four-step delivery path, pre-engagement scope decisions and three FAQs. Exact-head QA still required. |
+| P3.2 — Related journeys | FIRST INCREMENT IMPLEMENTED | Each service page links to complementary service pages; Service Finder recommendations now render as real accessible internal links. Exact-head QA still required. |
+| P3.3 — Team profiles | PROFILE GOVERNANCE IMPLEMENTED | Removed unverified numerical experience, degree and 10+ team-size claims from public Team page. Added a profile consent/approval note and a publication checklist to `docs/PORTFOLIO_CONTENT_EVIDENCE.md`. Individual profiles remain deferred until approved evidence exists. |
 | P3.4 — Evidence-led refinement | BLOCKED ON EVIDENCE | No approved analytics or inquiry-pattern dataset supplied. Do not call changes research-based. |
-| P3.5 — QA | PLANNED | Add focused Playwright assertions for six service pages, related links, finder recommendations and verified-claims policy; run complete CI and inspect screenshots. |
+| P3.5 — QA | IN PROGRESS | Added Playwright tests for six service pages, four-step process, FAQs, related-link 200 responses, Service Finder links and team-claim safeguards. Run complete CI and inspect changed-page screenshots before acceptance. |
 
 This is an execution plan, not a completion declaration. Update the table and acceptance checklist only when implementation and QA evidence exist.
