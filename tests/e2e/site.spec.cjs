@@ -79,7 +79,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(toggle).toBeFocused();
     await toggle.click();
     await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Services' }).click();
-    await expect(page).toHaveURL(/\/services\.html$/);
+    await expect(page).toHaveURL(/services[.]html$/);
     await expect(page.locator('#primary-nav')).not.toBeVisible();
   });
 
