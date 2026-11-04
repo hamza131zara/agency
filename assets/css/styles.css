@@ -1038,3 +1038,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .service-scope-note { padding: 17px; }
   .service-related-block { padding: 19px; }
 }
+
+/* Phase 3 / profile publication safeguards. */
+.team-profile-note {
+  margin: 0 0 24px;
+  padding: 17px 20px;
+  border-left: 3px solid var(--orange);
+  background: #f0f1e9;
+  color: #535d50;
+  font-size: 11px;
+  line-height: 1.8;
+}
