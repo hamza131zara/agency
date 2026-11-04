@@ -107,7 +107,7 @@ Each Phase 2 pull request must record: changed routes/assets, design rationale, 
 | Work package | Progress | Evidence / next check |
 |---|---|---|
 | P2.1 — Visual baseline and art direction | Baseline reviewed; current palette/wordmark explicitly remain provisional. | Screenshot review at 1440px and 390px; design notes in `docs/VISUAL_DESIGN_3D_STANDARD.md`. |
-| P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | Desktop/mobile captures reviewed; mobile hub caption refined after screenshot inspection; verify new screenshot in CI #41835653951. |
+| P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | Desktop/mobile captures reviewed; the nonessential hub caption was hidden on mobile after the shortened caption still clipped in the 390px screenshot; verify the final screenshot in the latest CI run. |
 | P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Existing keyboard/touch test coverage; verify latest run before closing this work package. |
 | P2.4 — Evidence-led work/product visuals | Not started; current project mockups remain illustrative. | Await approved project screenshots and contribution/usage permissions. Do not add unverified assets. |
 | P2.5 — Performance, accessibility and regression | In progress. | CSS increased by 2,188 characters versus `main`; no new assets, JavaScript or runtime dependencies. Latest browser/responsive/axe run must pass and screenshots must be reviewed. |
