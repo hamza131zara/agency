@@ -2,21 +2,18 @@ const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 
 const ALLOWED_SERVICES = [
-  'Full-stack development',
-  'AI / LLM / agent development',
-  'AI integration',
-  'Cybersecurity / secure engineering',
-  'Debugging / performance',
-  'UI/UX and product design',
-  'Digital marketing / growth',
-  'Workflow automation consulting',
+  'Software & website development',
+  'AI, LLM & intelligent automation',
+  'Blockchain & Web3',
+  'Graphic design & creative services',
+  'Digital marketing & growth',
+  'E-commerce & marketplace operations',
   'Something else'
 ];
 
 const PAGES = [
-  '/', '/services.html', '/work.html', '/about.html', '/contact.html',
-  '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html',
-  '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
+  '/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html',
+  '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
 ];
 
 test.describe('Phase I route and content checks', () => {
@@ -34,7 +31,7 @@ test.describe('Phase I route and content checks', () => {
   }
 
   test('internal page links use safe attributes when opening new tabs', async ({ page }) => {
-    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/contact.html', '/privacy.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
+    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html', '/privacy.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
         links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
@@ -90,7 +87,7 @@ test.describe('Phase I route and content checks', () => {
 
     await page.locator('input[name="name"]').fill('Test Visitor');
     await page.locator('input[name="email"]').fill('visitor@example.org');
-    await page.locator('select[name="interest"]').selectOption({ label: 'Full-stack development' });
+    await page.locator('select[name="interest"]').selectOption({ label: 'Software & website development' });
     await page.locator('textarea[name="message"]').fill('This is a browser smoke test and must never be delivered.');
     await page.getByRole('button', { name: /send inquiry/i }).click();
     await expect(page.locator('#form-status')).toContainText(/your inquiry has not been sent/i);
@@ -107,7 +104,7 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#local-inquiry-tools')).toBeVisible();
     await page.getByLabel('Your name').fill('Local Copy Test');
     await page.getByLabel('Email address').fill('local-copy@example.org');
-    await page.getByLabel('What can we help with?').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('What can we help with?').selectOption({ label: 'Software & website development' });
     await page.getByLabel('A little about the project').fill('Please build a local draft that can be saved without sending any message.');
 
     const downloadEvent = page.waitForEvent('download');
@@ -119,7 +116,7 @@ test.describe('Phase I route and content checks', () => {
     const contents = await fs.readFile(filePath, 'utf8');
     expect(contents).toContain('Local Copy Test');
     expect(contents).toContain('local-copy@example.org');
-    expect(contents).toContain('Full-stack development');
+    expect(contents).toContain('Software & website development');
     expect(contents).toContain('Please build a local draft');
     expect(contents).toContain('was not submitted');
 
@@ -143,20 +140,28 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.getByRole('link', { name: /View public source/i })).toHaveAttribute('rel', /noopener noreferrer/);
   });
 
-  test('service finder recommends a service and carries the selection into the project brief', async ({ page }) => {
+  test('service divisions have working anchors and the finder carries its choice', async ({ page }) => {
     await page.goto('/services.html');
+    for (const id of ['software','ai','web3','design','growth','ecommerce']) await expect(page.locator('#'+id)).toHaveCount(1);
     const result = page.locator('#service-finder-result');
     await expect(result).toBeHidden();
-    await page.locator('input[name="serviceNeed"][value="AI integration"]').check();
+    await page.locator('input[name="serviceNeed"][value="Blockchain & Web3"]').check();
     await expect(result).toBeVisible();
-    await expect(page.locator('#service-finder-result-title')).toHaveText('AI and platform integration');
-    await expect(page.locator('#service-finder-status')).toContainText(/AI and platform integration/i);
-    await expect(page.locator('#service-finder-brief')).toHaveAttribute('href', 'brief-builder.html?service=AI%20integration');
-    await expect(page.locator('#service-finder-contact')).toHaveAttribute('href', 'contact.html?service=AI%20integration');
+    await expect(page.locator('#service-finder-result-title')).toHaveText('Blockchain and Web3 engineering');
+    await expect(page.locator('#service-finder-status')).toContainText(/Blockchain and Web3 engineering/i);
+    await expect(page.locator('#service-finder-brief')).toHaveAttribute('href','brief-builder.html?service=Blockchain%20%26%20Web3');
+    await expect(page.locator('#service-finder-contact')).toHaveAttribute('href','contact.html?service=Blockchain%20%26%20Web3');
+    await page.getByRole('link',{name:/Build a project brief/i}).click();
+    await expect(page).toHaveURL(/brief-builder\.html\?service=Blockchain%20%26%20Web3$/);
+    await expect(page.locator('#brief-service')).toHaveValue('Blockchain & Web3');
+  });
 
-    await page.getByRole('link', { name: /Build a project brief/i }).click();
-    await expect(page).toHaveURL(/brief-builder\.html\?service=AI%20integration$/);
-    await expect(page.locator('#brief-service')).toHaveValue('AI integration');
+  test('homepage 3D service map links to all six service divisions', async ({ page }) => {
+    await page.goto('/');
+    const atlas=page.locator('#service-atlas');
+    await expect(atlas).toBeVisible();
+    for (const href of ['services.html#software','services.html#ai','services.html#web3','services.html#design','services.html#growth','services.html#ecommerce']) await expect(atlas.locator('a[href="'+href+'"]')).toHaveCount(1);
+    await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
@@ -187,7 +192,7 @@ test.describe('Phase I route and content checks', () => {
     });
     await page.goto('/brief-builder.html');
     expect(await page.locator('#brief-form').evaluate(form => form.checkValidity())).toBe(false);
-    await page.getByLabel('Main area of help').selectOption({ label: 'AI / LLM / agent development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'AI, LLM & intelligent automation' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Planning an MVP' });
     await page.getByLabel('Goal or problem to solve').fill('Create an AI support assistant that helps answer common product questions.');
     await page.getByLabel('Project name').fill('Support Assistant');
@@ -199,7 +204,7 @@ test.describe('Phase I route and content checks', () => {
     const output = page.getByLabel('Generated project brief');
     const generatedBrief = await output.inputValue();
     expect(generatedBrief).toContain('Support Assistant');
-    expect(generatedBrief).toContain('AI / LLM / agent development');
+    expect(generatedBrief).toContain('AI, LLM & intelligent automation');
     expect(generatedBrief).toContain('Security and privacy');
     expect(generatedBrief).toContain('AI quality and evaluation');
     await expect(page.locator('#brief-status')).toContainText('generated in this browser tab');
@@ -230,7 +235,7 @@ test.describe('Phase I route and content checks', () => {
     expect(structured.schemaVersion).toBe('1.0');
     expect(structured.documentType).toBe('agency-project-brief');
     expect(structured.project.name).toBe('Support Assistant');
-    expect(structured.project.service).toBe('AI / LLM / agent development');
+    expect(structured.project.service).toBe('AI, LLM & intelligent automation');
     expect(structured.priorities).toContain('Security and privacy');
     expect(structured.submitted).toBe(false);
     expect(structured.notAQuote).toBe(true);
@@ -243,7 +248,7 @@ test.describe('Phase I route and content checks', () => {
 
   test('project brief builder reset clears draft output and disables export actions', async ({ page }) => {
     await page.goto('/brief-builder.html');
-    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'Software & website development' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
     await page.getByLabel('Goal or problem to solve').fill('We need a responsive portal to help our customers manage requests.');
     await page.getByRole('button', { name: 'Generate project brief' }).click();
@@ -262,7 +267,7 @@ test.describe('Phase I route and content checks', () => {
       if (request.method() === 'POST' && request.url().includes('/contact.php')) postRequests.push(request.url());
     });
     await page.goto('/brief-builder.html');
-    await page.getByLabel('Main area of help').selectOption({ label: 'Full-stack development' });
+    await page.getByLabel('Main area of help').selectOption({ label: 'Software & website development' });
     await page.getByLabel('Where are you now?').selectOption({ label: 'Exploring an idea' });
     await page.getByLabel('Goal or problem to solve').fill('Build a customer portal where clients can track their service requests.');
     await page.getByLabel('Project name').fill('Contact handoff test');
