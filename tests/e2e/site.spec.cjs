@@ -307,10 +307,10 @@ test.describe('Phase I route and content checks', () => {
   });
 
   test('terms and disclaimer drafts are reachable, clearly marked, and not indexable', async ({ page }) => {
-    for (const [route, heading] of [['/terms.html','Clear terms for'],['/disclaimer.html','Know what the']]) {
+    for (const [route, heading] of [['/privacy.html','Privacy, in'],['/terms.html','Clear terms for'],['/disclaimer.html','Know what the']]) {
       await page.goto(route);
       await expect(page.locator('h1')).toContainText(heading);
-      await expect(page.locator('.legal-status').first()).toContainText(/DRAFT ONLY|DRAFT TERMS|DRAFT DISCLAIMER/i);
+      await expect(page.locator('.legal-status').first()).toContainText(/DRAFT NOTICE|DRAFT ONLY|DRAFT TERMS|DRAFT DISCLAIMER/i);
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
       await expect(page.locator('footer a[href="/terms.html"], footer a[href="../terms.html"], footer a[href="terms.html"]')).toHaveCount(1);
     }
@@ -361,6 +361,7 @@ test.describe('Phase I route and content checks', () => {
     const response = await page.request.get('/sitemap.xml');
     expect(response.status()).toBe(200);
     const xml = await response.text();
+    expect(xml).not.toContain('/privacy.html');
     expect(xml).not.toContain('/terms.html');
     expect(xml).not.toContain('/disclaimer.html');
   });
