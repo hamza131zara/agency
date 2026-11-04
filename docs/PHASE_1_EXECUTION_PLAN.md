@@ -3,7 +3,7 @@
 **Status:** Phase 1 implementation is ready for owner review; automated checks and visual review are complete; owner/legal sign-off remains pending  
 **Implementation branch:** `phase1/multipage-foundation`  
 **Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
-**Latest CI:** [Run #140 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41809019489)  
+**Latest CI:** [Run #148 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41812453643)  
 **Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
@@ -59,6 +59,7 @@ The Phase 1 implementation is on branch `phase1/multipage-foundation` and open a
 - **21 URLs are in the sitemap.** Privacy, Terms, Disclaimer and 404 remain outside it until their legal/publication status is approved.
 - All routes are English-only, with page-specific titles, descriptions and H1s, checked local links/fragments and unique IDs.
 - The 3D CSS visual remains progressively enhanced: its labels and links are normal HTML, no canvas/WebGL is required, reduced-motion is respected, and touch/keyboard interaction is covered by tests.
+- The working theme tokens (warm paper, charcoal ink, lime/orange accents, Manrope/DM Mono typography, spacing and radii) are documented and implemented consistently; final official brand/logo approval remains owner-controlled.
 
 ### Content and trust review
 
@@ -70,9 +71,9 @@ The Phase 1 implementation is on branch `phase1/multipage-foundation` and open a
 
 ### Browser and visual evidence
 
-- The latest full-page screenshot artifact captures **all 25 routes at desktop and mobile sizes** (50 captures).
+- The latest full-page screenshot artifact captures **all 25 routes at desktop and mobile sizes** (50 captures). The contact sheet and representative full-size Home, Services, service-detail, Products, Automation and Contact captures were reviewed.
 - The full contact sheet has been manually reviewed for route/page consistency, responsive layout, visible clipping and navigation hierarchy; representative full-size desktop/mobile captures were also inspected.
-- CI covers all 25 routes at 320, 390, 768 and 1440 pixel widths, automated axe checks on all 25 routes, route/navigation/form regressions, breadcrumb behavior, mobile touch activation of the 3D map, keyboard traversal, reduced-motion behavior, service-to-contact preselection, legal noindex/sitemap rules and the 404 noindex rule.
+- CI covers all 25 routes at 320, 390, 768 and 1440 pixel widths, automated axe checks on all 25 routes, route/navigation/form regressions, breadcrumb behavior, mobile touch activation of the 3D map, keyboard traversal, reduced-motion behavior, service-to-contact preselection, legal noindex/sitemap rules, the 404 noindex rule and a public-content guard against internal release-phase labels.
 - Static validation covers nested service pages and project pages, exact English language declarations, page metadata, local links/fragments, non-indexable page rules, JavaScript syntax, PHP lint and the contact endpoint smoke test.
 
 ### Remaining acceptance boundary

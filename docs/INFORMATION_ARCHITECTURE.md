@@ -6,7 +6,7 @@
 
 ## 1. Global navigation model
 
-Recommended primary navigation:
+Implemented primary navigation:
 
 - **Home**
 - **Services** — overview plus six service divisions.
@@ -14,13 +14,14 @@ Recommended primary navigation:
 - **Products** — product catalogue and product detail pages.
 - **Automation** — automation capabilities, available tools and planned tools.
 - **About** — agency identity and principles.
-- **Approach** — delivery method and engagement process.
-- **Team** — verified people and expertise.
-- **Contact** — inquiry and project brief entry.
 
-Use a restrained desktop navigation with clear active states. Group long destinations into accessible dropdowns or mega-menu panels only when the number of pages justifies it. On mobile, provide a simple, keyboard-operable menu with a visible close action and logical focus behavior.
+Utility actions:
+- **Project brief** — direct access to the Project Brief Builder.
+- **Let's talk** — primary Contact CTA.
 
-The Project Brief Builder can be linked as a utility CTA within Contact/Services rather than occupying the same prominence as the primary sections. Legal pages belong in the footer and must remain reachable.
+Approach and Team are independent pages linked from the About page and the global footer. This keeps the desktop/mobile primary navigation compact without hiding either destination. Privacy, Terms and Disclaimer are footer links; the latter three remain noindex drafts until legal details and approval are supplied.
+
+The current menu uses a restrained desktop row and a keyboard-operable mobile toggle with Escape-to-close behavior, stateful `aria-expanded`, and focus returned to the toggle.
 
 ## 2. Page inventory and purpose
 

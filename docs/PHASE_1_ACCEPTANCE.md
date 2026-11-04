@@ -48,8 +48,8 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - [ ] Team size, designer experience/qualification and other personal/business claims are owner-provided; obtain the relevant person's/team lead's approval and permission before final publication.
 
 ### Theme and 3D
-- [ ] Shared type, colour, spacing, layout and component tokens are documented and implemented.
-- [ ] The visual identity is consistent across main routes.
+- [x] Shared type, colour, spacing, layout and component tokens are implemented in CSS and recorded in `docs/VISUAL_DESIGN_3D_STANDARD.md`.
+- [x] The working visual system is consistent across main routes and all six service-detail pages. Final logo/name/brand approval is separately owner-gated.
 - [x] The 3D/interactive visual explains the six service divisions and provides direct navigation to their detail pages.
 - [x] The CSS perspective visual has no WebGL dependency; essential labels and links are normal HTML and remain usable without a 3D runtime.
 - [x] Keyboard traversal of all six service nodes, touch activation in a real touch-enabled mobile context and reduced-motion transition behavior are covered by Playwright. Reset/pause controls are not applicable because this constellation has no continuous animation or user-controlled rotation.
@@ -69,12 +69,12 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - [x] PHP lint checks pass in the latest branch-head CI run.
 - [x] Contact endpoint smoke test passes without sending real email in the latest branch-head CI run.
 - [x] Playwright E2E, responsive and automated axe checks cover all 25 routes; responsive widths are 320/390/768/1440px. Suite includes mobile 3D-map touch, keyboard/reduced-motion, breadcrumb, service-to-contact, legal-policy and 404 noindex/sitemap checks (latest branch-head CI).
-- [ ] Manual keyboard, focus, screen-reader naming, contrast and reduced-motion review is recorded.
-- [x] No critical/high-severity automated functional/accessibility blocker was reported in CI run #140; manual review remains open.
+- [ ] Human screen-reader/assistive-technology review and a final human keyboard/contrast review are still required. Automated Playwright keyboard, touch, focus and reduced-motion checks plus axe scans pass; they are not claimed as a substitute for a human screen-reader review.
+- [x] No critical/high-severity automated functional/accessibility blocker was reported in latest branch-head CI run #148; human assistive-technology review remains open.
 
 ## Owner input and manual acceptance before public launch
 
-- [ ] Complete human keyboard/screen-reader review of header, menus, filters, forms and project brief flow. Automated keyboard checks cover the mobile menu, skip link, 3D-map node traversal and touch navigation.
+- [ ] Complete human keyboard/screen-reader review of header, menus, filters, forms and project brief flow. Automated checks cover mobile menu open/close, Escape/focus return, skip link, 3D-map keyboard traversal, touch navigation, service handoff and reduced motion.
 - [ ] Complete human screen-reader naming/reading-order review and any remaining manual contrast/reduced-motion review; automated axe/Playwright coverage is not a substitute.
 - [x] Review the latest all-route desktop/mobile screenshot contact sheet and representative full-size captures. [ ] Owner still approves final visual identity/brand assets.
 - [ ] Owner confirms project ownership, agency contribution/attribution, technologies, external link uptime and permissions to publish screenshots. Repository-backed product descriptions are registered in `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
@@ -106,9 +106,9 @@ The documentation set has been added/updated and merged through PR #13. These bo
 - Current route inventory: 25 HTML routes (14 root, six service details, five project details); 21 URLs in sitemap.
 - Privacy, Terms, Disclaimer and 404 are noindex and omitted from the 21-URL sitemap.
 - Product/repository factual notes and owner-claim review list: `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
-- Latest branch-head CI is tracked at [Run #140](https://github.com/hamza131zara/agency/actions/runs/41809019489) — current branch-head validation and browser/accessibility jobs both passed.
+- Latest branch-head CI is tracked at [Run #148](https://github.com/hamza131zara/agency/actions/runs/41812453643) — validation and browser/accessibility jobs both passed on commit `0c3b4d91b96fdee230306a10bc486e875632c51a`.
 - Browser artifact captures all 25 routes at desktop and mobile sizes (50 screenshots). The contact sheet and representative full-size captures were manually reviewed.
-- Automated coverage includes 25-route metadata/local-link validation, responsive checks at 320/390/768/1440px, axe checks across 25 routes, service CTA preselection, breadcrumbs, keyboard/touch/reduced-motion and legal/404 indexing rules.
+- Automated coverage includes 25-route metadata/local-link validation, responsive checks at 320/390/768/1440px, axe checks across 25 routes, service CTA preselection, breadcrumbs, keyboard/touch/reduced-motion, a 25-route public-copy guard against internal phase labels, and legal/404 indexing rules.
 
 ## Completion evidence
 

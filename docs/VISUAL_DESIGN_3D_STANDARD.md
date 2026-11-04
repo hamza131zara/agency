@@ -5,7 +5,7 @@
 
 ## 1. Experience principles
 
-The agency website should feel confident, contemporary, technically capable and human. Use strong typography, deliberate spacing, clear content hierarchy, high-quality imagery/diagrams and restrained motion.
+The agency website should feel confident, contemporary, technically capable and human. Use strong typography, deliberate spacing, clear content hierarchy, high-quality imagery/diagrams and restrained motion. The current implementation uses the working token set recorded above consistently across the primary, service-detail, product, automation and project pages.
 
 Visuals must help a visitor understand at least one of:
 - What the agency builds.
