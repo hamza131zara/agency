@@ -407,8 +407,8 @@ test.describe('Phase I route and content checks', () => {
 
   test('404 page is noindex and excluded from the sitemap', async ({ page }) => {
     await page.goto('/404.html');
-    const heading = (await page.locator('h1').innerText()).replace(/\\s+/g, ' ').replace(/took\\s*a/i, 'tooka');
-    expect(heading).toMatch(/This page tooka wrong turn\\.?/i);
+    const heading = (await page.locator('h1').innerText()).replaceAll(' ', '').replaceAll('\\n', '');
+    expect(heading).toMatch(/^Thispagetookawrongturn\\.?$/i);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content','noindex, nofollow');
     const response = await page.request.get('/sitemap.xml');
     const xml = await response.text();
