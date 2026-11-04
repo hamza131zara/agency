@@ -3,7 +3,7 @@
 **Status:** Phase 1 implementation is ready for owner review; automated checks and visual review are complete; owner/legal sign-off remains pending  
 **Implementation branch:** `phase1/multipage-foundation`  
 **Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
-**Latest CI:** [Run #137 — current branch-head validation/browser checks](https://github.com/hamza131zara/agency/actions/runs/41808527626) (see workflow result before merge)  
+**Latest CI:** [Run #140 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41809019489)  
 **Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
@@ -50,7 +50,7 @@ The Phase 1 implementation is on branch `phase1/multipage-foundation` and open a
 - A CSS 3D six-discipline service constellation on Home. Its nodes are real HTML links to dedicated service pages; it uses no WebGL runtime or external 3D library.
 - Service-specific contact CTAs and consistent categories across Home, Contact, Project Brief Builder, Service Finder and the server-side PHP allow-list.
 - Breadcrumbs on all six service detail pages and all five project detail pages.
-- Privacy, Terms and Disclaimer draft pages linked in the footer but marked `noindex, nofollow`; the 404 page is also `noindex, nofollow`. All four are excluded from the sitemap.
+- Privacy, Terms and Disclaimer draft pages linked in the footer but marked `noindex, nofollow`; the 404 page is also `noindex, nofollow`. All four are excluded from the sitemap. The sitemap has 21 indexable URLs and still needs the owner-approved canonical domain.
 - A portfolio evidence register at `docs/PORTFOLIO_CONTENT_EVIDENCE.md`, distinguishing repository-backed facts from owner-provided claims.
 
 ### Current route and indexing inventory
@@ -155,7 +155,7 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 - [x] Services, Work, About, Approach, Contact, Privacy, Terms and Disclaimer have independent destinations; the legal pages remain draft-only until owner/legal approval.
 - [x] Products and Automation have dedicated navigation/page destinations; unavailable capabilities are labelled as planned or in development.
 - [x] Primary navigation uses independent page destinations; homepage 3D service nodes and service cards link to dedicated service detail pages.
-- [x] English-only language policy is applied consistently across the 23 audited routes.
+- [x] English-only language policy is applied consistently across the 25 audited routes.
 
 ### Content
 - [x] Website copy explicitly says the agency can build all kinds of websites/platforms across different technologies.
@@ -173,9 +173,9 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 - [x] Desktop and mobile screenshots were captured and manually reviewed for all 25 HTML routes.
 
 ### Quality and release
-- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #86.
+- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #140.
 - [ ] Keyboard-only navigation and key form flows pass manual tests.
-- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #86; manual review remains open.
+- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #140; manual review remains open.
 - [x] Contact flow retains explicit unsent/local-fallback wording when mail is unavailable; automated contact endpoint smoke tests pass. The real inbox delivery test remains an owner configuration step.
 - [ ] Owner accepts public identity, claims, visuals and project content after reviewing the evidence register and team-claim permissions.
 - [x] Deployment remains deferred until a separate explicit approval.
