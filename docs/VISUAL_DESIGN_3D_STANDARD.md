@@ -176,3 +176,10 @@ A mobile screenshot review identified that the central hub's longer caption was 
 - The hub and orbital geometry are CSS pseudo-elements; service labels, explanations and destinations remain HTML.
 
 The current colour direction and “AGENCY.” mark are still provisional. These implementation notes do not represent final brand approval, a full performance score, or a human assistive-technology audit.
+
+
+## 12. Project/product visual evidence
+
+Project previews are not production screenshots unless they are captured from a verified product build and approved for publication. The work index and project detail pages must label conceptual artwork clearly. The current project-by-project visual audit, evidence gaps and owner inputs are recorded in `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md`.
+
+Do not invent dashboards, provider outputs, customer metrics or screenshots to fill a visual gap. A clearly labelled conceptual composition is preferable to a deceptive product screen. Keep a verified current live URL and development status close to each preview.
