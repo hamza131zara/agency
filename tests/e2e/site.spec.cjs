@@ -202,7 +202,7 @@ test.describe('Phase I route and content checks', () => {
       expect(count).toBeGreaterThanOrEqual(2);
       for (let i = 0; i < count; i++) {
         const href = await links.nth(i).getAttribute('href');
-        expect(href).toMatch(/^\.\.\/services\/[a-z0-9-]+\.html$/);
+        expect(href).toMatch(/^[a-z0-9-]+\.html$/);
         const response = await page.request.get(new URL(href, page.url()).toString());
         expect(response.status(), route + ' related link ' + href).toBe(200);
       }
