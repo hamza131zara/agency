@@ -1,8 +1,10 @@
 # Phase 1 — Multi-page Platform Foundation & Experience
 
-**Status:** Planned / active after documentation baseline  
-**Implementation branch:** To be created after documentation review  
-**Repository baseline:** `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee` when this plan was prepared  
+**Status:** Implementation pull request open; automated CI passed; owner/manual acceptance remains pending  
+**Implementation branch:** `phase1/multipage-foundation`  
+**Pull request:** [#14 — Multi-page platform foundation](https://github.com/hamza131zara/agency/pull/14)  
+**Latest complete CI run:** [Run #86 — validation and browser/accessibility passed](https://github.com/hamza131zara/agency/actions/runs/41801289514)  
+**Repository baseline:** Original audit baseline was `main` at `f147f8dae4f84c1397a40113ee6824f16b1f24ee`; documentation PR #13 has since been merged into `main`.  
 **Scope:** Website foundation, page hierarchy, shared theme, useful visual experience and verified content  
 **Non-goal:** Production launch, paid infrastructure, customer login/checkout or live automation integrations
 
@@ -35,6 +37,37 @@ Current gaps from the reviewed source:
 - There is no established interactive 3D system; the current orbit artwork is CSS-based.
 - Brand/domain/legal operator details and production deployment remain owner decisions.
 - Project visuals and descriptions need continued evidence/approval review.
+
+## 2A. Implementation progress (4 November 2026)
+
+The first Phase 1 implementation slice is on the feature branch and open for review. The following work has been implemented:
+
+- Shared page navigation/footer destinations are connected across the platform.
+- Home remains an overview and now links visitors to independent platform destinations.
+- Six service divisions have an overview and their own detail routes under `services/`.
+- About, Approach and Team are separate pages.
+- Products and Automation are separate pages with explicit lifecycle labels; planned automation is not represented as operational.
+- The homepage has a CSS 3D service constellation. Its six nodes are real HTML links to the dedicated service detail pages. The visual uses no WebGL runtime or external 3D library; the content and navigation remain usable as ordinary HTML.
+- Service choices are aligned across Home, Contact, Project Brief Builder, Service Finder and the PHP endpoint allow-list.
+- Route validation, sitemap entries, E2E route checks and responsive screenshot coverage include the expanded pages.
+
+The platform currently covers 23 public HTML routes: 12 primary pages, six service detail pages and five project detail pages. The 404 route is included in route validation but is not listed as an indexable sitemap destination.
+
+### Verified engineering evidence
+
+- GitHub Actions run #86 completed with both `validate` and `browser-and-accessibility` jobs passing.
+- The run includes Python site validation, JavaScript syntax, PHP lint, the contact endpoint smoke test, Playwright E2E checks, responsive checks at 320/390/768/1440px and automated axe checks.
+- The screenshot artifact includes desktop and mobile captures for Home, Services, all six service detail pages, Products, Automation, Work and Contact.
+- Desktop/mobile samples from Home, Services, a service detail page, Products and Automation were manually inspected. The remaining page-by-page visual review and manual assistive-technology checks remain open.
+
+### Still required before Phase 1 acceptance
+
+- Complete the manual keyboard, focus order, screen-reader naming, contrast and reduced-motion review across primary journeys.
+- Review remaining screenshots/page details and confirm final visual identity and brand assets.
+- Confirm and approve public service/team credentials and the project ownership, contribution, stack, status and screenshot claims.
+- Finalize Terms and Disclaimer content with the actual legal operator/jurisdiction; do not publish invented legal details.
+- Confirm canonical domain, monitored inquiry inbox and verified sender. The sitemap/domain placeholders remain intentionally unresolved.
+- Obtain owner approval for the public content and release. Production deployment remains out of scope and unauthorized in this phase.
 
 ## 3. Work packages
 
@@ -100,15 +133,15 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 
 ### Platform structure
 - [ ] Website has clear, consistent, usable navigation across dedicated pages.
-- [ ] Home is an overview, not the only substantive page.
+- [x] Home is an overview, not the only substantive page.
 - [ ] Services, Work, About, Approach, Contact and legal destinations are independent pages.
-- [ ] Products and Automation have dedicated navigation/page destinations when their module release is ready; they must not masquerade as live if still planned.
-- [ ] Primary navigation contains no broken or misleading anchor-only destinations.
-- [ ] English-only language policy is applied consistently.
+- [x] Products and Automation have dedicated navigation/page destinations; unavailable capabilities are labelled as planned or in development.
+- [x] Primary navigation uses independent page destinations; homepage 3D service nodes and service cards link to dedicated service detail pages.
+- [x] English-only language policy is applied consistently across the 23 audited routes.
 
 ### Content
-- [ ] Website copy explicitly says the agency can build all kinds of websites/platforms across different technologies.
-- [ ] Six service divisions are represented consistently.
+- [x] Website copy explicitly says the agency can build all kinds of websites/platforms across different technologies.
+- [x] Six service divisions are represented consistently across Home, Services, service detail pages and inquiry routes.
 - [ ] Project and product status claims are checked.
 - [ ] No fabricated client proof, metrics, credentials or testimonials.
 - [ ] Any conceptual mockup is labelled illustrative.
@@ -116,18 +149,18 @@ Do not combine this phase with customer accounts, checkout, payments or live ext
 ### Theme and visuals
 - [ ] Shared visual system is consistent across routes.
 - [ ] Typography, spacing, colour and interactive states are readable and coherent.
-- [ ] At least one selected visual/3D experience adds a clear explanatory or navigation benefit, or its implementation is deferred with a documented reason.
-- [ ] 3D has an accessible static fallback and respects reduced motion.
+- [x] The homepage CSS 3D service constellation explains the six divisions and links directly to each detail page.
+- [x] The 3D effect is progressive CSS only: labels and links remain normal HTML, there is no WebGL dependency, and reduced-motion disables hover transitions.
 - [ ] The website remains fully navigable if WebGL is unavailable.
 - [ ] Desktop and mobile screenshot review is complete.
 
 ### Quality and release
-- [ ] Existing automated validation, syntax, PHP and Playwright checks pass.
+- [x] Automated validation, syntax, PHP contact smoke test, Playwright, responsive and axe checks passed in CI run #86.
 - [ ] Keyboard-only navigation and key form flows pass manual tests.
-- [ ] No critical/high-severity accessibility or functional release blocker remains.
+- [x] No critical/high-severity automated accessibility or functional blocker was reported by CI run #86; manual review remains open.
 - [ ] Contact behavior continues to report unsent inquiries honestly when delivery is not configured.
 - [ ] Owner accepts public identity, claims, visuals and project content.
-- [ ] Deployment remains deferred until a separate explicit approval.
+- [x] Deployment remains deferred until a separate explicit approval.
 
 ## 6. Out of scope for Phase 1
 
