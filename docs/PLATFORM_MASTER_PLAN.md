@@ -150,8 +150,8 @@ Each module has its own page(s), navigation destination, page metadata, content 
 |---|---|---|
 | Phase 0 — Strategy, documentation and governance | COMPLETE | Planning baseline merged through PR #13. |
 | Phase 1 — Multi-page platform foundation | COMPLETE — implementation | PR #14 merged into `main` at [`17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609); exact PR-head CI run #151 passed both required jobs. Owner/legal and human accessibility items remain pre-launch gates in `docs/PHASE_1_ACCEPTANCE.md`. |
-| Phase 2 — Premium visual identity and 3D experience | IMPLEMENTATION READY FOR OWNER REVIEW — NOT FORMALLY COMPLETE | PR #15 (`phase2/premium-visual-identity-3d`) latest tested head `88a5e07`; CI #41844344939 passed both required jobs, including 4-breakpoint map checks. Phase closure awaits owner approval of the provisional visual/brand direction and PR merge. See `docs/PHASE_2_EXECUTION_PLAN.md` and `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md`. |
-| Phases 3–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
+| Phase 2 — Premium visual identity and 3D experience | COMPLETE | PR #15 merged to `main` on 4 November 2026 at [`d069caaf`](https://github.com/hamza131zara/agency/commit/d069caaf3fc10d462199d945d3c4729fed0b70a6); post-merge CI #41864959360 passed both required jobs. Human assistive-technology and official legal-brand inputs remain pre-launch gates. Evidence in `docs/PHASE_2_EXECUTION_PLAN.md`. |
+| Phase 3 — Service depth, positioning and team profiles | IN PROGRESS | Execution plan: `docs/PHASE_3_EXECUTION_PLAN.md`; branch `phase3/service-depth-positioning-team-profiles`. First increment deepens all six service pages, links related disciplines and removes unverified numerical team claims. |\n| Phases 4–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
 
 A phase status distinguishes repository implementation from public-release readiness. A merge does not complete legal approvals, human accessibility reviews, external delivery tests or deployment.
 
@@ -198,7 +198,8 @@ Exit criteria:
 
 **Purpose:** deepen the visual language and introduce purposeful spatial interaction.
 
-**Execution plan:** `docs/PHASE_2_EXECUTION_PLAN.md`.
+**Execution plan:** `docs/PHASE_2_EXECUTION_PLAN.md`.  
+**Accepted implementation:** PR #15 merged to `main` at `d069caaf`; post-merge CI #41864959360 passed.
 
 Deliverables:
 - Approved brand direction, typography, colour, spacing, components and motion rules.
@@ -215,6 +216,8 @@ Exit criteria:
 ### Phase 3 — Service depth, positioning and team profiles
 
 **Purpose:** deepen the six service areas already established in Phase 1, improve their conversion journeys and publish approved team expertise.
+
+**Execution plan:** `docs/PHASE_3_EXECUTION_PLAN.md`. Current implementation is limited to factual service-page improvements and profile-governance safeguards; individual credentials require consent and evidence.
 
 Phase 1 provides the six service-detail routes and the initial Service Finder. Phase 3 is an enhancement phase; it must build on those pages rather than recreate them.
 
