@@ -352,7 +352,8 @@ test.describe('Phase I route and content checks', () => {
     for (const [route, service] of services) {
       await page.goto(route);
       await page.getByRole('link', { name: /Discuss this service/i }).first().click();
-      await expect(page).toHaveURL(/contact\\.html\\?service=/);
+      expect(new URL(page.url()).pathname).toBe('/contact.html');
+      expect(new URL(page.url()).searchParams.has('service')).toBe(true);
       await expect(page.locator('select[name="interest"]')).toHaveValue(service);
     }
   });
