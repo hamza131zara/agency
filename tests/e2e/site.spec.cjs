@@ -188,6 +188,21 @@ test.describe('Phase I route and content checks', () => {
     await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
+  test('3D service cards stay within the map frame on narrow phones', async ({ page }) => {
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/');
+      const frame = await page.locator('#service-atlas').boundingBox();
+      expect(frame).not.toBeNull();
+      for (const selector of ['.atlas-growth', '.atlas-ai', '.atlas-design', '.atlas-web3']) {
+        const card = await page.locator('#service-atlas ' + selector).boundingBox();
+        expect(card, selector + ' should have a visible layout box at ' + width + 'px').not.toBeNull();
+        expect(card.x, selector + ' should not be clipped on the left at ' + width + 'px').toBeGreaterThanOrEqual(frame.x - 1);
+        expect(card.x + card.width, selector + ' should not be clipped on the right at ' + width + 'px').toBeLessThanOrEqual(frame.x + frame.width + 1);
+      }
+    }
+  });
+
   test('portfolio search, category and status filters combine and reset', async ({ page }) => {
     await page.goto('/work.html');
     const visibleCards = page.locator('[data-project-card]:visible');
