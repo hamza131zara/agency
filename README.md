@@ -21,21 +21,21 @@ The current implementation uses semantic HTML, CSS, browser JavaScript and a PHP
 | Products | Products | Product detail pages, installation and licence information |
 | Automation | Automation | Tool-specific pages and later customer workspaces |
 | Contact | Contact, Project Brief Builder | Inquiry workflow |
-| Legal | Privacy, Terms, Disclaimer, 404 | Final legal content subject to owner review |
+| Legal | Privacy, Terms, Disclaimer, 404 | Privacy notice and clearly marked noindex legal drafts awaiting operator/jurisdiction review |
 
 The homepage introduces the agency and links to dedicated destinations. It must not contain the entire platform as one continuous page.
 
 ## Current repository baseline
 
 Existing pages and features include:
-- Home, Services, Work, About, Contact and Privacy.
+- Home, Services, Work, About, Approach, Team, Contact, Privacy, Terms and Disclaimer.
 - Project detail pages under `work/`.
 - Service Finder and portfolio search/filter controls.
 - Browser-local Project Brief Builder with copy/export/print actions.
 - PHP inquiry endpoint with validation and safe unsent fallback behavior.
 - SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
 
-The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Not every planned page or product module is implemented yet.
+The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. The Terms and Disclaimer pages are draft-only, marked noindex and intentionally excluded from the sitemap until owner/legal review. Not every planned product module is implemented yet.
 
 ## Documentation index
 
