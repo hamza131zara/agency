@@ -932,7 +932,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .service-process-grid article small,
 .service-related-block > .eyebrow {
-  color: #66715d;
+  color: #596354;
   font: 8px var(--mono);
   letter-spacing: .08em;
 }
