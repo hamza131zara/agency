@@ -1,7 +1,7 @@
 # Phase 2 — Premium Visual Identity & Purposeful 3D Experience
 
-**Status:** IMPLEMENTATION READY FOR OWNER REVIEW — PR #15 latest tested head `88a5e0797e8e24593755f86c40d8218425722ac6` passes both required CI jobs. Formal Phase 2 closure still awaits owner approval of the provisional visual/brand direction and PR #15 merge.  
-**Baseline:** Phase 1 merged to `main` at `17637e7`; PR #14 exact-head CI run #151 passed.  
+**Status:** COMPLETE — PR #15 was merged to `main` on 4 November 2026 at merge commit `d069caaf3fc10d462199d945d3c4729fed0b70a6`. The merge commit's post-merge CI run #41864959360 passed both required jobs. The owner approved the Phase 2 visual implementation by merging the PR; the official legal agency name, logo files and canonical domain remain separate launch inputs.  
+**Baseline:** Phase 1 remains complete at `17637e7`; Phase 2 is accepted in `main` at [`d069caaf`](https://github.com/hamza131zara/agency/commit/d069caaf3fc10d462199d945d3c4729fed0b70a6) after PR #15 merged. Post-merge workflow run [#41864959360](https://github.com/hamza131zara/agency/actions/runs/41864959360) passed `validate` and `browser-and-accessibility`.  
 **Scope:** Visual-system refinement, a stronger hero/brand object, purposeful spatial navigation and evidence-led project/product visualisation.  
 **Non-goals:** Final legal identity, domain purchase, production deployment, customer accounts, payments, live automation or a framework migration.
 
@@ -73,7 +73,7 @@ The existing warm-neutral palette, lime/orange accents, Manrope/DM Mono typograp
 - [x] Reduced-motion, keyboard and touch checks pass in the current browser suite.
 - [x] No unapproved project screenshots, fake UI, fabricated outcome metrics or unsupported brand claims were introduced; conceptual artwork is labelled.
 - [x] Asset/runtime impact is measured and documented in the visual standard and evidence audit.
-- [ ] Owner approves the final visual/brand direction and merges PR #15; human assistive-technology review remains a separate pre-launch gate.
+- [x] Owner approves the final visual/brand direction and merges PR #15; human assistive-technology review remains a separate pre-launch gate.
 ## 5. Owner / external dependencies
 
 These items may be completed independently and must not be fabricated:
@@ -99,20 +99,20 @@ Each Phase 2 pull request must record: changed routes/assets, design rationale, 
 
 ## 8. Current progress snapshot — 4 November 2026
 
-**Active PR:** [#15](https://github.com/hamza131zara/agency/pull/15)  
-**Current tested head:** `88a5e0797e8e24593755f86c40d8218425722ac6`  
-**Latest CI:** [Run #41844344939](https://github.com/hamza131zara/agency/actions/runs/41844344939) — `validate` and `browser-and-accessibility` both passed.  
-**Screenshot artifact:** `phase-one-browser-review` (artifact `13329888450`): full route set at 390px/1440px and Home at 320px/390px/768px/1440px. A Playwright assertion checks all six map nodes stay inside the spatial frame at all four widths, and the tablet navigation test opens the menu and follows its Services link.
+**Merged PR:** [#15](https://github.com/hamza131zara/agency/pull/15) — merged 4 November 2026.  
+**Merge commit:** `d069caaf3fc10d462199d945d3c4729fed0b70a6` (current `main` head when accepted).  
+**Post-merge CI:** [Run #41864959360](https://github.com/hamza131zara/agency/actions/runs/41864959360) — `validate` and `browser-and-accessibility` both passed on the merge commit.  
+**Visual evidence:** CI artifact `13342725076` captures the full route set at 390px/1440px and Home at 320px/390px/768px/1440px; all six service-map nodes are tested inside the frame at each breakpoint.
 
 | Work package | Progress | Evidence / next check |
 |---|---|---|
-| P2.1 — Visual baseline and art direction | Visual baseline and owner-reviewable token direction documented; final palette/wordmark approval pending. | Design standard records typography, palette, spacing, surfaces, component rules and motion. Current brand mark/name remain explicitly provisional. |
+| P2.1 — Visual baseline and art direction | COMPLETE — Phase 2 visual direction accepted through PR #15 merge. | Palette, typography, spacing, surfaces, component rules and motion are documented. The exact legal/official agency name and final production logo assets remain separate owner-provided launch details. |
 | P2.2 — Hero / spatial brand object | CSS-only spatial refinement implemented and reviewed at all required breakpoints. | The hub caption is hidden on mobile; max-width: 380px positions the side cards inside the narrow-phone frame; 761–850px rules rebalance the map within the tablet hero column. Screenshots at 320/390/768/1440px reviewed from CI artifact `13329888450`. |
 | P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Exact-head CI passes keyboard/touch/reduced-motion checks. New Playwright regression asserts all six node boxes remain within the map frame at 320/390/768/1440px; a 768px tablet-navigation test confirms the hamburger menu and Services route. |
 | P2.4 — Evidence-led work/product visuals | Evidence audit complete; authentic screenshot replacements deferred pending owner-selected source captures and publishing permission. | `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` records all five projects plus the service constellation, current preview status, source evidence and replacement decisions. Free AI Mixer detail page now labels its flow as conceptual. No unapproved images or invented UI added. |
-| P2.5 — Performance, accessibility and regression | Automated implementation checks and screenshot review complete for this increment. | Stylesheet increased by 5,068 characters versus `main` (character count, not a gzip/performance score); no product image/model/font, production browser JS, 3D engine or WebGL dependency added. CI #41844344939 passed both jobs on exact head `88a5e07`; all four homepage breakpoints and full route captures reviewed. Human assistive-technology review remains a pre-launch owner task. |
+| P2.5 — Performance, accessibility and regression | COMPLETE — exact merge-commit CI and screenshot review passed. | Stylesheet increased by 5,068 source characters versus the Phase 2 `main` baseline (not a compressed-performance score); no product image/model/font, production browser JS, 3D engine or WebGL dependency added. Post-merge CI #41864959360 passed both jobs on merge commit `d069caaf`; all four homepage breakpoints and full route captures reviewed. Human assistive-technology review remains a pre-launch owner task. |
 
-The technical implementation is ready for owner review. Phase 2 is **not formally complete** until the owner approves the provisional visual direction/brand identity and PR #15 is merged. Human assistive-technology review remains required before public launch.
+Phase 2 is complete at repository implementation level. Human assistive-technology review, official legal identity, domain, inbox, project permissions and deployment remain separate pre-launch gates.
 
 
 ### P2.4 audit outcome — 4 November 2026
