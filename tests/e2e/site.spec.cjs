@@ -12,8 +12,29 @@ const ALLOWED_SERVICES = [
 ];
 
 const PAGES = [
-  '/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html',
-  '/privacy.html', '/404.html', '/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html', '/brief-builder.html'
+  '/',
+  '/services.html',
+  '/work.html',
+  '/services/software-engineering.html',
+  '/services/ai-automation.html',
+  '/services/blockchain-web3.html',
+  '/services/creative-design.html',
+  '/services/digital-growth.html',
+  '/services/ecommerce-operations.html',
+  '/about.html',
+  '/approach.html',
+  '/team.html',
+  '/products.html',
+  '/automation.html',
+  '/contact.html',
+  '/privacy.html',
+  '/404.html',
+  '/work/strideto.html',
+  '/work/regexlab.html',
+  '/work/jotjson.html',
+  '/work/siteintel-pulse.html',
+  '/work/free-ai-mixer.html',
+  '/brief-builder.html'
 ];
 
 test.describe('Phase I route and content checks', () => {
@@ -143,6 +164,7 @@ test.describe('Phase I route and content checks', () => {
   test('service divisions have working anchors and the finder carries its choice', async ({ page }) => {
     await page.goto('/services.html');
     for (const id of ['software','ai','web3','design','growth','ecommerce']) await expect(page.locator('#'+id)).toHaveCount(1);
+    for (const href of ['services/software-engineering.html','services/ai-automation.html','services/blockchain-web3.html','services/creative-design.html','services/digital-growth.html','services/ecommerce-operations.html']) await expect(page.locator('a[href="'+href+'"]')).toHaveCount(1);
     const result = page.locator('#service-finder-result');
     await expect(result).toBeHidden();
     await page.locator('input[name="serviceNeed"][value="Blockchain & Web3"]').check();
@@ -156,11 +178,11 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#brief-service')).toHaveValue('Blockchain & Web3');
   });
 
-  test('homepage 3D service map links to all six service divisions', async ({ page }) => {
+  test('homepage 3D service map links to all six dedicated service pages', async ({ page }) => {
     await page.goto('/');
     const atlas=page.locator('#service-atlas');
     await expect(atlas).toBeVisible();
-    for (const href of ['services.html#software','services.html#ai','services.html#web3','services.html#design','services.html#growth','services.html#ecommerce']) await expect(atlas.locator('a[href="'+href+'"]')).toHaveCount(1);
+    for (const href of ['services/software-engineering.html','services/ai-automation.html','services/blockchain-web3.html','services/creative-design.html','services/digital-growth.html','services/ecommerce-operations.html']) await expect(atlas.locator('a[href="'+href+'"]')).toHaveCount(1);
     await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
