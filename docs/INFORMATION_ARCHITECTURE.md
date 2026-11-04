@@ -46,15 +46,15 @@ The Project Brief Builder can be linked as a utility CTA within Contact/Services
 | `brief-builder.html` — Project brief | Help a visitor prepare a useful brief | Guided requirements, local draft/export and explicit handoff |
 | `contact.html` — Contact | Receive project inquiries | Clear categories, consent/privacy text, validation, delivery status and safe fallback |
 | `privacy.html` — Privacy | Disclose real data handling | Actual operator, collection, purposes, retention, processors, rights and contact |
-| `terms.html` — Terms | Define site and service terms | Approved jurisdiction, scope, intellectual property, warranties, liability and applicable terms |
-| `disclaimer.html` — Disclaimer | Clarify limitations | General information, marketing/security/financial claim limits and third-party links |
+| `terms.html` — Terms | Define site and service terms | Draft-only, noindex until legal operator, jurisdiction, scope, intellectual property, warranties and liability wording are reviewed and approved |
+| `disclaimer.html` — Disclaimer | Clarify limitations | Draft-only, noindex until claims, service scope, professional-advice and jurisdiction-specific wording are reviewed and approved |
 | `404.html` | Recover from invalid routes | Clear message and links to Home, Services, Work and Contact |
 
 These paths are proposed static-page paths compatible with the existing PHP-enabled shared-hosting model. Keep the current HTML pages and links working while implementing this hierarchy; introduce rewrites or a routing framework only after a documented need and regression plan.
 
 ## 3. Page hierarchy and navigation rules
 
-- Every primary destination must have its own page with a unique title, description and purpose.
+- Every primary destination must have its own page with a unique title, description and purpose. Draft legal pages remain reachable for review but carry noindex and are excluded from the sitemap until approved.
 - Service detail pages sit under Services; project detail pages sit under Work; product detail pages sit under Products; tool detail pages sit under Automation.
 - Use breadcrumbs on deep pages, for example: Home → Services → AI & Automation.
 - Avoid dead-end pages. Every detail page should link to the parent index and one relevant next action.
