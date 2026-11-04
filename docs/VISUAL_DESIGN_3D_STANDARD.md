@@ -166,7 +166,7 @@ For every major page or scene:
 
 The first refinement keeps the existing CSS-only service map and adds a more sculptural central hub, layered orbital geometry, restrained inner lighting and clearer depth on the six service cards. Hover, focus-visible and active states remain attached to the real HTML links. The visual has no continuous rotation and does not capture or hijack scrolling.
 
-A mobile screenshot review identified that the central hub's longer caption was clipped by the circular shape at 390px. The label was shortened to **“Six disciplines”** and reduced to 6px on small screens with no wrapping. The follow-up screenshot and responsive/browser checks are being re-run against the updated PR head; this adjustment is not marked as verified until that run completes.
+A mobile screenshot review identified that the central hub's longer caption was clipped by the circular shape at 390px. The label was shortened to **“Six disciplines”** for desktop. Because the circular hub still clipped this caption in the 390px follow-up screenshot, the nonessential caption is now hidden on small screens; the header still states that six disciplines are connected, and all six destination cards remain visible. The latest screenshot and responsive/browser checks must verify this final treatment.
 
 ### Runtime and asset impact
 
