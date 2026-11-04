@@ -97,3 +97,19 @@ Until approved, the current "AGENCY." wordmark and theme remain provisional desi
 ## 7. Evidence record
 
 Each Phase 2 pull request must record: changed routes/assets, design rationale, before/after screenshots, responsive behavior, reduced-motion and keyboard/touch evidence, asset/runtime measurements, CI links, known limitations and any owner decision still required.
+
+## 8. Current progress snapshot — 4 November 2026
+
+**Active PR:** [#15](https://github.com/hamza131zara/agency/pull/15)  
+**Current head:** `4446d928c35ada4a7478e431a54c4ee533abb1d8`  
+**Latest run:** [CI #41835653951](https://github.com/hamza131zara/agency/actions/runs/41835653951) — static validation passed; browser/responsive/accessibility job is still running.
+
+| Work package | Progress | Evidence / next check |
+|---|---|---|
+| P2.1 — Visual baseline and art direction | Baseline reviewed; current palette/wordmark explicitly remain provisional. | Screenshot review at 1440px and 390px; design notes in `docs/VISUAL_DESIGN_3D_STANDARD.md`. |
+| P2.2 — Hero / spatial brand object | First CSS-only visual refinement implemented. | Desktop/mobile captures reviewed; mobile hub caption refined after screenshot inspection; verify new screenshot in CI #41835653951. |
+| P2.3 — Interactive service map | Focus, hover and active feedback refined; all six destinations remain native links. | Existing keyboard/touch test coverage; verify latest run before closing this work package. |
+| P2.4 — Evidence-led work/product visuals | Not started; current project mockups remain illustrative. | Await approved project screenshots and contribution/usage permissions. Do not add unverified assets. |
+| P2.5 — Performance, accessibility and regression | In progress. | CSS increased by 2,188 characters versus `main`; no new assets, JavaScript or runtime dependencies. Latest browser/responsive/axe run must pass and screenshots must be reviewed. |
+
+This is a progress record, not a Phase 2 completion declaration. The acceptance checklist above remains open until final CI and owner visual review are recorded.
