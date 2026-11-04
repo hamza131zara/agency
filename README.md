@@ -1,37 +1,75 @@
-# Agency — Phase 1 Portfolio Platform
+# Agency — Multi-page Digital Studio Platform
 
-Responsive public portfolio for a software and AI agency. It is independent from the older Skill-Sphere Agency application. The site uses semantic HTML, CSS, browser JavaScript and a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger.
+The agency website is a multi-page portfolio, services, products and automation platform. It is not intended to be a one-page landing site.
 
-## Phase 1 scope
-- Home plus Services, Work, About/Approach, Contact and Privacy pages, with an interactive Service Finder, portfolio explorer and local-only Project Brief Builder.
-- Full-stack development, AI/LLM/agent work, integrations, cybersecurity, debugging/performance, product design and digital growth.
-- Selected project showcases without fabricated testimonials or quantified outcomes, with source links for verified public repositories and no unconfirmed demo claims.
-- Contact validation, CSRF/session token, same-origin check, honeypot, basic per-session throttling.
-- Transparent errors when the inbox is missing or the hosting mail service rejects an inquiry, plus browser-only copy/download fallback to preserve the visitor's draft.
-- Phase 2 roadmap for SMS, Instagram/social publishing, webhooks, approvals and automation workspaces. Those products are not available in Phase 1.
-- SEO metadata, favicon, robots/sitemap template, 404 page, restrictive CSP and shared-hosting security headers, detailed project notes and GitHub Actions checks.
+The current implementation uses semantic HTML, CSS, browser JavaScript and a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger. Keep this lightweight architecture unless a documented feature need justifies a change.
+
+## Public language and positioning
+
+- Public website language: **English only**.
+- The agency builds all kinds of websites and web platforms across different technologies and stacks.
+- The six service divisions are Software & Digital Product Engineering; AI, LLMs & Intelligent Automation; Blockchain & Web3; Graphic Design & Creative Services; Digital Marketing & Growth; and E-commerce & Marketplace Operations.
+- Products and customer-facing automation tools must show their real status. Planned or in-development work must never be presented as live.
+
+## Platform page map
+
+| Area | Main page | Detail pages |
+|---|---|---|
+| Agency | Home, About, Approach, Team | Approved profile and trust content |
+| Services | Services | Six service-division pages |
+| Portfolio | Work | Individual project/case-study pages |
+| Products | Products | Product detail pages, installation and licence information |
+| Automation | Automation | Tool-specific pages and later customer workspaces |
+| Contact | Contact, Project Brief Builder | Inquiry workflow |
+| Legal | Privacy, Terms, Disclaimer, 404 | Final legal content subject to owner review |
+
+The homepage introduces the agency and links to dedicated destinations. It must not contain the entire platform as one continuous page.
+
+## Current repository baseline
+
+Existing pages and features include:
+- Home, Services, Work, About, Contact and Privacy.
+- Project detail pages under `work/`.
+- Service Finder and portfolio search/filter controls.
+- Browser-local Project Brief Builder with copy/export/print actions.
+- PHP inquiry endpoint with validation and safe unsent fallback behavior.
+- SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
+
+The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Not every planned page or product module is implemented yet.
+
+## Documentation index
+
+- `docs/PLATFORM_MASTER_PLAN.md` — vision, six services, platform modules and all phases.
+- `docs/INFORMATION_ARCHITECTURE.md` — navigation, page inventory, page settings and content models.
+- `docs/VISUAL_DESIGN_3D_STANDARD.md` — theme direction, 3D interaction, accessibility and performance.
+- `docs/DELIVERY_METHODOLOGY.md` — workflows, Git practices, QA and release methodology.
+- `docs/PHASE_1_EXECUTION_PLAN.md` — current Phase 1 scope, work packages and acceptance.
+- `docs/PHASE_1_ACCEPTANCE.md` — acceptance checklist.
+- `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
+- `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
 
 ## Local checks
-Run \`python scripts/validate_site.py\`, \`node --check assets/js/main.js\`, \`php -l contact.php\`, \`php -l config.example.php\`, and \`python tests/test_contact_endpoint.py\`. The endpoint smoke test does not send real email.
 
-## Hostinger setup — only after launch approval
-1. Confirm the agency name/logo, final domain, recipient inbox and legal operator details.
-2. Use a PHP-enabled Hostinger plan. Back up existing public_html content before replacing files.
-3. Upload approved site files into the document root so index.html is at the root.
-4. Copy config.example.php to config.php on the server only. Set recipient_email to the monitored inbox and from_email to a verified sender on the final domain. Never commit config.php.
-5. Configure domain mail/DNS records from your mail host, including SPF/DKIM where available. PHP mail() acceptance does not guarantee final inbox delivery.
-6. Replace YOUR-DOMAIN.example in robots.txt and sitemap.xml. Enable SSL and verify it before forcing HTTPS.
-7. Review the privacy notice, project descriptions and approved screenshots. Follow docs/HOSTINGER_DEPLOYMENT.md and docs/PHASE_1_ACCEPTANCE.md.
+Run:
 
-The visible name AGENCY and domain values are deliberate placeholders. Project artwork is illustrative, not production screenshots. Summaries do not claim unverified outcomes, credentials or contributions.
+```bash
+python scripts/validate_site.py
+node --check assets/js/main.js
+php -l contact.php
+php -l config.example.php
+python tests/test_contact_endpoint.py
+npm install
+npm run test:e2e
+```
 
-## Phase boundary
-Phase 1 is the portfolio/services site plus a configured inquiry path. SMS, Instagram/social publishing, webhook flows, approvals and client automation workspaces are Phase 2 items.
+The CI workflow also runs HTML/link/site validation, JavaScript/PHP syntax checks, contact endpoint smoke tests, Playwright browser tests and axe accessibility scans. Automated accessibility scans do not replace manual keyboard, screen-reader, contrast and screenshot review.
 
+## Phase boundaries
 
-## Interactive Phase I features
-- Services page: a guided Service Finder recommends a starting service and carries it into the brief builder/contact page without submission.
-- Work page: client-side search, category filters and status filters with accessible result counts.
-- Project Brief Builder: creates a structured project brief in the current browser page and offers explicit copy, plain-text download, structured JSON export and browser print/Save as PDF actions. It makes no server request and stores no brief data; it works while domain, hosting and mailbox setup are deferred.
-- Optional brief-to-contact handoff passes only a concise summary via temporary session storage; the contact page consumes and clears it, and no message is submitted automatically.
-- When delivery is unconfigured/unreachable, Contact offers explicit browser-local copy/download actions that never POST the inquiry.
+The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phase 1 focuses on the multi-page platform foundation, consistent theme, English-only copy, functional navigation, useful visual/3D experience and verified content. Customer accounts, payments, licences, and live automation integrations are later phases and require their own security and owner approval gates.
+
+## Hosting and release
+
+The site is not considered deployed merely because CI passes. Domain, branding, legal operator, monitored inbox, verified sender and final content require owner confirmation. Follow `docs/HOSTINGER_DEPLOYMENT.md` only after explicit launch approval.
+
+Never commit `config.php`, credentials, API keys, private customer data or production secrets.
