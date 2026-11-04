@@ -157,3 +157,22 @@ For every major page or scene:
 - [ ] WebGL failure does not break the page.
 - [ ] Assets and bundles are measured and reasonably optimized.
 - [ ] Screenshots have been manually reviewed on desktop and mobile.
+
+## 11. Phase 2 implementation notes — first visual increment
+
+**Review branch:** `phase2/premium-visual-identity-3d`  
+**Pull request:** [#15 — Premium visual identity and purposeful 3D](https://github.com/hamza131zara/agency/pull/15)  
+**Reviewed scope:** homepage service constellation at 1440px desktop and 390px mobile screenshots.
+
+The first refinement keeps the existing CSS-only service map and adds a more sculptural central hub, layered orbital geometry, restrained inner lighting and clearer depth on the six service cards. Hover, focus-visible and active states remain attached to the real HTML links. The visual has no continuous rotation and does not capture or hijack scrolling.
+
+A mobile screenshot review identified that the central hub's longer caption was clipped by the circular shape at 390px. The label was shortened to **“Six disciplines”** and reduced to 6px on small screens with no wrapping. The follow-up screenshot and responsive/browser checks are being re-run against the updated PR head; this adjustment is not marked as verified until that run completes.
+
+### Runtime and asset impact
+
+- The shared stylesheet grew from **58,136 to 60,324 characters** compared with `main` at the time of this increment (**+2,188 characters**).
+- No image, font, model, texture or other asset was added by this increment.
+- No JavaScript, package manifest, 3D engine or WebGL runtime was added or changed.
+- The hub and orbital geometry are CSS pseudo-elements; service labels, explanations and destinations remain HTML.
+
+The current colour direction and “AGENCY.” mark are still provisional. These implementation notes do not represent final brand approval, a full performance score, or a human assistive-technology audit.
