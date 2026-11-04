@@ -371,7 +371,7 @@ test.describe('Phase I route and content checks', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await page.locator('#service-atlas .atlas-software').tap();
-    await expect(page).toHaveURL(/services\\/software-engineering\\.html$/);
+    expect(new URL(page.url()).pathname).toBe('/services/software-engineering.html');
     await expect(page.locator('h1')).toContainText('Websites and platforms');
   });
 
