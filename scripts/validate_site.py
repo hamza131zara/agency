@@ -62,7 +62,7 @@ for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")
 if "contact.php?csrf=1" not in (ROOT/"assets/js/main.js").read_text(encoding="utf-8"): errors.append("browser form is not wired to PHP endpoint")
-for legal_page in ("terms.html","disclaimer.html"):
+for legal_page in ("privacy.html","terms.html","disclaimer.html"):
  content=(ROOT/legal_page).read_text(encoding="utf-8")
  if '<meta name="robots" content="noindex, nofollow">' not in content:
   errors.append(f"{legal_page}: draft legal page must remain noindex until approved")
