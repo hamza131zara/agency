@@ -573,43 +573,31 @@ test.describe('Phase I route and content checks', () => {
 
 
   test('project notes share a navigable case-study structure and semantic breadcrumbs', async ({ page }) => {
-    const routes = ['/work/strideto.html','/work/regexlab.html','/work/jotjson.html','/work/siteintel-pulse.html','/work/free-ai-mixer.html'];
+    const routes = ['/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html'];
     const sections = [
-      ['project-context','Context'],
-      ['project-scope','Scope & approach'],
-      ['project-details','Implementation details']
+      ['project-context', 'Context'],
+      ['project-scope', 'Scope & approach'],
+      ['project-details', 'Implementation details']
     ];
+
     for (const route of routes) {
       await page.goto(route);
       const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
       await expect(breadcrumb).toBeVisible();
       await expect(breadcrumb.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '../work.html');
+
       const article = page.locator('article[data-case-study-version="1"]');
       await expect(article).toBeVisible();
       const toc = page.getByRole('navigation', { name: 'On this page' });
       await expect(toc).toBeVisible();
+
       for (const [id, label] of sections) {
-        const heading = article.locator('#' + id);
-        await expect(heading).toBeVisible();
+        await expect(article.locator('#' + id)).toBeVisible();
         await expect(toc.getByRole('link', { name: label })).toHaveAttribute('href', '#' + id);
       }
-      await toc.getByRole('link', { name: 'Scope & approach' }).click();
-      await expect(page).toHaveURL(new RegExp('#project-scope
-    const routes = ['/work/strideto.html','/work/regexlab.html','/work/jotjson.html','/work/siteintel-pulse.html','/work/free-ai-mixer.html'];
-    for (const route of routes) {
-      await page.goto(route);
-      const panel = page.locator('.project-evidence-panel');
-      await expect(panel).toBeVisible();
-      await expect(panel.getByRole('heading', { name: /What this page can verify/i })).toBeVisible();
-      await expect(panel.locator('dt')).toHaveText(['Release status','Project relationship','Evidence boundary']);
-      await expect(panel.getByText(/agency delivery/i).first()).toBeVisible();
-      await expect(panel.getByRole('navigation', { name: 'Related portfolio projects' })).toBeVisible();
-      await expect(panel.getByRole('link', { name: 'All projects' })).toHaveAttribute('href', '../work.html');
-    }
-  });
 
-});
-));
+      await toc.getByRole('link', { name: 'Scope & approach' }).click();
+      await expect(page).toHaveURL(/#project-scope$/);
     }
   });
 
