@@ -43,6 +43,12 @@ Obtain the relevant person's consent for their profile and credentials before pu
 - Privacy, Terms and Disclaimer pages remain reachable for review but carry `noindex, nofollow` and are excluded from the sitemap while they are drafts.
 - Sitemap retains the `YOUR-DOMAIN.example` placeholder until the owner supplies the canonical domain. No production domain is guessed.
 
+## Visual asset and evidence governance
+
+The enforceable publication policy is maintained in `docs/PORTFOLIO_EVIDENCE_VISUAL_GOVERNANCE.md`. The normalized inventory now records a per-project `visualGovernance` object. At this review, all six records have no approved authentic screenshot, logo, testimonial or outcome asset; project pages therefore retain visibly illustrative/conceptual disclosures. An empty `approvedAssets` array is a publication block for authentic images, not permission to add an image without a record.
+
+The CI validator `scripts/validate_portfolio_evidence.py` checks inventory completeness, explicit public/excluded visibility, exact agreement between public inventory IDs and catalogue cards, shared project-page markers, visible illustrative disclosures, agency-contribution boundaries, and every project-page image source against the approved asset list. This is a structural guardrail; it does not replace human review of rights, sensitive data, accuracy or owner consent.
+
 ## Final launch review checklist
 
 - [ ] Owner rechecks each external live URL and its regional availability.

@@ -14,7 +14,18 @@
       "verifiedTechnology": [],
       "demo": "https://strideto.com",
       "source": "https://github.com/Hafiz-Hamza-Liaqat/Strideto",
-      "evidenceBoundary": "Repository README describes the platform and workflows. Owner identifies the service as live and free. Recheck uptime and regional access before launch; do not claim agency delivery or quantified outcomes."
+      "evidenceBoundary": "Repository README describes the platform and workflows. Owner identifies the service as live and free. Recheck uptime and regional access before launch; do not claim agency delivery or quantified outcomes.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     },
     {
       "id": "regexlab",
@@ -25,10 +36,25 @@
       "catalogueVisibility": "public",
       "relationship": "owner-associated public tool; agency delivery relationship not asserted",
       "agencyContribution": "not independently verified; do not claim",
-      "verifiedTechnology": ["TypeScript", "Playwright", "GitHub Pages deployment"],
+      "verifiedTechnology": [
+        "TypeScript",
+        "Playwright",
+        "GitHub Pages deployment"
+      ],
       "demo": "https://hafiz-hamza-liaqat.github.io/RegexLab/",
       "source": "https://github.com/Hafiz-Hamza-Liaqat/RegexLab",
-      "evidenceBoundary": "README documents browser regex testing, match inspection, replay and learning. Do not claim usage or performance metrics."
+      "evidenceBoundary": "README documents browser regex testing, match inspection, replay and learning. Do not claim usage or performance metrics.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     },
     {
       "id": "jotjson",
@@ -39,10 +65,29 @@
       "catalogueVisibility": "public",
       "relationship": "owner-associated public tool; agency delivery relationship not asserted",
       "agencyContribution": "not independently verified; do not claim",
-      "verifiedTechnology": ["React", "TypeScript", "Vite", "Tailwind CSS", "CodeMirror", "Vitest", "Playwright"],
+      "verifiedTechnology": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "CodeMirror",
+        "Vitest",
+        "Playwright"
+      ],
       "demo": "https://hafiz-hamza-liaqat.github.io/JotJSON/",
       "source": "https://github.com/Hafiz-Hamza-Liaqat/JotJSON",
-      "evidenceBoundary": "README describes local-first browser processing, JSON validation, formatting, comparison, search and learning features. Do not imply documents are uploaded to a backend."
+      "evidenceBoundary": "README describes local-first browser processing, JSON validation, formatting, comparison, search and learning features. Do not imply documents are uploaded to a backend.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     },
     {
       "id": "siteintel-pulse",
@@ -53,10 +98,25 @@
       "catalogueVisibility": "public",
       "relationship": "owner-associated product; agency delivery relationship not asserted",
       "agencyContribution": "not independently verified; do not claim",
-      "verifiedTechnology": ["Next.js", "TypeScript", "SQLite"],
+      "verifiedTechnology": [
+        "Next.js",
+        "TypeScript",
+        "SQLite"
+      ],
       "demo": "https://hafiz-hamza-liaqat.github.io/siteintel-pulse/",
       "source": "https://github.com/Hafiz-Hamza-Liaqat/siteIntel-pulse",
-      "evidenceBoundary": "The GitHub Pages URL is a static design/documentation showcase, not the full interactive scanner. Full scanner requires a separate Node.js host."
+      "evidenceBoundary": "The GitHub Pages URL is a static design/documentation showcase, not the full interactive scanner. Full scanner requires a separate Node.js host.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     },
     {
       "id": "free-ai-mixer",
@@ -67,10 +127,24 @@
       "catalogueVisibility": "public",
       "relationship": "owner-associated product; agency delivery relationship not asserted",
       "agencyContribution": "not independently verified; do not claim",
-      "verifiedTechnology": ["React", "TypeScript"],
+      "verifiedTechnology": [
+        "React",
+        "TypeScript"
+      ],
       "demo": null,
       "source": "https://github.com/hamza131zara/Free-AI-Mixer",
-      "evidenceBoundary": "In development. Provider calls require configured API endpoints and credentials; no hosted public demo is confirmed. Do not imply successful generation without configured providers."
+      "evidenceBoundary": "In development. Provider calls require configured API endpoints and credentials; no hosted public demo is confirmed. Do not imply successful generation without configured providers.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     },
     {
       "id": "auto-trading-agent",
@@ -84,7 +158,18 @@
       "verifiedTechnology": [],
       "demo": null,
       "source": "https://github.com/hamza131zara/Auto-Trading-Agent",
-      "evidenceBoundary": "Explicitly excluded from the public Work catalogue for this phase: not available to buy/install, live trading is not authorized, and unresolved market-data/provider decisions remain. Do not advertise returns, investment advice, hosted trading or commercial availability."
+      "evidenceBoundary": "Explicitly excluded from the public Work catalogue for this phase: not available to buy/install, live trading is not authorized, and unresolved market-data/provider decisions remain. Do not advertise returns, investment advice, hosted trading or commercial availability.",
+      "visualGovernance": {
+        "visualStatus": "illustrative-only",
+        "approvedAssets": [],
+        "authenticScreenshotPermission": "not-recorded",
+        "brandAssetPermission": "not-recorded",
+        "testimonialPermission": "not-recorded",
+        "outcomeEvidence": "not-recorded",
+        "ownerApproval": null,
+        "reviewedAt": "2026-11-05",
+        "note": "Current project page visuals are explanatory/illustrative text treatments; no authentic product screenshot or third-party brand asset is approved for publication. Add an asset only after recording its exact path, source, owner, permission, redaction review and approval date."
+      }
     }
   ],
   "globalRules": [
@@ -92,6 +177,11 @@
     "Do not claim paid-client delivery, agency contribution, testimonials, outcomes, usage metrics, revenue, certifications or security audits without dated evidence and owner approval.",
     "Only catalogueVisibility=public projects may appear in work.html.",
     "Illustrative UI compositions must never be presented as authentic product screenshots.",
-    "Owner must recheck live URLs, release states, attribution and visual permissions before launch."
+    "Owner must recheck live URLs, release states, attribution and visual permissions before launch.",
+    "No project screenshot, logo, testimonial, client identity or measured outcome may be published unless its exact asset/claim is recorded with source, permission scope, approving owner and approval date.",
+    "An empty approvedAssets list means no authentic visual assets are approved; do not add screenshots or logos to that project page.",
+    "Illustrative visuals must be labelled as illustrative in the visible page copy and must not imitate evidence of a released interface.",
+    "Before publishing a screenshot, inspect it for personal data, credentials, API keys, private URLs, customer information, internal dashboards and other sensitive content; redact and re-approve any modified asset.",
+    "A visual approval is asset-specific and channel-specific; permission for a repository README or private review does not automatically permit agency website or social publication."
   ]
 }

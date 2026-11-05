@@ -1,6 +1,6 @@
 # Phase 4 — Portfolio & Case-Study System
 
-**Status:** IN PROGRESS — P4.1 and P4.2 merged and verified on `main`; P4.3 reusable case-study structure is under review; P4.4–P4.5 remain open.  
+**Status:** IN PROGRESS — P4.1–P4.3 merged and verified on `main`; P4.4 evidence and visual governance is under review; P4.5 remains open.  
 **Predecessor:** Phase 3 merged to `main` at [`94954a3`](https://github.com/hamza131zara/agency/commit/94954a3e859ae45070fc84d0e7ff3eba53be11bc); post-merge CI [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed both required jobs.  
 **Language:** English only.  
 **Hosting baseline:** Existing static HTML/CSS/browser-JavaScript/PHP-compatible architecture; no framework or CMS migration is assumed.
@@ -27,7 +27,7 @@ Known limitations to address:
 
 ## 3. Work packages
 
-**Progress note (5 November 2026):** P4.1 is merged to `main` at `9126451e97645436f219e59d8962dbc184ede2d56`; post-merge CI run [#41989863844](https://github.com/hamza131zara/agency/actions/runs/41989863844) passed both required jobs. P4.2 is merged at `c570f9c61ac54ac6df41fa25286ff47b0f78ed78`; post-merge CI run [#41996753340](https://github.com/hamza131zara/agency/actions/runs/41996753340) passed both `validate` and `browser-and-accessibility`. The normalized six-record inventory and five-item public visibility boundary remain the baseline. P4.2 added explicit project-type and release-status chips to all five public cards and the recorded STRIDETO source link. P4.3 implementation is underway on `phase4/p4-3-reusable-case-study-system`: all five project pages now share semantic breadcrumb navigation, a consistent in-page section index, stable context/scope/implementation anchors, and a versioned case-study article marker. Responsive styles and Playwright coverage for the shared navigation and section targets have been added. Exact-head CI and visual review are pending; P4.4 and P4.5 remain open.
+**Progress note (5 November 2026):** P4.1 is merged at `9126451e97645436f219e59d8962dbc184ede2d56` (post-merge CI [#41989863844](https://github.com/hamza131zara/agency/actions/runs/41989863844), passed). P4.2 is merged at `c570f9c61ac54ac6df41fa25286ff47b0f78ed78` (post-merge CI [#41996753340](https://github.com/hamza131zara/agency/actions/runs/41996753340), passed). P4.3 is merged at `b0b225586821f57a30c62f1b0a650ebe873cc388` (post-merge CI [#42026701923](https://github.com/hamza131zara/agency/actions/runs/42026701923), passed). P4.3 standardized semantic breadcrumbs, the in-page section index, context/scope/implementation anchors and the versioned case-study article marker across all five public project pages. P4.4 implementation is underway on `phase4/p4-4-evidence-visual-governance`: added a formal evidence/visual publication policy, per-project visual approval records (all currently unapproved), a CI validator that cross-checks public inventory IDs against catalogue cards and checks project-page disclosures/image sources against approved asset lists, and a new required validation workflow step. Exact-head CI and manual visual review are pending; P4.5 remains open.
 
 
 ### P4.1 — Portfolio inventory and evidence model
