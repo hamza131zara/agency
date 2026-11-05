@@ -1,6 +1,6 @@
 # Phase 4 — Portfolio & Case-Study System
 
-**Status:** PLANNED — scope and acceptance baseline prepared after Phase 3 merge.  
+**Status:** IN PROGRESS — P4.1 normalized inventory established on branch `phase4/p4-1-inventory-evidence-model`; P4.2–P4.5 remain open.  
 **Predecessor:** Phase 3 merged to `main` at [`94954a3`](https://github.com/hamza131zara/agency/commit/94954a3e859ae45070fc84d0e7ff3eba53be11bc); post-merge CI [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed both required jobs.  
 **Language:** English only.  
 **Hosting baseline:** Existing static HTML/CSS/browser-JavaScript/PHP-compatible architecture; no framework or CMS migration is assumed.
@@ -26,6 +26,9 @@ Known limitations to address:
 - The existing catalogue filters must be regression-tested and improved only where evidence or usability findings justify it; do not replace working functionality gratuitously.
 
 ## 3. Work packages
+
+**Progress note (5 November 2026):** P4.1 has a first implementation on the current branch: `docs/PORTFOLIO_PROJECTS.json` defines six normalized records, stable public-catalogue IDs, relationship and contribution boundaries, source/demo references, release status and explicit exclusion policy. The evidence register records why the public catalogue intentionally remains at five. Automated checks and remaining work packages are still in progress.
+
 
 ### P4.1 — Portfolio inventory and evidence model
 - Audit every current project card and detail page against `docs/PORTFOLIO_CONTENT_EVIDENCE.md`.
