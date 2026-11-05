@@ -43,7 +43,7 @@ class PageAudit(HTMLParser):
                 self.related_nav = True
         if tag == "article" and attrs.get("data-case-study-version") == "1":
             self.article_version = True
-        if attrs.get("class") == "project-evidence-panel":
+        if "project-evidence-panel" in attrs.get("class", "").split():
             self.evidence_panel = True
         if tag == "title":
             self.title = True
