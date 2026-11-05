@@ -571,6 +571,36 @@ test.describe('Phase I route and content checks', () => {
   });
 
 
+
+  test('project notes share a navigable case-study structure and semantic breadcrumbs', async ({ page }) => {
+    const routes = ['/work/strideto.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html'];
+    const sections = [
+      ['project-context', 'Context'],
+      ['project-scope', 'Scope & approach'],
+      ['project-details', 'Implementation details']
+    ];
+
+    for (const route of routes) {
+      await page.goto(route);
+      const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
+      await expect(breadcrumb).toBeVisible();
+      await expect(breadcrumb.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '../work.html');
+
+      const article = page.locator('article[data-case-study-version="1"]');
+      await expect(article).toBeVisible();
+      const toc = page.getByRole('navigation', { name: 'On this page' });
+      await expect(toc).toBeVisible();
+
+      for (const [id, label] of sections) {
+        await expect(article.locator('#' + id)).toBeVisible();
+        await expect(toc.getByRole('link', { name: label })).toHaveAttribute('href', '#' + id);
+      }
+
+      await toc.getByRole('link', { name: 'Scope & approach' }).click();
+      await expect(page).toHaveURL(/#project-scope$/);
+    }
+  });
+
   test('all project notes expose consistent evidence and attribution boundaries', async ({ page }) => {
     const routes = ['/work/strideto.html','/work/regexlab.html','/work/jotjson.html','/work/siteintel-pulse.html','/work/free-ai-mixer.html'];
     for (const route of routes) {
