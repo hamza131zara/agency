@@ -39,6 +39,7 @@ Obtain the relevant person's consent for their profile and credentials before pu
 - Work page states that project showcases are not claims of paid-client delivery and that conceptual UI previews are illustrative.
 - Project notes avoid unverified business metrics and mark development-stage work.
 - Products page clearly distinguishes live/public tools from projects in development.
+- Team page currently describes the service disciplines without publishing the unverified 8+ years / graphic-design degree or 10+ marketplace-team claims. Those owner-provided claims remain in this register until evidence, consent and team-lead approval are recorded.
 - Privacy, Terms and Disclaimer pages remain reachable for review but carry `noindex, nofollow` and are excluded from the sitemap while they are drafts.
 - Sitemap retains the `YOUR-DOMAIN.example` placeholder until the owner supplies the canonical domain. No production domain is guessed.
 
@@ -50,3 +51,19 @@ Obtain the relevant person's consent for their profile and credentials before pu
 - [ ] Owner confirms actual product release states and public support routes.
 - [ ] Legal operator and jurisdiction are supplied, and Privacy/Terms/Disclaimer are reviewed.
 - [ ] Final canonical domain, inbox and verified sender are configured and tested.
+
+
+## Team profile publication checklist
+
+For each proposed public individual profile, collect and approve the following before publishing:
+
+- Full name and preferred public display name.
+- Current role and accurate relationship to the agency (employee, contractor, advisor or project collaborator).
+- Biography and responsibility summary, reviewed by the individual.
+- Skills and technologies that the individual confirms are current.
+- Qualification and experience claims with credible evidence, plus the individual's permission to publish them.
+- Approved portrait and permission to use or crop it.
+- Any client/project references separately approved for attribution.
+- Individual consent and final owner/editor sign-off, with review date.
+
+Until that record is complete, use capability-level descriptions only. Do not infer a person's title, seniority, employment status, years of experience or degree from internal discussions.

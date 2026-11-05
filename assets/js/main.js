@@ -226,13 +226,63 @@ if (serviceFinderForm) {
   const contactLink = document.querySelector('#service-finder-contact');
   const finderStatus = document.querySelector('#service-finder-status');
   const serviceRecommendations = {
-    'Software & website development': { title:'Software and website development', description:'A starting point for a new website or platform—from a business site or e-commerce store to a marketplace, portal, SaaS product, dashboard or custom web application. The technology stack is selected for the project.', related:'UI/UX and product design · Digital marketing and growth' },
-    'AI, LLM & intelligent automation': { title:'AI, LLM and intelligent automation', description:'A fit for AI-powered features, chatbots, agents, RAG workflows, model integrations or process automation with appropriate safeguards and human review.', related:'Software and website development · API integrations' },
-    'Blockchain & Web3': { title:'Blockchain and Web3 engineering', description:'Start here for smart contracts, decentralized applications, DAO governance, wallet connections or on-chain product integrations.', related:'Software engineering · Security and testing' },
-    'Graphic design & creative services': { title:'Graphic design and creative services', description:'A fit for brand identity, marketing creatives, social graphics, presentations, product visuals or a more consistent visual system.', related:'UI/UX and product design · Digital marketing and growth' },
-    'Digital marketing & growth': { title:'Digital marketing and growth', description:'Start here to improve search visibility, AEO/GEO discoverability, content, affiliate channels, paid advertising or conversion paths.', related:'Software and website development · Creative design' },
-    'E-commerce & marketplace operations': { title:'E-commerce and marketplace operations', description:'A fit for marketplace setup, listings, catalogue operations, marketplace SEO, ads, inventory or multi-channel workflows.', related:'Software and website development · Digital marketing and growth' },
-    'Something else': { title:'Project discovery', description:'You do not need to know which service is right. Describe the problem, your audience and the result you need, and we can clarify the scope together.', related:'The best starting point depends on your goals and constraints.' }
+    'Software & website development': {
+      title:'Software and website development',
+      description:'A starting point for a new website or platform—from a business site or e-commerce store to a marketplace, portal, SaaS product, dashboard or custom web application. The technology stack is selected for the project.',
+      related:[
+        {label:'AI, LLM & Intelligent Automation',href:'services/ai-automation.html'},
+        {label:'Graphic Design & Creative Services',href:'services/creative-design.html'},
+        {label:'E-commerce & Marketplace Operations',href:'services/ecommerce-operations.html'}
+      ]
+    },
+    'AI, LLM & intelligent automation': {
+      title:'AI, LLM and intelligent automation',
+      description:'A fit for AI-powered features, chatbots, agents, RAG workflows, model integrations or process automation with appropriate safeguards and human review.',
+      related:[
+        {label:'Software & Website Development',href:'services/software-engineering.html'},
+        {label:'Digital Marketing & Growth',href:'services/digital-growth.html'}
+      ]
+    },
+    'Blockchain & Web3': {
+      title:'Blockchain and Web3 engineering',
+      description:'Start here for smart contracts, decentralized applications, DAO governance, wallet connections or on-chain product integrations.',
+      related:[
+        {label:'Software & Website Development',href:'services/software-engineering.html'},
+        {label:'AI, LLM & Intelligent Automation',href:'services/ai-automation.html'}
+      ]
+    },
+    'Graphic design & creative services': {
+      title:'Graphic design and creative services',
+      description:'A fit for brand identity, marketing creatives, social graphics, presentations, product visuals or a more consistent visual system.',
+      related:[
+        {label:'Digital Marketing & Growth',href:'services/digital-growth.html'},
+        {label:'Software & Website Development',href:'services/software-engineering.html'}
+      ]
+    },
+    'Digital marketing & growth': {
+      title:'Digital marketing and growth',
+      description:'Start here to improve search visibility, AEO/GEO discoverability, content, affiliate channels, paid advertising or conversion paths.',
+      related:[
+        {label:'Graphic Design & Creative Services',href:'services/creative-design.html'},
+        {label:'E-commerce & Marketplace Operations',href:'services/ecommerce-operations.html'},
+        {label:'Software & Website Development',href:'services/software-engineering.html'}
+      ]
+    },
+    'E-commerce & marketplace operations': {
+      title:'E-commerce and marketplace operations',
+      description:'A fit for marketplace setup, listings, catalogue operations, marketplace SEO, ads, inventory or multi-channel workflows.',
+      related:[
+        {label:'Software & Website Development',href:'services/software-engineering.html'},
+        {label:'Digital Marketing & Growth',href:'services/digital-growth.html'}
+      ]
+    },
+    'Something else': {
+      title:'Project discovery',
+      description:'You do not need to know which service is right. Describe the problem, your audience and the result you need, and we can clarify the scope together.',
+      related:[
+        {label:'Explore all six service divisions',href:'services.html'}
+      ]
+    }
   };
   const updateServiceRecommendation = () => {
     const selected = new FormData(serviceFinderForm).get('serviceNeed');
@@ -244,7 +294,17 @@ if (serviceFinderForm) {
     }
     if (resultTitle) resultTitle.textContent = recommendation.title;
     if (resultDescription) resultDescription.textContent = recommendation.description;
-    if (resultRelated) resultRelated.textContent = recommendation.related;
+    if (resultRelated) {
+      resultRelated.replaceChildren();
+      recommendation.related.forEach(item => {
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = item.href;
+        link.textContent = item.label;
+        listItem.append(link);
+        resultRelated.append(listItem);
+      });
+    }
     if (briefLink) briefLink.href = 'brief-builder.html?service=' + encodeURIComponent(String(selected));
     if (contactLink) contactLink.href = 'contact.html?service=' + encodeURIComponent(String(selected));
     if (resultPanel) resultPanel.hidden = false;

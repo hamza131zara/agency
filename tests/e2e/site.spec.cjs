@@ -175,9 +175,81 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#service-finder-status')).toContainText(/Blockchain and Web3 engineering/i);
     await expect(page.locator('#service-finder-brief')).toHaveAttribute('href','brief-builder.html?service=Blockchain%20%26%20Web3');
     await expect(page.locator('#service-finder-contact')).toHaveAttribute('href','contact.html?service=Blockchain%20%26%20Web3');
+    await expect(page.locator('#service-finder-related a')).toHaveCount(2);
+    await expect(page.locator('#service-finder-related a').nth(0)).toHaveAttribute('href','services/software-engineering.html');
+    await expect(page.locator('#service-finder-related a').nth(1)).toHaveAttribute('href','services/ai-automation.html');
     await page.getByRole('link',{name:/Build a project brief/i}).click();
     await expect(page).toHaveURL(/brief-builder\.html\?service=Blockchain%20%26%20Web3$/);
     await expect(page.locator('#brief-service')).toHaveValue('Blockchain & Web3');
+  });
+
+  test('six service detail pages explain delivery, scope and common questions', async ({ page }) => {
+    const routes = [
+      '/services/software-engineering.html',
+      '/services/ai-automation.html',
+      '/services/blockchain-web3.html',
+      '/services/creative-design.html',
+      '/services/digital-growth.html',
+      '/services/ecommerce-operations.html'
+    ];
+    for (const route of routes) {
+      await page.goto(route);
+      await expect(page.locator('.service-next-section')).toBeVisible();
+      await expect(page.locator('.service-process-grid article')).toHaveCount(4);
+      await expect(page.locator('.service-faq-block .faq-list details')).toHaveCount(3);
+      const links = page.locator('.service-related-block li a');
+      const count = await links.count();
+      expect(count).toBeGreaterThanOrEqual(2);
+      for (let i = 0; i < count; i++) {
+        const href = await links.nth(i).getAttribute('href');
+        expect(href).toMatch(/^[a-z0-9-]+\.html$/);
+        const response = await page.request.get(new URL(href, page.url()).toString());
+        expect(response.status(), route + ' related link ' + href).toBe(200);
+      }
+    }
+  });
+
+  test('service detail pages reflow without horizontal overflow at every review breakpoint', async ({ page }) => {
+    const routes = [
+      '/services/software-engineering.html',
+      '/services/ai-automation.html',
+      '/services/blockchain-web3.html',
+      '/services/creative-design.html',
+      '/services/digital-growth.html',
+      '/services/ecommerce-operations.html'
+    ];
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const route of routes) {
+        await page.goto(route);
+        const dimensions = await page.evaluate(() => ({
+          viewport: document.documentElement.clientWidth,
+          document: document.documentElement.scrollWidth
+        }));
+        expect(dimensions.document, route + ' horizontal overflow at ' + width + 'px')
+          .toBeLessThanOrEqual(dimensions.viewport);
+        await expect(page.locator('.service-process-grid')).toBeVisible();
+        await expect(page.locator('.service-faq-block .faq-list details').first()).toBeVisible();
+      }
+    }
+  });
+
+  test('service FAQs retain native keyboard-operable disclosure behavior', async ({ page }) => {
+    await page.goto('/services/software-engineering.html');
+    const firstFaq = page.locator('.service-faq-block .faq-list details').first();
+    const summary = firstFaq.locator('summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(firstFaq).toHaveAttribute('open', '');
+    await page.keyboard.press('Enter');
+    await expect(firstFaq).not.toHaveAttribute('open', '');
+  });
+
+  test('team page does not publish unverified numerical credentials or team size', async ({ page }) => {
+    await page.goto('/team.html');
+    const body = await page.locator('main').innerText();
+    expect(body).not.toMatch(/8\+ years|bachelor'?s degree in graphic design|10\+ team members/i);
+    await expect(page.locator('.team-profile-note')).toContainText(/consent and owner approval/i);
   });
 
   test('homepage 3D service map links to all six dedicated service pages', async ({ page }) => {
