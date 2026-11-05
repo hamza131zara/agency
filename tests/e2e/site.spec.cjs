@@ -209,6 +209,42 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+  test('service detail pages reflow without horizontal overflow at every review breakpoint', async ({ page }) => {
+    const routes = [
+      '/services/software-engineering.html',
+      '/services/ai-automation.html',
+      '/services/blockchain-web3.html',
+      '/services/creative-design.html',
+      '/services/digital-growth.html',
+      '/services/ecommerce-operations.html'
+    ];
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const route of routes) {
+        await page.goto(route);
+        const dimensions = await page.evaluate(() => ({
+          viewport: document.documentElement.clientWidth,
+          document: document.documentElement.scrollWidth
+        }));
+        expect(dimensions.document, route + ' horizontal overflow at ' + width + 'px')
+          .toBeLessThanOrEqual(dimensions.viewport);
+        await expect(page.locator('.service-process-grid')).toBeVisible();
+        await expect(page.locator('.service-faq-block .faq-list details').first()).toBeVisible();
+      }
+    }
+  });
+
+  test('service FAQs retain native keyboard-operable disclosure behavior', async ({ page }) => {
+    await page.goto('/services/software-engineering.html');
+    const firstFaq = page.locator('.service-faq-block .faq-list details').first();
+    const summary = firstFaq.locator('summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(firstFaq).toHaveAttribute('open', '');
+    await page.keyboard.press('Enter');
+    await expect(firstFaq).not.toHaveAttribute('open', '');
+  });
+
   test('team page does not publish unverified numerical credentials or team size', async ({ page }) => {
     await page.goto('/team.html');
     const body = await page.locator('main').innerText();
