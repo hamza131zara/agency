@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-05",
+  "publicCatalogue": [
+    {
+      "id": "strideto",
+      "name": "STRIDETO",
+      "slug": "strideto",
+      "projectType": "career-and-education-platform",
+      "publicStatus": "live",
+      "catalogueVisibility": "public",
+      "relationship": "owner-associated project; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": [],
+      "demo": "https://strideto.com",
+      "source": "https://github.com/Hafiz-Hamza-Liaqat/Strideto",
+      "evidenceBoundary": "Repository README describes the platform and workflows. Owner identifies the service as live and free. Recheck uptime and regional access before launch; do not claim agency delivery or quantified outcomes."
+    },
+    {
+      "id": "regexlab",
+      "name": "RegexLab",
+      "slug": "regexlab",
+      "projectType": "developer-tool",
+      "publicStatus": "live",
+      "catalogueVisibility": "public",
+      "relationship": "owner-associated public tool; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": ["TypeScript", "Playwright", "GitHub Pages deployment"],
+      "demo": "https://hafiz-hamza-liaqat.github.io/RegexLab/",
+      "source": "https://github.com/Hafiz-Hamza-Liaqat/RegexLab",
+      "evidenceBoundary": "README documents browser regex testing, match inspection, replay and learning. Do not claim usage or performance metrics."
+    },
+    {
+      "id": "jotjson",
+      "name": "JotJSON",
+      "slug": "jotjson",
+      "projectType": "developer-tool",
+      "publicStatus": "live",
+      "catalogueVisibility": "public",
+      "relationship": "owner-associated public tool; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": ["React", "TypeScript", "Vite", "Tailwind CSS", "CodeMirror", "Vitest", "Playwright"],
+      "demo": "https://hafiz-hamza-liaqat.github.io/JotJSON/",
+      "source": "https://github.com/Hafiz-Hamza-Liaqat/JotJSON",
+      "evidenceBoundary": "README describes local-first browser processing, JSON validation, formatting, comparison, search and learning features. Do not imply documents are uploaded to a backend."
+    },
+    {
+      "id": "siteintel-pulse",
+      "name": "SiteIntel Pulse",
+      "slug": "siteintel-pulse",
+      "projectType": "website-intelligence-platform",
+      "publicStatus": "in-development",
+      "catalogueVisibility": "public",
+      "relationship": "owner-associated product; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": ["Next.js", "TypeScript", "SQLite"],
+      "demo": "https://hafiz-hamza-liaqat.github.io/siteintel-pulse/",
+      "source": "https://github.com/Hafiz-Hamza-Liaqat/siteIntel-pulse",
+      "evidenceBoundary": "The GitHub Pages URL is a static design/documentation showcase, not the full interactive scanner. Full scanner requires a separate Node.js host."
+    },
+    {
+      "id": "free-ai-mixer",
+      "name": "Free AI Mixer",
+      "slug": "free-ai-mixer",
+      "projectType": "ai-creative-workflow-platform",
+      "publicStatus": "in-development",
+      "catalogueVisibility": "public",
+      "relationship": "owner-associated product; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": ["React", "TypeScript"],
+      "demo": null,
+      "source": "https://github.com/hamza131zara/Free-AI-Mixer",
+      "evidenceBoundary": "In development. Provider calls require configured API endpoints and credentials; no hosted public demo is confirmed. Do not imply successful generation without configured providers."
+    },
+    {
+      "id": "auto-trading-agent",
+      "name": "Auto-Trading-Agent",
+      "slug": null,
+      "projectType": "solana-trading-agent",
+      "publicStatus": "in-development",
+      "catalogueVisibility": "excluded",
+      "relationship": "owner-associated development repository; agency delivery relationship not asserted",
+      "agencyContribution": "not independently verified; do not claim",
+      "verifiedTechnology": [],
+      "demo": null,
+      "source": "https://github.com/hamza131zara/Auto-Trading-Agent",
+      "evidenceBoundary": "Explicitly excluded from the public Work catalogue for this phase: not available to buy/install, live trading is not authorized, and unresolved market-data/provider decisions remain. Do not advertise returns, investment advice, hosted trading or commercial availability."
+    }
+  ],
+  "globalRules": [
+    "Repository README content is evidence of documented scope, not proof of production availability.",
+    "Do not claim paid-client delivery, agency contribution, testimonials, outcomes, usage metrics, revenue, certifications or security audits without dated evidence and owner approval.",
+    "Only catalogueVisibility=public projects may appear in work.html.",
+    "Illustrative UI compositions must never be presented as authentic product screenshots.",
+    "Owner must recheck live URLs, release states, attribution and visual permissions before launch."
+  ]
+}
