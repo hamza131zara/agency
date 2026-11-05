@@ -1,6 +1,6 @@
 # Portfolio Content Evidence Register
 
-**Review date:** 4 November 2026  
+**Review date:** 5 November 2026  
 **Purpose:** Keep public project descriptions factual, distinguish owner-provided information from repository evidence, and prevent development-stage work from being advertised as a released product.
 
 ## Review rules
@@ -67,3 +67,18 @@ For each proposed public individual profile, collect and approve the following b
 - Individual consent and final owner/editor sign-off, with review date.
 
 Until that record is complete, use capability-level descriptions only. Do not infer a person's title, seniority, employment status, years of experience or degree from internal discussions.
+
+
+## Normalized portfolio inventory and catalogue decision
+
+The machine-readable inventory in `docs/PORTFOLIO_PROJECTS.json` is the canonical project record for Phase 4. It contains six owner-associated repositories, while the public Work catalogue intentionally contains five entries. These counts are not a defect: Auto-Trading-Agent is recorded for governance but excluded from public promotion because it is not available to buy or install and live trading is not authorized.
+
+The five public catalogue entries have stable IDs matching the JSON inventory. Their project type, public status, relationship/attribution boundary, evidence source, demo availability and publication constraints are recorded there. For all five, agency contribution remains unverified and is not claimed. A repository's presence under an owner-associated account does not by itself establish that the agency delivered the project.
+
+Inventory decisions:
+- STRIDETO: public project overview; live status is owner-provided and must be rechecked before launch.
+- RegexLab and JotJSON: public developer tools; README-supported scope and technology signals only.
+- SiteIntel Pulse and Free AI Mixer: public project notes marked in development; no full public product availability is implied.
+- Auto-Trading-Agent: retained in the internal evidence register but intentionally omitted from the public Work catalogue for this phase.
+
+The normalized inventory does not grant permission to publish individual contributions, client attribution, testimonials, screenshots or outcome metrics. Those remain separate owner-approval gates.
