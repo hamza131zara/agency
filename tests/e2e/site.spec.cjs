@@ -553,4 +553,19 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#project-empty-state')).toBeHidden();
   });
 
+
+  test('all project notes expose consistent evidence and attribution boundaries', async ({ page }) => {
+    const routes = ['/work/strideto.html','/work/regexlab.html','/work/jotjson.html','/work/siteintel-pulse.html','/work/free-ai-mixer.html'];
+    for (const route of routes) {
+      await page.goto(route);
+      const panel = page.locator('.project-evidence-panel');
+      await expect(panel).toBeVisible();
+      await expect(panel.getByRole('heading', { name: /What this page can verify/i })).toBeVisible();
+      await expect(panel.locator('dt')).toHaveText(['Release status','Project relationship','Evidence boundary']);
+      await expect(panel.getByText(/agency delivery/i)).toBeVisible();
+      await expect(panel.getByRole('navigation', { name: 'Related portfolio projects' })).toBeVisible();
+      await expect(panel.getByRole('link', { name: 'All projects' })).toHaveAttribute('href', '../work.html');
+    }
+  });
+
 });
