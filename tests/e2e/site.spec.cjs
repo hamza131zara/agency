@@ -562,7 +562,7 @@ test.describe('Phase I route and content checks', () => {
       await expect(panel).toBeVisible();
       await expect(panel.getByRole('heading', { name: /What this page can verify/i })).toBeVisible();
       await expect(panel.locator('dt')).toHaveText(['Release status','Project relationship','Evidence boundary']);
-      await expect(panel.getByText(/agency delivery/i)).toBeVisible();
+      await expect(panel.getByText(/agency delivery/i).first()).toBeVisible();
       await expect(panel.getByRole('navigation', { name: 'Related portfolio projects' })).toBeVisible();
       await expect(panel.getByRole('link', { name: 'All projects' })).toHaveAttribute('href', '../work.html');
     }
