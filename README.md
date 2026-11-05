@@ -48,7 +48,7 @@ The current validated platform contains 25 HTML routes: 14 root pages, six servi
 - `docs/PHASE_2_EXECUTION_PLAN.md` — accepted premium visual identity and 3D implementation record.
 - `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` — evidence review for project and product visuals.
 - `docs/PHASE_3_EXECUTION_PLAN.md` — service depth, positioning and team profile governance.
-- `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
+- `docs/PHASE_4_EXECUTION_PLAN.md` — portfolio and case-study system; accepted implementation record.\n- `docs/PHASE_4_QA_ACCEPTANCE.md` — Phase 4 automated acceptance evidence and outstanding manual launch gates.\n- `docs/PHASE_5_EXECUTION_PLAN.md` — ready-made product marketplace scope and execution plan.\n- `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
 - `docs/PORTFOLIO_CONTENT_EVIDENCE.md` — repository-backed product descriptions, owner-provided claims and final verification checklist.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
 
