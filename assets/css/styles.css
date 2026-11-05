@@ -250,6 +250,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .project-siteintel>strong{position:absolute;right:18px;top:107px;font-size:19px;text-align:right}
 .project-copy{padding:26px 28px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
 .project-copy>small{font:8px var(--mono);letter-spacing:.07em;color:#737d70}
+.project-meta{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:-7px 0 16px}.project-meta>span{display:inline-flex;align-items:center;min-height:25px;padding:5px 9px;border:1px solid #d4dbcf;border-radius:2px;font:8px var(--mono);letter-spacing:.04em;color:#586454;background:#edf0e8}.project-meta>.project-status-chip{font-weight:700}.project-status-chip.is-live{color:#365c3e;background:#e4eee1;border-color:#c5d7c0}.project-status-chip.is-development{color:#78552c;background:#f4ead8;border-color:#e3d2b4}
 .project-copy h2{font-size:28px;letter-spacing:-.055em;margin:12px 0}
 .project-copy p{font-size:11px;line-height:1.9;color:#697168;margin:0 0 20px;max-width:530px}
 .project-copy>a{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
