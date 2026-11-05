@@ -23,6 +23,8 @@ jobs:
         run: python scripts/validate_site.py
       - name: Validate portfolio evidence and visual permissions
         run: python scripts/validate_portfolio_evidence.py
+      - name: Validate Phase 4 portfolio acceptance structure
+        run: python scripts/validate_portfolio_acceptance.py
       - name: Check JavaScript syntax
         run: node --check assets/js/main.js
       - name: Check PHP syntax
