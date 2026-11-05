@@ -311,7 +311,7 @@ test.describe('Phase I route and content checks', () => {
       await expect(card).toHaveCount(1);
       await expect(card.locator('.project-meta')).toContainText(type);
       await expect(card.locator('.project-status-chip')).toHaveText(status);
-      await expect(card.getByRole('link', { name: /Read project notes/i })).toHaveAttribute('href', /work\\/.+\\.html$/);
+      await expect(card.getByRole('link', { name: /Read project notes/i })).toHaveAttribute('href', 'work/' + id + '.html');
     }
 
     await page.getByRole('button', { name: 'Developer tools' }).click();
