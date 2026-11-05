@@ -1,6 +1,6 @@
 # Phase 3 — Service Depth, Positioning & Team Profiles
 
-**Status:** IN PROGRESS — execution branch `phase3/service-depth-positioning-team-profiles` created from Phase 2 merge commit `d069caaf3fc10d462199d945d3c4729fed0b70a6`.  
+**Status:** IMPLEMENTATION READY FOR OWNER REVIEW — PR #16 remains open and unmerged. Latest exact-head CI run #41983347871 passed both required jobs on `188c29f377d259a59562da6d5730c37fbabd4cb4`.  
 **Predecessor:** Phase 2 merged through PR #15; post-merge validation and browser/accessibility jobs succeeded on the merge commit.  
 **Language:** English only.  
 **Purpose:** improve the six service journeys and explain cross-disciplinary delivery without inventing biographies, credentials, clients, results or demand evidence.
@@ -56,15 +56,15 @@ For all six service detail pages:
 
 ## 3. Acceptance criteria
 
-- [ ] All six service pages explain fit, practical scope, delivery approach, important decisions and useful FAQs.
-- [ ] Related-service links provide working routes and do not imply false project/client relationships.
-- [ ] Service Finder related recommendations are real accessible links; brief and contact preselection remain correct.
-- [ ] Team page contains no unapproved numeric experience, qualification or team-size claims.
-- [ ] Profile publication requirements and owner-approval workflow are documented.
-- [ ] No invented customer evidence, testimonials, prices, timelines, performance claims or guaranteed outcomes are introduced.
-- [ ] Page titles, descriptions, headings, breadcrumbs and English-only policy remain correct.
-- [ ] All browser, responsive, keyboard and accessibility checks pass on the exact PR head.
-- [ ] Screenshots of all changed service/team pages are reviewed.
+- [x] All six service pages explain fit, practical scope, delivery approach, important decisions and useful FAQs.
+- [x] Related-service links provide working routes and do not imply false project/client relationships.
+- [x] Service Finder related recommendations are real accessible links; brief and contact preselection remain correct.
+- [x] Team page contains no unapproved numeric experience, qualification or team-size claims.
+- [x] Profile publication requirements and owner-approval workflow are documented.
+- [x] No invented customer evidence, testimonials, prices, timelines, performance claims or guaranteed outcomes are introduced.
+- [x] Page titles, descriptions, headings, breadcrumbs and English-only policy remain correct.
+- [x] All browser, responsive, keyboard and accessibility checks pass on the exact PR head.
+- [x] Screenshots of all changed service/team pages are reviewed.
 - [ ] Owner reviews and merges the Phase 3 implementation PR.
 
 ## 4. Owner / evidence dependencies
@@ -83,14 +83,14 @@ For all six service detail pages:
 - Changing legal identity, canonical domain, privacy pages, hosting or production deployment.
 - Replacing the existing site architecture or introducing a frontend framework.
 
-## 6. Current progress snapshot — 4 November 2026
+## 6. Current progress snapshot — 5 November 2026
 
 | Work package | Status | Evidence / next action |
 |---|---|---|
-| P3.1 — Service page depth | FIRST INCREMENT IMPLEMENTED | All six service pages now include a tailored four-step delivery path, pre-engagement scope decisions and three FAQs. Exact-head QA still required. |
-| P3.2 — Related journeys | FIRST INCREMENT IMPLEMENTED | Each service page links to complementary service pages; Service Finder recommendations now render as real accessible internal links. Exact-head QA still required. |
-| P3.3 — Team profiles | PROFILE GOVERNANCE IMPLEMENTED | Removed unverified numerical experience, degree and 10+ team-size claims from public Team page. Added a profile consent/approval note and a publication checklist to `docs/PORTFOLIO_CONTENT_EVIDENCE.md`. Individual profiles remain deferred until approved evidence exists. |
-| P3.4 — Evidence-led refinement | BLOCKED ON EVIDENCE | No approved analytics or inquiry-pattern dataset supplied. Do not call changes research-based. |
-| P3.5 — QA | IN PROGRESS | Added Playwright tests for six service pages, four-step process, FAQs, related-link 200 responses, Service Finder links and team-claim safeguards. Run complete CI and inspect changed-page screenshots before acceptance. |
+| P3.1 — Service page depth | IMPLEMENTED AND VERIFIED | Six tailored service pages include a four-step delivery path, scope decisions and three FAQs each. HTML/link validation and Playwright checks pass on the exact PR head. |
+| P3.2 — Related journeys | IMPLEMENTED AND VERIFIED | Related-service links return HTTP 200; Service Finder related links, brief-builder preselection and contact preselection pass regression checks. |
+| P3.3 — Team profiles | GOVERNANCE IMPLEMENTED AND VERIFIED | Unverified numerical experience, degree and team-size claims are removed. Profile consent, evidence and owner sign-off requirements are documented; individual profiles remain deferred until approved evidence exists. |
+| P3.4 — Evidence-led refinement | EVIDENCE BOUNDARY DOCUMENTED; DATA-LED ITERATION DEFERRED | No approved analytics or inquiry-pattern dataset was supplied. Known/unknown evidence is recorded; usability and content clarity were improved without describing the work as research-based. No tracking or new data collection was added. Revisit only when owner-approved evidence is available. |
+| P3.5 — QA | AUTOMATED QA AND VISUAL REVIEW COMPLETE | Exact-head CI [#41983347871](https://github.com/hamza131zara/agency/actions/runs/41983347871) passed `validate` and `browser-and-accessibility`. Playwright verifies all six service routes, related-link HTTP 200 responses, Service Finder routes, team safeguards, no horizontal overflow at 320/390/768/1440px, and keyboard operation of native FAQ disclosures. Axe/browser checks passed; screenshots of all six service pages and Team at desktop/mobile were reviewed from artifact `13394891838`. |
 
-This is an execution plan, not a completion declaration. Update the table and acceptance checklist only when implementation and QA evidence exist.
+Implementation and automated QA are ready for owner acceptance. The final checklist item remains open until the owner reviews and merges PR #16. Human assistive-technology review remains a separate pre-launch requirement. No deployment or external infrastructure changes were made.
