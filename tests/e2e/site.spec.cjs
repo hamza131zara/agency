@@ -531,4 +531,41 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+
+  test('portfolio catalogue exposes five unique, evidence-governed project records', async ({ page }) => {
+    await page.goto('/work.html');
+    const cards = page.locator('[data-project-card]');
+    await expect(cards).toHaveCount(5);
+    const ids = await cards.evaluateAll(items => items.map(item => item.dataset.projectId));
+    expect(ids).toEqual(['strideto', 'regexlab', 'jotjson', 'siteintel-pulse', 'free-ai-mixer']);
+    expect(new Set(ids).size).toBe(5);
+    for (const card of await cards.all()) {
+      await expect(card.locator('.project-copy h2')).toBeVisible();
+      await expect(card.locator('.project-links a').first()).toHaveAttribute('href', /work\//);
+      expect(await card.getAttribute('data-status')).toMatch(/^(live|development)$/);
+    }
+    await expect(page.locator('#project-result-count')).toHaveText('Showing all 5 projects.');
+    await page.getByLabel('Search projects').fill('trading');
+    await expect(page.locator('[data-project-card]:visible')).toHaveCount(0);
+    await expect(page.locator('#project-empty-state')).toBeVisible();
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(page.locator('[data-project-card]:visible')).toHaveCount(5);
+    await expect(page.locator('#project-empty-state')).toBeHidden();
+  });
+
+
+  test('all project notes expose consistent evidence and attribution boundaries', async ({ page }) => {
+    const routes = ['/work/strideto.html','/work/regexlab.html','/work/jotjson.html','/work/siteintel-pulse.html','/work/free-ai-mixer.html'];
+    for (const route of routes) {
+      await page.goto(route);
+      const panel = page.locator('.project-evidence-panel');
+      await expect(panel).toBeVisible();
+      await expect(panel.getByRole('heading', { name: /What this page can verify/i })).toBeVisible();
+      await expect(panel.locator('dt')).toHaveText(['Release status','Project relationship','Evidence boundary']);
+      await expect(panel.getByText(/agency delivery/i).first()).toBeVisible();
+      await expect(panel.getByRole('navigation', { name: 'Related portfolio projects' })).toBeVisible();
+      await expect(panel.getByRole('link', { name: 'All projects' })).toHaveAttribute('href', '../work.html');
+    }
+  });
+
 });
