@@ -1,6 +1,6 @@
 # Phase 3 — Service Depth, Positioning & Team Profiles
 
-**Status:** IMPLEMENTATION READY FOR OWNER REVIEW — PR #16 remains open and unmerged. Code/test commit `188c29f` passed CI #41983347871; the subsequent roadmap/documentation revision at `742aa980` also passed both required jobs in exact-head CI #41983646119.  
+**Status:** COMPLETE — PR #16 merged to `main` on 5 November 2026 at merge commit `94954a3e859ae45070fc84d0e7ff3eba53be11bc`. Post-merge CI run [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed both required jobs (`validate` and `browser-and-accessibility`).  
 **Predecessor:** Phase 2 merged through PR #15; post-merge validation and browser/accessibility jobs succeeded on the merge commit.  
 **Language:** English only.  
 **Purpose:** improve the six service journeys and explain cross-disciplinary delivery without inventing biographies, credentials, clients, results or demand evidence.
@@ -65,7 +65,7 @@ For all six service detail pages:
 - [x] Page titles, descriptions, headings, breadcrumbs and English-only policy remain correct.
 - [x] All browser, responsive, keyboard and accessibility checks pass on the exact PR head.
 - [x] Screenshots of all changed service/team pages are reviewed.
-- [ ] Owner reviews and merges the Phase 3 implementation PR.
+- [x] Owner reviewed and merged PR #16; post-merge `main` CI passed both required jobs.
 
 ## 4. Owner / evidence dependencies
 
@@ -93,4 +93,4 @@ For all six service detail pages:
 | P3.4 — Evidence-led refinement | EVIDENCE BOUNDARY DOCUMENTED; DATA-LED ITERATION DEFERRED | No approved analytics or inquiry-pattern dataset was supplied. Known/unknown evidence is recorded; usability and content clarity were improved without describing the work as research-based. No tracking or new data collection was added. Revisit only when owner-approved evidence is available. |
 | P3.5 — QA | AUTOMATED QA AND VISUAL REVIEW COMPLETE | Exact-head CI [#41983646119](https://github.com/hamza131zara/agency/actions/runs/41983646119) passed `validate` and `browser-and-accessibility` on PR head `742aa980`. Playwright verifies all six service routes, related-link HTTP 200 responses, Service Finder routes, team safeguards, no horizontal overflow at 320/390/768/1440px, and keyboard operation of native FAQ disclosures. Axe/browser checks passed; screenshots of all six service pages and Team at desktop/mobile were reviewed from artifact `13394891838`. |
 
-Implementation and automated QA are ready for owner acceptance. The final checklist item remains open until the owner reviews and merges PR #16. Human assistive-technology review remains a separate pre-launch requirement. No deployment or external infrastructure changes were made.
+Phase 3 is complete at repository implementation and automated QA level. Human assistive-technology review remains a separate pre-launch requirement; verified evidence and consent are still required before individual team profiles or unsupported credentials can be published. No deployment or external infrastructure changes were made.

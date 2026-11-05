@@ -144,14 +144,14 @@ Each module has its own page(s), navigation destination, page metadata, content 
 
 ## 5. Master phase roadmap
 
-### Execution status — 4 November 2026
+### Execution status — 5 November 2026
 
 | Phase | Status | Evidence / boundary |
 |---|---|---|
 | Phase 0 — Strategy, documentation and governance | COMPLETE | Planning baseline merged through PR #13. |
 | Phase 1 — Multi-page platform foundation | COMPLETE — implementation | PR #14 merged into `main` at [`17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609); exact PR-head CI run #151 passed both required jobs. Owner/legal and human accessibility items remain pre-launch gates in `docs/PHASE_1_ACCEPTANCE.md`. |
 | Phase 2 — Premium visual identity and 3D experience | COMPLETE | PR #15 merged to `main` on 4 November 2026 at [`d069caaf`](https://github.com/hamza131zara/agency/commit/d069caaf3fc10d462199d945d3c4729fed0b70a6); post-merge CI #41864959360 passed both required jobs. Human assistive-technology and official legal-brand inputs remain pre-launch gates. Evidence in `docs/PHASE_2_EXECUTION_PLAN.md`. |
-| Phase 3 — Service depth, positioning and team profiles | IMPLEMENTATION READY FOR OWNER REVIEW | PR #16 is open and unmerged. Exact-head CI #41983347871 passed both required jobs on `188c29f`; six service journeys, related links, profile safeguards, responsive/keyboard tests and screenshot review are complete. Evidence-led conversion refinement is explicitly bounded by the absence of owner-approved inquiry/analytics data. |
+| Phase 3 — Service depth, positioning and team profiles | COMPLETE — implementation and post-merge QA | PR #16 merged to `main` on 5 November 2026 at [`94954a3`](https://github.com/hamza131zara/agency/commit/94954a3e859ae45070fc84d0e7ff3eba53be11bc). Post-merge CI [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed `validate` and `browser-and-accessibility`. Profile evidence/consent and human assistive-technology review remain pre-launch gates. |
 | Phases 4–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
 
 A phase status distinguishes repository implementation from public-release readiness. A merge does not complete legal approvals, human accessibility reviews, external delivery tests or deployment.
@@ -235,6 +235,8 @@ Exit criteria:
 - Service links, inquiry preselection and related-content links remain consistent.
 
 ### Phase 4 — Portfolio and case-study system
+
+**Status:** PLANNED — execution plan: `docs/PHASE_4_EXECUTION_PLAN.md`. Phase 3 is merged and post-merge CI passed. Phase 4 begins with an audit of the existing five-project catalogue and project-note pages; it must improve and standardize this foundation rather than rebuild it blindly.
 
 **Purpose:** turn the project list into an evidence-led body of work.
 
