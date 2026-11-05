@@ -2,7 +2,7 @@
 
 **Review date:** 5 November 2026  
 **Scope:** Portfolio catalogue and the five public project-note pages.  
-**Status:** Automated acceptance checks added; exact-head CI and owner/manual review pending.
+**Status:** REPOSITORY / AUTOMATED-QA ACCEPTED — PR #22 merged at `b89adee04b9fe9ebae5e56e01e5cf440605fee9f`; post-merge CI [#42080702755](https://github.com/hamza131zara/agency/actions/runs/42080702755) passed. Manual owner and assistive-technology review remains a pre-launch gate.
 
 ## Automated acceptance coverage
 
@@ -45,4 +45,4 @@ Record reviewer, date, browser/device, routes inspected, findings and evidence l
 
 ## Acceptance decision
 
-Phase 4 implementation can be accepted at repository/automated-QA level only after both exact-head PR checks and post-merge checks pass. The public launch remains conditional on the manual owner-review items above. Missing owner evidence must result in omission or qualified wording, never invented claims or unapproved assets.
+Phase 4 implementation is accepted at repository/automated-QA level: the corrected exact PR head passed both required jobs and post-merge CI on `main` passed. The public launch remains conditional on the manual owner-review items above. Missing owner evidence must result in omission or qualified wording, never invented claims or unapproved assets.
