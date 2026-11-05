@@ -27,7 +27,7 @@ Known limitations to address:
 
 ## 3. Work packages
 
-**Progress note (5 November 2026):** P4.1 has a first implementation on the current branch: `docs/PORTFOLIO_PROJECTS.json` defines six normalized records, stable public-catalogue IDs, relationship and contribution boundaries, source/demo references, release status and explicit exclusion policy. The evidence register records why the public catalogue intentionally remains at five. Automated checks and remaining work packages are still in progress.
+**Progress note (5 November 2026):** P4.1 has a first implementation on the current branch: `docs/PORTFOLIO_PROJECTS.json` defines six normalized records, stable public-catalogue IDs, relationship and contribution boundaries, source/demo references, release status and explicit exclusion policy. The evidence register records why the public catalogue intentionally remains at five. P4.3 has also started: all five project-note routes now share a responsive evidence/attribution panel and related-project navigation. Playwright coverage checks the shared structure. P4.2 catalogue behavior, full visual review and remaining acceptance work are still in progress.
 
 
 ### P4.1 — Portfolio inventory and evidence model
