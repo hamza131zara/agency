@@ -152,6 +152,9 @@ test.describe('Phase I route and content checks', () => {
 
   test('project showcases expose the verified source links and do not imply an unconfirmed demo', async ({ page }) => {
     await page.goto('/work.html');
+    const stridetoCard = page.locator('[data-project-card]').filter({ hasText: 'STRIDETO' });
+    await expect(stridetoCard.getByRole('link', { name: /View source/i })).toHaveAttribute('href', 'https://github.com/Hafiz-Hamza-Liaqat/Strideto');
+
     const regexCard = page.locator('[data-project-card]').filter({ hasText: 'RegexLab' });
     await expect(regexCard.getByRole('link', { name: /View source/i })).toHaveAttribute('href', 'https://github.com/Hafiz-Hamza-Liaqat/RegexLab');
 
@@ -296,6 +299,20 @@ test.describe('Phase I route and content checks', () => {
     const visibleCards = page.locator('[data-project-card]:visible');
     await expect(page.locator('[data-project-card]')).toHaveCount(5);
     await expect(page.locator('#project-result-count')).toContainText('all 5 projects');
+    const expectedCards = [
+      ['strideto','Platform','Live'],
+      ['regexlab','Developer tool','Live demo'],
+      ['jotjson','Developer tool','Live demo'],
+      ['siteintel-pulse','AI & intelligence','In development'],
+      ['free-ai-mixer','AI & intelligence','In development']
+    ];
+    for (const [id, type, status] of expectedCards) {
+      const card = page.locator('[data-project-card][data-project-id="' + id + '"]');
+      await expect(card).toHaveCount(1);
+      await expect(card.locator('.project-meta')).toContainText(type);
+      await expect(card.locator('.project-status-chip')).toHaveText(status);
+      await expect(card.getByRole('link', { name: /Read project notes/i })).toHaveAttribute('href', 'work/' + id + '.html');
+    }
 
     await page.getByRole('button', { name: 'Developer tools' }).click();
     await expect(visibleCards).toHaveCount(2);

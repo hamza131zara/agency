@@ -1,6 +1,6 @@
 # Phase 4 — Portfolio & Case-Study System
 
-**Status:** IN PROGRESS — P4.1 normalized inventory established on branch `phase4/p4-1-inventory-evidence-model`; P4.2–P4.5 remain open.  
+**Status:** IN PROGRESS — P4.1 merged and verified on `main`; P4.2 catalogue-quality implementation is under review; P4.3–P4.5 remain open.  
 **Predecessor:** Phase 3 merged to `main` at [`94954a3`](https://github.com/hamza131zara/agency/commit/94954a3e859ae45070fc84d0e7ff3eba53be11bc); post-merge CI [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed both required jobs.  
 **Language:** English only.  
 **Hosting baseline:** Existing static HTML/CSS/browser-JavaScript/PHP-compatible architecture; no framework or CMS migration is assumed.
@@ -27,7 +27,7 @@ Known limitations to address:
 
 ## 3. Work packages
 
-**Progress note (5 November 2026):** P4.1 has a first implementation on the current branch: `docs/PORTFOLIO_PROJECTS.json` defines six normalized records, stable public-catalogue IDs, relationship and contribution boundaries, source/demo references, release status and explicit exclusion policy. The evidence register records why the public catalogue intentionally remains at five. P4.3 has also started: all five project-note routes now share a responsive evidence/attribution panel and related-project navigation. Playwright coverage checks the shared structure. P4.2 catalogue behavior, full visual review and remaining acceptance work are still in progress.
+**Progress note (5 November 2026):** P4.1 is merged to `main` at `9126451e97645436f219e59d8962dbc184ede2d56`; post-merge CI run [#41989863844](https://github.com/hamza131zara/agency/actions/runs/41989863844) passed both required jobs. The normalized six-record inventory and five-item public visibility boundary are now the baseline. P4.2 implementation is underway on `phase4/p4-2-portfolio-catalogue-quality`: all five public cards now display explicit project-type and release-status chips, STRIDETO now exposes its recorded public source repository, and Playwright assertions cover the metadata and source link alongside existing filter/reset behavior. Exact-head CI and responsive/visual review remain pending. P4.3 has begun with the shared evidence/attribution panel and related-project navigation on all five project-note routes; P4.4 and P4.5 remain open.
 
 
 ### P4.1 — Portfolio inventory and evidence model
