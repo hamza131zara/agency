@@ -151,7 +151,7 @@ Each module has its own page(s), navigation destination, page metadata, content 
 | Phase 0 — Strategy, documentation and governance | COMPLETE | Planning baseline merged through PR #13. |
 | Phase 1 — Multi-page platform foundation | COMPLETE — implementation | PR #14 merged into `main` at [`17637e7`](https://github.com/hamza131zara/agency/commit/17637e7adb3299d0abc5d9263b91d1bac9def609); exact PR-head CI run #151 passed both required jobs. Owner/legal and human accessibility items remain pre-launch gates in `docs/PHASE_1_ACCEPTANCE.md`. |
 | Phase 2 — Premium visual identity and 3D experience | COMPLETE | PR #15 merged to `main` on 4 November 2026 at [`d069caaf`](https://github.com/hamza131zara/agency/commit/d069caaf3fc10d462199d945d3c4729fed0b70a6); post-merge CI #41864959360 passed both required jobs. Human assistive-technology and official legal-brand inputs remain pre-launch gates. Evidence in `docs/PHASE_2_EXECUTION_PLAN.md`. |
-| Phase 3 — Service depth, positioning and team profiles | IN PROGRESS | Execution plan: `docs/PHASE_3_EXECUTION_PLAN.md`; branch `phase3/service-depth-positioning-team-profiles`. First increment deepens all six service pages, links related disciplines and removes unverified numerical team claims. |
+| Phase 3 — Service depth, positioning and team profiles | IMPLEMENTATION READY FOR OWNER REVIEW | PR #16 is open and unmerged. Exact-head CI #41983347871 passed both required jobs on `188c29f`; six service journeys, related links, profile safeguards, responsive/keyboard tests and screenshot review are complete. Evidence-led conversion refinement is explicitly bounded by the absence of owner-approved inquiry/analytics data. |
 | Phases 4–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
 
 A phase status distinguishes repository implementation from public-release readiness. A merge does not complete legal approvals, human accessibility reviews, external delivery tests or deployment.
@@ -216,16 +216,16 @@ Exit criteria:
 
 ### Phase 3 — Service depth, positioning and team profiles
 
-**Purpose:** deepen the six service areas already established in Phase 1, improve their conversion journeys and publish approved team expertise.
+**Purpose:** deepen the six service areas already established in Phase 1, improve their conversion journeys and establish evidence/consent controls for public team expertise.
 
 **Execution plan:** `docs/PHASE_3_EXECUTION_PLAN.md`. Current implementation is limited to factual service-page improvements and profile-governance safeguards; individual credentials require consent and evidence.
 
 Phase 1 provides the six service-detail routes and the initial Service Finder. Phase 3 is an enhancement phase; it must build on those pages rather than recreate them.
 
 Deliverables:
-- Expand each service page with validated examples, industry/use-case guidance, FAQs based on real customer questions and clearer engagement boundaries.
-- Improve cross-linking between related services, relevant case studies, products and useful editorial guides.
-- Refine the Service Finder using inquiry feedback and evidence about visitor intent.
+- Expand each service page with service-specific use-case guidance, evergreen buyer FAQs (not represented as customer research), and clearer engagement boundaries. Add client examples only when verified and approved.
+- Improve cross-linking between related services and relevant case studies, products or editorial guides where verified material exists.
+- Refine the Service Finder's usability and routing; make data-led changes from inquiry feedback or visitor-intent evidence only when owner-approved datasets exist. Do not add tracking or new data collection under this phase.
 - Publish individual team/role profiles, biographies and credentials only after consent and owner approval.
 - Add service-specific process, scope and handover details where they materially help buyers understand delivery.
 
