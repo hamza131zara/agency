@@ -531,4 +531,26 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+
+  test('portfolio catalogue exposes five unique, evidence-governed project records', async ({ page }) => {
+    await page.goto('/work.html');
+    const cards = page.locator('[data-project-card]');
+    await expect(cards).toHaveCount(5);
+    const ids = await cards.evaluateAll(items => items.map(item => item.dataset.projectId));
+    expect(ids).toEqual(['strideto', 'regexlab', 'jotjson', 'siteintel-pulse', 'free-ai-mixer']);
+    expect(new Set(ids).size).toBe(5);
+    for (const card of await cards.all()) {
+      await expect(card.locator('.project-copy h2')).toBeVisible();
+      await expect(card.locator('.project-links a').first()).toHaveAttribute('href', /work\//);
+      expect(await card.getAttribute('data-status')).toMatch(/^(live|development)$/);
+    }
+    await expect(page.locator('#project-result-count')).toHaveText('Showing all 5 projects.');
+    await page.getByLabel('Search projects').fill('trading');
+    await expect(page.locator('[data-project-card]:visible')).toHaveCount(0);
+    await expect(page.locator('#project-empty-state')).toBeVisible();
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(page.locator('[data-project-card]:visible')).toHaveCount(5);
+    await expect(page.locator('#project-empty-state')).toBeHidden();
+  });
+
 });
