@@ -29,8 +29,12 @@ jobs:
         run: python scripts/validate_product_release_governance.py
       - name: Audit production launch blockers (report-only)
         run: python scripts/validate_launch_readiness.py
+      - name: Validate SEO and discoverability fundamentals
+        run: python scripts/validate_discoverability.py
       - name: Test launch-readiness release gate
-        run: python tests/test_launch_readiness.py
+        run: |
+          python tests/test_launch_readiness.py
+          python tests/test_discoverability.py
       - name: Check JavaScript syntax
         run: node --check assets/js/main.js
       - name: Check PHP syntax
