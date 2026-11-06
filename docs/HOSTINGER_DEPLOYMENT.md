@@ -49,6 +49,24 @@ Before mail configuration is correct, the endpoint must clearly state that the i
 - Document who owns updates, inbox monitoring, security updates and incident handling.
 - If a release causes critical breakage, restore the previous verified release and investigate before redeploying.
 
-## 6. Deployment authority
+## 6. Launch preflight and evidence record
 
-Do not purchase a domain/plan, change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval.
+Before any upload, read `docs/LAUNCH_READINESS_CHECKLIST.md` and complete `docs/LAUNCH_APPROVALS.json`. The repository now contains a launch guard:
+
+- Report-only audit (used by CI): `python scripts/validate_launch_readiness.py`
+- Strict release gate (must pass before publication): `python scripts/validate_launch_readiness.py --strict`
+
+The strict gate checks:
+- Approved canonical HTTPS origin and exact sitemap/robots host.
+- Sitemap integrity against the 26 indexable routes; draft legal pages and 404 remain excluded.
+- Approved brand and legal operator information.
+- Privacy, Terms and Disclaimer approval.
+- Monitored recipient inbox, verified sender, server-only mail configuration and real delivery tests.
+- Hostinger/PHP/document-root confirmation, SSL, HTTPS redirect and backup.
+- Owner approval, copy/asset review, keyboard/screen-reader and responsive review.
+
+The report-only CI step intentionally exits successfully while unresolved owner/production blockers are listed. It is not a deployment approval. The strict gate must exit zero after those blockers are resolved and evidence is written to the launch register.
+
+## 7. Deployment authority
+
+Do not purchase a domain/plan, change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval. A successful GitHub Actions run or a passing strict static audit does not itself perform or authorize a deployment.
