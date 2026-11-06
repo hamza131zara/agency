@@ -1,6 +1,6 @@
 # Phase 5 — Ready-Made Product Marketplace Execution Plan
 
-**Status:** IN PROGRESS — P5.1 merged and verified on `main` through PR #24; P5.2 product catalogue discovery is implemented on the current review branch; P5.3–P5.5 remain open.  
+**Status:** IN PROGRESS — P5.1 and P5.2 are merged and verified on `main`; P5.3 reusable product detail pages are implemented on the current review branch; P5.4–P5.5 remain open.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 5.  
 **Review date:** 6 November 2026.
 
@@ -52,17 +52,19 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 
 ## P5.2 — Product catalogue and category discovery
 
-**Implementation branch:** `phase5/p5-2-product-catalogue-discovery`.
+**Implementation branch:** `phase5/p5-2-product-catalogue-discovery`.  
+**Accepted:** PR #25 merged at `7159084d449891835eff2a6202630fca945a05a0`; post-merge CI [#42179451016](https://github.com/hamza131zara/agency/actions/runs/42179451016) passed both required jobs.
 
 - [x] Add stable product IDs, category keys and availability states to all six catalogue cards.
 - [x] Add category filters for platforms, developer tools, AI/intelligence and research/future systems.
 - [x] Add availability filtering for public tools/platforms, in-development projects and unavailable/gated work.
 - [x] Add name/description search, live result count, empty state and clear/reset behavior.
-- [x] Preserve verified demo/source links and make the distinction between project notes and actual product access explicit.
+- [x] Preserve verified demo/source links and distinguish project notes from product detail information.
 - [x] Keep Auto-Trading-Agent visible only as a clearly unavailable gated research candidate; do not add buying/installing/trading actions.
 - [x] Add Playwright coverage for product card inventory, status/category metadata, combined filters, keyboard activation, empty state and reset.
-- [ ] Exact-head `validate` and `browser-and-accessibility` CI checks pass.
-- [ ] Owner merges the PR and post-merge `main` CI passes.
+- [x] Exact-head `validate` and `browser-and-accessibility` checks passed.
+- [x] Owner merged PR #25; post-merge `main` CI passed.
+
 
 ## P5.3–P5.5 implementation constraints
 
@@ -75,10 +77,18 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 
 ## P5.3 — Reusable product detail pages
 
-- Define a consistent product-page template for overview, intended audience/use cases, verified capabilities, limitations, availability, platform requirements, data/security notes, deployment or installation steps, licence, approved pricing, support route, version and change history.
-- Keep project notes and product documentation separate. A project note is not a product installation guide or commercial offer.
-- Omit unavailable details or label them clearly as unverified/not yet available; never fill gaps with generic promises.
-- Link to a verified live destination, source repository, technical documentation or contact route as appropriate.
+**Implementation branch:** `phase5/p5-3-product-detail-pages`.
+
+- [x] Add one reusable semantic product-detail structure for the five public catalogue candidates: STRIDETO, RegexLab, JotJSON, SiteIntel Pulse and Free AI Mixer.
+- [x] Include overview, audience, documented capabilities, evidence source, availability/limitations, operating requirements, licence, price, support and update-policy information.
+- [x] Separate product-detail pages from Phase 4 project notes and link between them without treating portfolio notes as installation documentation.
+- [x] Keep SiteIntel Pulse's static showcase distinct from its full scanner and Free AI Mixer's separately configured API dependency explicit.
+- [x] Preserve STRIDETO's hosted-service/source-code distinction and qualify README license statements for RegexLab/JotJSON.
+- [x] Leave Auto-Trading-Agent without a product detail route; retain the not-available research card and its separate roadmap boundary.
+- [x] Connect the five eligible catalogue cards to product-detail pages, register the routes in site validation, browser tests and sitemap.
+- [ ] Exact-head `validate` and `browser-and-accessibility` checks pass.
+- [ ] Owner merges the PR and post-merge `main` CI passes.
+
 
 ## P5.4 — Product submission, release and commercial governance
 
