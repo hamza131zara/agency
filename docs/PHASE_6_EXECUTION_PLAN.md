@@ -203,6 +203,78 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 
 **Boundaries:** single internal owner only; no public signup, multiple staff roles, customer workspace or real data requirement. No retention schedule is activated until its period and deletion policy are explicitly approved. The login limiter is process-local and single-instance only. The live contact endpoint remains disconnected; no provider or production deployment is authorized.
 
+## 7E. P6.6 — Production Security, Privacy, Agency Marketing and Search Discoverability
+
+**Implementation branch:** `phase6/p6-6-release-marketing-readiness`.  
+**Security/privacy review:** `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md`.  
+**Marketing and SEO/AEO/GEO strategy:** `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md`.
+
+P6.6 is a release-readiness programme with five workstreams. Completing documentation or CI checks does not approve production deployment.
+
+### P6.6.1 — Production security and operational hardening
+
+- [x] Scope the operator session cookie to `/v1/operator`.
+- [x] Add a fail-closed guard that blocks the sandbox API/worker in `NODE_ENV=production`.
+- [x] Add regression tests for the production guard and cookie scope.
+- [x] Document the trust boundaries, threat model, current controls and production prerequisites in `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md`.
+- [x] Exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) passed the sandbox production-guard and scoped-cookie regression tests.
+- [ ] Select and verify production Node runtime, PostgreSQL, HTTPS ingress and network boundary.
+- [ ] Add production-grade shared rate limiting, operator MFA/recovery decision and secret-management/rotation.
+- [ ] Complete independent security review and adversarial testing.
+- [ ] Verify database TLS, backups, point-in-time recovery, restore and rollback.
+- [ ] Add monitoring, alerting, worker health, dead-letter operations and incident response.
+
+### P6.6.2 — Privacy and legal readiness
+
+- [x] Inventory the current PHP inquiry flow, browser brief-builder behavior, Google Fonts, operator sessions and sandbox database records.
+- [x] Document likely hosting/mail logs and provider questions without inventing retention or legal basis in `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md`.
+- [x] Keep public legal documents visibly draft/noindex pending real operator and jurisdiction review.
+- [ ] Confirm the legal operator/entity, jurisdiction, business address and privacy contact.
+- [ ] Review purposes, lawful basis, processor/subprocessor arrangements, cross-border transfers and data-subject request process.
+- [ ] Owner/legal reviewer approves separate retention periods for enquiries, project records, logs, sessions, audit and backups.
+- [ ] Implement approved deletion/purge and backup-expiry controls and verify the result.
+- [ ] Finalize Privacy Notice, Terms and Disclaimer against the actual production stack.
+
+### P6.6.3 — Agency marketing strategy
+
+- [x] Document a positioning hypothesis and audience hypotheses; do not present unvalidated segments as current customers.
+- [x] Propose primary/secondary service focus, channel priorities, a 90-day test and conversion metrics in `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md`.
+- [ ] Owner approves primary ICP, target markets, public agency name, differentiated offer and commercial capacity.
+- [ ] Verify all team credentials, service coverage, project attribution, product status, testimonials and case-study evidence.
+- [ ] Approve brand assets, message hierarchy, content voice, sales process and lead follow-up ownership.
+- [ ] Activate a channel only after the inquiry route, legal/privacy disclosure and operational capacity are ready.
+
+### P6.6.4 — SEO, AEO and GEO discoverability
+
+- [x] Add a structural gate for unique page titles, meta descriptions, one primary H1, index/noindex policy and canonical-host consistency after approval.
+- [x] Document technical SEO, answer-engine and generative-engine content practices using current search-platform guidance.
+- [x] Keep canonical tags deferred until the real HTTPS domain is approved; no placeholder canonical is published.
+- [x] Discoverability audit [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) checked all 26 indexable routes: 26 unique titles, 26 unique descriptions, one H1 each, and four excluded noindex routes. No blocking metadata issues.
+- [x] Record 40 non-blocking social-preview warnings for missing Open Graph images and some Twitter/X card metadata; completion awaits approved domain and approved preview assets.
+- [ ] Owner selects actual target geographies; do not infer or invent service areas.
+- [ ] Add exact self-canonical URLs after domain approval and verify redirects, sitemap and robots over HTTPS.
+- [ ] Review/approve Open Graph and social preview image assets.
+- [ ] Add only accurate structured data that matches visible, approved business facts.
+- [ ] Verify Search Console and Bing Webmaster Tools ownership; request indexing only after production smoke tests.
+- [ ] Review Search Console and Bing AI Performance reports after real data exists; citations are not clicks or leads.
+- [ ] Add location pages/Google Business Profile only if the real-world eligibility, address/service area and customer interaction criteria are met.
+- [ ] Publish original, expert-reviewed content that answers real buyer questions; no scaled or keyword-stuffed AI pages.
+
+### P6.6.5 — Release acceptance
+
+- [ ] Production security/privacy gates above have evidence and sign-off.
+- [x] P6.6 repository readiness PR [#36](https://github.com/hamza131zara/agency/pull/36) exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) passed `validate`, `browser-and-accessibility` and `automation-sandbox`; sandbox suite passed 18/18 tests.
+- [ ] Real notification provider, consent, suppression/unsubscribe, idempotency and deliverability tests are approved if messaging is enabled.
+- [ ] Live contact-form forwarding has tested fallback semantics and never reports success before durable acceptance.
+- [ ] Domain, HTTPS, Hostinger PHP support, private config, backups, mail inbox and sender authentication are verified for the website.
+- [ ] Canonicals, sitemap, robots, metadata, social previews and structured data are verified on the real domain.
+- [ ] Public content, team consent, portfolio claims, legal pages and accessibility receive human review.
+- [ ] Analytics/advertising collection, if any, is separately approved and disclosed.
+- [ ] Strict predeploy and post-deploy release validators pass; deployed commit, smoke tests and rollback evidence are recorded.
+- [ ] Owner gives explicit final release approval.
+
+**Current decision:** the P6.6 repository readiness package is implemented and its exact-head CI is green. It records the security/privacy review, marketing and SEO/AEO/GEO strategy, and 26-page discoverability baseline. The automation runtime remains sandbox-only; production startup is blocked, fake transport is the only adapter, real customer data is not approved, and no provider/host/domain/budget/deployment is selected. P6.6 is not complete until the owner/legal/operations and release acceptance gates are evidenced.
+
 ## 8. Phase 6 exit criteria
 
 Phase 6 is complete only when at least one approved customer-facing tool allows a customer to discover, configure, test, run, monitor and disconnect its supported workflow; the data/permission model is transparent; failures and retries are recoverable; secrets remain server-side; security, privacy, accessibility and operational evidence passes; and the owner approves the release. A static catalogue or simulated demo alone does not satisfy this exit gate.

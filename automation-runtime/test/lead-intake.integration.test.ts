@@ -11,6 +11,7 @@ import { acceptLeadEvent, leaseNextJob } from "../src/repository.js";
 import { createSignature } from "../src/security.js";
 import { FakeNotificationTransport } from "../src/transport.js";
 import { processNextJob } from "../src/worker-core.js";
+import { assertSandboxOnlyRuntime } from "../src/runtime-guard.js";
 
 const databaseUrl = process.env.TEST_DATABASE_URL;
 const secret = "test-only-secret-material-that-is-at-least-32-bytes";
@@ -79,6 +80,7 @@ async function loginOperator(api: { baseUrl: string }): Promise<{ cookie: string
   const cookie = setCookie.split(";")[0]!;
   assert.match(setCookie, /HttpOnly/iu);
   assert.match(setCookie, /SameSite=Strict/iu);
+  assert.match(setCookie, /Path=\/v1\/operator/iu);
   return { cookie, csrfToken: body.csrfToken };
 }
 
@@ -340,6 +342,15 @@ test("health and readiness endpoints expose no infrastructure details", { skip: 
   }
 });
 
+
+test("sandbox runtime refuses production mode until release gates are approved", () => {
+  assert.throws(
+    () => assertSandboxOnlyRuntime({ NODE_ENV: "production" }),
+    /sandbox-only/u,
+  );
+  assert.doesNotThrow(() => assertSandboxOnlyRuntime({ NODE_ENV: "development" }));
+  assert.doesNotThrow(() => assertSandboxOnlyRuntime({ NODE_ENV: "test" }));
+});
 
 test("operator console assets are served with a restrictive content security policy", { skip: !databaseUrl }, async () => {
   const api = await startApi();
