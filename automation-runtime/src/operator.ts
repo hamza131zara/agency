@@ -259,7 +259,7 @@ async function login(
   passwordHash: string | undefined,
   secure: boolean,
   ttlSeconds: number,
-  limiter: ReturnType<typeof loginRateLimiter>,
+  limiter: ReturnType<typeof createLoginRateLimiter>,
 ): Promise<void> {
   if (!hasSameOrigin(request)) {
     sendJson(response, 403, { error: "same_origin_required" });
