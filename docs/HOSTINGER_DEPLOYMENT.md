@@ -65,7 +65,13 @@ The strict gate checks:
 - Hostinger/PHP/document-root confirmation, SSL, HTTPS redirect and backup.
 - Owner approval, copy/asset review, keyboard/screen-reader and responsive review.
 
-The report-only CI step intentionally exits successfully while unresolved owner/production blockers are listed. It is not a deployment approval. The strict gate must exit zero after those blockers are resolved and evidence is written to the launch register.
+The report-only CI step intentionally exits successfully while unresolved owner/production blockers are listed. It is not a deployment approval. Use the two strict modes in order:
+
+1. `python scripts/validate_launch_readiness.py --strict-predeploy` must exit zero before the initial upload. It checks the owner/legal/domain/hosting approvals and static files, including canonical sitemap/robots/canonical URL tags.
+2. Upload to the Hostinger staging/preview or prepared target, install the server-only configuration, enable SSL and run the production smoke tests.
+3. `python scripts/validate_launch_readiness.py --strict` must exit zero after the staged/production checks. It additionally verifies the real mail submission/inbox/Reply-To, HTTPS redirect, deployed sitemap and deployment record.
+
+CI runs the report-only audit so missing owner inputs remain visible without treating a not-yet-launched website as a failed code build.
 
 ## 7. Deployment authority
 
