@@ -196,8 +196,9 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Restrict manual retry to dead-letter jobs; preserve prior attempts in separate retry generations and audit the operator action.
 - [x] Add restrictive CSP/security headers and a responsive accessible operator interface.
 - [x] Add migration `002_operator_controls.sql` for session storage and retry generations.
-- [ ] Exact-head CI passes all required jobs, including operator-auth and manual-retry integration tests.
-- [ ] Owner merges P6.5 implementation PR.
+- [x] Exact-head CI [#42290370862](https://github.com/hamza131zara/agency/actions/runs/42290370862) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
+- [x] PostgreSQL integration suite passed all 17 tests (17 passed, 0 failed, 0 skipped).
+- [ ] Owner merges P6.5 implementation [PR #35](https://github.com/hamza131zara/agency/pull/35).
 - [ ] Post-merge `main` CI passes both website checks and PostgreSQL integration suite.
 
 **Boundaries:** single internal owner only; no public signup, multiple staff roles, customer workspace or real data requirement. No retention schedule is activated until its period and deletion policy are explicitly approved. The login limiter is process-local and single-instance only. The live contact endpoint remains disconnected; no provider or production deployment is authorized.
