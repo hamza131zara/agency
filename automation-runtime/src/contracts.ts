@@ -96,7 +96,7 @@ export function validateLeadSubmittedEvent(
       source: value.source,
       lead: {
         name: name.trim(),
-        email: email.trim().toLowerCase(),
+        email: email.trim(),
         service,
         message: message.trim(),
       },
