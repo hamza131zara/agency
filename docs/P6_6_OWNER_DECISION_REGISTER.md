@@ -1,7 +1,7 @@
 # P6.6 — Owner Decision and Release Evidence Register
 
 **Status:** OPEN — repository readiness implementation is merged; production and public-release decisions are not approved.  
-**Baseline:** main at 5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d after PR #36.  
+**Baseline:** `main` at `8515648dda57324224ef07b8d09458b2f815b4eb` after PR #37. P6.6 implementation PR #36 remains at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`; PR #37 merged the documentation/owner-register closeout, whose exact-head CI [#42300331776](https://github.com/hamza131zara/agency/actions/runs/42300331776) passed all three jobs.  
 **Purpose:** collect the real business, legal, security, infrastructure and operational decisions needed to move from a tested repository to a controlled release.
 
 This register is a decision aid, not a legal checklist or a claim that any approval has been granted. An item changes to APPROVED only when the decision-maker, date and evidence are recorded. Unknown values must remain unknown; do not infer them from a profile, development environment, repository URL or hosting account.
