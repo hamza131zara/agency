@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { Pool } from "pg";
 import type { LeadSubmittedEvent } from "../src/contracts.js";
 import { createIntakeHandler } from "../src/handler.js";
+import { createLoginRateLimiter } from "../src/operator.js";
 import { acceptLeadEvent, leaseNextJob } from "../src/repository.js";
 import { createSignature } from "../src/security.js";
 import { FakeNotificationTransport } from "../src/transport.js";
@@ -344,6 +345,26 @@ test("health and readiness endpoints expose no infrastructure details", { skip: 
   }
 });
 
+
+test("operator login limiter prunes expired entries and caps per-process memory", () => {
+  const limiter = createLoginRateLimiter(2);
+  limiter.fail("source-a", 0);
+  limiter.fail("source-b", 0);
+  limiter.fail("source-c", 0);
+
+  // The oldest live key is evicted to keep the in-process map within capacity.
+  assert.equal(limiter.blocked("source-a", 1), false);
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    limiter.fail("source-c", 1 + attempt);
+  }
+  assert.equal(limiter.blocked("source-c", 10), true);
+
+  // Expired entries stop blocking and are removed when checked.
+  assert.equal(limiter.blocked("source-c", 15 * 60 * 1000 + 2), false);
+  limiter.clear("source-b");
+  assert.throws(() => createLoginRateLimiter(0), /positive safe integer/u);
+});
 
 test("sandbox runtime refuses production mode until release gates are approved", () => {
   assert.throws(
