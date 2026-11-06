@@ -1,6 +1,6 @@
 # Phase 5 — Ready-Made Product Marketplace Execution Plan
 
-**Status:** IN PROGRESS — P5.1–P5.4 merged and verified on `main`; P5.5 launch-readiness QA is implemented on the current review branch. Publication remains blocked pending owner-supplied domain, legal, inbox, hosting and final review evidence.  
+**Status:** IMPLEMENTATION AND AUTOMATED QA COMPLETE — P5.1–P5.5 are merged and verified on `main`. Overall Phase 5 owner/manual acceptance and public publication remain open pending ownership/licensing review, domain, legal, inbox, hosting and final review evidence.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 5.  
 **Review date:** 6 November 2026.
 
@@ -117,16 +117,18 @@ No product is being approved for installation, resale or commercial sale in P5.4
 - [x] Verify the sitemap should contain exactly the 26 indexable routes; legal drafts and 404 remain noindex and excluded.
 - [x] Add launch blocker reporting to CI and Python compilation.
 - [x] Update the Hostinger runbook and README with the launch preflight process.
-- [ ] Run exact-head `validate` and `browser-and-accessibility` checks and resolve any failures.
+- [x] Exact-head `validate` and `browser-and-accessibility` checks passed before merge.
+- [x] Owner merged PR #28 at `f432f276872fb63f7c53d8c6671f44d7cb815e73`.
+- [x] Post-merge `main` CI [#42226388403](https://github.com/hamza131zara/agency/actions/runs/42226388403) passed both `validate` and `browser-and-accessibility`.
 - [ ] Complete owner legal/brand/contact/hosting inputs and final manual reviews.
-- [ ] Run `python scripts/validate_launch_readiness.py --strict` successfully after production evidence is recorded.
-- [ ] Owner merges the PR and post-merge `main` CI passes.
+- [ ] Run `python scripts/validate_launch_readiness.py --strict-predeploy` successfully before the first upload.
+- [ ] Run `python scripts/validate_launch_readiness.py --strict` successfully after production evidence and smoke tests are recorded.
 - [ ] Deploy only after explicit owner approval and successful production smoke tests.
 
-**Known publication blockers at implementation start:** canonical domain is a placeholder; legal pages are draft/noindex; monitored inbox and verified sender are not supplied; private Hostinger mail configuration, SSL/redirect checks, backup, production deployment and owner final approval are not recorded. The catalogue itself remains intentionally non-transactional and does not advertise products for sale/install.
+**Current publication blockers (not cleared by automated CI):** canonical domain is a placeholder; legal pages are draft/noindex; monitored inbox and verified sender are not supplied; private Hostinger mail configuration, SSL/redirect checks, backup, production deployment and owner final approval are not recorded. The catalogue itself remains intentionally non-transactional and does not advertise products for sale/install.
 
 ## Verification and completion policy
 
 Each package is delivered in a focused PR. Required `validate` and `browser-and-accessibility` checks must pass on the exact PR head before merge. After the owner merges, verify post-merge CI on `main` before accepting that package or beginning the next one.
 
-Phase 5 is complete only after P5.1–P5.5 implementation and automated checks are merged, and the manual owner review has been recorded. Product launch remains separately gated by verified ownership, licensing, installation, pricing/support approvals and deployment readiness.
+P5.1–P5.5 implementation and automated QA are complete and merged. Overall Phase 5 owner/manual acceptance remains open until ownership/licensing review and the required manual release reviews are recorded. Public deployment remains separately gated by approved legal/brand details, domain, monitored contact delivery, hosting/SSL/backup evidence, strict preflight and explicit owner approval. Product launch remains separately gated by verified ownership, licensing, installation, pricing/support approvals and deployment readiness.
