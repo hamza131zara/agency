@@ -171,7 +171,7 @@ function renderDetail(data) {
     }
     notificationSection.append(box);
     const attemptsTitle = element("h3", "", "Delivery attempts");
-    attemptsTitle.style.marginTop = "20px";
+    attemptsTitle.classList.add("attempts-title");
     notificationSection.append(attemptsTitle);
     const attempts = element("div", "attempt-list");
     if (!notification.attempts.length) {
