@@ -124,9 +124,14 @@ def main():
         "--strict", action="store_true",
         help="exit non-zero while any launch blocker remains"
     )
+    parser.add_argument(
+        "--strict-predeploy", action="store_true",
+        help="exit non-zero for unresolved owner/legal/domain/hosting gates before upload; post-deploy tests remain informational"
+    )
     args = parser.parse_args()
 
     blockers = []
+    post_deployment_blockers = []
     if not APPROVALS.is_file():
         print("Launch readiness: BLOCKED — docs/LAUNCH_APPROVALS.json is missing.")
         return 1 if args.strict else 0
@@ -200,16 +205,12 @@ def main():
     ):
         if is_placeholder(contact.get(field)):
             add(blockers, label)
-    for field, label in (
-        ("senderDomainAuthenticationChecked", "Verify sender-domain mail authentication (SPF/DKIM as supported)."),
-        ("productionServerConfigInstalled", "Install the private production config.php on the host; do not commit it."),
-    ):
-        if not contact.get(field):
-            add(blockers, label)
+    if not contact.get("senderDomainAuthenticationChecked"):
+        add(blockers, "Verify sender-domain mail authentication (SPF/DKIM as supported).")
     if contact.get("hostMailSubmissionTest") != "passed":
-        add(blockers, "Run a real production contact-form submission test.")
+        add(post_deployment_blockers, "Run a real production contact-form submission test.")
     if contact.get("inboxDeliveryAndReplyToTest") != "passed":
-        add(blockers, "Verify inbox receipt, spam placement and Reply-To behavior.")
+        add(post_deployment_blockers, "Verify inbox receipt, spam placement and Reply-To behavior.")
 
     hosting = approvals.get("hosting", {})
     for field, label in (
@@ -219,21 +220,26 @@ def main():
         ("sslEnabledAndVerified", "Enable and verify SSL before forcing HTTPS."),
         ("httpsRedirectVerified", "Verify the HTTP-to-HTTPS redirect."),
         ("productionBackupCreated", "Back up the existing production web root before replacing files."),
-        ("productionConfigInstalledOutsideRepository", "Confirm private production configuration is installed outside the repository."),
         ("deploymentApproved", "Record explicit owner approval for production deployment."),
     ):
         if not hosting.get(field):
             add(blockers, label)
+    if not hosting.get("productionConfigInstalledOutsideRepository"):
+        add(post_deployment_blockers, "Install private production config.php on the host, outside the public repository.")
+    if not hosting.get("httpsRedirectVerified"):
+        add(post_deployment_blockers, "Verify the HTTP-to-HTTPS redirect on the deployed host.")
+    if not hosting.get("deploymentDate") or is_placeholder(hosting.get("approvedCommit")):
+        add(post_deployment_blockers, "Record the deployed commit and deployment date after upload.")
 
     search = approvals.get("searchAndIndexing", {})
     for field, label in (
         ("canonicalDomainAppliedToSitemap", "Replace sitemap placeholder host with the approved canonical domain."),
         ("robotsSitemapUrlUpdated", "Update robots.txt to point at the approved sitemap URL."),
-        ("sitemapUploadedAndFetched", "Fetch the deployed sitemap over HTTPS and verify all indexable routes."),
-        ("searchConsolePropertyVerified", "Verify the domain property in the search console."),
     ):
         if not search.get(field):
             add(blockers, label)
+    if not search.get("sitemapUploadedAndFetched"):
+        add(post_deployment_blockers, "Fetch the deployed sitemap over HTTPS and verify all indexable routes.")
 
     manual = approvals.get("manualReleaseReview", {})
     for field, label in (
@@ -293,15 +299,22 @@ def main():
     print(f"- Expected indexable routes: {len(expected_routes)}")
     print(f"- Sitemap URLs: {sitemap_count}")
     print(f"- Production canonical origin: {'configured' if not is_placeholder(origin) else 'MISSING'}")
-    print(f"- Outstanding launch blockers: {len(blockers)}")
+    print(f"- Pre-deployment blockers: {len(blockers)}")
+    print(f"- Post-deployment verification items: {len(post_deployment_blockers)}")
     for item in dict.fromkeys(blockers):
-        print(f"BLOCKER: {item}")
+        print(f"PRE-DEPLOYMENT BLOCKER: {item}")
+    for item in dict.fromkeys(post_deployment_blockers):
+        print(f"POST-DEPLOYMENT CHECK: {item}")
 
-    if blockers and args.strict:
-        print("RESULT: NOT READY TO DEPLOY — resolve every blocker and rerun with --strict.")
+    if blockers and (args.strict or args.strict_predeploy):
+        mode = "release" if args.strict else "pre-deployment"
+        print(f"RESULT: NOT READY FOR {mode.upper()} — resolve every listed pre-deployment blocker.")
         return 1
-    if blockers:
-        print("RESULT: AUTOMATED STRUCTURE AUDIT COMPLETE — publication remains blocked pending owner/production evidence.")
+    if args.strict and post_deployment_blockers:
+        print("RESULT: DEPLOYMENT VERIFICATION INCOMPLETE — resolve all post-deployment checks.")
+        return 1
+    if blockers or post_deployment_blockers:
+        print("RESULT: AUDIT COMPLETE — use strict-predeploy before upload and strict after staging/production smoke tests.")
         return 0
     print("RESULT: ALL RECORDED LAUNCH GATES PASSED.")
     return 0
