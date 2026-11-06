@@ -1200,3 +1200,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .product-detail-disclosure>a{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:760px){.product-detail-intro,.product-detail-layout{grid-template-columns:1fr}.product-detail-facts{max-width:none}.product-detail-nav{gap:12px 16px}.product-detail-nav>span{width:100%}.product-detail-nav>a{font-size:10px}.product-detail-sidebar{grid-template-columns:1fr}}
 @media(max-width:420px){.product-detail-facts,.product-detail-panel{padding:18px}.product-detail-lead h1{font-size:clamp(38px,12vw,52px)}}
+
+/* Product release decision disclosure */
+.product-release-note{padding:13px 15px;margin:0 0 14px;border-left:2px solid #a66d3e;background:#f1ece4;color:#4e473c;font-size:10px;line-height:1.8}
+.product-release-note strong{display:block;margin-bottom:4px;color:#3b352d}
