@@ -50,7 +50,8 @@ def is_placeholder(value):
     text = value.strip().lower()
     return not text or any(token in text for token in (
         "replace-", "replace_", "your-domain", "not-provided",
-        "not-approved", "example.com", "example.org", "yourdomain"
+        "not-approved", "example.com", "example.org", "example.net",
+        ".example", ".test", ".invalid", ".localhost", "yourdomain"
     ))
 
 
