@@ -99,6 +99,14 @@ def main():
         "free-ai-mixer": "development-only",
         "auto-trading-agent": "excluded",
     }
+    expected_release_states = {
+        "strideto": "hosted-reference-not-for-resale",
+        "regexlab": "public-tool-no-commercial-package",
+        "jotjson": "public-tool-no-commercial-package",
+        "siteintel-pulse": "not-released",
+        "free-ai-mixer": "not-released",
+        "auto-trading-agent": "not-released",
+    }
 
     for product in products:
         product_id = product["productId"]
@@ -106,6 +114,8 @@ def main():
             fail(f"{product_id}: catalogue availability state conflicts with release register")
         if product.get("marketplaceDisposition") != expected_dispositions[product_id]:
             fail(f"{product_id}: marketplace disposition conflicts with release register")
+        if product.get("releaseStatus") != expected_release_states[product_id]:
+            fail(f"{product_id}: release status conflicts with the approved inventory disposition")
     for product in products:
         product_id = product["productId"]
         if not isinstance(product.get("approvalEvidence"), list):
