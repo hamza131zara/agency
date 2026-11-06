@@ -1,6 +1,6 @@
 # Phase 6 — Automation Catalogue and Customer Tools Execution Plan
 
-**Status:** IN PROGRESS — P6.1 discovery and feasibility baseline prepared for review. No customer-facing automation product is being presented as live, connected or production-ready.  
+**Status:** P6.1 ACCEPTED; P6.2 CATALOGUE IMPLEMENTATION IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
 **Baseline:** `main` after PR #29; 6 November 2026.
 
@@ -127,6 +127,21 @@ Before selecting infrastructure, document the product's actual runtime needs: HT
 - [ ] Complete candidate scores with source evidence and unknowns.
 - [ ] Record an owner-approved MVP selection, or explicitly defer selection if evidence is insufficient.
 - [ ] Have the owner accept the P6.1 baseline before implementing a provider integration.
+
+## 7A. P6.2 — Automation catalogue and integration directory
+
+**Implementation branch:** `phase6/p6-2-automation-catalogue`.
+
+- [x] Extend the existing automation page rather than creating a duplicate route.
+- [x] Distinguish four scoped agency service capabilities from six planned self-service tool concepts.
+- [x] Add catalogue search, delivery-model filtering, workflow-area filtering, result count, empty state and reset behavior.
+- [x] Make planned concepts explicitly unavailable for account connection, message sending, publishing or workflow execution.
+- [x] Add an integration-pattern directory for OAuth services, signed webhooks, AI/model APIs and commerce/marketplace APIs.
+- [x] Mark every integration pattern as provider-unverified; no vendor, logo, scope or supported-connector claim is introduced.
+- [ ] Pass exact-head validation and browser/accessibility tests.
+- [ ] Owner merges P6.2 and post-merge CI on `main` passes.
+
+P6.2 does not select a provider or MVP. That decision remains in P6.3 and requires owner-approved problem evidence and current provider/API verification.
 
 ## 8. Phase 6 exit criteria
 
