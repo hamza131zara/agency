@@ -18,7 +18,7 @@ The current implementation uses semantic HTML, CSS, browser JavaScript and a PHP
 | Agency | Home, About, Approach, Team | Approved profile and trust content |
 | Services | Services | Six service-division pages |
 | Portfolio | Work | Individual project/case-study pages |
-| Products | Products | Product detail pages, installation and licence information |
+| Products | Products | Five product detail pages, availability, requirements and release/licence information |
 | Automation | Automation | Tool-specific pages and later customer workspaces |
 | Contact | Contact, Project Brief Builder | Inquiry workflow |
 | Legal | Privacy, Terms, Disclaimer, 404 | Privacy notice and clearly marked noindex legal drafts awaiting operator/jurisdiction review |
@@ -35,7 +35,7 @@ Existing pages and features include:
 - PHP inquiry endpoint with validation and safe unsent fallback behavior.
 - SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
 
-The current validated platform contains 25 HTML routes: 14 root pages, six service detail pages and five project detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap currently contains 21 URLs and must be updated with the owner-approved canonical domain before launch. Not every planned product module is implemented yet.
+The current validated platform contains 30 HTML routes: 14 root pages, six service detail pages, five portfolio project-note pages and five product detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap currently contains 21 URLs and must be updated with the owner-approved canonical domain before launch. Not every planned product module is implemented yet.
 
 ## Documentation index
 
