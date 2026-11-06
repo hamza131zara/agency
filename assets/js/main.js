@@ -357,6 +357,59 @@ if (portfolioExplorer) {
   applyFilters();
 }
 
+/* Product catalogue discovery: search, category and availability. */
+const productExplorer = document.querySelector('.product-explorer');
+if (productExplorer) {
+  const cards = Array.from(document.querySelectorAll('[data-product-card]'));
+  const search = document.querySelector('#product-search');
+  const statusFilter = document.querySelector('#product-status');
+  const filterButtons = Array.from(productExplorer.querySelectorAll('[data-product-filter]'));
+  const resultCount = document.querySelector('#product-result-count');
+  const clearButton = document.querySelector('#clear-product-filters');
+  const emptyMessage = document.querySelector('#product-empty-state');
+  let category = 'all';
+
+  const applyFilters = () => {
+    const query = (search?.value || '').trim().toLowerCase();
+    const statusValue = statusFilter?.value || 'all';
+    let visible = 0;
+
+    cards.forEach(card => {
+      const categoryMatches = category === 'all' || card.dataset.category === category;
+      const statusMatches = statusValue === 'all' || card.dataset.status === statusValue;
+      const queryMatches = !query || card.textContent.toLowerCase().includes(query);
+      const show = categoryMatches && statusMatches && queryMatches;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+
+    if (resultCount) {
+      resultCount.textContent = visible === cards.length
+        ? 'Showing all ' + visible + ' products.'
+        : 'Showing ' + visible + ' of ' + cards.length + ' products.';
+    }
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
+  };
+
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    category = button.dataset.productFilter || 'all';
+    filterButtons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    applyFilters();
+  }));
+  search?.addEventListener('input', applyFilters);
+  statusFilter?.addEventListener('change', applyFilters);
+  clearButton?.addEventListener('click', () => {
+    category = 'all';
+    if (search) search.value = '';
+    if (statusFilter) statusFilter.value = 'all';
+    filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.productFilter === 'all')));
+    applyFilters();
+    search?.focus();
+  });
+
+  applyFilters();
+}
+
 /* Project Brief Builder runs locally and does not submit or persist answers. */
 const briefForm = document.querySelector('#brief-form');
 if (briefForm) {
