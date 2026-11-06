@@ -83,6 +83,29 @@ def main():
     if set(cards) != EXPECTED_IDS:
         fail("product catalogue cards do not match the six release-register IDs")
 
+    expected_catalogue_states = {
+        "strideto": "public",
+        "regexlab": "public",
+        "jotjson": "public",
+        "siteintel-pulse": "development",
+        "free-ai-mixer": "development",
+        "auto-trading-agent": "unavailable",
+    }
+    expected_dispositions = {
+        "strideto": "reference-only",
+        "regexlab": "public-tool-only",
+        "jotjson": "public-tool-only",
+        "siteintel-pulse": "development-only",
+        "free-ai-mixer": "development-only",
+        "auto-trading-agent": "excluded",
+    }
+
+    for product in products:
+        product_id = product["productId"]
+        if cards.get(product_id) != expected_catalogue_states[product_id]:
+            fail(f"{product_id}: catalogue availability state conflicts with release register")
+        if product.get("marketplaceDisposition") != expected_dispositions[product_id]:
+            fail(f"{product_id}: marketplace disposition conflicts with release register")
     for product in products:
         product_id = product["productId"]
         if not isinstance(product.get("approvalEvidence"), list):
