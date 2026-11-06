@@ -2,7 +2,7 @@
 
 **Status:** P6.1–P6.5 IMPLEMENTED AND MERGED; P6.6 REPOSITORY READINESS IMPLEMENTED AND MERGED; PRODUCTION AND RELEASE ACCEPTANCE OPEN. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #37 at `8515648dda57324224ef07b8d09458b2f815b4eb`; 7 November 2026. PR #36 contains the P6.6 implementation; PR #37 closes the documentation and owner-evidence reconciliation.
+**Baseline:** `main` after PR #40 at `0ab534c797fd3ac3ed007208ed740304f90decde`; 7 November 2026. PR #36 contains the initial P6.6 implementation, PR #37 closes the owner/evidence register, PR #38 reconciles the merge record, and PR #40 adds the final PHP contact-boundary and fail-closed release-validator hardening.
 
 ## 1. Purpose
 
@@ -219,6 +219,13 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 - [x] Add regression tests for the production guard and cookie scope.
 - [x] Document the trust boundaries, threat model, current controls and production prerequisites in `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md`.
 - [x] Exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) passed the sandbox production-guard and scoped-cookie regression tests.
+- [x] Require a same-origin `Origin` on every PHP contact POST and compare scheme, host and effective port; reject missing/mismatched origins.
+- [x] Enable strict-mode, cookie-only PHP sessions and disable transparent session IDs; test cookie attributes and unknown-ID fixation rejection.
+- [x] Reject PHP contact submissions over 16 KiB when `Content-Length` is supplied; test a `413` response and preserve the safe not-configured-mail behavior.
+- [x] Make the launch validator fail closed for strict pre-deploy/full-release modes when the approval register is missing; only JSON boolean `true` satisfies approval flags.
+- [x] Validate canonical HTTPS-origin shape, reserved placeholder hosts, approval email syntax, ISO review/deployment dates and exact 40-character deployed commit evidence.
+- [x] Align the Hostinger runbook and launch checklist: `--strict-predeploy` before upload, `--strict` after deployed smoke tests.
+- [x] PR #40 [merged](https://github.com/hamza131zara/agency/pull/40) at `0ab534c797fd3ac3ed007208ed740304f90decde`; exact-head CI [#42306629958](https://github.com/hamza131zara/agency/actions/runs/42306629958) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
 - [ ] Select and verify production Node runtime, PostgreSQL, HTTPS ingress and network boundary.
 - [ ] Add production-grade shared rate limiting, operator MFA/recovery decision and secret-management/rotation.
 - [ ] Complete independent security review and adversarial testing.
@@ -266,6 +273,7 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 - [ ] Production security/privacy gates above have evidence and sign-off.
 - [x] P6.6 repository readiness PR [#36](https://github.com/hamza131zara/agency/pull/36) merged to `main` at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`.  
 - [x] Documentation and owner-register closeout PR [#37](https://github.com/hamza131zara/agency/pull/37) merged to `main` at `8515648dda57324224ef07b8d09458b2f815b4eb`; exact-head CI [#42300331776](https://github.com/hamza131zara/agency/actions/runs/42300331776) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.  
+- [x] Contact-boundary and release-validator hardening PR [#40](https://github.com/hamza131zara/agency/pull/40) merged to `main` at `0ab534c797fd3ac3ed007208ed740304f90decde`; exact-head CI [#42306629958](https://github.com/hamza131zara/agency/actions/runs/42306629958) passed all three jobs.  
 - [x] Exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) and post-merge `main` CI [#42298818757](https://github.com/hamza131zara/agency/actions/runs/42298818757) passed all three jobs: `validate`, `browser-and-accessibility` and `automation-sandbox`. The PostgreSQL sandbox suite passed 18/18 tests.
 - [ ] Real notification provider, consent, suppression/unsubscribe, idempotency and deliverability tests are approved if messaging is enabled.
 - [ ] Live contact-form forwarding has tested fallback semantics and never reports success before durable acceptance.
@@ -276,7 +284,7 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 - [ ] Strict predeploy and post-deploy release validators pass; deployed commit, smoke tests and rollback evidence are recorded.
 - [ ] Owner gives explicit final release approval.
 
-**Current decision:** the P6.6 repository-readiness implementation is merged and post-merge CI is green. The security/privacy review, marketing strategy and discoverability gate are committed. The audit covers 26 indexable routes with unique titles/descriptions and one primary H1 each; 40 social-preview warnings remain non-blocking and require approved assets. The automation runtime remains sandbox-only, production startup is blocked, fake transport is the only adapter, and no real customer data, provider, runtime host, canonical domain, budget or deployment is approved. The remaining work is an owner/legal/operations decision-and-evidence sequence tracked in docs/P6_6_OWNER_DECISION_REGISTER.md; neither this merge nor a green CI run is production approval.
+**Current decision:** P6.6 repository implementation, security hardening, documentation and automated checks are merged. PR #40 adds strict PHP contact origin/session/body protections and a fail-closed release approval validator; its exact-head three-job CI run is green. The discoverability audit covers 26 indexable routes with unique titles/descriptions and one primary H1 each; 40 social-preview warnings remain non-blocking pending approved assets. The automation runtime remains sandbox-only, production startup is blocked, fake transport is the only adapter, and no real customer data, provider, runtime host, canonical domain, budget or deployment is approved. The 20 owner/reviewer decisions remain open in docs/P6_6_OWNER_DECISION_REGISTER.md; neither a merge nor green CI approves production, website publication or marketing activation.
 
 ## 8. Phase 6 exit criteria
 
