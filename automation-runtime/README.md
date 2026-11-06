@@ -17,7 +17,7 @@
 - Authenticated lead inbox, status filter, lead detail, delivery-attempt and audit history.
 - CSRF-protected manual retry for dead-letter jobs, preserving past attempts across retry generations.
 
-The fake transport deliberately performs **no network, email or SMS I/O**. There is no production transport module.
+The fake transport deliberately performs **no network, email or SMS I/O**. There is no production transport module. The sandbox API and fake-transport worker refuse to start when NODE_ENV is set to production; the guard is intentional until P6.6 production approval.
 
 ## Local setup
 
@@ -126,6 +126,10 @@ The CI workflow starts a disposable PostgreSQL 16 service and runs the migration
 - Logs use generic, sanitized status codes and do not include lead details.
 
 Delivery semantics are **at least once**, not exactly once. A future external adapter would need its own provider idempotency/reconciliation behavior.
+
+## P6.6 production safety boundary
+
+The current API/worker package is a sandbox. It is not suitable for a production environment, does not connect the public PHP form and has no real delivery adapter. The API and worker now fail closed when `NODE_ENV=production`. Do not bypass this guard or run the fake adapter in a live environment. Production use requires the separate gates in `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md` and an explicit owner-approved release PR.
 
 ## Explicit non-goals and live-release blockers
 
