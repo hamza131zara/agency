@@ -25,6 +25,11 @@ const PAGES = [
   '/approach.html',
   '/team.html',
   '/products.html',
+  '/products/strideto.html',
+  '/products/regexlab.html',
+  '/products/jotjson.html',
+  '/products/siteintel-pulse.html',
+  '/products/free-ai-mixer.html',
   '/automation.html',
   '/contact.html',
   '/privacy.html',
@@ -54,7 +59,7 @@ test.describe('Phase I route and content checks', () => {
   }
 
   test('internal page links use safe attributes when opening new tabs', async ({ page }) => {
-    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/automation.html', '/contact.html', '/privacy.html', '/terms.html', '/disclaimer.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
+    for (const route of ['/', '/services.html', '/work.html', '/about.html', '/approach.html', '/team.html', '/products.html', '/products/strideto.html', '/products/regexlab.html', '/products/jotjson.html', '/products/siteintel-pulse.html', '/products/free-ai-mixer.html', '/automation.html', '/contact.html', '/privacy.html', '/terms.html', '/disclaimer.html', '/work/regexlab.html', '/work/jotjson.html', '/work/siteintel-pulse.html', '/work/free-ai-mixer.html']) {
       await page.goto(route);
       const unsafeLinks = await page.locator('a[target="_blank"]').evaluateAll(links =>
         links.filter(link => !/\bnoopener\b/.test(link.rel) || !/\bnoreferrer\b/.test(link.rel))
@@ -396,6 +401,59 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#product-result-count')).toHaveText('Showing all 6 products.');
     await expect(page.getByRole('button', { name: 'All products' })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByLabel('Availability')).toHaveValue('all');
+  });
+
+  test('five public product detail pages share a complete and navigable structure', async ({ page }) => {
+    const products = [
+      ['/products/strideto.html', 'strideto', 'STRIDETO', 'LIVE · FREE TO USE', 'Visit STRIDETO'],
+      ['/products/regexlab.html', 'regexlab', 'RegexLab', 'PUBLIC BROWSER TOOL', 'Open RegexLab'],
+      ['/products/jotjson.html', 'jotjson', 'JotJSON', 'PUBLIC BROWSER TOOL', 'Open JotJSON'],
+      ['/products/siteintel-pulse.html', 'siteintel-pulse', 'SiteIntel Pulse', 'IN DEVELOPMENT', 'View static showcase'],
+      ['/products/free-ai-mixer.html', 'free-ai-mixer', 'Free AI Mixer', 'IN DEVELOPMENT', 'View source repository']
+    ];
+    const sections = ['overview', 'capabilities', 'availability', 'data-security', 'requirements', 'commercial'];
+
+    for (const [route, id, name, status, action] of products) {
+      await page.goto(route);
+      const main = page.locator('main.product-detail-page[data-product-detail-version="1"]');
+      await expect(main).toBeVisible();
+      await expect(main).toHaveAttribute('data-product-id', id);
+      await expect(page.locator('h1')).toHaveCount(1);
+      await expect(page.locator('h1')).toBeVisible();
+      await expect(main.locator('.product-status')).toContainText(status);
+
+      const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb' });
+      await expect(breadcrumb).toBeVisible();
+      await expect(breadcrumb.getByRole('link', { name: 'Products' })).toHaveAttribute('href', '../products.html');
+      await expect(breadcrumb).toContainText(name);
+
+      const toc = page.getByRole('navigation', { name: 'Product detail sections' });
+      await expect(toc).toBeVisible();
+      for (const section of sections) {
+        await expect(main.locator('#' + section)).toBeVisible();
+        await expect(toc.locator('a[href="#' + section + '"]')).toHaveCount(1);
+      }
+      await expect(main.locator('.product-detail-facts')).toBeVisible();
+      await expect(main.locator('.product-detail-disclosure')).toContainText('not an independent production test');
+
+      if (id === 'siteintel-pulse') {
+        await expect(main).toContainText('static design showcase');
+        await expect(main).toContainText('full interactive scanner');
+      }
+      if (id === 'free-ai-mixer') {
+        await expect(main).toContainText('No hosted public application or working generation API endpoint is confirmed');
+        await expect(main).toContainText('protected credential handling');
+      }
+      await expect(main.getByRole('link', { name: new RegExp(action, 'i') }).first()).toBeVisible();
+    }
+
+    await page.goto('/products.html');
+    for (const [, id] of products) {
+      await expect(page.locator('[data-product-id="' + id + '"]').getByRole('link', { name: 'Product details' }))
+        .toHaveAttribute('href', 'products/' + id + '.html');
+    }
+    const gated = page.locator('[data-product-id="auto-trading-agent"]');
+    await expect(gated.getByRole('link', { name: /product details/i })).toHaveCount(0);
   });
 
   test('project brief builder creates a local draft and supports text download', async ({ page }) => {
