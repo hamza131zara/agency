@@ -12,6 +12,7 @@ export interface LeasedJob {
   leadId: string;
   attemptId: string;
   attemptCount: number;
+  retryGeneration: number;
   workerId: string;
   lead: {
     name: string;
@@ -107,6 +108,7 @@ export async function leaseNextJob(
       id: string;
       lead_id: string;
       attempt_count: number;
+      retry_generation: number;
     }>(
       `WITH candidate AS (
          SELECT id
@@ -128,7 +130,7 @@ export async function leaseNextJob(
            updated_at = NOW()
        FROM candidate
        WHERE job.id = candidate.id
-       RETURNING job.id, job.lead_id, job.attempt_count`,
+       RETURNING job.id, job.lead_id, job.attempt_count, job.retry_generation`,
       [workerId, leaseSeconds],
     );
 
@@ -156,18 +158,19 @@ export async function leaseNextJob(
        SET outcome = 'retry_scheduled',
            finished_at = NOW(),
            sanitized_error_code = 'worker_lease_expired'
-       WHERE job_id = $1 AND outcome = 'started'`,
-      [job.id],
+       WHERE job_id = $1 AND retry_generation = $2 AND outcome = 'started'`,
+      [job.id, job.retry_generation],
     );
 
     const attemptId = randomUUID();
     await client.query(
-      `INSERT INTO delivery_attempts (id, job_id, attempt_number, outcome)
-       VALUES ($1, $2, $3, 'started')`,
-      [attemptId, job.id, job.attempt_count],
+      `INSERT INTO delivery_attempts (id, job_id, retry_generation, attempt_number, outcome)
+       VALUES ($1, $2, $3, $4, 'started')`,
+      [attemptId, job.id, job.retry_generation, job.attempt_count],
     );
     await audit(client, workerId, "notification.attempt_started", "outbox_job", job.id, {
       attempt: job.attempt_count,
+      retryGeneration: job.retry_generation,
     });
     await client.query("COMMIT");
 
@@ -176,6 +179,7 @@ export async function leaseNextJob(
       leadId: job.lead_id,
       attemptId,
       attemptCount: job.attempt_count,
+      retryGeneration: job.retry_generation,
       workerId,
       lead: {
         name: lead.name,
@@ -252,6 +256,7 @@ export async function completeJob(
 
     await audit(client, job.workerId, `notification.${outcome}`, "outbox_job", job.jobId, {
       attempt: job.attemptCount,
+      retryGeneration: job.retryGeneration,
       ...(errorCode ? { errorCode } : {}),
     });
     await client.query("COMMIT");
