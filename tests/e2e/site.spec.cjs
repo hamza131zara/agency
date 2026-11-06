@@ -329,6 +329,75 @@ test.describe('Phase I route and content checks', () => {
     await expect(page.locator('#project-result-count')).toContainText('2 of 5');
   });
 
+  test('product catalogue search, category and availability filters are truthful and reset cleanly', async ({ page }) => {
+    await page.goto('/products.html');
+    const cards = page.locator('[data-product-card]');
+    const visibleCards = page.locator('[data-product-card]:visible');
+    await expect(cards).toHaveCount(6);
+    await expect(page.locator('#product-result-count')).toHaveText('Showing all 6 products.');
+    expect(await cards.evaluateAll(nodes => nodes.map(node => node.dataset.productId))).toEqual([
+      'strideto', 'regexlab', 'jotjson', 'siteintel-pulse', 'free-ai-mixer', 'auto-trading-agent'
+    ]);
+
+    const expected = [
+      ['strideto','platform','public','LIVE · FREE TO USE'],
+      ['regexlab','developer-tool','public','PUBLIC TOOL'],
+      ['jotjson','developer-tool','public','PUBLIC TOOL'],
+      ['siteintel-pulse','ai-intelligence','development','IN DEVELOPMENT'],
+      ['free-ai-mixer','ai-intelligence','development','IN DEVELOPMENT'],
+      ['auto-trading-agent','research','unavailable','NOT AVAILABLE']
+    ];
+    for (const [id, category, status, label] of expected) {
+      const card = page.locator('[data-product-card][data-product-id="' + id + '"]');
+      await expect(card).toHaveCount(1);
+      await expect(card).toHaveAttribute('data-category', category);
+      await expect(card).toHaveAttribute('data-status', status);
+      await expect(card.locator('.product-status')).toContainText(label);
+    }
+
+    await page.getByRole('button', { name: 'Developer tools' }).click();
+    await expect(visibleCards).toHaveCount(2);
+    await expect(page.locator('#product-result-count')).toHaveText('Showing 2 of 6 products.');
+
+    await page.getByRole('searchbox', { name: 'Search products' }).fill('JotJSON');
+    await expect(visibleCards).toHaveCount(1);
+    await expect(visibleCards.first()).toContainText('local-first JSON toolkit');
+
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(visibleCards).toHaveCount(6);
+
+    await page.getByRole('button', { name: 'AI & intelligence' }).focus();
+    await page.keyboard.press('Enter');
+    await expect(visibleCards).toHaveCount(2);
+    await expect(page.getByRole('button', { name: 'AI & intelligence' })).toHaveAttribute('aria-pressed', 'true');
+
+    await page.getByLabel('Availability').selectOption('development');
+    await expect(visibleCards).toHaveCount(2);
+    await page.getByRole('searchbox', { name: 'Search products' }).fill('SiteIntel');
+    await expect(visibleCards).toHaveCount(1);
+    await expect(visibleCards.first()).toContainText('static showcase');
+
+    await page.getByRole('button', { name: 'Research / future' }).click();
+    await page.getByRole('searchbox', { name: 'Search products' }).fill('');
+    await page.getByLabel('Availability').selectOption('unavailable');
+    await expect(visibleCards).toHaveCount(1);
+    const gated = page.locator('[data-product-id="auto-trading-agent"]');
+    await expect(gated).toContainText('not available to buy or install');
+    await expect(gated.getByRole('link', { name: /buy|install/i })).toHaveCount(0);
+
+    await page.getByRole('searchbox', { name: 'Search products' }).fill('no-matching-product-xyz');
+    await expect(visibleCards).toHaveCount(0);
+    await expect(page.locator('#product-empty-state')).toBeVisible();
+    await expect(page.locator('#product-result-count')).toHaveText('Showing 0 of 6 products.');
+
+    await page.getByRole('button', { name: 'Clear filters' }).click();
+    await expect(visibleCards).toHaveCount(6);
+    await expect(page.locator('#product-empty-state')).toBeHidden();
+    await expect(page.locator('#product-result-count')).toHaveText('Showing all 6 products.');
+    await expect(page.getByRole('button', { name: 'All products' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByLabel('Availability')).toHaveValue('all');
+  });
+
   test('project brief builder creates a local draft and supports text download', async ({ page }) => {
     const serviceRequests = [];
     page.on('request', request => {
