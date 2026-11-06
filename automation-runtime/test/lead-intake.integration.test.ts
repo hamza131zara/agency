@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createServer, type Server } from "node:http";
 import { AddressInfo } from "node:net";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID, scryptSync } from "node:crypto";
 import { after, before, beforeEach, test } from "node:test";
 import { Pool } from "pg";
 import type { LeadSubmittedEvent } from "../src/contracts.js";
@@ -14,6 +14,14 @@ import { processNextJob } from "../src/worker-core.js";
 
 const databaseUrl = process.env.TEST_DATABASE_URL;
 const secret = "test-only-secret-material-that-is-at-least-32-bytes";
+const operatorPassword = "CI-only-test-operator-password-long-enough";
+const operatorSalt = Buffer.from("00112233445566778899aabbccddeeff", "hex");
+const operatorPasswordHash = `${operatorSalt.toString("hex")}:${scryptSync(operatorPassword, operatorSalt, 64, {
+  N: 1 << 15,
+  r: 8,
+  p: 1,
+  maxmem: 64 * 1024 * 1024,
+}).toString("hex")}`;
 let pool: Pool | undefined;
 
 function db(): Pool {
@@ -42,6 +50,8 @@ async function startApi(): Promise<{ server: Server; baseUrl: string; close: () 
       pool: db(),
       keys: new Map([["ci-test", secret]]),
       allowedSources: new Set(["agency-contact-form"]),
+      operatorPasswordHash,
+      operatorCookieSecure: false,
     })(request, response);
   });
   await new Promise<void>((resolve, reject) => {
@@ -54,6 +64,36 @@ async function startApi(): Promise<{ server: Server; baseUrl: string; close: () 
     baseUrl: `http://127.0.0.1:${address.port}`,
     close: () => new Promise<void>((resolve, reject) => server.close((error) => error ? reject(error) : resolve())),
   };
+}
+
+async function loginOperator(api: { baseUrl: string }): Promise<{ cookie: string; csrfToken: string }> {
+  const response = await fetch(`${api.baseUrl}/v1/operator/login`, {
+    method: "POST",
+    headers: { "content-type": "application/json", origin: api.baseUrl },
+    body: JSON.stringify({ password: operatorPassword }),
+  });
+  assert.equal(response.status, 200);
+  const body = await response.json() as { csrfToken: string };
+  const setCookie = response.headers.get("set-cookie");
+  assert.ok(setCookie);
+  const cookie = setCookie.split(";")[0]!;
+  assert.match(setCookie, /HttpOnly/iu);
+  assert.match(setCookie, /SameSite=Strict/iu);
+  return { cookie, csrfToken: body.csrfToken };
+}
+
+async function operatorRequest(
+  api: { baseUrl: string },
+  path: string,
+  session: { cookie: string; csrfToken: string },
+  method = "GET",
+): Promise<Response> {
+  const headers: Record<string, string> = { cookie: session.cookie };
+  if (method !== "GET") {
+    headers.origin = api.baseUrl;
+    headers["x-csrf-token"] = session.csrfToken;
+  }
+  return fetch(`${api.baseUrl}${path}`, { method, headers });
 }
 
 async function sendEvent(
@@ -79,13 +119,39 @@ async function sendEvent(
 before(async () => {
   if (!databaseUrl) return;
   pool = new Pool({ connectionString: databaseUrl, max: 6 });
-  const migration = await readFile(new URL("../../sql/001_initial_schema.sql", import.meta.url), "utf8");
-  await db().query(migration);
+  await db().query(`CREATE TABLE IF NOT EXISTS schema_migrations (
+    version TEXT PRIMARY KEY,
+    applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`);
+  for (const migration of [
+    { version: "001_initial_schema", file: "001_initial_schema.sql" },
+    { version: "002_operator_controls", file: "002_operator_controls.sql" },
+  ]) {
+    const existing = await db().query(
+      "SELECT version FROM schema_migrations WHERE version = $1",
+      [migration.version],
+    );
+    if (existing.rowCount === 0) {
+      const sql = await readFile(new URL(`../../sql/${migration.file}`, import.meta.url), "utf8");
+      const client = await db().connect();
+      try {
+        await client.query("BEGIN");
+        await client.query(sql);
+        await client.query("INSERT INTO schema_migrations (version) VALUES ($1)", [migration.version]);
+        await client.query("COMMIT");
+      } catch (error) {
+        await client.query("ROLLBACK").catch(() => undefined);
+        throw error;
+      } finally {
+        client.release();
+      }
+    }
+  }
 });
 
 beforeEach(async () => {
   if (!databaseUrl) return;
-  await db().query("TRUNCATE audit_events, delivery_attempts, outbox_jobs, leads CASCADE");
+  await db().query("TRUNCATE operator_sessions, audit_events, delivery_attempts, outbox_jobs, leads CASCADE");
 });
 
 after(async () => {
@@ -269,6 +335,197 @@ test("health and readiness endpoints expose no infrastructure details", { skip: 
     assert.deepEqual(await health.json(), { status: "ok" });
     assert.equal(readiness.status, 200);
     assert.deepEqual(await readiness.json(), { status: "ready" });
+  } finally {
+    await api.close();
+  }
+});
+
+
+test("operator console assets are served with a restrictive content security policy", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const response = await fetch(`${api.baseUrl}/operator`);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-security-policy") ?? "", /default-src 'none'/u);
+    assert.match(response.headers.get("x-frame-options") ?? "", /DENY/iu);
+    assert.match(await response.text(), /Operator sign in/u);
+    const script = await fetch(`${api.baseUrl}/operator.js`);
+    assert.equal(script.status, 200);
+    assert.match(script.headers.get("content-type") ?? "", /javascript/u);
+  } finally {
+    await api.close();
+  }
+});
+
+test("operator lead APIs deny anonymous access and reject cross-origin login", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const anonymous = await fetch(`${api.baseUrl}/v1/operator/leads`);
+    assert.equal(anonymous.status, 401);
+    const crossOrigin = await fetch(`${api.baseUrl}/v1/operator/login`, {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "https://attacker.invalid" },
+      body: JSON.stringify({ password: operatorPassword }),
+    });
+    assert.equal(crossOrigin.status, 403);
+    const badPassword = await fetch(`${api.baseUrl}/v1/operator/login`, {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: api.baseUrl },
+      body: JSON.stringify({ password: "wrong-password" }),
+    });
+    assert.equal(badPassword.status, 401);
+  } finally {
+    await api.close();
+  }
+});
+
+test("operator session signs in, lists leads and returns details only to the authenticated operator", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const accepted = await acceptLeadEvent(db(), event());
+    const anonymousDetail = await fetch(`${api.baseUrl}/v1/operator/leads/${accepted.leadId}`);
+    assert.equal(anonymousDetail.status, 401);
+
+    const session = await loginOperator(api);
+    const refreshed = await operatorRequest(api, "/v1/operator/session", session);
+    assert.equal(refreshed.status, 200);
+    const refreshBody = await refreshed.json() as { csrfToken: string };
+    session.csrfToken = refreshBody.csrfToken;
+
+    const list = await operatorRequest(api, "/v1/operator/leads?limit=10", session);
+    assert.equal(list.status, 200);
+    const listBody = await list.json() as {
+      leads: Array<{ id: string; email: string; notificationStatus: string }>;
+      counts: { total: string; notification_pending: string };
+    };
+    assert.equal(listBody.leads.length, 1);
+    assert.equal(listBody.leads[0]?.id, accepted.leadId);
+    assert.equal(listBody.leads[0]?.email, "visitor@example.invalid");
+    assert.equal(listBody.leads[0]?.notificationStatus, "pending");
+    assert.equal(listBody.counts.total, "1");
+    assert.equal(listBody.counts.notification_pending, "1");
+
+    const detail = await operatorRequest(api, `/v1/operator/leads/${accepted.leadId}`, session);
+    assert.equal(detail.status, 200);
+    const detailBody = await detail.json() as {
+      lead: { name: string; message: string };
+      notification: { status: string; attempts: unknown[] };
+      audit: Array<{ action: string }>;
+    };
+    assert.equal(detailBody.lead.name, "Synthetic Test Visitor");
+    assert.match(detailBody.lead.message, /Synthetic project inquiry/u);
+    assert.equal(detailBody.notification.status, "pending");
+    assert.equal(detailBody.notification.attempts.length, 0);
+    assert.ok(detailBody.audit.some((item) => item.action === "lead.accepted"));
+  } finally {
+    await api.close();
+  }
+});
+
+test("operator can manually retry a dead-letter job without erasing prior attempts", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const accepted = await acceptLeadEvent(db(), event());
+    await processNextJob(db(), "operator-retry-fixture", new FakeNotificationTransport("permanent_failure"));
+    const before = await db().query(
+      "SELECT id FROM outbox_jobs WHERE lead_id = $1 AND status = 'dead_letter'",
+      [accepted.leadId],
+    );
+    const jobId = before.rows[0]?.id as string;
+    assert.ok(jobId);
+
+    const session = await loginOperator(api);
+    const missingCsrf = await fetch(`${api.baseUrl}/v1/operator/jobs/${jobId}/retry`, {
+      method: "POST",
+      headers: { origin: api.baseUrl, cookie: session.cookie },
+    });
+    assert.equal(missingCsrf.status, 403);
+
+    const retry = await operatorRequest(api, `/v1/operator/jobs/${jobId}/retry`, session, "POST");
+    assert.equal(retry.status, 200);
+    assert.deepEqual(await retry.json(), { retried: true });
+
+    const state = await db().query(
+      "SELECT status, attempt_count, retry_generation FROM outbox_jobs WHERE id = $1",
+      [jobId],
+    );
+    assert.equal(state.rows[0].status, "pending");
+    assert.equal(state.rows[0].attempt_count, 0);
+    assert.equal(state.rows[0].retry_generation, 1);
+
+    const history = await db().query(
+      "SELECT retry_generation, attempt_number, outcome FROM delivery_attempts WHERE job_id = $1",
+      [jobId],
+    );
+    assert.equal(history.rowCount, 1);
+    assert.equal(history.rows[0].retry_generation, 0);
+    assert.equal(history.rows[0].outcome, "dead_letter");
+
+    const audit = await db().query(
+      "SELECT actor_type, action, metadata FROM audit_events WHERE entity_id = $1",
+      [jobId],
+    );
+    assert.ok(audit.rows.some((row) => row.actor_type === "operator"
+      && row.action === "notification.manual_retry_requested"
+      && row.metadata.retryGeneration === 1));
+
+    await processNextJob(db(), "operator-retry-success", new FakeNotificationTransport("success"));
+    const completed = await db().query("SELECT status FROM outbox_jobs WHERE id = $1", [jobId]);
+    assert.equal(completed.rows[0].status, "sent");
+    const allAttempts = await db().query(
+      "SELECT retry_generation, attempt_number, outcome FROM delivery_attempts WHERE job_id = $1 ORDER BY retry_generation, attempt_number",
+      [jobId],
+    );
+    assert.deepEqual(allAttempts.rows.map((row) => [row.retry_generation, row.attempt_number, row.outcome]), [
+      [0, 1, "dead_letter"],
+      [1, 1, "sent"],
+    ]);
+  } finally {
+    await api.close();
+  }
+});
+
+test("operator cannot manually retry a job unless it is dead-lettered", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const accepted = await acceptLeadEvent(db(), event());
+    const job = await db().query("SELECT id FROM outbox_jobs WHERE lead_id = $1", [accepted.leadId]);
+    const session = await loginOperator(api);
+    const response = await operatorRequest(api, `/v1/operator/jobs/${job.rows[0]?.id}/retry`, session, "POST");
+    assert.equal(response.status, 409);
+    assert.deepEqual(await response.json(), { error: "job_not_retryable" });
+  } finally {
+    await api.close();
+  }
+});
+
+test("operator logout revokes the server-side session", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const session = await loginOperator(api);
+    const logout = await operatorRequest(api, "/v1/operator/logout", session, "POST");
+    assert.equal(logout.status, 200);
+    const after = await fetch(`${api.baseUrl}/v1/operator/leads`, {
+      headers: { cookie: session.cookie },
+    });
+    assert.equal(after.status, 401);
+  } finally {
+    await api.close();
+  }
+});
+
+test("expired operator sessions cannot access lead records", { skip: !databaseUrl }, async () => {
+  const api = await startApi();
+  try {
+    const session = await loginOperator(api);
+    await db().query(
+      "UPDATE operator_sessions SET expires_at = NOW() - INTERVAL '1 minute' WHERE token_hash = $1",
+      [createHash("sha256").update(session.cookie.split("=")[1]!, "utf8").digest("hex")],
+    );
+    const response = await fetch(`${api.baseUrl}/v1/operator/leads`, {
+      headers: { cookie: session.cookie },
+    });
+    assert.equal(response.status, 401);
   } finally {
     await api.close();
   }

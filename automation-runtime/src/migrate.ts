@@ -11,30 +11,48 @@ const pool = new Pool({
   application_name: "agency-automation-migrator",
 });
 
+const migrations = [
+  { version: "001_initial_schema", file: "001_initial_schema.sql" },
+  { version: "002_operator_controls", file: "002_operator_controls.sql" },
+] as const;
+
 try {
   await pool.query(`CREATE TABLE IF NOT EXISTS schema_migrations (
     version TEXT PRIMARY KEY,
     applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
   )`);
-  const version = "001_initial_schema";
-  const existing = await pool.query("SELECT version FROM schema_migrations WHERE version = $1", [version]);
-  if (existing.rowCount === 0) {
-    const sql = await readFile(new URL("../../sql/001_initial_schema.sql", import.meta.url), "utf8");
+
+  for (const migration of migrations) {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
-      await client.query(sql);
-      await client.query("INSERT INTO schema_migrations (version) VALUES ($1)", [version]);
-      await client.query("COMMIT");
-      process.stdout.write(`Applied migration ${version}\n`);
+      await client.query("SELECT pg_advisory_xact_lock(610240501)");
+      const existing = await client.query(
+        "SELECT version FROM schema_migrations WHERE version = $1",
+        [migration.version],
+      );
+      if (existing.rowCount === 0) {
+        const sql = await readFile(
+          new URL(`../../sql/${migration.file}`, import.meta.url),
+          "utf8",
+        );
+        await client.query(sql);
+        await client.query(
+          "INSERT INTO schema_migrations (version) VALUES ($1)",
+          [migration.version],
+        );
+        await client.query("COMMIT");
+        process.stdout.write(`Applied migration ${migration.version}\n`);
+      } else {
+        await client.query("COMMIT");
+        process.stdout.write(`Migration ${migration.version} already applied\n`);
+      }
     } catch (error) {
       await client.query("ROLLBACK").catch(() => undefined);
       throw error;
     } finally {
       client.release();
     }
-  } else {
-    process.stdout.write(`Migration ${version} already applied\n`);
   }
 } finally {
   await pool.end();
