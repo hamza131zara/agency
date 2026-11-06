@@ -2,7 +2,7 @@
 
 **Status:** P6.1–P6.5 IMPLEMENTED AND MERGED; P6.6 REPOSITORY READINESS IMPLEMENTED AND MERGED; PRODUCTION AND RELEASE ACCEPTANCE OPEN. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #36 at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`; 7 November 2026.
+**Baseline:** `main` after PR #37 at `8515648dda57324224ef07b8d09458b2f815b4eb`; 7 November 2026. PR #36 contains the P6.6 implementation; PR #37 closes the documentation and owner-evidence reconciliation.
 
 ## 1. Purpose
 
@@ -265,6 +265,7 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 
 - [ ] Production security/privacy gates above have evidence and sign-off.
 - [x] P6.6 repository readiness PR [#36](https://github.com/hamza131zara/agency/pull/36) merged to `main` at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`.  
+- [x] Documentation and owner-register closeout PR [#37](https://github.com/hamza131zara/agency/pull/37) merged to `main` at `8515648dda57324224ef07b8d09458b2f815b4eb`; exact-head CI [#42300331776](https://github.com/hamza131zara/agency/actions/runs/42300331776) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.  
 - [x] Exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) and post-merge `main` CI [#42298818757](https://github.com/hamza131zara/agency/actions/runs/42298818757) passed all three jobs: `validate`, `browser-and-accessibility` and `automation-sandbox`. The PostgreSQL sandbox suite passed 18/18 tests.
 - [ ] Real notification provider, consent, suppression/unsubscribe, idempotency and deliverability tests are approved if messaging is enabled.
 - [ ] Live contact-form forwarding has tested fallback semantics and never reports success before durable acceptance.
