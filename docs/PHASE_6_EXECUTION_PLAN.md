@@ -1,8 +1,8 @@
 # Phase 6 — Automation Catalogue and Customer Tools Execution Plan
 
-**Status:** P6.1 ACCEPTED; P6.2 CATALOGUE IMPLEMENTATION IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
+**Status:** P6.1–P6.2 ACCEPTED; P6.3 MVP ARCHITECTURE PROPOSAL IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #29; 6 November 2026.
+**Baseline:** `main` after PR #31 at `6343d918f553889629d42d2c010238179cc1eaea`; 6 November 2026.
 
 ## 1. Purpose
 
@@ -138,10 +138,27 @@ Before selecting infrastructure, document the product's actual runtime needs: HT
 - [x] Make planned concepts explicitly unavailable for account connection, message sending, publishing or workflow execution.
 - [x] Add an integration-pattern directory for OAuth services, signed webhooks, AI/model APIs and commerce/marketplace APIs.
 - [x] Mark every integration pattern as provider-unverified; no vendor, logo, scope or supported-connector claim is introduced.
-- [ ] Pass exact-head validation and browser/accessibility tests.
-- [ ] Owner merges P6.2 and post-merge CI on `main` passes.
+- [x] Exact-head `validate` and `browser-and-accessibility` checks passed before merge.
+- [x] Owner merged PR #31 at `6343d918f553889629d42d2c010238179cc1eaea`.
+- [x] Post-merge `main` CI [#42269325279](https://github.com/hamza131zara/agency/actions/runs/42269325279) passed both required jobs.
 
 P6.2 does not select a provider or MVP. That decision remains in P6.3 and requires owner-approved problem evidence and current provider/API verification.
+
+## 7B. P6.3 — MVP selection proposal and architecture
+
+**Implementation branch:** `phase6/p6-3-mvp-architecture`.  
+**Architecture proposal:** `docs/PHASE_6_MVP_ARCHITECTURE.md`.
+
+- [x] Review the actual PHP contact endpoint and deployment model before proposing a workflow.
+- [x] Compare the five P6.1 automation candidates and record material unknowns rather than assigning invented scores.
+- [x] Propose a narrow internal-first lead-intake routing and notification pilot based on an existing repository workflow.
+- [x] Define the sandbox boundary, signed server-to-server event contract, durable PostgreSQL/outbox design, worker behavior, fake notification transport, privacy controls and failure tests.
+- [x] Keep production provider, runtime host, price and real customer integration unselected.
+- [ ] Owner approves the lead-intake pilot, proposes a different target workflow with customer/problem evidence, or defers MVP selection.
+- [ ] Complete provider/runtime verification for whichever live transport is later selected.
+- [ ] Complete architecture/security review before implementing real integrations or storing real customer inquiry data.
+
+**Decision status:** the lead-intake workflow is a recommendation for an internal-first technical pilot, not evidence that customers have requested it and not a live self-service product. P6.4 must not begin until the owner decision is recorded.
 
 ## 8. Phase 6 exit criteria
 
