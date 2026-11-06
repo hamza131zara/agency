@@ -226,13 +226,20 @@ export async function completeJob(
     const result = await client.query(
       `UPDATE outbox_jobs
        SET status = $2,
-           available_at = CASE WHEN $2 = 'pending' THEN $3 ELSE available_at END,
+           available_at = CASE WHEN $6::boolean THEN $3::timestamptz ELSE available_at END,
            locked_at = NULL,
            locked_by = NULL,
            last_error_code = $4,
            updated_at = NOW()
        WHERE id = $1 AND status = 'processing' AND locked_by = $5`,
-      [job.jobId, jobStatus, outcome === "retry_scheduled" ? completion.retryAt : new Date(), errorCode, job.workerId],
+      [
+        job.jobId,
+        jobStatus,
+        outcome === "retry_scheduled" ? completion.retryAt : new Date(),
+        errorCode,
+        job.workerId,
+        outcome === "retry_scheduled",
+      ],
     );
     if (result.rowCount !== 1) throw new Error("Worker lease was lost before completion");
 
