@@ -1,7 +1,10 @@
+import { assertSandboxOnlyRuntime } from "./runtime-guard.js";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { processNextJob } from "./worker-core.js";
 import { FakeNotificationTransport, type FakeTransportMode } from "./transport.js";
+
+assertSandboxOnlyRuntime();
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is required");
