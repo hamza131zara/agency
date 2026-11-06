@@ -6,9 +6,36 @@ header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: no-referrer');
 header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
 $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== '' && strtolower((string) $_SERVER['HTTPS']) !== 'off';
+ini_set('session.use_strict_mode', '1');
+ini_set('session.use_only_cookies', '1');
+ini_set('session.use_trans_sid', '0');
 session_set_cookie_params(['lifetime'=>0,'path'=>'/','secure'=>$isHttps,'httponly'=>true,'samesite'=>'Strict']);
 session_start();
 function respond(int $status,array $body): never { http_response_code($status); echo json_encode($body,JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE); exit; }
+function normalize_origin(string $value): ?array {
+ try { $parts=parse_url($value); } catch (Throwable $error) { return null; }
+ if (!is_array($parts)||!isset($parts['scheme'],$parts['host'])) return null;
+ $scheme=strtolower((string)$parts['scheme']);
+ if (!in_array($scheme,['http','https'],true)||isset($parts['user'])||isset($parts['pass'])||isset($parts['query'])||isset($parts['fragment'])||(isset($parts['path'])&&$parts['path']!=='')) return null;
+ $port=$parts['port']??($scheme==='https'?443:80);
+ if (!is_int($port)||$port<1||$port>65535) return null;
+ return [$scheme,strtolower((string)$parts['host']),$port];
+}
+function request_origin_matches(bool $isHttps): bool {
+ $scheme=$isHttps?'https':'http';
+ $host=$_SERVER['HTTP_HOST']??'';
+ $origin=$_SERVER['HTTP_ORIGIN']??'';
+ if (!is_string($host)||$host===''||!is_string($origin)||$origin==='') return false;
+ $expected=normalize_origin($scheme.'://'.$host);
+ $received=normalize_origin($origin);
+ return $expected!==null&&$received!==null&&$expected===$received;
+}
+if (($_SERVER['REQUEST_METHOD']??'')==='POST') {
+ $contentLength=$_SERVER['CONTENT_LENGTH']??'';
+ if ($contentLength!==''&&(!ctype_digit((string)$contentLength)||(int)$contentLength>16384)) {
+  respond(413,['ok'=>false,'code'=>'payload_too_large','message'=>'The inquiry is too large to process. Please shorten the project details and try again.']);
+ }
+}
 function load_config(): array { $file=__DIR__.'/config.php'; if (!is_file($file)) return []; $data=require $file; return is_array($data)?$data:[]; }
 function valid_address(mixed $value): bool {
  if (!is_string($value)||trim($value)===''||filter_var($value,FILTER_VALIDATE_EMAIL)===false) return false;
@@ -24,11 +51,7 @@ if (($_SERVER['REQUEST_METHOD']??'GET')==='GET'&&isset($_GET['csrf'])) {
  respond(200,['ok'=>true,'csrf_token'=>$_SESSION['csrf_token'],'configured'=>mail_is_configured(load_config())]);
 }
 if (($_SERVER['REQUEST_METHOD']??'')!=='POST') { header('Allow: GET, POST'); respond(405,['ok'=>false,'code'=>'method_not_allowed','message'=>'Use the inquiry form to submit a project request.']); }
-$origin=$_SERVER['HTTP_ORIGIN']??'';
-if ($origin!=='') {
- $originHost=parse_url($origin,PHP_URL_HOST); $host=parse_url('http://'.($_SERVER['HTTP_HOST']??''),PHP_URL_HOST);
- if (!is_string($originHost)||!is_string($host)||strtolower($originHost)!==strtolower($host)) respond(403,['ok'=>false,'code'=>'origin_rejected','message'=>'The request could not be verified. Refresh and try again.']);
-}
+if (!request_origin_matches($isHttps)) respond(403,['ok'=>false,'code'=>'origin_rejected','message'=>'The request could not be verified. Refresh and try again.']);
 $posted=$_POST['csrf_token']??''; $session=$_SESSION['csrf_token']??'';
 if (!is_string($posted)||!is_string($session)||$session===''||!hash_equals($session,$posted)) respond(403,['ok'=>false,'code'=>'csrf_failed','message'=>'Your form session expired. Refresh the page and try again.']);
 function post_text(string $key): string { $value=$_POST[$key]??''; return is_string($value)?$value:''; }

@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Regression tests for the report-only and strict production launch gate."""
+import importlib.util
 import subprocess
 import sys
+import tempfile
+from contextlib import redirect_stdout
+from io import StringIO
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +24,41 @@ def run(*args):
 
 
 def main():
+    spec = importlib.util.spec_from_file_location("launch_readiness_validator", SCRIPT)
+    validator = importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(validator)
+
+    assert validator.is_approved(True) is True
+    assert validator.is_approved(False) is False
+    assert validator.is_approved("true") is False
+    assert validator.is_approved("false") is False
+    assert validator.is_approved(1) is False
+    assert validator.is_approved_https_origin("https://agency.dev") is True
+    assert validator.is_approved_https_origin("https://agency.dev:8443") is True
+    assert validator.is_valid_email("hello@agency.dev") is True
+    assert validator.is_valid_email("not-an-email") is False
+    assert validator.is_valid_iso_date("2026-11-07") is True
+    assert validator.is_valid_iso_date("tomorrow") is False
+    for invalid_origin in (
+        "http://agency.example",
+        "https://agency.dev/path",
+        "https://user@agency.dev",
+        "https://agency.dev?query=1",
+        "https://agency.dev#fragment",
+        "https://agency.dev:99999",
+        "https://agency.example",
+        "NOT-APPROVED",
+    ):
+        assert validator.is_approved_https_origin(invalid_origin) is False, invalid_origin
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        validator.APPROVALS = Path(temp_dir) / "missing-approvals.json"
+        output = StringIO()
+        with patch.object(sys, "argv", [str(SCRIPT), "--strict-predeploy"]), redirect_stdout(output):
+            assert validator.main() == 1, output.getvalue()
+        assert "missing" in output.getvalue().lower(), output.getvalue()
+
     report = run()
     combined = report.stdout + report.stderr
     assert report.returncode == 0, combined

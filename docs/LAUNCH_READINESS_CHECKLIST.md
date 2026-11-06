@@ -3,7 +3,8 @@
 **Release target:** Saturday, 7 November 2026  
 **Current state:** NOT READY TO DEPLOY — code/CI is healthy, but owner, legal, domain, mail and hosting evidence are not supplied.  
 **Release record:** `docs/LAUNCH_APPROVALS.json`  
-**Strict preflight:** `python scripts/validate_launch_readiness.py --strict`
+**Strict pre-deploy preflight:** `python scripts/validate_launch_readiness.py --strict-predeploy`  
+**Full post-deploy release gate:** `python scripts/validate_launch_readiness.py --strict`
 
 ## What is already in place
 
