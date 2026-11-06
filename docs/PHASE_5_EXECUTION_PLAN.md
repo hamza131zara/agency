@@ -1,6 +1,6 @@
 # Phase 5 — Ready-Made Product Marketplace Execution Plan
 
-**Status:** IN PROGRESS — P5.1 and P5.2 are merged and verified on `main`; P5.3 reusable product detail pages are implemented on the current review branch; P5.4–P5.5 remain open.  
+**Status:** IN PROGRESS — P5.1–P5.3 merged and verified on `main`; P5.4 release and commercial governance is implemented on the current review branch; P5.5 remains open.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 5.  
 **Review date:** 6 November 2026.
 
@@ -77,7 +77,8 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 
 ## P5.3 — Reusable product detail pages
 
-**Implementation branch:** `phase5/p5-3-product-detail-pages`.
+**Implementation branch:** `phase5/p5-3-product-detail-pages`.  
+**Accepted:** PR #26 merged at `301b01ca4cb4b196b83b2881eea7250a86b10b02`; post-merge CI [#42196381737](https://github.com/hamza131zara/agency/actions/runs/42196381737) passed both required jobs.
 
 - [x] Add one reusable semantic product-detail structure for the five public catalogue candidates: STRIDETO, RegexLab, JotJSON, SiteIntel Pulse and Free AI Mixer.
 - [x] Include overview, audience, documented capabilities, evidence source, availability/limitations, data/security notes, operating and installation requirements, version/change-history state, licence, price, support and update-policy information.
@@ -86,18 +87,25 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 - [x] Preserve STRIDETO's hosted-service/source-code distinction and qualify README license statements for RegexLab/JotJSON.
 - [x] Leave Auto-Trading-Agent without a product detail route; retain the not-available research card and its separate roadmap boundary.
 - [x] Connect the five eligible catalogue cards to product-detail pages, register the routes in site validation, browser tests and sitemap.
-- [ ] Exact-head `validate` and `browser-and-accessibility` checks pass.
-- [ ] Owner merges the PR and post-merge `main` CI passes.
+- [x] Exact-head `validate` and `browser-and-accessibility` checks passed; owner merged the PR and post-merge `main` CI passed.
+
 
 
 ## P5.4 — Product submission, release and commercial governance
 
-- Define an owner review record for product ownership/operator, release state, approved copy and visual assets, technical requirements, licence and third-party notices.
-- Require a versioned distribution artifact, documented prerequisites, clean installation/deployment test, checksum/integrity instructions where relevant, upgrade/rollback guidance and a support route before making an installable claim.
-- Publish a licence only after its exact text and scope have been checked. A repository's license does not automatically cover third-party dependencies, artwork, brands, hosted services or model/provider terms.
-- Display pricing only after the owner approves amount, currency, billing model and applicable tax, refund, renewal and cancellation terms.
-- Review data flows, privacy, security and server-side secret handling before a hosted product processes customer data.
-- Keep payment, customer accounts, licence activation, protected downloads and automated fulfilment outside Phase 5; those are later-phase capabilities.
+**Implementation branch:** `phase5/p5-4-release-commercial-governance`.
+
+- [x] Define the release/publication lifecycle, evidence standards, owner authority, copy/asset permissions, licence/third-party review, technical release artifact, privacy/security, support/update and withdrawal requirements in `docs/PRODUCT_RELEASE_GOVERNANCE.md`.
+- [x] Add a six-product structured approval register at `docs/PRODUCT_RELEASE_GOVERNANCE.json`; all release and commercial approvals are currently explicitly unapproved/not recorded.
+- [x] Add per-submission review steps and evidence fields in `docs/PRODUCT_SUBMISSION_CHECKLIST.md`.
+- [x] Add a versioned product changelog/release template in `docs/PRODUCT_CHANGELOG_TEMPLATE.md`; no release versions or dates are fabricated.
+- [x] Add `scripts/validate_product_release_governance.py` and a required CI step. The validator prevents `readyToInstall=true` or commercial approval until all applicable gates and evidence fields pass.
+- [x] Add visible release-decision disclosures to each of the five product detail pages.
+- [x] Add Playwright coverage to ensure the release decision is visible and no unapproved buy/install action appears.
+- [ ] Exact-head `validate` and `browser-and-accessibility` checks pass.
+- [ ] Owner merges the PR and post-merge `main` CI passes.
+
+No product is being approved for installation, resale or commercial sale in P5.4. This package establishes the decision and evidence controls; actual product release remains blocked until the owner and technical/legal checks are completed.
 
 ## P5.5 — Quality and acceptance
 
