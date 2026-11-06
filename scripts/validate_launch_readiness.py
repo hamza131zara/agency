@@ -218,7 +218,6 @@ def main():
         ("documentRootConfirmed", "Confirm the public document root."),
         ("supportedPhpVersionVerified", "Verify the production PHP version."),
         ("sslEnabledAndVerified", "Enable and verify SSL before forcing HTTPS."),
-        ("httpsRedirectVerified", "Verify the HTTP-to-HTTPS redirect."),
         ("productionBackupCreated", "Back up the existing production web root before replacing files."),
         ("deploymentApproved", "Record explicit owner approval for production deployment."),
     ):
