@@ -151,6 +151,15 @@ export async function leaseNextJob(
     const lead = leadResult.rows[0];
     if (!lead) throw new Error("Outbox job references a missing lead");
 
+    await client.query(
+      `UPDATE delivery_attempts
+       SET outcome = 'retry_scheduled',
+           finished_at = NOW(),
+           sanitized_error_code = 'worker_lease_expired'
+       WHERE job_id = $1 AND outcome = 'started'`,
+      [job.id],
+    );
+
     const attemptId = randomUUID();
     await client.query(
       `INSERT INTO delivery_attempts (id, job_id, attempt_number, outcome)
