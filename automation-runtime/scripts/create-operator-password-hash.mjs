@@ -11,7 +11,7 @@ process.stdout.write("Enter a private operator password (input hidden): ");
 input.setRawMode(true);
 input.resume();
 
-function finish(): void {
+function finish() {
   input.setRawMode(false);
   input.pause();
   input.removeAllListeners("data");
