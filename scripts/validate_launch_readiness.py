@@ -170,16 +170,24 @@ def main():
             add(blockers, f"Required legal page is missing: {filename}")
             continue
         content = path.read_text(encoding="utf-8")
-        if draft_marker.lower() not in content.lower():
-            add(blockers, f"{filename} has no recognizable draft marker; verify approved final wording.")
-        if noindex_marker not in content:
-            add(blockers, f"{filename} must remain noindex until legal approval is complete.")
-        if not operator.get({
+        approval_field = {
             "privacy.html": "privacyApproval",
             "terms.html": "termsApproval",
             "disclaimer.html": "disclaimerApproval",
-        }[filename]):
+        }[filename]
+        approved = bool(operator.get(approval_field))
+        has_draft_marker = draft_marker.lower() in content.lower()
+        if not approved:
+            if not has_draft_marker:
+                add(blockers, f"{filename} must remain visibly marked as a draft until approved.")
+            if noindex_marker not in content:
+                add(blockers, f"{filename} must remain noindex until legal approval is complete.")
             add(blockers, f"{filename} is not approved for publication.")
+        else:
+            if has_draft_marker:
+                add(blockers, f"{filename} is marked approved but still contains draft-only wording.")
+            if noindex_marker not in content:
+                add(blockers, f"{filename} must remain noindex until its indexing decision is separately reviewed.")
 
     contact = approvals.get("contact", {})
     for field, label in (
@@ -258,7 +266,7 @@ def main():
                 continue
             canonical_parser = CanonicalParser()
             canonical_parser.feed(file.read_text(encoding="utf-8"))
-            expected_canonical = origin + ("" if route == "/" else route)
+            expected_canonical = origin + route
             if canonical_parser.canonicals != [expected_canonical]:
                 if not canonical_parser.canonicals:
                     missing_canonicals.append(route)
