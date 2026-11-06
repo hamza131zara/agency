@@ -69,3 +69,36 @@ jobs:
             playwright-report/
           if-no-files-found: ignore
           retention-days: 14
+
+  automation-sandbox:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: agency_automation
+          POSTGRES_PASSWORD: local-ci-password
+          POSTGRES_DB: agency_automation
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U agency_automation -d agency_automation"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://agency_automation:local-ci-password@127.0.0.1:5432/agency_automation
+      TEST_DATABASE_URL: postgres://agency_automation:local-ci-password@127.0.0.1:5432/agency_automation
+      AUTOMATION_HMAC_KEYS: '{"ci-test":"test-only-secret-material-that-is-at-least-32-bytes"}'
+      DATABASE_SSL: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22.23.4"
+      - name: Install pinned project dependencies
+        run: npm install --no-audit --no-fund
+      - name: Apply automation database schema
+        run: npm run automation:migrate
+      - name: Run lead-intake PostgreSQL integration suite
+        run: npm run test:automation

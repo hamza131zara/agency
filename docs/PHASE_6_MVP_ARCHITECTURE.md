@@ -1,8 +1,8 @@
 # Phase 6 — MVP Selection Proposal and Architecture
 
-**Decision status:** PROPOSED — owner approval required before implementation of the workflow runtime.  
+**Decision status:** OWNER-APPROVED FOR P6.4 SANDBOX IMPLEMENTATION ONLY. Production integration and release remain unapproved.  
 **Phase package:** P6.3 — MVP selection and architecture.  
-**Baseline:** `main` after PR #31; 6 November 2026.  
+**Baseline:** `main` after PR #33 at `84e7843e2e7415018c858272a061ae0c13b7ccc2`; 7 November 2026.  
 **Related documents:** `docs/PHASE_6_EXECUTION_PLAN.md`, `docs/PRODUCT_AUTOMATION_GOVERNANCE.md`, `docs/LAUNCH_READINESS_CHECKLIST.md`.
 
 ## 1. Executive proposal
@@ -15,7 +15,7 @@ This is deliberately an **internal-first workflow vertical slice**, not a claim 
 
 - The technical fit is supported by the existing inquiry route.
 - External market/customer demand remains unknown.
-- Owner approval is required before P6.4 implements even the sandbox runtime.
+- The owner approved the internal-first lead-intake workflow for the P6.4 sandbox implementation on 7 November 2026. This does not approve real customer data, production integration, provider selection, hosting spend or public release.
 - If the owner has a different high-priority customer workflow with evidence, replace this proposal before implementation.
 
 ## 2. Why this is the recommended first pilot
@@ -265,12 +265,18 @@ The public website can be purchased/deployed on Hostinger near launch as planned
 | Hosting/provider spend | None approved | Not selected |
 | Public product status | Planned / in development only | Must remain non-live |
 
-### Owner approval gate
+### Owner decision record
 
-Before P6.4 starts, the owner must approve one of the following:
-- approve this internal-first lead-intake pilot;
-- nominate a different workflow and provide the target user/problem and priority integration;
-- defer MVP selection until customer/problem evidence is available.
+**Approved on 7 November 2026:** the owner selected the internal-first Lead Intake Routing & Internal Notification MVP and authorized P6.4 sandbox implementation.
+
+Approval is limited to synthetic test events, a separate Node.js/TypeScript API and worker, PostgreSQL persistence, the transactional outbox, and deterministic fake notification outcomes. It does **not** authorize:
+- modifying the live PHP contact endpoint or forwarding real inquiries;
+- storing real customer or personal data in this runtime;
+- selecting or connecting email, SMS or other providers;
+- production hosting, paid infrastructure, external accounts or deployment;
+- a public customer-facing SaaS claim or release.
+
+P6.5/P6.6 and any live pilot require their own security, privacy, runtime and release decisions.
 
 Merging this architecture document does not silently mark customer demand as proven, select a paid provider, authorize production credentials or authorize deployment.
 

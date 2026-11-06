@@ -1,8 +1,8 @@
 # Phase 6 — Automation Catalogue and Customer Tools Execution Plan
 
-**Status:** P6.1–P6.2 ACCEPTED; P6.3 ARCHITECTURE PROPOSAL MERGED; MVP SELECTION AWAITS OWNER DECISION. No customer-facing automation product is being presented as live, connected or production-ready.  
+**Status:** P6.1–P6.2 ACCEPTED; P6.3 ARCHITECTURE AND MVP APPROVED FOR SANDBOX; P6.4 IMPLEMENTATION IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #32 at `997d33c2eb1b8481c2f01a92bf6ff3dbb6432b39`; 6 November 2026.
+**Baseline:** `main` after PR #33 at `84e7843e2e7415018c858272a061ae0c13b7ccc2`; 7 November 2026.
 
 ## 1. Purpose
 
@@ -161,7 +161,28 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [ ] Complete provider/runtime verification for whichever live transport is later selected.
 - [ ] Complete architecture/security review before implementing real integrations or storing real customer inquiry data.
 
-**Decision status:** PR #32 is merged and its proposal is now the repository's documented architecture baseline. The lead-intake workflow remains a recommendation for an internal-first technical pilot, not evidence that customers have requested it and not a live self-service product. Merging the documentation does not constitute approval to build the MVP. P6.4 must not begin until the owner decision is explicitly recorded.
+**Decision status:** the owner approved the internal-first lead-intake workflow for P6.4 sandbox implementation on 7 November 2026. This is an internal technical pilot decision, not evidence that customers have requested the product and not a live self-service product. Production provider and runtime selection remain open.
+
+## 7C. P6.4 — Lead-intake sandbox vertical slice
+
+**Implementation branch:** `phase6/p6-4-lead-intake-sandbox`.  
+**Owner authorization:** approved 7 November 2026 for synthetic sandbox implementation only.  
+**Implementation guide:** `automation-runtime/README.md` and `docs/PHASE_6_P6_4_SANDBOX.md`.
+
+- [x] Add an isolated Node.js/TypeScript API and separate worker entry point; do not alter the PHP contact endpoint.
+- [x] Authenticate trusted source events with timestamped HMAC-SHA256, key IDs, constant-time comparison and replay-window validation.
+- [x] Enforce a versioned event contract, source allowlist, body-size limit and bounded per-process rate limit.
+- [x] Persist lead + notification outbox intent in one PostgreSQL transaction with source/event idempotency.
+- [x] Lease work with `FOR UPDATE SKIP LOCKED`, recover expired leases and record delivery attempts.
+- [x] Implement bounded retry, permanent-failure handling and dead-letter state.
+- [x] Keep the transport simulated only; no mail, SMS, CRM, provider or external network adapter exists.
+- [x] Add PostgreSQL-backed integration tests and a disposable PostgreSQL CI service.
+- [x] Exact-head CI [#42283098059](https://github.com/hamza131zara/agency/actions/runs/42283098059) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
+- [x] PostgreSQL integration suite passed all 10 tests (10 passed, 0 failed, 0 skipped).
+- [ ] Owner merges implementation [PR #34](https://github.com/hamza131zara/agency/pull/34).
+- [ ] Post-merge `main` CI passes both website checks and the PostgreSQL sandbox suite.
+
+**Boundary:** P6.4 is a tested sandbox workflow, not a live agency inquiry service. P6.5 adds operator controls; P6.6 owns release acceptance. Real contact forwarding, customer data, external providers, hosting spend and deployment remain out of scope.
 
 ## 8. Phase 6 exit criteria
 
