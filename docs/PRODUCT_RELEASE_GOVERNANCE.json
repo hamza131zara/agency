@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-06",
+  "purpose": "Internal P5.4 release-governance register. This file records evidence and approvals required for public release or commercial distribution. It does not constitute approval or a sale offer.",
+  "requiredGates": [
+    "ownerAuthority",
+    "approvedPublicCopy",
+    "screenshotAndBrandPermissions",
+    "licenseReview",
+    "thirdPartyNoticesReview",
+    "privacyAndSecurityReview",
+    "distributionArtifact",
+    "installDocumentation",
+    "cleanInstallVerification",
+    "versionAndChangelog",
+    "pricingApproval",
+    "supportPolicyApproval",
+    "updatePolicyApproval",
+    "refundAndConsumerTerms",
+    "releaseApproval"
+  ],
+  "permittedStates": {
+    "ownerAuthority": [
+      "not-recorded",
+      "approved",
+      "rejected"
+    ],
+    "approvedPublicCopy": [
+      "not-recorded",
+      "pending",
+      "approved"
+    ],
+    "screenshotAndBrandPermissions": [
+      "not-approved",
+      "pending",
+      "approved",
+      "not-applicable"
+    ],
+    "licenseReview": [
+      "not-reviewed",
+      "in-review",
+      "approved",
+      "restricted",
+      "not-applicable"
+    ],
+    "thirdPartyNoticesReview": [
+      "not-reviewed",
+      "in-review",
+      "approved",
+      "restricted",
+      "not-applicable"
+    ],
+    "privacyAndSecurityReview": [
+      "not-reviewed",
+      "in-review",
+      "approved",
+      "restricted",
+      "not-applicable"
+    ],
+    "distributionArtifact": [
+      "not-created",
+      "draft",
+      "built",
+      "verified"
+    ],
+    "installDocumentation": [
+      "not-available",
+      "developer-documentation-only",
+      "draft",
+      "approved"
+    ],
+    "cleanInstallVerification": [
+      "not-run",
+      "failed",
+      "passed"
+    ],
+    "versionAndChangelog": [
+      "not-established",
+      "draft",
+      "published"
+    ],
+    "pricingApproval": [
+      "not-approved",
+      "pending",
+      "approved",
+      "not-applicable"
+    ],
+    "supportPolicyApproval": [
+      "not-approved",
+      "pending",
+      "approved",
+      "not-applicable"
+    ],
+    "updatePolicyApproval": [
+      "not-approved",
+      "pending",
+      "approved",
+      "not-applicable"
+    ],
+    "refundAndConsumerTerms": [
+      "not-approved",
+      "pending",
+      "approved",
+      "not-applicable"
+    ],
+    "releaseApproval": [
+      "not-approved",
+      "pending",
+      "approved",
+      "rejected"
+    ]
+  },
+  "products": [
+    {
+      "productId": "strideto",
+      "productName": "STRIDETO",
+      "marketplaceDisposition": "reference-only",
+      "releaseStatus": "hosted-reference-not-for-resale",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "developer-documentation-only",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Confirm product ownership and operator authority for any commercial offer.",
+        "Separate public hosted service from source-code redistribution rights and service terms.",
+        "No approved customer packaging, onboarding, support or update policy.",
+        "Do not imply agency delivery or ownership."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    },
+    {
+      "productId": "regexlab",
+      "productName": "RegexLab",
+      "marketplaceDisposition": "public-tool-only",
+      "releaseStatus": "public-tool-no-commercial-package",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "not-available",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Verify LICENSE file and third-party notices/asset rights.",
+        "Decide whether product is only a free hosted tool or whether a separate distributable package is intended.",
+        "If distributable, create versioned package, customer installation guide and clean-install evidence.",
+        "Define support/update policy only if a commercial offer is approved."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    },
+    {
+      "productId": "jotjson",
+      "productName": "JotJSON",
+      "marketplaceDisposition": "public-tool-only",
+      "releaseStatus": "public-tool-no-commercial-package",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "not-available",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Verify LICENSE file and all third-party notices and asset rights.",
+        "Keep privacy statements aligned with actual network behavior and current build.",
+        "Decide whether free hosted tool only or distributable product is intended.",
+        "If distributable, create versioned package, installation guide and clean-install evidence."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    },
+    {
+      "productId": "siteintel-pulse",
+      "productName": "SiteIntel Pulse",
+      "marketplaceDisposition": "development-only",
+      "releaseStatus": "not-released",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "not-available",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Resolve conflicting README 'public live' wording versus static-showcase/in-development boundary.",
+        "Verify production hosting, security, tenancy, rate limits, backups, privacy and operational readiness.",
+        "Verify exact license and third-party notices.",
+        "Create documented deployment/customer installation process and clean install evidence.",
+        "Define report/data retention and support/update policy before release."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    },
+    {
+      "productId": "free-ai-mixer",
+      "productName": "Free AI Mixer",
+      "marketplaceDisposition": "development-only",
+      "releaseStatus": "not-released",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "not-available",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Implement and verify a real supported API endpoint and provider configuration flow.",
+        "Define secure customer credential handling; never expose provider secrets in browser code.",
+        "Test provider failure, retries, rate limits, usage/cost controls and job lifecycle end-to-end.",
+        "Verify license/provider terms and produce deployment/install docs.",
+        "Define customer data retention, support and update policy."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    },
+    {
+      "productId": "auto-trading-agent",
+      "productName": "Auto-Trading-Agent",
+      "marketplaceDisposition": "excluded",
+      "releaseStatus": "not-released",
+      "ownerAuthority": "not-recorded",
+      "approvedPublicCopy": "not-recorded",
+      "screenshotAndBrandPermissions": "not-approved",
+      "licenseReview": "not-reviewed",
+      "thirdPartyNoticesReview": "not-reviewed",
+      "privacyAndSecurityReview": "not-reviewed",
+      "distributionArtifact": "not-created",
+      "installDocumentation": "not-available",
+      "cleanInstallVerification": "not-run",
+      "versionAndChangelog": "not-established",
+      "pricingApproval": "not-approved",
+      "supportPolicyApproval": "not-approved",
+      "updatePolicyApproval": "not-approved",
+      "refundAndConsumerTerms": "not-approved",
+      "releaseApproval": "not-approved",
+      "readyToInstall": false,
+      "reviewedAt": "2026-11-06",
+      "blockers": [
+        "Remain excluded until separate roadmap exit criteria and explicit owner release approval.",
+        "No live trading, returns, investment advice, hosted trading or commercial availability claims.",
+        "Do not change the frozen trading-agent roadmap through this agency marketplace phase."
+      ],
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
+    }
+  ],
+  "releaseRule": "A product may be marked readyToInstall=true only when owner authority, copy/asset permissions, licence and third-party review, privacy/security review, a versioned distribution artifact, approved installation instructions, a passing clean-install verification, version/change history, support/update policies and final release approval are all recorded as approved/verified. Pricing and consumer/refund terms must also be approved before any paid offer. A public hosted tool can remain public without being installable or commercially offered.",
+  "currentFinding": "No product is approved as ready to install or commercially available through the agency marketplace. STRIDETO is reference-only; RegexLab and JotJSON are public tools without commercial packages; SiteIntel Pulse and Free AI Mixer remain in development; Auto-Trading-Agent is excluded.",
+  "approvalEvidenceRule": "ApprovalEvidence entries must identify the approver, decision, timestamp/date, exact asset/claim/release version or artifact digest, scope/channels, and an immutable evidence location. Do not use a blank placeholder, repository README or inferred owner identity as approval.",
+  "autoTradingBoundary": "This marketplace register does not override or revise the separate Solana Autonomous DEX Trading Agent roadmap. Auto-Trading-Agent remains excluded until its own roadmap exit criteria and explicit owner release approval."
+}

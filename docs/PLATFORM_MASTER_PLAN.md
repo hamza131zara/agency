@@ -153,7 +153,7 @@ Each module has its own page(s), navigation destination, page metadata, content 
 | Phase 2 — Premium visual identity and 3D experience | COMPLETE | PR #15 merged to `main` on 4 November 2026 at [`d069caaf`](https://github.com/hamza131zara/agency/commit/d069caaf3fc10d462199d945d3c4729fed0b70a6); post-merge CI #41864959360 passed both required jobs. Human assistive-technology and official legal-brand inputs remain pre-launch gates. Evidence in `docs/PHASE_2_EXECUTION_PLAN.md`. |
 | Phase 3 — Service depth, positioning and team profiles | COMPLETE — implementation and post-merge QA | PR #16 merged to `main` on 5 November 2026 at [`94954a3`](https://github.com/hamza131zara/agency/commit/94954a3e859ae45070fc84d0e7ff3eba53be11bc). Post-merge CI [#41984286337](https://github.com/hamza131zara/agency/actions/runs/41984286337) passed `validate` and `browser-and-accessibility`. Profile evidence/consent and human assistive-technology review remain pre-launch gates. |
 | Phase 4 — Portfolio and case-study system | COMPLETE — repository implementation and automated QA | PR #22 merged at `b89adee0`; post-merge CI [#42080702755](https://github.com/hamza131zara/agency/actions/runs/42080702755) passed. Manual visual/assistive-technology and owner evidence reviews remain pre-launch gates. |
-| Phase 5 — Ready-made product marketplace | IN PROGRESS — P5.1 and P5.2 accepted; P5.3 underway | P5.1 PR #24 merged at `fbfb36e5`; post-merge CI [#42175498028](https://github.com/hamza131zara/agency/actions/runs/42175498028) passed. P5.2 PR #25 merged at `7159084d`; post-merge CI [#42179451016](https://github.com/hamza131zara/agency/actions/runs/42179451016) passed. P5.3 product detail pages for five public candidates are on `phase5/p5-3-product-detail-pages`. Auto-Trading-Agent remains gated and excluded from public product details. |
+| Phase 5 — Ready-made product marketplace | IN PROGRESS — P5.1–P5.3 accepted; P5.4 underway | P5.1 PR #24 merged at `fbfb36e5`; CI [#42175498028](https://github.com/hamza131zara/agency/actions/runs/42175498028) passed. P5.2 PR #25 merged at `7159084d`; CI [#42179451016](https://github.com/hamza131zara/agency/actions/runs/42179451016) passed. P5.3 PR #26 merged at `301b01ca`; CI [#42196381737](https://github.com/hamza131zara/agency/actions/runs/42196381737) passed. P5.4 governance and release approval controls are implemented on `phase5/p5-4-release-commercial-governance`. No product is approved ready-to-install or commercially available. Auto-Trading-Agent remains excluded. |
 | Phases 6–9 | PLANNED | Start after their predecessor scope and dependencies are reviewed; no implementation is implied by this status table. |
 
 A phase status distinguishes repository implementation from public-release readiness. A merge does not complete legal approvals, human accessibility reviews, external delivery tests or deployment.
@@ -255,14 +255,14 @@ Exit criteria:
 
 ### Phase 5 — Ready-made product marketplace
 
-**Status:** IN PROGRESS — P5.1 and P5.2 are merged and verified on `main`; P5.3 reusable product detail pages are underway on `phase5/p5-3-product-detail-pages`. Execution plan: `docs/PHASE_5_EXECUTION_PLAN.md`.
+**Status:** IN PROGRESS — P5.1–P5.3 are merged and verified on `main`; P5.4 product submission, release and commercial governance is underway on `phase5/p5-4-release-commercial-governance`. Execution plan: `docs/PHASE_5_EXECUTION_PLAN.md`.
 
 **Purpose:** present software products as distinct products, not just portfolio cards.
 
 Deliverables:
 - Products catalogue and product-category pages.
 - Product detail page with screenshots/demo, features, constraints, requirements, installation, status, licence, pricing (where approved), support and update policy.
-- Product submission/review checklist and version/change history.
+- Product submission/review checklist, release-approval register and version/change history.
 - Initial verified product listings.
 
 Initial catalogue candidates and current known status:
