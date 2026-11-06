@@ -37,6 +37,7 @@ Requirements: Node.js 22+, npm and Docker Compose.
    ```powershell
    $env:DATABASE_URL = "postgres://agency_automation:local-dev-only@127.0.0.1:5432/agency_automation"
    $env:AUTOMATION_HMAC_KEYS = '{"local-dev":"replace-this-with-a-random-secret-of-at-least-32-bytes"}'
+   $env:AUTOMATION_DEMO_SECRET = "use-the-same-secret-value-as-the-local-dev-key"
    $env:AUTOMATION_ALLOWED_SOURCES = "agency-contact-form"
    $env:AUTOMATION_FAKE_TRANSPORT_MODE = "success"
    ```
@@ -62,6 +63,14 @@ Requirements: Node.js 22+, npm and Docker Compose.
    ```
 
 The API listens on port 8787 by default. Check `GET /healthz` and `GET /readyz`. The private intake route is `POST /v1/intake/lead-submitted`.
+
+With the API and worker running in separate terminals, submit a synthetic event from a third terminal:
+
+```bash
+npm run automation:demo
+```
+
+The demo sender signs a newly generated synthetic event. Its `AUTOMATION_DEMO_SECRET` must exactly match the value configured under the `local-dev` key in `AUTOMATION_HMAC_KEYS`. The example uses an `.invalid` email address and never sends email.
 
 ## Event authentication
 
