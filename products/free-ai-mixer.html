@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free AI Mixer is an in-development AI scene-generation orchestration project requiring a separately configured generation API. No hosted public demo is confirmed.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free AI Mixer — Products — Agency">
+<meta property="og:description" content="Free AI Mixer is an in-development AI scene-generation orchestration project requiring a separately configured generation API. No hosted public demo is confirmed.">
+<meta name="twitter:card" content="summary">
+<title>Free AI Mixer — Products — Agency</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<script defer src="../assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="page-shell">
+<header class="site-header">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation"><span></span><span></span></button>
+<nav class="primary-nav" id="primary-nav" aria-label="Main navigation"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../work.html">Work</a><a aria-current="page" href="../products.html">Products</a><a href="../automation.html">Automation</a><a href="../about.html">About</a><a href="../brief-builder.html">Project brief</a><a class="nav-cta" href="../contact.html">Let's talk <span aria-hidden="true">↗</span></a></nav>
+</header>
+<main id="main" class="product-detail-page" data-product-detail-version="1" data-product-id="free-ai-mixer">
+<section class="product-detail-hero section-wrap" id="top">
+<p class="eyebrow">PRODUCT 05 / AI CREATIVE WORKFLOWS</p>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><a href="../products.html">Products</a><span aria-hidden="true">/</span><span aria-current="page">Free AI Mixer</span></nav>
+<div class="product-detail-intro">
+<div class="product-detail-lead">
+<span class="product-status status-development">IN DEVELOPMENT</span>
+<h1>An AI scene-generation workflow under development.</h1>
+<p class="product-detail-summary">Free AI Mixer focuses on scene lifecycle management, asynchronous job orchestration and provider integration. A hosted generation product is not currently advertised.</p>
+<div class="hero-actions"><a href="https://github.com/hamza131zara/Free-AI-Mixer" target="_blank" rel="noopener noreferrer">View source repository ↗</a><a class="text-link" href="../work/free-ai-mixer.html">Read project notes ↗</a></div>
+</div>
+<aside class="product-detail-facts" aria-label="Free AI Mixer product facts">
+<small>PRODUCT RECORD</small>
+<dl>
+<dt>Product type</dt><dd>AI scene-generation orchestration project</dd>
+<dt>Availability</dt><dd>In development; no hosted demo confirmed</dd>
+<dt>Access model</dt><dd>Source repository only</dd>
+<dt>Distribution</dt><dd>Developer setup is documented; customer installer and hosted API not verified</dd>
+</dl>
+</aside>
+</div>
+</section>
+<nav class="section-wrap product-detail-nav" aria-label="Product detail sections">
+<span>ON THIS PAGE</span>
+<a href="#overview">Overview</a><a href="#capabilities">Capabilities</a><a href="#availability">Availability &amp; limits</a><a href="#requirements">Requirements</a><a href="#commercial">Licence &amp; support</a>
+</nav>
+<section class="section-wrap product-detail-layout" aria-label="Product information">
+<div class="product-detail-main">
+<section id="overview">
+<p class="eyebrow">01 / OVERVIEW</p>
+<h2>A controlled lifecycle for asynchronous generation jobs.</h2>
+<p>The repository describes a scene state machine and an orchestration layer that queues work, limits concurrency and reports actual lifecycle progress. The UI depends on a separately configured generation API. The existence of provider integration code does not mean a hosted endpoint or customer-ready generation service is available.</p>
+<div class="product-audience"><strong>Who it may suit</strong><p>Developers evaluating an AI creative workflow or contributing to the orchestration project. This is not currently a hosted end-user generation service.</p></div>
+</section>
+<section id="capabilities">
+<p class="eyebrow">02 / DOCUMENTED CAPABILITIES</p>
+<h2>What the project describes</h2>
+<ul class="product-capability-list"><li>A shared scene lifecycle is documented: idle, queued, generating, success or error.</li><li>The orchestration layer documents a maximum of two concurrent generation jobs.</li><li>Provider order is documented as Replicate first, with Gemini fallback.</li><li>Progress is described as reflecting real lifecycle results rather than simulated percentage movement.</li><li>The configured API is expected to accept a prompt/style/duration payload and return generated image and variation data.</li></ul>
+<p class="product-evidence-note">Evidence source: Free AI Mixer repository README at commit cb1fdf23f91e3c3ffc3d54c3ca6efa36d510cebb. These are documented architecture details; no externally hosted generation workflow was verified.</p>
+</section>
+<section id="availability">
+<p class="eyebrow">03 / AVAILABILITY &amp; LIMITATIONS</p>
+<h2>Development repository only; no hosted demo.</h2>
+<p>No hosted public application or working generation API endpoint is confirmed in the product-readiness register. The repository README expects a separately configured scene-generation API. This page does not provide provider access or imply that API usage is included.</p>
+<ul class="product-limit-list"><li>A generation API endpoint must be configured before scene generation can work.</li><li>Provider credentials, usage costs, rate limits and fallback behavior depend on the configured API/provider environment.</li><li>No customer-safe credential provisioning, hosted queue service or public support process is documented.</li><li>Do not place private provider secrets in browser-delivered configuration.</li></ul>
+</section>
+</div>
+<aside class="product-detail-sidebar">
+<section class="product-detail-panel" id="requirements">
+<p class="eyebrow">04 / REQUIREMENTS</p>
+<h2>Before using or running it</h2>
+<ul><li>Developer setup uses Node.js/npm commands documented in the repository.</li><li>The application requires a configured scene-generation API base URL and generation path.</li><li>A compatible server-side provider integration and protected credential handling are required before customer operation; these are not supplied as a hosted service here.</li></ul>
+</section>
+<section class="product-detail-panel" id="commercial">
+<p class="eyebrow">05 / LICENCE, PRICE &amp; SUPPORT</p>
+<h2>Commercial information</h2>
+<dl>
+<dt>Licence</dt><dd>Not verified in the Phase 5.1 inventory. Check the repository LICENSE, dependency terms, provider SDKs and model/API usage terms before distribution.</dd>
+<dt>Pricing</dt><dd>No price or provider-usage billing model is approved.</dd>
+<dt>Support</dt><dd>No customer support channel, SLA or provider uptime commitment is offered.</dd>
+<dt>Updates</dt><dd>No release cadence, compatibility or maintenance policy is approved.</dd>
+</dl>
+</section>
+<section class="product-detail-panel product-source-panel">
+<p class="eyebrow">SOURCE &amp; PROJECT RECORD</p>
+<p>The repository README explains the architecture, scene lifecycle, provider order and expected API contract. No hosted demo URL was supplied.</p>
+<div class="product-source-links"><a href="https://github.com/hamza131zara/Free-AI-Mixer" target="_blank" rel="noopener noreferrer">Source repository ↗</a><a href="../work/free-ai-mixer.html">Portfolio project notes ↗</a></div>
+</section>
+</aside>
+</section>
+<section class="section-wrap product-detail-disclosure">
+<strong>Evidence and release note</strong>
+<p>This page summarizes repository documentation and the current product-readiness register reviewed on 6 November 2026. README statements are not an independent production test or a customer release approval. No agency delivery relationship, commercial package, service-level commitment or installable distribution is implied unless explicitly evidenced above.</p>
+<a href="../products.html">← Back to all products</a>
+</section>
+<section class="callout-band"><div class="section-wrap callout-inner"><div><p class="eyebrow">NEED SOMETHING SIMILAR?</p><h2>Discuss a custom software project.</h2><p>This contact route is for a new project inquiry, not a product-support or purchase promise.</p></div><a class="button button-light" href="../contact.html">Discuss a custom project ↗</a></div></section>
+</main>
+<footer class="site-footer"><div class="section-wrap footer-main"><a class="brand footer-brand" href="../index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><p>Thoughtful products.<br>Useful technology.</p><div class="footer-links"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../work.html">Work</a><a href="../products.html">Products</a><a href="../automation.html">Automation</a><a href="../about.html">About</a><a href="../approach.html">Approach</a><a href="../team.html">Team</a><a href="../brief-builder.html">Project brief</a><a href="../contact.html">Contact</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../disclaimer.html">Disclaimer</a></div></div><div class="section-wrap footer-bottom"><span>© <span id="year"></span> Agency. All rights reserved.</span><span>PRODUCTS / 05</span><a href="#top">Back to top ↑</a></div></footer>
+</div>
+</body>
+</html>
