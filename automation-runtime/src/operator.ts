@@ -159,8 +159,32 @@ function cursorDecode(raw: string | null): Cursor | null {
   }
 }
 
-function loginRateLimiter() {
+const MAX_LOGIN_RATE_LIMIT_ENTRIES = 4_096;
+
+export function createLoginRateLimiter(maxEntries = MAX_LOGIN_RATE_LIMIT_ENTRIES) {
+  if (!Number.isSafeInteger(maxEntries) || maxEntries < 1) {
+    throw new Error("Login rate limiter capacity must be a positive safe integer");
+  }
   const failures = new Map<string, { count: number; resetAt: number }>();
+
+  function prune(now: number): void {
+    for (const [key, entry] of failures) {
+      if (entry.resetAt <= now) failures.delete(key);
+    }
+    while (failures.size > maxEntries) {
+      let oldestKey: string | undefined;
+      let earliestReset = Number.POSITIVE_INFINITY;
+      for (const [key, entry] of failures) {
+        if (entry.resetAt < earliestReset) {
+          oldestKey = key;
+          earliestReset = entry.resetAt;
+        }
+      }
+      if (oldestKey === undefined) break;
+      failures.delete(oldestKey);
+    }
+  }
+
   return {
     blocked(key: string, now: number): boolean {
       const entry = failures.get(key);
@@ -177,6 +201,7 @@ function loginRateLimiter() {
       } else {
         entry.count += 1;
       }
+      prune(now);
     },
     clear(key: string): void {
       failures.delete(key);
@@ -234,7 +259,7 @@ async function login(
   passwordHash: string | undefined,
   secure: boolean,
   ttlSeconds: number,
-  limiter: ReturnType<typeof loginRateLimiter>,
+  limiter: ReturnType<typeof createLoginRateLimiter>,
 ): Promise<void> {
   if (!hasSameOrigin(request)) {
     sendJson(response, 403, { error: "same_origin_required" });
@@ -528,7 +553,7 @@ async function retryDeadLetter(pool: Pool, jobId: string, operatorId: string): P
 export function createOperatorHandler(options: HandlerOptions) {
   const secure = options.cookieSecure ?? true;
   const ttlSeconds = options.sessionTtlSeconds ?? SESSION_TTL_SECONDS;
-  const limiter = loginRateLimiter();
+  const limiter = createLoginRateLimiter();
 
   return async (request: IncomingMessage, response: ServerResponse): Promise<boolean> => {
     const url = new URL(request.url ?? "/", "http://automation.local");

@@ -1,7 +1,7 @@
 # P6.6 — Owner Decision and Release Evidence Register
 
 **Status:** OPEN — repository readiness implementation is merged; production and public-release decisions are not approved.  
-**Baseline:** `main` at `8515648dda57324224ef07b8d09458b2f815b4eb` after PR #37. P6.6 implementation PR #36 remains at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`; PR #37 merged the documentation/owner-register closeout, whose exact-head CI [#42300331776](https://github.com/hamza131zara/agency/actions/runs/42300331776) passed all three jobs.  
+**Baseline:** `main` at `0ab534c797fd3ac3ed007208ed740304f90decde` after PR #40. PR #40 merged the contact-origin/session/request-boundary and release-validator hardening; exact-head CI [#42306629958](https://github.com/hamza131zara/agency/actions/runs/42306629958) passed all three jobs. Earlier P6.6 implementation and documentation closeout evidence is recorded in `docs/PHASE_6_EXECUTION_PLAN.md`.  
 **Purpose:** collect the real business, legal, security, infrastructure and operational decisions needed to move from a tested repository to a controlled release.
 
 This register is a decision aid, not a legal checklist or a claim that any approval has been granted. An item changes to APPROVED only when the decision-maker, date and evidence are recorded. Unknown values must remain unknown; do not infer them from a profile, development environment, repository URL or hosting account.
@@ -12,9 +12,9 @@ This register is a decision aid, not a legal checklist or a claim that any appro
 |---|---|---|
 | Website code | 30 HTML routes; site, PHP syntax, endpoint smoke and browser/accessibility CI pass | Production hosting behavior, real email receipt, legal/content approval or human accessibility acceptance |
 | Search structure | 26 indexable routes have unique titles/descriptions and one primary H1; four routes are intentionally excluded/noindex | Search ranking, indexing, qualified traffic, AI citations or live canonical-domain correctness |
-| Contact endpoint | PHP validation, CSRF, honeypot, per-session throttle and safe unsent fallback | A live monitored inbox, sender authentication or final inbox delivery |
+| Contact endpoint | PHP validation, required exact-origin POST checks, strict cookie-only session settings, 16 KiB Content-Length ceiling, CSRF, honeypot, per-session throttle and safe unsent fallback; CI tests origin/session/body boundaries | A live monitored inbox, sender authentication, chunked-request edge behavior at the host, or final inbox delivery |
 | Automation sandbox | HMAC-authenticated synthetic intake, PostgreSQL outbox, worker, fake transport and internal operator console; 18 PostgreSQL tests pass | Production runtime, live provider delivery, real customer data, multi-instance safety or operations |
-| Security boundary | Production startup guard blocks the sandbox API and fake worker when NODE_ENV=production | Independent penetration testing or production security approval |
+| Security boundary | Production startup guard blocks the sandbox API and fake worker when NODE_ENV=production; launch validator fails closed on missing approval register and accepts only JSON boolean approvals | Independent penetration testing, production configuration verification or production security approval |
 | Legal/privacy | Data-flow and threat-model review is documented; legal pages remain draft/noindex | A legal basis, compliance status, approved retention periods or legal advice |
 
 References: docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md, docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md, docs/LAUNCH_READINESS_CHECKLIST.md, docs/LAUNCH_APPROVALS.json and automation-runtime/README.md.
