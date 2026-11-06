@@ -441,7 +441,7 @@ test.describe('Phase I route and content checks', () => {
         await expect(main).toContainText('full interactive scanner');
       }
       if (id === 'free-ai-mixer') {
-        await expect(main).toContainText('no hosted demo is confirmed');
+        await expect(main).toContainText('No hosted public application or working generation API endpoint is confirmed');
         await expect(main).toContainText('protected credential handling');
       }
       await expect(main.getByRole('link', { name: new RegExp(action, 'i') }).first()).toBeVisible();
