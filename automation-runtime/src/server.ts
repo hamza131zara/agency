@@ -1,8 +1,11 @@
+import { assertSandboxOnlyRuntime } from "./runtime-guard.js";
 import { createServer } from "node:http";
 import { Pool } from "pg";
 import { MAX_BODY_BYTES, SIGNATURE_TOLERANCE_SECONDS } from "./contracts.js";
 import { createIntakeHandler } from "./handler.js";
 import { parseKeyring } from "./security.js";
+
+assertSandboxOnlyRuntime();
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is required");
