@@ -236,7 +236,7 @@ Exit criteria:
 
 ### Phase 4 — Portfolio and case-study system
 
-**Status:** PLANNED — execution plan: `docs/PHASE_4_EXECUTION_PLAN.md`. Phase 3 is merged and post-merge CI passed. Phase 4 begins with an audit of the existing five-project catalogue and project-note pages; it must improve and standardize this foundation rather than rebuild it blindly.
+**Status:** COMPLETE — execution and automated QA accepted in PRs #18–#22; post-merge CI passed on `main`. Manual visual, assistive-technology and owner-approval checks remain pre-launch requirements. See `docs/PHASE_4_EXECUTION_PLAN.md` and `docs/PHASE_4_QA_ACCEPTANCE.md`.
 
 **Purpose:** turn the project list into an evidence-led body of work.
 
@@ -252,6 +252,8 @@ Exit criteria:
 - No unverified metrics, client claims or production-demo claims appear.
 
 ### Phase 5 — Ready-made product marketplace
+
+**Status:** IN PROGRESS — execution plan: `docs/PHASE_5_EXECUTION_PLAN.md`; P5.1 audit submitted for review.
 
 **Purpose:** present software products as distinct products, not just portfolio cards.
 
