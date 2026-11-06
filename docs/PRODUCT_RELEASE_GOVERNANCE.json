@@ -139,7 +139,8 @@
         "No approved customer packaging, onboarding, support or update policy.",
         "Do not imply agency delivery or ownership."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     },
     {
       "productId": "regexlab",
@@ -169,7 +170,8 @@
         "If distributable, create versioned package, customer installation guide and clean-install evidence.",
         "Define support/update policy only if a commercial offer is approved."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     },
     {
       "productId": "jotjson",
@@ -199,7 +201,8 @@
         "Decide whether free hosted tool only or distributable product is intended.",
         "If distributable, create versioned package, installation guide and clean-install evidence."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     },
     {
       "productId": "siteintel-pulse",
@@ -230,7 +233,8 @@
         "Create documented deployment/customer installation process and clean install evidence.",
         "Define report/data retention and support/update policy before release."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     },
     {
       "productId": "free-ai-mixer",
@@ -261,7 +265,8 @@
         "Verify license/provider terms and produce deployment/install docs.",
         "Define customer data retention, support and update policy."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     },
     {
       "productId": "auto-trading-agent",
@@ -290,7 +295,8 @@
         "No live trading, returns, investment advice, hosted trading or commercial availability claims.",
         "Do not change the frozen trading-agent roadmap through this agency marketplace phase."
       ],
-      "approvalEvidence": []
+      "approvalEvidence": [],
+      "commercialOfferApproved": false
     }
   ],
   "releaseRule": "A product may be marked readyToInstall=true only when owner authority, copy/asset permissions, licence and third-party review, privacy/security review, a versioned distribution artifact, approved installation instructions, a passing clean-install verification, version/change history, support/update policies and final release approval are all recorded as approved/verified. Pricing and consumer/refund terms must also be approved before any paid offer. A public hosted tool can remain public without being installable or commercially offered.",
