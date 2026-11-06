@@ -54,7 +54,8 @@ Before mail configuration is correct, the endpoint must clearly state that the i
 Before any upload, read `docs/LAUNCH_READINESS_CHECKLIST.md` and complete `docs/LAUNCH_APPROVALS.json`. The repository now contains a launch guard:
 
 - Report-only audit (used by CI): `python scripts/validate_launch_readiness.py`
-- Strict release gate (must pass before publication): `python scripts/validate_launch_readiness.py --strict`
+- Strict pre-deploy gate (must pass before initial upload): `python scripts/validate_launch_readiness.py --strict-predeploy`
+- Full strict release gate (must pass after staging/deployment smoke tests): `python scripts/validate_launch_readiness.py --strict`
 
 The strict gate checks:
 - Approved canonical HTTPS origin and exact sitemap/robots host.
