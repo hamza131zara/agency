@@ -1139,3 +1139,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .project-evidence-grid { grid-template-columns: 1fr; }
   .project-evidence-grid > div { padding: 15px; }
 }
+
+/* Phase 5 product catalogue discovery */
+.product-explorer{padding:25px;background:#e9ece4;border:1px solid #d6ddd1;margin-bottom:22px}
+.product-search-row{display:grid;grid-template-columns:minmax(190px,1fr) minmax(180px,.6fr) auto;gap:12px;align-items:end}
+.product-search-row label{display:grid;gap:7px;font-size:10px;font-weight:800;color:#30382f}
+.product-search-row input,.product-search-row select{width:100%;min-width:0;background:#f8f8f2;border:1px solid #c9d1c4;border-radius:2px;padding:12px 13px;font:11px var(--mono);color:#30382f}
+.product-search-row input:focus-visible,.product-search-row select:focus-visible{outline:2px solid #6d844e;outline-offset:2px}
+.product-search-row .button{padding:12px 14px;white-space:nowrap}
+.product-filter-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.product-filter-buttons button{appearance:none;border:1px solid #c4cebd;background:#f6f7f1;border-radius:999px;padding:9px 13px;font-size:10px;font-weight:800;color:#50584e;cursor:pointer}
+.product-filter-buttons button[aria-pressed="true"]{background:#242b23;border-color:#242b23;color:#fff}
+.product-filter-buttons button:focus-visible,.product-search-row .button:focus-visible{outline:2px solid #6d844e;outline-offset:3px}
+.product-result-count{font:10px var(--mono);color:#50584e;margin:18px 0 0}
+.product-card[hidden],.product-empty[hidden]{display:none!important}
+.product-empty{padding:25px 20px;margin:18px 0 0;border:1px dashed #aab5a3;background:#f4f3ee;color:#50584e;font-size:12px;line-height:1.7}
+.product-card-links{display:flex;flex-wrap:wrap;gap:0 14px;margin-top:auto;padding-top:14px}
+.product-card-links a{display:inline-flex;margin:0 0 10px;color:#293529;font-size:10px;font-weight:800;text-decoration:underline;text-decoration-color:#a8b58f;text-underline-offset:4px}
+.status-unavailable{border-color:#d5b6aa;background:#f8eae5;color:#763f31}
+@media(max-width:760px){.product-search-row{grid-template-columns:1fr}.product-search-row .button{justify-self:start}}
