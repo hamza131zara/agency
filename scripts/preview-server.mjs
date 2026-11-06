@@ -6,9 +6,11 @@ import { fileURLToPath } from "node:url";
 
 const PROJECT_ROOT = fileURLToPath(new URL("../", import.meta.url));
 const MIME_TYPES = new Map([
+  [".avif", "image/avif"],
   [".css", "text/css; charset=utf-8"],
   [".csv", "text/csv; charset=utf-8"],
   [".html", "text/html; charset=utf-8"],
+  [".gif", "image/gif"],
   [".ico", "image/x-icon"],
   [".jpeg", "image/jpeg"],
   [".jpg", "image/jpeg"],
