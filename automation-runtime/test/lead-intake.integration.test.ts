@@ -4,6 +4,8 @@ import { createServer, type Server } from "node:http";
 import { AddressInfo } from "node:net";
 import { createHash, randomUUID, scryptSync } from "node:crypto";
 import { after, before, beforeEach, test } from "node:test";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { Pool } from "pg";
 import type { LeadSubmittedEvent } from "../src/contracts.js";
 import { createIntakeHandler } from "../src/handler.js";
@@ -350,6 +352,22 @@ test("sandbox runtime refuses production mode until release gates are approved",
   );
   assert.doesNotThrow(() => assertSandboxOnlyRuntime({ NODE_ENV: "development" }));
   assert.doesNotThrow(() => assertSandboxOnlyRuntime({ NODE_ENV: "test" }));
+});
+
+test("sandbox API and worker entrypoints refuse production startup before database setup", () => {
+  for (const entrypoint of ["server", "worker"] as const) {
+    const scriptPath = fileURLToPath(new URL(`../src/${entrypoint}.js`, import.meta.url));
+    const result = spawnSync(process.execPath, [scriptPath], {
+      encoding: "utf8",
+      timeout: 10_000,
+      env: { ...process.env, NODE_ENV: "production", DATABASE_URL: "" },
+    });
+
+    assert.equal(result.error, undefined, `${entrypoint} process should exit normally after the guard error`);
+    assert.notEqual(result.status, 0, `${entrypoint} must refuse production startup`);
+    assert.match(result.stderr, /sandbox-only/u, `${entrypoint} should report the sandbox-only boundary`);
+    assert.doesNotMatch(result.stderr, /DATABASE_URL is required/u, `${entrypoint} must stop before database setup`);
+  }
 });
 
 test("operator console assets are served with a restrictive content security policy", { skip: !databaseUrl }, async () => {

@@ -55,6 +55,10 @@ The current validated platform contains 30 HTML routes: 14 root pages, six servi
 - `docs/LAUNCH_READINESS_CHECKLIST.md` — dated pre-publication checklist for domain, legal, email, Hostinger, SEO and final smoke tests.
 - `docs/LAUNCH_APPROVALS.json` — explicit owner/production approval record; unresolved items block deployment.
 - `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
+- `docs/PHASE_6_EXECUTION_PLAN.md` — automation catalogue, sandbox, operator console and production-readiness sequence.
+- `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md` — security threat model, data-flow inventory and production/privacy blockers.
+- `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md` — agency positioning hypotheses, 90-day marketing test and search-discoverability strategy.
+- `docs/P6_6_OWNER_DECISION_REGISTER.md` — unresolved owner decisions, evidence register and release-gate sequence.
 - `docs/PORTFOLIO_CONTENT_EVIDENCE.md` and `docs/PORTFOLIO_EVIDENCE_VISUAL_GOVERNANCE.md` — portfolio evidence, owner claims, asset permissions and publication safeguards.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
 
@@ -78,8 +82,15 @@ The CI workflow also runs HTML/link/site validation across root, service-detail 
 
 ## Phase boundaries
 
-The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phases 1–3 are complete at their documented repository implementation/QA levels; their owner, legal and human accessibility launch gates remain where recorded. Phase 4 (portfolio and case-study system) is complete at repository/automated-QA level: PR #22 merged at `b89adee0` and post-merge CI #42080702755 passed. Manual visual, screen-reader and owner evidence reviews remain pre-launch requirements. Phase 5 (ready-made product marketplace) is in progress: P5.1–P5.4 are merged and verified. P5.1 PR #24 merged at `fbfb36e5` (post-merge CI #42175498028 passed); P5.2 PR #25 merged at `7159084d` (post-merge CI #42179451016 passed); P5.3 PR #26 merged at `301b01ca` (post-merge CI #42196381737 passed); P5.4 PR #27 merged at `dea8a92d` (post-merge CI #42220387993 passed). P5.5 launch-readiness QA is underway. No product is approved as ready-to-install or commercially available. Checkout, payment, customer accounts and licence activation remain later-phase scope and require separate security and owner approval gates.
+The master roadmap is in docs/PLATFORM_MASTER_PLAN.md.
 
+- **Phases 1–3:** repository implementation is complete at their documented levels. Owner, legal, evidence-consent and human accessibility gates remain where recorded.
+- **Phase 4:** portfolio/case-study implementation and automated QA are complete; manual visual, screen-reader and owner evidence reviews remain pre-launch requirements.
+- **Phase 5:** P5.1–P5.5 implementation and automated QA are merged. Owner/manual acceptance, legal identity, domain, inbox, Hostinger/SSL/backup evidence and strict website launch preflight remain open. No product is approved as ready-to-install or commercially available.
+- **Phase 6:** P6.1–P6.6 repository implementation and automated checks are merged. P6.6 merge commit is 5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d; post-merge CI [#42298818757](https://github.com/hamza131zara/agency/actions/runs/42298818757) passed all three jobs. Production automation, real customer data, external notification delivery and deployment remain blocked pending the decision/evidence register and explicit release approval.
+- **Phases 7–9:** planned; they require separate scope and dependency review.
+
+A merge or green CI run is evidence of repository implementation and automated verification, not legal acceptance, production readiness, public release or customer demand.
 ## Hosting and release
 
 The site is not considered deployed merely because CI passes. Domain, branding, legal operator, monitored inbox, verified sender and final content require owner confirmation. Follow `docs/HOSTINGER_DEPLOYMENT.md` only after explicit launch approval.
