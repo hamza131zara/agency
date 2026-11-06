@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Agency Operator Console</title>
+  <link rel="stylesheet" href="/operator.css">
+  <script src="/operator.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <section id="login-view" class="login-card" aria-labelledby="login-title">
+      <div class="eyebrow">PRIVATE WORKSPACE</div>
+      <h1 id="login-title">Operator sign in</h1>
+      <p class="muted">This console is restricted to the agency operator. Sign in to inspect lead intake and notification processing.</p>
+      <form id="login-form">
+        <label for="operator-password">Operator password</label>
+        <input id="operator-password" name="password" type="password" autocomplete="current-password" minlength="16" maxlength="1024" required>
+        <button class="primary full" type="submit">Sign in</button>
+      </form>
+      <p id="login-error" class="notice error" role="alert" hidden></p>
+      <p class="footnote">Private internal console · No customer sign-up</p>
+    </section>
+
+    <section id="dashboard-view" hidden>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">AGENCY AUTOMATION</div>
+          <h1>Lead intake</h1>
+          <p class="muted">Internal inquiry review and notification operations</p>
+        </div>
+        <div class="top-actions">
+          <button id="refresh-button" class="secondary" type="button">Refresh</button>
+          <button id="logout-button" class="quiet" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <section class="stats" aria-label="Lead summary">
+        <article class="stat"><span>Total leads</span><strong id="count-total">0</strong></article>
+        <article class="stat"><span>Awaiting notification</span><strong id="count-pending">0</strong></article>
+        <article class="stat"><span>Notified</span><strong id="count-notified">0</strong></article>
+        <article class="stat"><span>Needs attention</span><strong id="count-failed">0</strong></article>
+      </section>
+
+      <section class="workspace">
+        <div class="panel inbox-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Inquiries</h2>
+              <p class="muted">Most recent submissions first</p>
+            </div>
+            <label class="filter-label" for="status-filter">Status
+              <select id="status-filter">
+                <option value="">All leads</option>
+                <option value="notification_pending">Notification pending</option>
+                <option value="notified">Notified</option>
+                <option value="notification_failed">Notification failed</option>
+                <option value="received">Received</option>
+              </select>
+            </label>
+          </div>
+          <div id="lead-list" class="lead-list" aria-live="polite">
+            <p class="empty">Loading inquiries…</p>
+          </div>
+          <button id="load-more" class="secondary full" type="button" hidden>Load more</button>
+        </div>
+
+        <section class="panel detail-panel" aria-labelledby="detail-title">
+          <div class="panel-heading">
+            <div>
+              <h2 id="detail-title">Inquiry details</h2>
+              <p class="muted">Select an inquiry to review its processing history.</p>
+            </div>
+          </div>
+          <div id="lead-detail" class="detail-content">
+            <p class="empty">No inquiry selected.</p>
+          </div>
+        </section>
+      </section>
+
+      <p id="dashboard-notice" class="notice" role="status" aria-live="polite" hidden></p>
+      <footer class="footnote">Internal operator access · Session expires automatically · Lead details are shown only after sign-in</footer>
+    </section>
+  </main>
+</body>
+</html>
