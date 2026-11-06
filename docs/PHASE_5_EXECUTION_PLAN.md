@@ -1,6 +1,6 @@
 # Phase 5 — Ready-Made Product Marketplace Execution Plan
 
-**Status:** IN PROGRESS — P5.1–P5.3 merged and verified on `main`; P5.4 release and commercial governance is implemented on the current review branch; P5.5 remains open.  
+**Status:** IN PROGRESS — P5.1–P5.4 merged and verified on `main`; P5.5 launch-readiness QA is implemented on the current review branch. Publication remains blocked pending owner-supplied domain, legal, inbox, hosting and final review evidence.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 5.  
 **Review date:** 6 November 2026.
 
@@ -93,7 +93,8 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 
 ## P5.4 — Product submission, release and commercial governance
 
-**Implementation branch:** `phase5/p5-4-release-commercial-governance`.
+**Implementation branch:** `phase5/p5-4-release-commercial-governance`.  
+**Accepted:** PR #27 merged at `dea8a92d4bb1d154171692803f6be26b22253f21`; post-merge CI [#42220387993](https://github.com/hamza131zara/agency/actions/runs/42220387993) passed both required jobs.
 
 - [x] Define the release/publication lifecycle, evidence standards, owner authority, copy/asset permissions, licence/third-party review, technical release artifact, privacy/security, support/update and withdrawal requirements in `docs/PRODUCT_RELEASE_GOVERNANCE.md`.
 - [x] Add a six-product structured approval register at `docs/PRODUCT_RELEASE_GOVERNANCE.json`; all release and commercial approvals are currently explicitly unapproved/not recorded.
@@ -102,19 +103,27 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 - [x] Add `scripts/validate_product_release_governance.py` and a required CI step. The validator prevents `readyToInstall=true` or commercial approval until all applicable gates and evidence fields pass.
 - [x] Add visible release-decision disclosures to each of the five product detail pages.
 - [x] Add Playwright coverage to ensure the release decision is visible and no unapproved buy/install action appears.
-- [ ] Exact-head `validate` and `browser-and-accessibility` checks pass.
-- [ ] Owner merges the PR and post-merge `main` CI passes.
+- [x] Exact-head `validate` and `browser-and-accessibility` checks passed; owner merged the PR and post-merge `main` CI passed.
 
 No product is being approved for installation, resale or commercial sale in P5.4. This package establishes the decision and evidence controls; actual product release remains blocked until the owner and technical/legal checks are completed.
 
 ## P5.5 — Quality and acceptance
 
-- Verify all catalogue cards, detail routes, demo/source/documentation links and availability labels.
-- Test category/status/search combinations, result counts, empty states and reset behavior.
-- Test responsive layout at 320, 390, 768 and 1440px; review actual screenshots for clipping, overflow and spacing.
-- Test keyboard operation, visible focus, semantic names, live result-count announcements and screen-reader reading order.
-- Run exact-head `validate` and `browser-and-accessibility` checks before merge, then verify both on `main` after owner merge.
-- Record outstanding owner, licensing, legal and live-service checks as explicit launch dependencies rather than silently treating CI as release approval.
+**Implementation branch:** `phase5/p5-5-launch-readiness-qa`.
+
+- [x] Add a structured `docs/LAUNCH_APPROVALS.json` register; no domain, legal identity, inbox or deployment values are invented.
+- [x] Add `docs/LAUNCH_READINESS_CHECKLIST.md` for the 7 November 2026 launch target.
+- [x] Add `scripts/validate_launch_readiness.py` with report-only CI mode and strict deployment-gate mode (`--strict`).
+- [x] Verify the sitemap should contain exactly the 26 indexable routes; legal drafts and 404 remain noindex and excluded.
+- [x] Add launch blocker reporting to CI and Python compilation.
+- [x] Update the Hostinger runbook and README with the launch preflight process.
+- [ ] Run exact-head `validate` and `browser-and-accessibility` checks and resolve any failures.
+- [ ] Complete owner legal/brand/contact/hosting inputs and final manual reviews.
+- [ ] Run `python scripts/validate_launch_readiness.py --strict` successfully after production evidence is recorded.
+- [ ] Owner merges the PR and post-merge `main` CI passes.
+- [ ] Deploy only after explicit owner approval and successful production smoke tests.
+
+**Known publication blockers at implementation start:** canonical domain is a placeholder; legal pages are draft/noindex; monitored inbox and verified sender are not supplied; private Hostinger mail configuration, SSL/redirect checks, backup, production deployment and owner final approval are not recorded. The catalogue itself remains intentionally non-transactional and does not advertise products for sale/install.
 
 ## Verification and completion policy
 

@@ -49,6 +49,30 @@ Before mail configuration is correct, the endpoint must clearly state that the i
 - Document who owns updates, inbox monitoring, security updates and incident handling.
 - If a release causes critical breakage, restore the previous verified release and investigate before redeploying.
 
-## 6. Deployment authority
+## 6. Launch preflight and evidence record
 
-Do not purchase a domain/plan, change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval.
+Before any upload, read `docs/LAUNCH_READINESS_CHECKLIST.md` and complete `docs/LAUNCH_APPROVALS.json`. The repository now contains a launch guard:
+
+- Report-only audit (used by CI): `python scripts/validate_launch_readiness.py`
+- Strict release gate (must pass before publication): `python scripts/validate_launch_readiness.py --strict`
+
+The strict gate checks:
+- Approved canonical HTTPS origin and exact sitemap/robots host.
+- Sitemap integrity against the 26 indexable routes; draft legal pages and 404 remain excluded.
+- Approved brand and legal operator information.
+- Privacy, Terms and Disclaimer approval.
+- Monitored recipient inbox, verified sender, server-only mail configuration and real delivery tests.
+- Hostinger/PHP/document-root confirmation, SSL, HTTPS redirect and backup.
+- Owner approval, copy/asset review, keyboard/screen-reader and responsive review.
+
+The report-only CI step intentionally exits successfully while unresolved owner/production blockers are listed. It is not a deployment approval. Use the two strict modes in order:
+
+1. `python scripts/validate_launch_readiness.py --strict-predeploy` must exit zero before the initial upload. It checks the owner/legal/domain/hosting approvals and static files, including canonical sitemap/robots/canonical URL tags.
+2. Upload to the Hostinger staging/preview or prepared target, install the server-only configuration, enable SSL and run the production smoke tests.
+3. `python scripts/validate_launch_readiness.py --strict` must exit zero after the staged/production checks. It additionally verifies the real mail submission/inbox/Reply-To, HTTPS redirect, deployed sitemap and deployment record.
+
+CI runs the report-only audit so missing owner inputs remain visible without treating a not-yet-launched website as a failed code build.
+
+## 7. Deployment authority
+
+Do not purchase a domain/plan, change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval. A successful GitHub Actions run or a passing strict static audit does not itself perform or authorize a deployment.

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "releaseName": "Agency website launch candidate — 7 November 2026",
+  "reviewDate": "2026-11-06",
+  "status": "blocked-pending-owner-inputs",
+  "canonicalOrigin": "https://REPLACE-WITH-APPROVED-CANONICAL-DOMAIN",
+  "brand": {
+    "publicDisplayName": "NOT-APPROVED",
+    "logoAndBrandApproval": false,
+    "approvedBy": null,
+    "evidenceLocation": null
+  },
+  "operator": {
+    "legalName": "NOT-PROVIDED",
+    "jurisdiction": "NOT-PROVIDED",
+    "registeredAddress": "NOT-PROVIDED",
+    "officialContactEmail": "NOT-PROVIDED",
+    "termsApproval": false,
+    "privacyApproval": false,
+    "disclaimerApproval": false,
+    "legalReviewer": null,
+    "evidenceLocation": null
+  },
+  "contact": {
+    "monitoredRecipientInbox": "NOT-PROVIDED",
+    "verifiedSenderAddress": "NOT-PROVIDED",
+    "senderDomainAuthenticationChecked": false,
+    "hostMailSubmissionTest": "not-run",
+    "inboxDeliveryAndReplyToTest": "not-run",
+    "productionServerConfigInstalled": false,
+    "evidenceLocation": null
+  },
+  "hosting": {
+    "providerAndPlanConfirmed": false,
+    "documentRootConfirmed": false,
+    "supportedPhpVersionVerified": false,
+    "sslEnabledAndVerified": false,
+    "httpsRedirectVerified": false,
+    "productionBackupCreated": false,
+    "productionConfigInstalledOutsideRepository": false,
+    "approvedCommit": null,
+    "deploymentApproved": false,
+    "deploymentDate": null,
+    "evidenceLocation": null
+  },
+  "searchAndIndexing": {
+    "canonicalDomainAppliedToSitemap": false,
+    "robotsSitemapUrlUpdated": false,
+    "sitemapUploadedAndFetched": false,
+    "searchConsolePropertyVerified": false,
+    "indexingRequested": false
+  },
+  "manualReleaseReview": {
+    "contentAndClaimsApproved": false,
+    "teamProfileConsentVerified": false,
+    "projectAndProductCopyApproved": false,
+    "visualAssetPermissionsVerified": false,
+    "keyboardReviewCompleted": false,
+    "screenReaderReviewCompleted": false,
+    "mobileAndTabletVisualReviewCompleted": false,
+    "finalPublishApproval": false,
+    "reviewer": null,
+    "reviewedAt": null,
+    "evidenceLocation": null
+  },
+  "productCommercialState": {
+    "checkoutEnabled": false,
+    "paymentsEnabled": false,
+    "productInstallableOffersEnabled": false,
+    "allProductsMustRemainAtTheirApprovedCatalogueAvailability": true
+  },
+  "notes": [
+    "This record deliberately contains no invented legal identity, domain, inbox or deployment configuration.",
+    "The site can be published as an agency information/catalogue site after required owner approvals and production checks, while products remain public-tool/development listings and no checkout or installation offer is enabled.",
+    "A green CI run does not satisfy legal, inbox delivery, domain, hosting, accessibility or final owner approval."
+  ]
+}

@@ -27,6 +27,10 @@ jobs:
         run: python scripts/validate_portfolio_acceptance.py
       - name: Validate product release and commercial approvals
         run: python scripts/validate_product_release_governance.py
+      - name: Audit production launch blockers (report-only)
+        run: python scripts/validate_launch_readiness.py
+      - name: Test launch-readiness release gate
+        run: python tests/test_launch_readiness.py
       - name: Check JavaScript syntax
         run: node --check assets/js/main.js
       - name: Check PHP syntax
@@ -36,7 +40,7 @@ jobs:
       - name: Smoke-test contact endpoint without real email
         run: python tests/test_contact_endpoint.py
       - name: Compile Python test helpers
-        run: python -m py_compile scripts/validate_site.py scripts/validate_portfolio_evidence.py scripts/validate_portfolio_acceptance.py scripts/validate_product_release_governance.py tests/test_contact_endpoint.py
+        run: python -m py_compile scripts/validate_site.py scripts/validate_portfolio_evidence.py scripts/validate_portfolio_acceptance.py scripts/validate_product_release_governance.py scripts/validate_launch_readiness.py tests/test_contact_endpoint.py tests/test_launch_readiness.py
 
   browser-and-accessibility:
     runs-on: ubuntu-latest
