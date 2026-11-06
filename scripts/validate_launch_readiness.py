@@ -246,6 +246,29 @@ def main():
 
     sitemap_count = inspect_sitemap(blockers, origin, expected_routes)
 
+    if is_placeholder(origin):
+        add(blockers, "Canonical URL tags cannot be finalized until the approved domain is supplied.")
+    else:
+        missing_canonicals = []
+        incorrect_canonicals = []
+        for file in html_files:
+            rel = file.relative_to(ROOT).as_posix()
+            route = "/" if rel == "index.html" else "/" + rel
+            if route not in expected_routes:
+                continue
+            canonical_parser = CanonicalParser()
+            canonical_parser.feed(file.read_text(encoding="utf-8"))
+            expected_canonical = origin + ("" if route == "/" else route)
+            if canonical_parser.canonicals != [expected_canonical]:
+                if not canonical_parser.canonicals:
+                    missing_canonicals.append(route)
+                else:
+                    incorrect_canonicals.append(route)
+        if missing_canonicals:
+            add(blockers, f"Add canonical URL tags to all indexable pages; missing on {len(missing_canonicals)} routes.")
+        if incorrect_canonicals:
+            add(blockers, f"Correct canonical URL tags on {len(incorrect_canonicals)} routes.")
+
     # A committed config.php is always a security failure; production config belongs on the host only.
     if (ROOT / "config.php").exists():
         add(blockers, "Do not commit config.php; keep production mail credentials on the server only.")
