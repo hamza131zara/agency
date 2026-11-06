@@ -80,7 +80,7 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 **Implementation branch:** `phase5/p5-3-product-detail-pages`.
 
 - [x] Add one reusable semantic product-detail structure for the five public catalogue candidates: STRIDETO, RegexLab, JotJSON, SiteIntel Pulse and Free AI Mixer.
-- [x] Include overview, audience, documented capabilities, evidence source, availability/limitations, operating requirements, licence, price, support and update-policy information.
+- [x] Include overview, audience, documented capabilities, evidence source, availability/limitations, data/security notes, operating and installation requirements, version/change-history state, licence, price, support and update-policy information.
 - [x] Separate product-detail pages from Phase 4 project notes and link between them without treating portfolio notes as installation documentation.
 - [x] Keep SiteIntel Pulse's static showcase distinct from its full scanner and Free AI Mixer's separately configured API dependency explicit.
 - [x] Preserve STRIDETO's hosted-service/source-code distinction and qualify README license statements for RegexLab/JotJSON.
