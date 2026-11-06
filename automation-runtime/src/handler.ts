@@ -4,6 +4,7 @@ import type { Pool } from "pg";
 import { MAX_BODY_BYTES, SIGNATURE_TOLERANCE_SECONDS, validateLeadSubmittedEvent } from "./contracts.js";
 import { acceptLeadEvent } from "./repository.js";
 import { verifyRequestSignature, type Keyring } from "./security.js";
+import { createOperatorHandler } from "./operator.js";
 
 class HttpInputError extends Error {
   constructor(public readonly status: number, public readonly code: string) {
@@ -19,6 +20,8 @@ interface HandlerOptions {
   signatureToleranceSeconds?: number;
   rateLimitPerMinute?: number;
   now?: () => number;
+  operatorPasswordHash?: string;
+  operatorCookieSecure?: boolean;
 }
 
 interface RateEntry {
@@ -79,9 +82,15 @@ export function createIntakeHandler(options: HandlerOptions) {
   const maxBodyBytes = options.maxBodyBytes ?? MAX_BODY_BYTES;
   const tolerance = options.signatureToleranceSeconds ?? SIGNATURE_TOLERANCE_SECONDS;
   const rateLimit = createRateLimiter(options.rateLimitPerMinute ?? 30, options.now ?? Date.now);
+  const operatorHandler = createOperatorHandler({
+    pool: options.pool,
+    passwordHash: options.operatorPasswordHash,
+    cookieSecure: options.operatorCookieSecure,
+  });
 
   return async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
     const url = new URL(request.url ?? "/", "http://automation.local");
+    if (await operatorHandler(request, response)) return;
     if (request.method === "GET" && url.pathname === "/healthz") {
       sendJson(response, 200, { status: "ok" });
       return;
