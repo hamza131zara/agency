@@ -10,7 +10,7 @@ The repository has a useful secure-development baseline and automated checks, bu
 
 ### Current controls observed
 
-- PHP contact endpoint uses a server-side session CSRF token, HttpOnly/SameSite=Strict session cookie, request validation, a honeypot, per-session throttling and safe failure when mail configuration is missing.
+- PHP contact endpoint uses a server-side session CSRF token, strict-mode cookie-only PHP sessions, an HttpOnly/SameSite=Strict session cookie, exact same-origin validation (scheme, hostname and effective port), a 16 KiB request-body ceiling when Content-Length is supplied, request validation, a honeypot, per-session throttling and safe failure when mail configuration is missing.
 - Live mail settings are expected in server-only config.php; the repository ignores that file and provides only config.example.php.
 - The PHP endpoint does not persist inquiry content to an application database. On successful host mail acceptance, the inquiry is handed to the host's mail mechanism; delivery to the final inbox is not guaranteed.
 - .htaccess supplies an Apache/LiteSpeed security-header/CSP baseline and prevents directory listing; its effectiveness must be verified on the actual hosting stack.
@@ -73,7 +73,7 @@ The contact endpoint currently returns an honest not-configured response if priv
 | Duplicate / lost notification intent | Transactional outbox and unique idempotency key | Provider idempotency/reconciliation, delivery receipts and operational alerting |
 | Operator session theft | Opaque random cookie; only hash stored; HTTP-only, SameSite, scoped path; revocation and expiry | HTTPS enforcement, secure proxy/header policy, session monitoring, MFA decision, recovery and key rotation |
 | Login brute force | Five failures per IP per 15-minute in-process window | Shared rate limiter/gateway, trusted proxy design and alerting; current limiter is not production-grade |
-| CSRF / cross-origin mutation | Same-origin Origin check plus CSRF token | Verify proxy/host configuration and include browser/security tests in release environment |
+| CSRF / cross-origin mutation | Required Origin header must match scheme, hostname and effective port; session CSRF token; cookie-only strict-mode PHP sessions | Verify proxy/host configuration and include browser/security tests in release environment |
 | Cross-site scripting in inquiry content | Operator UI inserts dynamic values as text nodes, not HTML; restrictive CSP | Continue output encoding, dependency review and manual security testing |
 | Secret exposure | No secrets committed by design; runtime config is environment-based | Managed secret store, least-privilege access, rotation, audit and emergency revoke procedure |
 | Database compromise / data loss | PostgreSQL schema and transaction tests | TLS, least-privilege DB user, encryption-at-rest decision, automated backups, restore drills, access review and incident plan |
