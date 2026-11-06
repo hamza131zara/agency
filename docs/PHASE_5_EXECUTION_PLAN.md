@@ -73,6 +73,31 @@ The unchecked owner/legal/operational items are explicit release gates; they are
 - Do not add checkout, payment provider integrations, customer authentication, licence activation, download entitlements or customer workspaces in Phase 5.
 - Do not publish Auto-Trading-Agent as purchasable or installable; its separate roadmap remains authoritative.
 
+## P5.3 — Reusable product detail pages
+
+- Define a consistent product-page template for overview, intended audience/use cases, verified capabilities, limitations, availability, platform requirements, data/security notes, deployment or installation steps, licence, approved pricing, support route, version and change history.
+- Keep project notes and product documentation separate. A project note is not a product installation guide or commercial offer.
+- Omit unavailable details or label them clearly as unverified/not yet available; never fill gaps with generic promises.
+- Link to a verified live destination, source repository, technical documentation or contact route as appropriate.
+
+## P5.4 — Product submission, release and commercial governance
+
+- Define an owner review record for product ownership/operator, release state, approved copy and visual assets, technical requirements, licence and third-party notices.
+- Require a versioned distribution artifact, documented prerequisites, clean installation/deployment test, checksum/integrity instructions where relevant, upgrade/rollback guidance and a support route before making an installable claim.
+- Publish a licence only after its exact text and scope have been checked. A repository's license does not automatically cover third-party dependencies, artwork, brands, hosted services or model/provider terms.
+- Display pricing only after the owner approves amount, currency, billing model and applicable tax, refund, renewal and cancellation terms.
+- Review data flows, privacy, security and server-side secret handling before a hosted product processes customer data.
+- Keep payment, customer accounts, licence activation, protected downloads and automated fulfilment outside Phase 5; those are later-phase capabilities.
+
+## P5.5 — Quality and acceptance
+
+- Verify all catalogue cards, detail routes, demo/source/documentation links and availability labels.
+- Test category/status/search combinations, result counts, empty states and reset behavior.
+- Test responsive layout at 320, 390, 768 and 1440px; review actual screenshots for clipping, overflow and spacing.
+- Test keyboard operation, visible focus, semantic names, live result-count announcements and screen-reader reading order.
+- Run exact-head `validate` and `browser-and-accessibility` checks before merge, then verify both on `main` after owner merge.
+- Record outstanding owner, licensing, legal and live-service checks as explicit launch dependencies rather than silently treating CI as release approval.
+
 ## Verification and completion policy
 
 Each package is delivered in a focused PR. Required `validate` and `browser-and-accessibility` checks must pass on the exact PR head before merge. After the owner merges, verify post-merge CI on `main` before accepting that package or beginning the next one.
