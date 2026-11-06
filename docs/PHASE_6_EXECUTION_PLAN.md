@@ -1,8 +1,8 @@
 # Phase 6 — Automation Catalogue and Customer Tools Execution Plan
 
-**Status:** P6.1–P6.2 ACCEPTED; P6.3 MVP ARCHITECTURE PROPOSAL IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
+**Status:** P6.1–P6.2 ACCEPTED; P6.3 ARCHITECTURE PROPOSAL MERGED; MVP SELECTION AWAITS OWNER DECISION. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #31 at `6343d918f553889629d42d2c010238179cc1eaea`; 6 November 2026.
+**Baseline:** `main` after PR #32 at `997d33c2eb1b8481c2f01a92bf6ff3dbb6432b39`; 6 November 2026.
 
 ## 1. Purpose
 
@@ -155,10 +155,13 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Define the sandbox boundary, signed server-to-server event contract, durable PostgreSQL/outbox design, worker behavior, fake notification transport, privacy controls and failure tests.
 - [x] Keep production provider, runtime host, price and real customer integration unselected.
 - [ ] Owner approves the lead-intake pilot, proposes a different target workflow with customer/problem evidence, or defers MVP selection.
+- [x] Merge the proposal and architecture documentation in PR #32 at `997d33c2eb1b8481c2f01a92bf6ff3dbb6432b39`.
+- [x] Exact-head CI run [#42272271691](https://github.com/hamza131zara/agency/actions/runs/42272271691) passed both `validate` and `browser-and-accessibility`.
+- [x] Post-merge `main` CI run [#42273194970](https://github.com/hamza131zara/agency/actions/runs/42273194970) passed both required jobs.
 - [ ] Complete provider/runtime verification for whichever live transport is later selected.
 - [ ] Complete architecture/security review before implementing real integrations or storing real customer inquiry data.
 
-**Decision status:** the lead-intake workflow is a recommendation for an internal-first technical pilot, not evidence that customers have requested it and not a live self-service product. P6.4 must not begin until the owner decision is recorded.
+**Decision status:** PR #32 is merged and its proposal is now the repository's documented architecture baseline. The lead-intake workflow remains a recommendation for an internal-first technical pilot, not evidence that customers have requested it and not a live self-service product. Merging the documentation does not constitute approval to build the MVP. P6.4 must not begin until the owner decision is explicitly recorded.
 
 ## 8. Phase 6 exit criteria
 
