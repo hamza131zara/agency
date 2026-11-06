@@ -1159,6 +1159,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .status-unavailable{border-color:#d5b6aa;background:#f8eae5;color:#763f31}
 @media(max-width:760px){.product-search-row{grid-template-columns:1fr}.product-search-row .button{justify-self:start}}
 
+
+
+/* Phase 6.2 automation catalogue and integration directory. */
+.automation-search-row{display:grid;grid-template-columns:minmax(190px,1fr) minmax(175px,.65fr) minmax(175px,.65fr) auto;gap:12px;align-items:end}
+.automation-search-row label{display:grid;gap:7px;font-size:10px;font-weight:800;color:#30382f}
+.automation-search-row input,.automation-search-row select{width:100%;min-width:0;background:#f8f8f2;border:1px solid #c9d1c4;border-radius:2px;padding:12px 13px;font:11px var(--mono);color:#30382f}
+.automation-search-row input:focus-visible,.automation-search-row select:focus-visible,.automation-search-row .button:focus-visible{outline:2px solid #6d844e;outline-offset:2px}
+.automation-search-row .button{padding:12px 14px;white-space:nowrap}
+.automation-explorer{padding:25px;background:#e9ece4;border:1px solid #d6ddd1;margin-bottom:22px}
+.automation-catalogue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.automation-capability-card[hidden]{display:none!important}
+.automation-delivery-status{display:inline-flex;align-items:center;max-width:100%;padding:6px 8px;font:7px var(--mono);letter-spacing:.07em;border:1px solid #c9d0c0;background:#eef0e7;color:#465241}
+.automation-status-service{border-color:#a6b69a;background:#edf2e9;color:#3f5a3c}
+.automation-status-planned{border-color:#c8cfc1;background:#f0f1ec;color:#62695d}
+.automation-status-unverified{border-color:#d8c4a8;background:#f6f0e5;color:#70552e}
+.automation-availability-note{padding:11px 12px;margin:12px 0 0;border-left:2px solid #9a9f8d;background:#f0f0e8;color:#62695d;font-size:10px;line-height:1.7}
+.automation-integration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.automation-integration-grid article{min-width:0;padding:clamp(20px,3vw,30px);border:1px solid var(--line);background:#f8f8f3}
+.automation-integration-grid article:nth-child(3n+1){background:#eef0e7}
+.automation-integration-grid h3{margin:18px 0 8px;font-size:18px;letter-spacing:-.03em}
+.automation-integration-grid p{color:#5b6358;font-size:11px;line-height:1.85}
+.automation-integration-grid small{display:block;margin-top:14px;color:#62695d;font:9px var(--mono);line-height:1.7}
+.automation-directory-note{max-width:900px;margin:20px auto 0;padding:13px 16px;border-left:2px solid var(--orange);background:#f0f0e8;color:#5b6358;font-size:10px;line-height:1.8}
+@media(max-width:1050px){.automation-search-row{grid-template-columns:repeat(2,minmax(0,1fr))}.automation-search-row .button{justify-self:start}}
+@media(max-width:760px){.automation-search-row,.automation-catalogue-grid,.automation-integration-grid{grid-template-columns:1fr}}
+
 /* Phase 5 reusable product detail pages */
 .product-detail-hero{padding-bottom:44px}
 .product-detail-hero>.eyebrow{margin:24px 0 0}
