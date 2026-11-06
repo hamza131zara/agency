@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createServer, type Server } from "node:http";
 import { AddressInfo } from "node:net";
-import { randomUUID, scryptSync } from "node:crypto";
+import { createHash, randomUUID, scryptSync } from "node:crypto";
 import { after, before, beforeEach, test } from "node:test";
 import { Pool } from "pg";
 import type { LeadSubmittedEvent } from "../src/contracts.js";
@@ -119,9 +119,33 @@ async function sendEvent(
 before(async () => {
   if (!databaseUrl) return;
   pool = new Pool({ connectionString: databaseUrl, max: 6 });
-  for (const file of ["001_initial_schema.sql", "002_operator_controls.sql"]) {
-    const migration = await readFile(new URL(`../../sql/${file}`, import.meta.url), "utf8");
-    await db().query(migration);
+  await db().query(`CREATE TABLE IF NOT EXISTS schema_migrations (
+    version TEXT PRIMARY KEY,
+    applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`);
+  for (const migration of [
+    { version: "001_initial_schema", file: "001_initial_schema.sql" },
+    { version: "002_operator_controls", file: "002_operator_controls.sql" },
+  ]) {
+    const existing = await db().query(
+      "SELECT version FROM schema_migrations WHERE version = $1",
+      [migration.version],
+    );
+    if (existing.rowCount === 0) {
+      const sql = await readFile(new URL(`../../sql/${migration.file}`, import.meta.url), "utf8");
+      const client = await db().connect();
+      try {
+        await client.query("BEGIN");
+        await client.query(sql);
+        await client.query("INSERT INTO schema_migrations (version) VALUES ($1)", [migration.version]);
+        await client.query("COMMIT");
+      } catch (error) {
+        await client.query("ROLLBACK").catch(() => undefined);
+        throw error;
+      } finally {
+        client.release();
+      }
+    }
   }
 });
 
@@ -495,8 +519,8 @@ test("expired operator sessions cannot access lead records", { skip: !databaseUr
   try {
     const session = await loginOperator(api);
     await db().query(
-      "UPDATE operator_sessions SET expires_at = NOW() - INTERVAL '1 minute' WHERE token_hash = encode(digest($1, 'sha256'), 'hex')",
-      [session.cookie.split("=")[1]],
+      "UPDATE operator_sessions SET expires_at = NOW() - INTERVAL '1 minute' WHERE token_hash = $1",
+      [createHash("sha256").update(session.cookie.split("=")[1]!, "utf8").digest("hex")],
     );
     const response = await fetch(`${api.baseUrl}/v1/operator/leads`, {
       headers: { cookie: session.cookie },
