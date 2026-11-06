@@ -72,7 +72,7 @@ async function sendEvent(
       "x-automation-timestamp": timestamp,
       "x-automation-signature": signature,
     },
-    body: rawBody,
+    body: new Uint8Array(rawBody),
   });
 }
 
