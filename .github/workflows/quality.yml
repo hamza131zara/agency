@@ -100,5 +100,9 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Apply automation database schema
         run: npm run automation:migrate
+      - name: Check operator dashboard JavaScript syntax
+        run: |
+          node --check automation-runtime/public/operator.js
+          node --check automation-runtime/scripts/create-operator-password-hash.mjs
       - name: Run lead-intake PostgreSQL integration suite
         run: npm run test:automation
