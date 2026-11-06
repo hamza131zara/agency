@@ -26,7 +26,7 @@ This phase does not authorize checkout, payment processing, licence activation, 
 
 The normalized register currently covers six candidates. P5.1 merged through PR #24 at `fbfb36e510eb8d92aab1b1dd80cfdea7390aa634`; post-merge CI [#42175498028](https://github.com/hamza131zara/agency/actions/runs/42175498028) passed both required jobs.
 
-### P5.1 acceptance checklist
+### Initial candidate disposition
 
 - **STRIDETO:** reference hosted platform; not presumed to be an agency resale package.
 - **RegexLab:** public browser tool; MIT is stated in its README, but exact license scope, asset rights and redistribution packaging still require review.
@@ -34,6 +34,8 @@ The normalized register currently covers six candidates. P5.1 merged through PR 
 - **SiteIntel Pulse:** in development; static showcase is not the full scanner. README headline wording that calls it a public live platform conflicts with the documented static-showcase boundary and must be reconciled.
 - **Free AI Mixer:** in development; README requires a separately configured scene-generation API. No hosted public demo is confirmed.
 - **Auto-Trading-Agent:** excluded and gated by its separate roadmap. This phase must not alter that roadmap or imply customer availability.
+
+### P5.1 acceptance checklist
 
 - [x] Six candidates recorded with source repository and reviewed README commit.
 - [x] Hosted/public-tool/development/excluded states distinguished.
