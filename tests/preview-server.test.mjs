@@ -6,6 +6,7 @@ import test, { after, before } from "node:test";
 import { createPreviewServer } from "../scripts/preview-server.mjs";
 
 let root;
+let outsideRoot;
 let server;
 let origin;
 
@@ -16,7 +17,8 @@ before(async () => {
   await writeFile(path.join(root, "index.html"), "<!doctype html><title>Agency preview</title>");
   await writeFile(path.join(root, "assets", "css", "styles.css"), "body { margin: 0; }");
   await writeFile(path.join(root, "contact.php"), "<?php echo 'must not be served';");
-  await writeFile(path.join(root, "secret.txt"), "outside the web root");
+  outsideRoot = await mkdtemp(path.join(os.tmpdir(), "agency-preview-outside-"));
+  await writeFile(path.join(outsideRoot, "secret.txt"), "outside the web root");
   server = createPreviewServer({ root });
   await new Promise((resolve, reject) => {
     server.once("error", reject);
@@ -31,6 +33,7 @@ after(async () => {
     await new Promise((resolve) => server.close(resolve));
   }
   if (root) await rm(root, { recursive: true, force: true });
+  if (outsideRoot) await rm(outsideRoot, { recursive: true, force: true });
 });
 
 test("serves the homepage with an HTML content type", async () => {
@@ -61,7 +64,7 @@ test("does not expose directory listings", async () => {
 test("rejects hidden paths and traversal attempts", async () => {
   const hidden = await fetch(`${origin}/.git/config`);
   assert.equal(hidden.status, 404);
-  const traversal = await fetch(`${origin}/%2e%2e/secret.txt`);
+  const traversal = await fetch(`${origin}/%2e%2e%2f${path.basename(outsideRoot)}/secret.txt`);
   assert.notEqual(traversal.status, 200);
   assert.doesNotMatch(await traversal.text(), /outside the web root/);
 });
