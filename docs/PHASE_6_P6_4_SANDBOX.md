@@ -1,6 +1,6 @@
 # P6.4 — Lead Intake Routing & Internal Notification Sandbox
 
-**Status:** implementation candidate; synthetic sandbox only.  
+**Status:** implementation ready for merge; synthetic sandbox only.  
 **Owner authorization:** 7 November 2026, limited to P6.4.  
 **Implementation:** `automation-runtime/`.
 
@@ -49,6 +49,8 @@ The lead record and outbox item commit atomically. The outbox has a unique idemp
 Delivery is at-least-once. The fake transport is deliberately the only transport implementation in this phase and performs no network, email or SMS I/O.
 
 ## Verification
+
+Exact-head pull request CI [#42283098059](https://github.com/hamza131zara/agency/actions/runs/42283098059) passed all three jobs: repository validation, browser/accessibility and the automation sandbox. The PostgreSQL suite reports 10 passed, 0 failed, 0 skipped.
 
 The CI job creates a disposable PostgreSQL 16 service, applies the migration, compiles the TypeScript and runs integration tests for:
 - valid signed intake and durable lead/outbox/audit persistence;
