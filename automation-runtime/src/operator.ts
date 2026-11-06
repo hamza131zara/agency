@@ -261,11 +261,28 @@ async function login(
   const token = randomBytes(32).toString("base64url");
   const csrfToken = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + ttlSeconds * 1000);
-  await pool.query(
-    `INSERT INTO operator_sessions (id, token_hash, csrf_hash, expires_at)
-     VALUES ($1, $2, $3, $4)`,
-    [randomUUID(), sha256(token), sha256(csrfToken), expiresAt],
-  );
+  const sessionId = randomUUID();
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    await client.query(
+      `INSERT INTO operator_sessions (id, token_hash, csrf_hash, expires_at)
+       VALUES ($1, $2, $3, $4)`,
+      [sessionId, sha256(token), sha256(csrfToken), expiresAt],
+    );
+    await client.query(
+      `INSERT INTO audit_events
+       (id, actor_type, actor_id, action, entity_type, entity_id, metadata)
+       VALUES ($1, 'operator', 'agency-owner', 'operator.session_created', 'operator_session', $2, '{}'::jsonb)`,
+      [randomUUID(), sessionId],
+    );
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK").catch(() => undefined);
+    throw error;
+  } finally {
+    client.release();
+  }
   await pool.query("DELETE FROM operator_sessions WHERE expires_at < NOW() - INTERVAL '7 days' OR revoked_at < NOW() - INTERVAL '7 days'");
   sendJson(response, 200, {
     authenticated: true,
@@ -553,10 +570,26 @@ export function createOperatorHandler(options: HandlerOptions) {
       }
 
       if (request.method === "POST" && url.pathname === "/v1/operator/logout") {
-        await options.pool.query(
-          "UPDATE operator_sessions SET revoked_at = NOW() WHERE id = $1",
-          [session.id],
-        );
+        const client = await options.pool.connect();
+        try {
+          await client.query("BEGIN");
+          await client.query(
+            "UPDATE operator_sessions SET revoked_at = NOW() WHERE id = $1",
+            [session.id],
+          );
+          await client.query(
+            `INSERT INTO audit_events
+             (id, actor_type, actor_id, action, entity_type, entity_id, metadata)
+             VALUES ($1, 'operator', 'agency-owner', 'operator.session_revoked', 'operator_session', $2, '{}'::jsonb)`,
+            [randomUUID(), session.id],
+          );
+          await client.query("COMMIT");
+        } catch (error) {
+          await client.query("ROLLBACK").catch(() => undefined);
+          throw error;
+        } finally {
+          client.release();
+        }
         sendJson(response, 200, { loggedOut: true }, {
           "set-cookie": cookieValue("", secure, 0),
         });
