@@ -138,7 +138,7 @@ function readCookie(request: IncomingMessage): string | null {
 }
 
 function cookieValue(token: string, secure: boolean, maxAge: number): string {
-  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure ? "; Secure" : ""}`;
+  return `${SESSION_COOKIE}=${token}; Path=/v1/operator; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure ? "; Secure" : ""}`;
 }
 
 function cursorEncode(cursor: Cursor): string {
