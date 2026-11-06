@@ -1,8 +1,8 @@
 # Phase 6 — Automation Catalogue and Customer Tools Execution Plan
 
-**Status:** P6.1–P6.2 ACCEPTED; P6.3 ARCHITECTURE AND MVP APPROVED FOR SANDBOX; P6.4 IMPLEMENTATION IN REVIEW. No customer-facing automation product is being presented as live, connected or production-ready.  
+**Status:** P6.1–P6.5 IMPLEMENTED AND MERGED; P6.6 REPOSITORY READINESS IMPLEMENTED AND MERGED; PRODUCTION AND RELEASE ACCEPTANCE OPEN. No customer-facing automation product is being presented as live, connected or production-ready.  
 **Master scope:** `docs/PLATFORM_MASTER_PLAN.md` — Phase 6.  
-**Baseline:** `main` after PR #33 at `84e7843e2e7415018c858272a061ae0c13b7ccc2`; 7 November 2026.
+**Baseline:** `main` after PR #36 at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`; 7 November 2026.
 
 ## 1. Purpose
 
@@ -154,7 +154,7 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Propose a narrow internal-first lead-intake routing and notification pilot based on an existing repository workflow.
 - [x] Define the sandbox boundary, signed server-to-server event contract, durable PostgreSQL/outbox design, worker behavior, fake notification transport, privacy controls and failure tests.
 - [x] Keep production provider, runtime host, price and real customer integration unselected.
-- [ ] Owner approves the lead-intake pilot, proposes a different target workflow with customer/problem evidence, or defers MVP selection.
+- [x] Owner approved the internal-first lead-intake pilot on 7 November 2026 for synthetic sandbox implementation only; this is not approval for real customer data or production use.
 - [x] Merge the proposal and architecture documentation in PR #32 at `997d33c2eb1b8481c2f01a92bf6ff3dbb6432b39`.
 - [x] Exact-head CI run [#42272271691](https://github.com/hamza131zara/agency/actions/runs/42272271691) passed both `validate` and `browser-and-accessibility`.
 - [x] Post-merge `main` CI run [#42273194970](https://github.com/hamza131zara/agency/actions/runs/42273194970) passed both required jobs.
@@ -179,8 +179,8 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Add PostgreSQL-backed integration tests and a disposable PostgreSQL CI service.
 - [x] Exact-head CI [#42283098059](https://github.com/hamza131zara/agency/actions/runs/42283098059) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
 - [x] PostgreSQL integration suite passed all 10 tests (10 passed, 0 failed, 0 skipped).
-- [ ] Owner merges implementation [PR #34](https://github.com/hamza131zara/agency/pull/34).
-- [ ] Post-merge `main` CI passes both website checks and the PostgreSQL sandbox suite.
+- [x] Owner merged implementation [PR #34](https://github.com/hamza131zara/agency/pull/34) at 225a5cf8084c8911f4a5a8a0f86688cf034968f0.
+- [x] Post-merge `main` CI [#42287715876](https://github.com/hamza131zara/agency/actions/runs/42287715876) passed all three jobs, including 10 PostgreSQL integration tests.
 
 **Boundary:** P6.4 is a tested sandbox workflow, not a live agency inquiry service. P6.5 adds operator controls; P6.6 owns release acceptance. Real contact forwarding, customer data, external providers, hosting spend and deployment remain out of scope.
 
@@ -198,8 +198,8 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Add migration `002_operator_controls.sql` for session storage and retry generations.
 - [x] Exact-head CI [#42290370862](https://github.com/hamza131zara/agency/actions/runs/42290370862) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
 - [x] PostgreSQL integration suite passed all 17 tests (17 passed, 0 failed, 0 skipped).
-- [ ] Owner merges P6.5 implementation [PR #35](https://github.com/hamza131zara/agency/pull/35).
-- [ ] Post-merge `main` CI passes both website checks and PostgreSQL integration suite.
+- [x] Owner merged P6.5 implementation [PR #35](https://github.com/hamza131zara/agency/pull/35) on 7 November 2026.
+- [x] Post-merge `main` CI [#42293691147](https://github.com/hamza131zara/agency/actions/runs/42293691147) passed all three jobs, including 17 PostgreSQL operator/auth/retry integration tests.
 
 **Boundaries:** single internal owner only; no public signup, multiple staff roles, customer workspace or real data requirement. No retention schedule is activated until its period and deletion policy are explicitly approved. The login limiter is process-local and single-instance only. The live contact endpoint remains disconnected; no provider or production deployment is authorized.
 
@@ -207,7 +207,8 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 
 **Implementation branch:** `phase6/p6-6-release-marketing-readiness`.  
 **Security/privacy review:** `docs/PRODUCTION_SECURITY_PRIVACY_REVIEW.md`.  
-**Marketing and SEO/AEO/GEO strategy:** `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md`.
+**Marketing and SEO/AEO/GEO strategy:** `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md`.  
+**Owner decision and evidence register:** `docs/P6_6_OWNER_DECISION_REGISTER.md`.
 
 P6.6 is a release-readiness programme with five workstreams. Completing documentation or CI checks does not approve production deployment.
 
@@ -263,7 +264,8 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 ### P6.6.5 — Release acceptance
 
 - [ ] Production security/privacy gates above have evidence and sign-off.
-- [x] P6.6 repository readiness PR [#36](https://github.com/hamza131zara/agency/pull/36) exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) passed `validate`, `browser-and-accessibility` and `automation-sandbox`; sandbox suite passed 18/18 tests.
+- [x] P6.6 repository readiness PR [#36](https://github.com/hamza131zara/agency/pull/36) merged to `main` at `5e7ce045156e69c66f8c6c0cb6fcf4d7e22cb30d`.  
+- [x] Exact-head CI [#42295966546](https://github.com/hamza131zara/agency/actions/runs/42295966546) and post-merge `main` CI [#42298818757](https://github.com/hamza131zara/agency/actions/runs/42298818757) passed all three jobs: `validate`, `browser-and-accessibility` and `automation-sandbox`. The PostgreSQL sandbox suite passed 18/18 tests.
 - [ ] Real notification provider, consent, suppression/unsubscribe, idempotency and deliverability tests are approved if messaging is enabled.
 - [ ] Live contact-form forwarding has tested fallback semantics and never reports success before durable acceptance.
 - [ ] Domain, HTTPS, Hostinger PHP support, private config, backups, mail inbox and sender authentication are verified for the website.
@@ -273,7 +275,7 @@ P6.6 is a release-readiness programme with five workstreams. Completing document
 - [ ] Strict predeploy and post-deploy release validators pass; deployed commit, smoke tests and rollback evidence are recorded.
 - [ ] Owner gives explicit final release approval.
 
-**Current decision:** the P6.6 repository readiness package is implemented and its exact-head CI is green. It records the security/privacy review, marketing and SEO/AEO/GEO strategy, and 26-page discoverability baseline. The automation runtime remains sandbox-only; production startup is blocked, fake transport is the only adapter, real customer data is not approved, and no provider/host/domain/budget/deployment is selected. P6.6 is not complete until the owner/legal/operations and release acceptance gates are evidenced.
+**Current decision:** the P6.6 repository-readiness implementation is merged and post-merge CI is green. The security/privacy review, marketing strategy and discoverability gate are committed. The audit covers 26 indexable routes with unique titles/descriptions and one primary H1 each; 40 social-preview warnings remain non-blocking and require approved assets. The automation runtime remains sandbox-only, production startup is blocked, fake transport is the only adapter, and no real customer data, provider, runtime host, canonical domain, budget or deployment is approved. The remaining work is an owner/legal/operations decision-and-evidence sequence tracked in docs/P6_6_OWNER_DECISION_REGISTER.md; neither this merge nor a green CI run is production approval.
 
 ## 8. Phase 6 exit criteria
 
