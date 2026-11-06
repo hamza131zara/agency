@@ -86,6 +86,7 @@ def inspect_sitemap(blockers, origin, expected_routes):
         add(blockers, "Approved canonical domain is missing; sitemap still uses a placeholder host.")
 
     paths = set()
+    placeholder_urls = []
     for url in urls:
         parsed = urlsplit(url)
         if parsed.scheme != "https" or not parsed.netloc:
@@ -94,7 +95,7 @@ def inspect_sitemap(blockers, origin, expected_routes):
         if not is_placeholder(origin) and f"{parsed.scheme}://{parsed.netloc}" != origin.rstrip("/"):
             add(blockers, f"Sitemap host does not match approved canonical origin: {url}")
         if is_placeholder(url):
-            add(blockers, f"Sitemap contains a placeholder URL: {url}")
+            placeholder_urls.append(url)
         if parsed.query or parsed.fragment:
             add(blockers, f"Sitemap URL must not contain query or fragment: {url}")
         paths.add(parsed.path or "/")
@@ -103,6 +104,9 @@ def inspect_sitemap(blockers, origin, expected_routes):
             target = ROOT / "index.html"
         if not target.is_file():
             add(blockers, f"Sitemap route has no corresponding file: {parsed.path}")
+
+    if placeholder_urls:
+        add(blockers, f"Sitemap contains {len(placeholder_urls)} URLs using a placeholder domain.")
 
     for route in sorted(expected_routes - paths):
         add(blockers, f"Indexable page is missing from sitemap: {route}")
