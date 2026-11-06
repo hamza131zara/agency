@@ -45,6 +45,8 @@ const handler = createIntakeHandler({
     900,
   ),
   rateLimitPerMinute: readPositiveInteger("AUTOMATION_RATE_LIMIT_PER_MINUTE", 30, 600),
+  operatorPasswordHash: process.env.AUTOMATION_OPERATOR_PASSWORD_HASH,
+  operatorCookieSecure: process.env.NODE_ENV !== "development",
 });
 
 const port = readPositiveInteger("PORT", 8787, 65_535);
