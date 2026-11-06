@@ -34,15 +34,20 @@ def main():
     assert validator.is_approved("true") is False
     assert validator.is_approved("false") is False
     assert validator.is_approved(1) is False
-    assert validator.is_approved_https_origin("https://agency.example") is True
-    assert validator.is_approved_https_origin("https://agency.example:8443") is True
+    assert validator.is_approved_https_origin("https://agency.dev") is True
+    assert validator.is_approved_https_origin("https://agency.dev:8443") is True
+    assert validator.is_valid_email("hello@agency.dev") is True
+    assert validator.is_valid_email("not-an-email") is False
+    assert validator.is_valid_iso_date("2026-11-07") is True
+    assert validator.is_valid_iso_date("tomorrow") is False
     for invalid_origin in (
         "http://agency.example",
-        "https://agency.example/path",
-        "https://user@agency.example",
-        "https://agency.example?query=1",
-        "https://agency.example#fragment",
-        "https://agency.example:99999",
+        "https://agency.dev/path",
+        "https://user@agency.dev",
+        "https://agency.dev?query=1",
+        "https://agency.dev#fragment",
+        "https://agency.dev:99999",
+        "https://agency.example",
         "NOT-APPROVED",
     ):
         assert validator.is_approved_https_origin(invalid_origin) is False, invalid_origin
