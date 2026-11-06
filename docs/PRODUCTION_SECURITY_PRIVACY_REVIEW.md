@@ -23,7 +23,7 @@ The repository has a useful secure-development baseline and automated checks, bu
 1. Automation runtime is still a sandbox with no production notification adapter. Production startup is now fail-closed.
 2. The Node API itself does not terminate TLS. A selected runtime/reverse proxy must provide HTTPS, safe headers and controlled network access.
 3. Database TLS, backups, restore testing, monitoring, alerting, incident response and service-level ownership have not been configured.
-4. Operator failed-login limiting is in process memory and is only suitable for a single-instance internal test. It is not a production abuse-control system.
+4. Operator failed-login limiting is in process memory, capped at 4,096 tracked source keys with expired-entry pruning, and is only suitable for a single-instance internal test. It is not a production shared abuse-control system.
 5. The operator console has one password-based owner account, no MFA, no staff roles and no recovery/invitation workflow.
 6. No inquiry, lead, attempt, session or audit retention/deletion period has been approved or automated.
 7. Legal operator, jurisdiction, privacy basis, official contact, domain, mail provider and production hosting are not confirmed.
@@ -73,7 +73,7 @@ The contact endpoint currently returns an honest not-configured response if priv
 | Forged source event / replay | HMAC-SHA256, key ID, timestamp window, constant-time signature comparison, source allowlist and idempotent event ID | Real sender adapter, key rotation runbook, network/rate controls and adversarial tests |
 | Duplicate / lost notification intent | Transactional outbox and unique idempotency key | Provider idempotency/reconciliation, delivery receipts and operational alerting |
 | Operator session theft | Opaque random cookie; only hash stored; HTTP-only, SameSite, scoped path; revocation and expiry | HTTPS enforcement, secure proxy/header policy, session monitoring, MFA decision, recovery and key rotation |
-| Login brute force | Five failures per IP per 15-minute in-process window | Shared rate limiter/gateway, trusted proxy design and alerting; current limiter is not production-grade |
+| Login brute force | Five failures per socket source per 15-minute in-process window; tracked entries are pruned and capped at 4,096 | Shared rate limiter/gateway, trusted proxy design and alerting; current limiter is not production-grade |
 | CSRF / cross-origin mutation | Required Origin header must match scheme, hostname and effective port; session CSRF token; cookie-only strict-mode PHP sessions | Verify proxy/host configuration and include browser/security tests in release environment |
 | Cross-site scripting in inquiry content | Operator UI inserts dynamic values as text nodes, not HTML; restrictive CSP | Continue output encoding, dependency review and manual security testing |
 | Secret exposure | No secrets committed by design; runtime config is environment-based | Managed secret store, least-privilege access, rotation, audit and emergency revoke procedure |
