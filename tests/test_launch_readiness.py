@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Regression tests for the report-only and strict production launch gate."""
+import importlib.util
 import subprocess
 import sys
+import tempfile
+from contextlib import redirect_stdout
+from io import StringIO
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +24,36 @@ def run(*args):
 
 
 def main():
+    spec = importlib.util.spec_from_file_location("launch_readiness_validator", SCRIPT)
+    validator = importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(validator)
+
+    assert validator.is_approved(True) is True
+    assert validator.is_approved(False) is False
+    assert validator.is_approved("true") is False
+    assert validator.is_approved("false") is False
+    assert validator.is_approved(1) is False
+    assert validator.is_approved_https_origin("https://agency.example") is True
+    assert validator.is_approved_https_origin("https://agency.example:8443") is True
+    for invalid_origin in (
+        "http://agency.example",
+        "https://agency.example/path",
+        "https://user@agency.example",
+        "https://agency.example?query=1",
+        "https://agency.example#fragment",
+        "https://agency.example:99999",
+        "NOT-APPROVED",
+    ):
+        assert validator.is_approved_https_origin(invalid_origin) is False, invalid_origin
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        validator.APPROVALS = Path(temp_dir) / "missing-approvals.json"
+        output = StringIO()
+        with patch.object(sys, "argv", [str(SCRIPT), "--strict-predeploy"]), redirect_stdout(output):
+            assert validator.main() == 1, output.getvalue()
+        assert "missing" in output.getvalue().lower(), output.getvalue()
+
     report = run()
     combined = report.stdout + report.stderr
     assert report.returncode == 0, combined
