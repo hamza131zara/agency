@@ -1,6 +1,6 @@
 # Lead Intake Routing & Internal Notification — Sandbox Runtime
 
-**Status:** owner-approved P6.4 implementation; sandbox only. This is not connected to the public website and is not a live customer-facing service.
+**Status:** P6.4 sandbox plus P6.5 private operator console; internal testing only. This is not connected to the public website and is not a live customer-facing service.
 
 ## What is implemented
 
@@ -13,6 +13,9 @@
 - Deterministic fake notification outcomes: success, transient failure, permanent failure and timeout.
 - Bounded retries, attempt history, dead-letter state and sanitized audit events.
 - PostgreSQL-backed integration tests in CI.
+- Private operator console at `/operator`, protected by a server-side scrypt password hash and HTTP-only session cookies.
+- Authenticated lead inbox, status filter, lead detail, delivery-attempt and audit history.
+- CSRF-protected manual retry for dead-letter jobs, preserving past attempts across retry generations.
 
 The fake transport deliberately performs **no network, email or SMS I/O**. There is no production transport module.
 
@@ -40,29 +43,40 @@ Requirements: Node.js 22+, npm and Docker Compose.
    $env:AUTOMATION_DEMO_SECRET = "use-the-same-secret-value-as-the-local-dev-key"
    $env:AUTOMATION_ALLOWED_SOURCES = "agency-contact-form"
    $env:AUTOMATION_FAKE_TRANSPORT_MODE = "success"
+   $env:NODE_ENV = "development"
    ```
 
    Generate a unique random secret for your own local environment. Never commit it, paste it into a browser, or reuse the example value.
 
-4. Apply the schema:
+4. Generate a private operator password hash. The prompt hides the password while typing:
+
+   ```bash
+   npm run automation:operator-hash
+   ```
+
+   Set the returned `salt:hash` value privately as `AUTOMATION_OPERATOR_PASSWORD_HASH`. Do not put the password itself or the generated hash in Git.
+
+5. Apply the schema:
+
+
 
    ```bash
    npm run automation:migrate
    ```
 
-5. Run the API in one terminal:
+6. Run the API in one terminal:
 
    ```bash
    npm run automation:api
    ```
 
-6. Run the worker in another terminal:
+7. Run the worker in another terminal:
 
    ```bash
    npm run automation:worker
    ```
 
-The API listens on port 8787 by default. Check `GET /healthz` and `GET /readyz`. The private intake route is `POST /v1/intake/lead-submitted`.
+The API listens on port 8787 by default. Check `GET /healthz` and `GET /readyz`. The private intake route is `POST /v1/intake/lead-submitted`. The internal operator console is available at `http://127.0.0.1:8787/operator`; it requires the password whose scrypt hash is configured in `AUTOMATION_OPERATOR_PASSWORD_HASH`.
 
 With the API and worker running in separate terminals, submit a synthetic event from a third terminal:
 
@@ -117,10 +131,13 @@ Delivery semantics are **at least once**, not exactly once. A future external ad
 
 - No changes to `contact.php`; no real website form is forwarded here.
 - No production mail, SMS, WhatsApp, CRM, social, ecommerce or AI provider.
-- No customer accounts, multi-tenancy, admin dashboard, configurable routing or billing.
+- No customer accounts, multi-tenancy, configurable routing or billing.
 - No production secrets, provider credentials, hosting, DNS, deployment or provider spending.
 - The simple in-memory rate limiter is per process; production needs a gateway/shared limiter and abuse monitoring.
 - The fake notification transport is for end-to-end workflow mechanics only. It does not prove deliverability.
-- Live use requires a separate P6.5/P6.6 review: authenticated operator controls, approved retention/deletion policy, provider and runtime selection, secret management, TLS, backup/restore, monitoring, incident response, privacy/legal approval and explicit release authorization.
+- The operator console is single-owner/internal only. It has no invitation, roles, customer workspace or public sign-up.
+- Operator sessions expire after eight hours and are server-side revocable. The login failure limiter is in-process and must be moved to shared infrastructure for multi-instance production.
+- No automatic retention/deletion schedule is enabled. The retention period and deletion process remain owner/privacy decisions before real personal data is accepted.
+- Live use requires P6.6 review: approved retention/deletion policy, provider and runtime selection, production secret management, TLS termination, backup/restore, monitoring, incident response, privacy/legal approval and explicit release authorization.
 
 Do not configure the public website to forward real inquiries to this sandbox.
