@@ -9,3 +9,4 @@ Thumbs.db
 node_modules/
 playwright-report/
 test-results/
+/automation-runtime/dist/
