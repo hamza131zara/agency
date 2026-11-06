@@ -64,6 +64,7 @@ The contact endpoint currently returns an honest not-configured response if priv
 - The sandbox-only API and fake-transport worker refuse to start when NODE_ENV=production. This is a fail-closed guard, not a production deployment mechanism.
 - CI tests the production guard and operator cookie scope.
 - The runtime remains isolated from contact.php; no live contact forwarding has been introduced.
+- The public PHP contact endpoint now requires the POST Origin to match scheme, hostname and effective port; strict-mode cookie-only PHP sessions are enabled; requests with a declared Content-Length over 16 KiB are rejected before form processing. These code-level controls are regression-tested, but the deployed proxy/host behavior still needs staging verification.
 
 ## 4. Threat model and required controls before real inquiries
 
