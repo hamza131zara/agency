@@ -411,7 +411,7 @@ test.describe('Phase I route and content checks', () => {
       ['/products/siteintel-pulse.html', 'siteintel-pulse', 'SiteIntel Pulse', 'IN DEVELOPMENT', 'View static showcase'],
       ['/products/free-ai-mixer.html', 'free-ai-mixer', 'Free AI Mixer', 'IN DEVELOPMENT', 'View source repository']
     ];
-    const sections = ['overview', 'capabilities', 'availability', 'requirements', 'commercial'];
+    const sections = ['overview', 'capabilities', 'availability', 'data-security', 'requirements', 'commercial'];
 
     for (const [route, id, name, status, action] of products) {
       await page.goto(route);
