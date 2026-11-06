@@ -12,7 +12,8 @@
     "automation:api": "npm run automation:build && node automation-runtime/dist/src/server.js",
     "automation:worker": "npm run automation:build && node automation-runtime/dist/src/worker.js",
     "test:automation": "npm run automation:build && node --test automation-runtime/dist/test/*.test.js",
-    "automation:demo": "node automation-runtime/scripts/send-synthetic.mjs"
+    "automation:demo": "node automation-runtime/scripts/send-synthetic.mjs",
+    "automation:operator-hash": "node automation-runtime/scripts/create-operator-password-hash.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
