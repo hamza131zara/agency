@@ -85,7 +85,7 @@ def is_valid_email(value):
     return (
         isinstance(value, str)
         and not is_placeholder(value)
-        and re.fullmatch(r"[^@\\s]+@[^@\\s]+\\.[^@\\s]+", value.strip()) is not None
+        and re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", value.strip()) is not None
     )
 
 
@@ -216,6 +216,8 @@ def main():
     ):
         if is_placeholder(operator.get(field)):
             add(blockers, label)
+    if not is_valid_email(operator.get("officialContactEmail")):
+        add(blockers, "Provide a syntactically valid official legal contact email.")
     for field, label in (
         ("privacyApproval", "Privacy notice approval is outstanding."),
         ("termsApproval", "Terms of use approval is outstanding."),
@@ -256,6 +258,8 @@ def main():
     ):
         if is_placeholder(contact.get(field)):
             add(blockers, label)
+        if not is_valid_email(contact.get(field)):
+            add(blockers, label.replace(".", " with a syntactically valid email address."))
     if not is_approved(contact.get("senderDomainAuthenticationChecked")):
         add(blockers, "Verify sender-domain mail authentication (SPF/DKIM as supported).")
     if contact.get("hostMailSubmissionTest") != "passed":
@@ -278,8 +282,10 @@ def main():
         add(post_deployment_blockers, "Install private production config.php on the host, outside the public repository.")
     if not is_approved(hosting.get("httpsRedirectVerified")):
         add(post_deployment_blockers, "Verify the HTTP-to-HTTPS redirect on the deployed host.")
-    if not hosting.get("deploymentDate") or is_placeholder(hosting.get("approvedCommit")):
-        add(post_deployment_blockers, "Record the deployed commit and deployment date after upload.")
+    if not is_valid_iso_date(hosting.get("deploymentDate")):
+        add(post_deployment_blockers, "Record the deployment date using an ISO 8601 calendar date.")
+    if not isinstance(hosting.get("approvedCommit"), str) or re.fullmatch(r"[0-9a-fA-F]{40}", hosting.get("approvedCommit")) is None:
+        add(post_deployment_blockers, "Record the exact 40-character deployed Git commit SHA.")
 
     search = approvals.get("searchAndIndexing", {})
     for field, label in (
@@ -306,6 +312,10 @@ def main():
             add(blockers, label)
     if is_placeholder(manual.get("reviewer")):
         add(blockers, "Record the person responsible for final manual release review.")
+    if not is_valid_iso_date(manual.get("reviewedAt")):
+        add(blockers, "Record the manual release review date using an ISO 8601 calendar date.")
+    if is_placeholder(manual.get("evidenceLocation")):
+        add(blockers, "Record evidence for the manual release review.")
 
     robots = ROBOTS.read_text(encoding="utf-8") if ROBOTS.is_file() else ""
     expected_sitemap = f"{origin}/sitemap.xml" if origin_approved else ""
