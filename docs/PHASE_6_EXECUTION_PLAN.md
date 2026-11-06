@@ -184,6 +184,24 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 
 **Boundary:** P6.4 is a tested sandbox workflow, not a live agency inquiry service. P6.5 adds operator controls; P6.6 owns release acceptance. Real contact forwarding, customer data, external providers, hosting spend and deployment remain out of scope.
 
+## 7D. P6.5 — Private operator dashboard and controls
+
+**Implementation branch:** `phase6/p6-5-operator-dashboard`.
+
+- [x] Add a private operator console route served by the isolated automation runtime.
+- [x] Add scrypt password-hash verification and an interactive hidden-input hash generator; no plaintext operator password is committed.
+- [x] Add server-side, eight-hour, HTTP-only, SameSite=Strict sessions with revocation and CSRF tokens.
+- [x] Enforce same-origin checks for login and state-changing operator requests.
+- [x] Add authenticated, paginated lead inbox, status filtering, lead detail, delivery attempts and audit history.
+- [x] Restrict manual retry to dead-letter jobs; preserve prior attempts in separate retry generations and audit the operator action.
+- [x] Add restrictive CSP/security headers and a responsive accessible operator interface.
+- [x] Add migration `002_operator_controls.sql` for session storage and retry generations.
+- [ ] Exact-head CI passes all required jobs, including operator-auth and manual-retry integration tests.
+- [ ] Owner merges P6.5 implementation PR.
+- [ ] Post-merge `main` CI passes both website checks and PostgreSQL integration suite.
+
+**Boundaries:** single internal owner only; no public signup, multiple staff roles, customer workspace or real data requirement. No retention schedule is activated until its period and deletion policy are explicitly approved. The login limiter is process-local and single-instance only. The live contact endpoint remains disconnected; no provider or production deployment is authorized.
+
 ## 8. Phase 6 exit criteria
 
 Phase 6 is complete only when at least one approved customer-facing tool allows a customer to discover, configure, test, run, monitor and disconnect its supported workflow; the data/permission model is transparent; failures and retries are recoverable; secrets remain server-side; security, privacy, accessibility and operational evidence passes; and the owner approves the release. A static catalogue or simulated demo alone does not satisfy this exit gate.
