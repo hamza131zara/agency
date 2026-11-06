@@ -24,7 +24,8 @@ def main():
     assert report.returncode == 0, combined
     assert "Launch readiness audit" in combined, combined
     assert "Expected indexable routes: 26" in combined, combined
-    assert "Canonical domain is missing" in combined, combined
+    assert "Approved canonical domain is missing" in combined, combined
+    assert "Canonical URL tags cannot be finalized" in combined, combined
     assert "Privacy notice approval is outstanding" in combined, combined
     assert "Sitemap cannot be parsed" not in combined, combined
 
