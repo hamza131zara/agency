@@ -19,9 +19,22 @@ def main():
     with opener.open(base+"/contact.php?csrf=1",timeout=1) as response:
      data=json.loads(response.read().decode())
      assert response.status==200 and data["ok"] is True and data["configured"] is False
+     cookie_headers=response.headers.get_all("Set-Cookie") or []
+     cookie_header="; ".join(cookie_headers).lower()
+     assert "httponly" in cookie_header and "samesite=strict" in cookie_header and "path=/" in cookie_header, cookie_headers
      token=data["csrf_token"]; assert len(token)>=32; break
    except (urllib.error.URLError,TimeoutError,ConnectionError): time.sleep(.1)
   assert token,"PHP test server did not become ready"
+  fixed_session="a"*26
+  fixed_request=urllib.request.Request(base+"/contact.php?csrf=1",headers={"Cookie":f"PHPSESSID={fixed_session}"})
+  with urllib.request.urlopen(fixed_request,timeout=2) as response:
+   replacement_cookies=response.headers.get_all("Set-Cookie") or []
+   replacement="; ".join(replacement_cookies)
+   assert any(
+    cookie.split(";",1)[0].startswith("PHPSESSID=")
+    and cookie.split(";",1)[0] != f"PHPSESSID={fixed_session}"
+    for cookie in replacement_cookies
+   ), replacement
   try:
    opener.open(urllib.request.Request(base+"/contact.php",data=urllib.parse.urlencode({"name":"Test"}).encode(),headers={"Origin":base},method="POST"),timeout=2)
    raise AssertionError("missing CSRF token was accepted")
@@ -57,7 +70,7 @@ def main():
   try:
    opener.open(base+"/contact.php",timeout=2); raise AssertionError("unsupported GET unexpectedly succeeded")
   except urllib.error.HTTPError as error: assert error.code==405
-  print("Contact endpoint smoke tests passed: CSRF, missing-config status and method handling.")
+  print("Contact endpoint smoke tests passed: strict session cookies, fixation rejection, origin checks, request-size limits, CSRF and safe mail fallback.")
  finally:
   server.terminate()
   try: server.wait(timeout=5)
