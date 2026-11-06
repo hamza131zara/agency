@@ -4,6 +4,8 @@
   "private": true,
   "description": "Public portfolio, services and project inquiry website for a software and AI agency.",
   "scripts": {
+    "preview": "node scripts/preview-server.mjs",
+    "test:preview": "node --test tests/preview-server.test.mjs",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.cjs",
     "test:responsive": "playwright test tests/e2e/responsive.spec.cjs",

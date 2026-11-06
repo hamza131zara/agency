@@ -37,6 +37,8 @@ jobs:
           python tests/test_discoverability.py
       - name: Check JavaScript syntax
         run: node --check assets/js/main.js
+      - name: Test local Node preview server
+        run: npm run test:preview
       - name: Check PHP syntax
         run: |
           php -l contact.php
