@@ -59,13 +59,12 @@ export function validateLeadSubmittedEvent(
     || Date.parse(value.occurred_at) > nowMs + 5 * 60 * 1000
     || typeof value.source !== "string"
     || !/^[a-z0-9][a-z0-9._-]{2,79}$/u.test(value.source)
-    || !allowedSources.has(value.source)
     || !isRecord(value.lead)
     || !hasExactKeys(value.lead, ["name", "email", "service", "message"])) {
     return { ok: false, code: "invalid_event" };
   }
 
-  if (typeof value.source === "string" && !allowedSources.has(value.source)) {
+  if (!allowedSources.has(value.source as string)) {
     return { ok: false, code: "unsupported_source" };
   }
 
