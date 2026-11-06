@@ -3,7 +3,7 @@
 
 This script intentionally does not invent a domain, legal operator, inbox or
 production configuration. CI uses report-only mode. The Hostinger release
-runbook requires --strict after owner inputs and production evidence are set.
+runbook requires --strict-predeploy before upload and --strict after staged smoke tests.
 """
 import argparse
 import json
@@ -313,6 +313,9 @@ def main():
     if args.strict and post_deployment_blockers:
         print("RESULT: DEPLOYMENT VERIFICATION INCOMPLETE — resolve all post-deployment checks.")
         return 1
+    if args.strict_predeploy and not blockers:
+        print("RESULT: PRE-DEPLOYMENT GATES PASSED — staging upload may proceed; run --strict after smoke tests.")
+        return 0
     if blockers or post_deployment_blockers:
         print("RESULT: AUDIT COMPLETE — use strict-predeploy before upload and strict after staging/production smoke tests.")
         return 0
