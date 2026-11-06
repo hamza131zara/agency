@@ -456,6 +456,29 @@ test.describe('Phase I route and content checks', () => {
     await expect(gated.getByRole('link', { name: /product details/i })).toHaveCount(0);
   });
 
+  test('product pages disclose release decisions and never imply unapproved installability', async ({ page }) => {
+    const routes = [
+      ['/products/strideto.html', 'Hosted reference platform only'],
+      ['/products/regexlab.html', 'Public browser tool only'],
+      ['/products/jotjson.html', 'Public browser tool only'],
+      ['/products/siteintel-pulse.html', 'In development'],
+      ['/products/free-ai-mixer.html', 'In development']
+    ];
+    for (const [route, disposition] of routes) {
+      await page.goto(route);
+      const releaseNote = page.locator('.product-release-note');
+      await expect(releaseNote).toBeVisible();
+      await expect(releaseNote).toContainText('Release decision');
+      await expect(releaseNote).toContainText(disposition);
+      await expect(page.getByRole('link', { name: /buy now|install now|purchase/i })).toHaveCount(0);
+    }
+
+    await page.goto('/products.html');
+    const gated = page.locator('[data-product-id="auto-trading-agent"]');
+    await expect(gated).toContainText('NOT AVAILABLE');
+    await expect(gated.getByRole('link', { name: /product details|buy now|install now|purchase/i })).toHaveCount(0);
+  });
+
   test('project brief builder creates a local draft and supports text download', async ({ page }) => {
     const serviceRequests = [];
     page.on('request', request => {
