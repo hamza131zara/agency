@@ -82,6 +82,23 @@ Until this is done, the contact endpoint intentionally returns a clear “Your i
 - [ ] Verify SSL, redirects, CSP, security headers, sitemap and robots over the deployed domain.
 - [ ] Check browser console, PHP/server logs, spam filtering and analytics/tracking state. Do not enable analytics unless separately approved and disclosed.
 
+### 6. Agency marketing, SEO, AEO and GEO activation
+
+- [ ] Approve the agency's real public brand/name, primary audience, target markets and primary offer.
+- [ ] Confirm all public claims, team bios/credentials, project attribution, screenshots, testimonials and outcome metrics are supported and consented.
+- [ ] Keep the editorial plan focused on helpful service guides, buyer questions, original project evidence and technical notes; do not publish scaled, thin or keyword-stuffed content.
+- [ ] Run `python scripts/validate_discoverability.py`; resolve duplicate/missing titles, descriptions, H1s and index/noindex conflicts.
+- [ ] After the canonical domain is approved, add and validate self-referencing canonical URLs for all 26 indexable pages.
+- [ ] Add approved Open Graph/social preview assets and ensure image rights/alt text are recorded.
+- [ ] Add Organization/LocalBusiness markup only when it accurately matches visible, approved identity/location information.
+- [ ] Verify the domain in Google Search Console and Bing Webmaster Tools after DNS/HTTPS checks; fetch sitemap and request indexing only after release acceptance.
+- [ ] Establish baseline organic search queries, qualified enquiries and conversion measurement without activating unapproved analytics or advertising pixels.
+- [ ] Confirm Google Business Profile eligibility before creating any local profile. Do not use virtual offices, unverified addresses, artificial city pages or fake reviews.
+- [ ] Do not promise ranking, AI Overview placement, Copilot/ChatGPT citations, traffic or lead volume. Review AI-performance reports only once real data is available.
+- [ ] Approve channel budget, campaign owner, lead follow-up responsibility and contact delivery before paid campaigns or outbound activation.
+
+See `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md` for the marketing hypotheses, channel sequence, content plan, metric definitions and platform references.
+
 ## Product-marketplace launch boundary
 
 The agency catalogue can describe public tools and development-stage projects accurately. It is not a ready-to-install or transactional marketplace today.
@@ -103,6 +120,7 @@ python scripts/validate_portfolio_evidence.py
 python scripts/validate_portfolio_acceptance.py
 python scripts/validate_product_release_governance.py
 python scripts/validate_launch_readiness.py
+python scripts/validate_discoverability.py
 node --check assets/js/main.js
 php -l contact.php
 php -l config.example.php
