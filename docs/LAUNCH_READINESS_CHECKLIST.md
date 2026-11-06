@@ -109,10 +109,15 @@ php -l config.example.php
 python tests/test_contact_endpoint.py
 npm install
 npm run test:e2e
+
+# Before first upload, after owner/legal/domain/hosting inputs are supplied:
+python scripts/validate_launch_readiness.py --strict-predeploy
+
+# After staging upload, private config, SSL and live smoke tests:
 python scripts/validate_launch_readiness.py --strict
 ```
 
-The first launch-readiness run is report-only and lists blockers. The final `--strict` run must exit successfully only after all owner inputs and production evidence have been recorded.
+The default launch-readiness run is report-only and lists blockers. `--strict-predeploy` must pass before the initial upload. The full `--strict` gate must pass after staging/production smoke tests and before public launch announcement or final DNS cutover.
 
 ## Rollback
 
