@@ -43,13 +43,14 @@ The current validated platform contains 25 HTML routes: 14 root pages, six servi
 - `docs/INFORMATION_ARCHITECTURE.md` — navigation, page inventory, page settings and content models.
 - `docs/VISUAL_DESIGN_3D_STANDARD.md` — theme direction, 3D interaction, accessibility and performance.
 - `docs/DELIVERY_METHODOLOGY.md` — workflows, Git practices, QA and release methodology.
-- `docs/PHASE_1_EXECUTION_PLAN.md` — current Phase 1 scope, work packages and acceptance.
-- `docs/PHASE_1_ACCEPTANCE.md` — acceptance checklist.
-- `docs/PHASE_2_EXECUTION_PLAN.md` — accepted premium visual identity and 3D implementation record.
-- `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` — evidence review for project and product visuals.
+- `docs/PHASE_1_EXECUTION_PLAN.md` and `docs/PHASE_1_ACCEPTANCE.md` — platform foundation scope and acceptance.
+- `docs/PHASE_2_EXECUTION_PLAN.md` and `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md` — visual identity, 3D and evidence review.
 - `docs/PHASE_3_EXECUTION_PLAN.md` — service depth, positioning and team profile governance.
+- `docs/PHASE_4_EXECUTION_PLAN.md` and `docs/PHASE_4_QA_ACCEPTANCE.md` — portfolio/case-study implementation and automated QA acceptance.
+- `docs/PHASE_5_EXECUTION_PLAN.md` — product marketplace phases, package sequence and release boundaries.
+- `docs/PRODUCT_CATALOGUE_READINESS.json` — six-candidate product ownership, licensing, installation and release-readiness audit.
 - `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
-- `docs/PORTFOLIO_CONTENT_EVIDENCE.md` — repository-backed product descriptions, owner-provided claims and final verification checklist.
+- `docs/PORTFOLIO_CONTENT_EVIDENCE.md` and `docs/PORTFOLIO_EVIDENCE_VISUAL_GOVERNANCE.md` — portfolio evidence, owner claims, asset permissions and publication safeguards.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
 
 ## Local checks
@@ -72,7 +73,7 @@ The CI workflow also runs HTML/link/site validation across root, service-detail 
 
 ## Phase boundaries
 
-The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phase 1 (multi-page platform foundation) is complete at the repository implementation level; PR #14 is merged and its exact PR-head CI passed. Phase 2 (premium visual identity and purposeful 3D) is complete: PR #15 merged at `d069caaf` and post-merge CI #41864959360 passed both required jobs. Human assistive-technology review, official legal identity, canonical domain, inbox, project permission and launch approvals remain pre-launch gates. Phase 3 (service depth, positioning and team profiles) is now in progress under `docs/PHASE_3_EXECUTION_PLAN.md`. Customer accounts, payments, licences, and live automation integrations are later phases and require their own security and owner approval gates.
+The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phases 1–3 are complete at their documented repository implementation/QA levels; their owner, legal and human accessibility launch gates remain where recorded. Phase 4 (portfolio and case-study system) is complete at repository/automated-QA level: PR #22 merged at `b89adee0` and post-merge CI #42080702755 passed. Manual visual, screen-reader and owner evidence reviews remain pre-launch requirements. Phase 5 (ready-made product marketplace) is in progress: P5.1 readiness audit PR #24 merged at `fbfb36e5` and post-merge CI #42175498028 passed; P5.2 catalogue discovery is underway. Checkout, payment, customer accounts and licence activation remain later-phase scope and require separate security and owner approval gates.
 
 ## Hosting and release
 
