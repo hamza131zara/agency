@@ -177,8 +177,9 @@ P6.2 does not select a provider or MVP. That decision remains in P6.3 and requir
 - [x] Implement bounded retry, permanent-failure handling and dead-letter state.
 - [x] Keep the transport simulated only; no mail, SMS, CRM, provider or external network adapter exists.
 - [x] Add PostgreSQL-backed integration tests and a disposable PostgreSQL CI service.
-- [ ] Exact-head CI passes all required jobs.
-- [ ] Owner merges the P6.4 implementation PR.
+- [x] Exact-head CI [#42283098059](https://github.com/hamza131zara/agency/actions/runs/42283098059) passed `validate`, `browser-and-accessibility` and `automation-sandbox`.
+- [x] PostgreSQL integration suite passed all 10 tests (10 passed, 0 failed, 0 skipped).
+- [ ] Owner merges implementation [PR #34](https://github.com/hamza131zara/agency/pull/34).
 - [ ] Post-merge `main` CI passes both website checks and the PostgreSQL sandbox suite.
 
 **Boundary:** P6.4 is a tested sandbox workflow, not a live agency inquiry service. P6.5 adds operator controls; P6.6 owns release acceptance. Real contact forwarding, customer data, external providers, hosting spend and deployment remain out of scope.
