@@ -49,6 +49,9 @@ The current validated platform contains 30 HTML routes: 14 root pages, six servi
 - `docs/PHASE_4_EXECUTION_PLAN.md` and `docs/PHASE_4_QA_ACCEPTANCE.md` — portfolio/case-study implementation and automated QA acceptance.
 - `docs/PHASE_5_EXECUTION_PLAN.md` — product marketplace phases, package sequence and release boundaries.
 - `docs/PRODUCT_CATALOGUE_READINESS.json` — six-candidate product ownership, licensing, installation and release-readiness audit.
+- `docs/PRODUCT_RELEASE_GOVERNANCE.md` and `docs/PRODUCT_RELEASE_GOVERNANCE.json` — release gates, owner approvals and structured product release decisions.
+- `docs/PRODUCT_SUBMISSION_CHECKLIST.md` — evidence checklist for each product submission and release review.
+- `docs/PRODUCT_CHANGELOG_TEMPLATE.md` — versioned release/change-history template; do not publish unreleased placeholders.
 - `docs/PRODUCT_AUTOMATION_GOVERNANCE.md` — product and automation status/release controls.
 - `docs/PORTFOLIO_CONTENT_EVIDENCE.md` and `docs/PORTFOLIO_EVIDENCE_VISUAL_GOVERNANCE.md` — portfolio evidence, owner claims, asset permissions and publication safeguards.
 - `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
@@ -73,7 +76,7 @@ The CI workflow also runs HTML/link/site validation across root, service-detail 
 
 ## Phase boundaries
 
-The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phases 1–3 are complete at their documented repository implementation/QA levels; their owner, legal and human accessibility launch gates remain where recorded. Phase 4 (portfolio and case-study system) is complete at repository/automated-QA level: PR #22 merged at `b89adee0` and post-merge CI #42080702755 passed. Manual visual, screen-reader and owner evidence reviews remain pre-launch requirements. Phase 5 (ready-made product marketplace) is in progress: P5.1 readiness audit PR #24 merged at `fbfb36e5` and post-merge CI #42175498028 passed; P5.2 catalogue discovery is underway. Checkout, payment, customer accounts and licence activation remain later-phase scope and require separate security and owner approval gates.
+The master roadmap is in `docs/PLATFORM_MASTER_PLAN.md`. Phases 1–3 are complete at their documented repository implementation/QA levels; their owner, legal and human accessibility launch gates remain where recorded. Phase 4 (portfolio and case-study system) is complete at repository/automated-QA level: PR #22 merged at `b89adee0` and post-merge CI #42080702755 passed. Manual visual, screen-reader and owner evidence reviews remain pre-launch requirements. Phase 5 (ready-made product marketplace) is in progress: P5.1–P5.3 are merged and verified. P5.1 PR #24 merged at `fbfb36e5` (post-merge CI #42175498028 passed); P5.2 PR #25 merged at `7159084d` (post-merge CI #42179451016 passed); P5.3 PR #26 merged at `301b01ca` (post-merge CI #42196381737 passed). P5.4 release and commercial governance is underway; no product is currently approved as ready-to-install or commercially available.1 readiness audit PR #24 merged at `fbfb36e5` and post-merge CI #42175498028 passed; P5.2 catalogue discovery is underway. Checkout, payment, customer accounts and licence activation remain later-phase scope and require separate security and owner approval gates.
 
 ## Hosting and release
 
