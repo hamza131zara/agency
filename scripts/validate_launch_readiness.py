@@ -7,6 +7,7 @@ runbook requires --strict-predeploy before upload and --strict after staged smok
 """
 import argparse
 import json
+import re
 import sys
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
@@ -44,11 +45,59 @@ def add(blockers, message):
 
 
 def is_placeholder(value):
-    text = str(value or "").strip().lower()
+    if not isinstance(value, str):
+        return True
+    text = value.strip().lower()
     return not text or any(token in text for token in (
         "replace-", "replace_", "your-domain", "not-provided",
         "not-approved", "example.com", "example.org", "yourdomain"
     ))
+
+
+def is_approved(value):
+    """Only the JSON boolean true counts as an approval."""
+    return value is True
+
+
+def is_approved_https_origin(value):
+    if not isinstance(value, str) or is_placeholder(value):
+        return False
+    try:
+        parsed = urlsplit(value.rstrip("/"))
+        port = parsed.port
+    except ValueError:
+        return False
+    return (
+        parsed.scheme.lower() == "https"
+        and bool(parsed.hostname)
+        and parsed.username is None
+        and parsed.password is None
+        and parsed.path == ""
+        and parsed.query == ""
+        and parsed.fragment == ""
+        and (port is None or 1 <= port <= 65535)
+        and "@" not in parsed.netloc
+        and not any(character.isspace() for character in parsed.netloc)
+    )
+
+
+def is_valid_email(value):
+    return (
+        isinstance(value, str)
+        and not is_placeholder(value)
+        and re.fullmatch(r"[^@\\s]+@[^@\\s]+\\.[^@\\s]+", value.strip()) is not None
+    )
+
+
+def is_valid_iso_date(value):
+    if not isinstance(value, str):
+        return False
+    try:
+        from datetime import date
+        date.fromisoformat(value)
+        return True
+    except ValueError:
+        return False
 
 
 def route_inventory():
@@ -134,14 +183,16 @@ def main():
     post_deployment_blockers = []
     if not APPROVALS.is_file():
         print("Launch readiness: BLOCKED — docs/LAUNCH_APPROVALS.json is missing.")
-        return 1 if args.strict else 0
+        return 1 if (args.strict or args.strict_predeploy) else 0
 
     approvals = json.loads(APPROVALS.read_text(encoding="utf-8"))
-    origin = str(approvals.get("canonicalOrigin", "")).rstrip("/")
+    raw_origin = approvals.get("canonicalOrigin", "")
+    origin = raw_origin.rstrip("/") if isinstance(raw_origin, str) else ""
+    origin_approved = is_approved_https_origin(origin)
     html_files, expected_routes = route_inventory()
 
-    if is_placeholder(origin) or not origin.startswith("https://"):
-        add(blockers, "Set and approve the final HTTPS canonical domain.")
+    if not origin_approved:
+        add(blockers, "Set and approve a valid HTTPS origin containing only scheme, host and optional port.")
 
     brand = approvals.get("brand", {})
     for field, label in (
@@ -151,7 +202,7 @@ def main():
     ):
         if is_placeholder(brand.get(field)):
             add(blockers, label)
-    if not brand.get("logoAndBrandApproval"):
+    if not is_approved(brand.get("logoAndBrandApproval")):
         add(blockers, "Owner approval of logo and brand assets is outstanding.")
 
     operator = approvals.get("operator", {})
@@ -170,7 +221,7 @@ def main():
         ("termsApproval", "Terms of use approval is outstanding."),
         ("disclaimerApproval", "Disclaimer approval is outstanding."),
     ):
-        if not operator.get(field):
+        if not is_approved(operator.get(field)):
             add(blockers, label)
 
     for filename, (draft_marker, noindex_marker) in LEGAL.items():
@@ -184,7 +235,7 @@ def main():
             "terms.html": "termsApproval",
             "disclaimer.html": "disclaimerApproval",
         }[filename]
-        approved = bool(operator.get(approval_field))
+        approved = is_approved(operator.get(approval_field))
         has_draft_marker = draft_marker.lower() in content.lower()
         if not approved:
             if not has_draft_marker:
@@ -205,7 +256,7 @@ def main():
     ):
         if is_placeholder(contact.get(field)):
             add(blockers, label)
-    if not contact.get("senderDomainAuthenticationChecked"):
+    if not is_approved(contact.get("senderDomainAuthenticationChecked")):
         add(blockers, "Verify sender-domain mail authentication (SPF/DKIM as supported).")
     if contact.get("hostMailSubmissionTest") != "passed":
         add(post_deployment_blockers, "Run a real production contact-form submission test.")
@@ -221,11 +272,11 @@ def main():
         ("productionBackupCreated", "Back up the existing production web root before replacing files."),
         ("deploymentApproved", "Record explicit owner approval for production deployment."),
     ):
-        if not hosting.get(field):
+        if not is_approved(hosting.get(field)):
             add(blockers, label)
-    if not hosting.get("productionConfigInstalledOutsideRepository"):
+    if not is_approved(hosting.get("productionConfigInstalledOutsideRepository")):
         add(post_deployment_blockers, "Install private production config.php on the host, outside the public repository.")
-    if not hosting.get("httpsRedirectVerified"):
+    if not is_approved(hosting.get("httpsRedirectVerified")):
         add(post_deployment_blockers, "Verify the HTTP-to-HTTPS redirect on the deployed host.")
     if not hosting.get("deploymentDate") or is_placeholder(hosting.get("approvedCommit")):
         add(post_deployment_blockers, "Record the deployed commit and deployment date after upload.")
@@ -235,9 +286,9 @@ def main():
         ("canonicalDomainAppliedToSitemap", "Replace sitemap placeholder host with the approved canonical domain."),
         ("robotsSitemapUrlUpdated", "Update robots.txt to point at the approved sitemap URL."),
     ):
-        if not search.get(field):
+        if not is_approved(search.get(field)):
             add(blockers, label)
-    if not search.get("sitemapUploadedAndFetched"):
+    if not is_approved(search.get("sitemapUploadedAndFetched")):
         add(post_deployment_blockers, "Fetch the deployed sitemap over HTTPS and verify all indexable routes.")
 
     manual = approvals.get("manualReleaseReview", {})
@@ -251,20 +302,20 @@ def main():
         ("mobileAndTabletVisualReviewCompleted", "Complete visual review on mobile and tablet."),
         ("finalPublishApproval", "Record final owner approval to publish."),
     ):
-        if not manual.get(field):
+        if not is_approved(manual.get(field)):
             add(blockers, label)
     if is_placeholder(manual.get("reviewer")):
         add(blockers, "Record the person responsible for final manual release review.")
 
     robots = ROBOTS.read_text(encoding="utf-8") if ROBOTS.is_file() else ""
-    expected_sitemap = f"{origin}/sitemap.xml" if not is_placeholder(origin) else ""
+    expected_sitemap = f"{origin}/sitemap.xml" if origin_approved else ""
     if not expected_sitemap or expected_sitemap not in robots:
         add(blockers, "robots.txt does not reference the approved canonical sitemap URL.")
 
     sitemap_count = inspect_sitemap(blockers, origin, expected_routes)
 
-    if is_placeholder(origin):
-        add(blockers, "Canonical URL tags cannot be finalized until the approved domain is supplied.")
+    if not origin_approved:
+        add(blockers, "Canonical URL tags cannot be finalized until a valid approved HTTPS origin is supplied.")
     else:
         missing_canonicals = []
         incorrect_canonicals = []
@@ -297,7 +348,7 @@ def main():
     print(f"- HTML routes discovered: {len(html_files)}")
     print(f"- Expected indexable routes: {len(expected_routes)}")
     print(f"- Sitemap URLs: {sitemap_count}")
-    print(f"- Production canonical origin: {'configured' if not is_placeholder(origin) else 'MISSING'}")
+    print(f"- Production canonical origin: {'configured' if origin_approved else 'MISSING OR INVALID'}")
     print(f"- Pre-deployment blockers: {len(blockers)}")
     print(f"- Post-deployment verification items: {len(post_deployment_blockers)}")
     for item in dict.fromkeys(blockers):
