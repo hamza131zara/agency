@@ -410,6 +410,56 @@ if (productExplorer) {
   applyFilters();
 }
 
+
+
+/* Phase 6.2 automation catalogue: service and planned-tool discovery. */
+const automationExplorer = document.querySelector('.automation-explorer');
+if (automationExplorer) {
+  const cards = Array.from(document.querySelectorAll('[data-automation-card]'));
+  const search = document.querySelector('#automation-search');
+  const deliveryFilter = document.querySelector('#automation-delivery');
+  const categoryFilter = document.querySelector('#automation-category');
+  const resultCount = document.querySelector('#automation-result-count');
+  const clearButton = document.querySelector('#clear-automation-filters');
+  const emptyMessage = document.querySelector('#automation-empty-state');
+
+  const applyAutomationFilters = () => {
+    const query = (search?.value || '').trim().toLowerCase();
+    const delivery = deliveryFilter?.value || 'all';
+    const category = categoryFilter?.value || 'all';
+    let visible = 0;
+
+    cards.forEach(card => {
+      const deliveryMatches = delivery === 'all' || card.dataset.delivery === delivery;
+      const categoryMatches = category === 'all' || card.dataset.category === category;
+      const queryMatches = !query || card.textContent.toLowerCase().includes(query);
+      const show = deliveryMatches && categoryMatches && queryMatches;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+
+    if (resultCount) {
+      resultCount.textContent = visible === cards.length
+        ? 'Showing all ' + visible + ' automation capabilities.'
+        : 'Showing ' + visible + ' of ' + cards.length + ' automation capabilities.';
+    }
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
+  };
+
+  search?.addEventListener('input', applyAutomationFilters);
+  deliveryFilter?.addEventListener('change', applyAutomationFilters);
+  categoryFilter?.addEventListener('change', applyAutomationFilters);
+  clearButton?.addEventListener('click', () => {
+    if (search) search.value = '';
+    if (deliveryFilter) deliveryFilter.value = 'all';
+    if (categoryFilter) categoryFilter.value = 'all';
+    applyAutomationFilters();
+    search?.focus();
+  });
+
+  applyAutomationFilters();
+}
+
 /* Project Brief Builder runs locally and does not submit or persist answers. */
 const briefForm = document.querySelector('#brief-form');
 if (briefForm) {
