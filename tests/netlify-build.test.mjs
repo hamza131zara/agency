@@ -10,7 +10,7 @@ async function createFixture() {
   await mkdir(path.join(root, "assets", "css"), { recursive: true });
   await mkdir(path.join(root, "services"), { recursive: true });
   await mkdir(path.join(root, "scripts"), { recursive: true });
-  await writeFile(path.join(root, "index.html"), "<!doctype html><title>SDC</title>");
+  await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"></head><a class="brand"><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer>');
   await writeFile(
     path.join(root, "contact.html"),
     '<form id="inquiry-form" action="contact.php" method="post" novalidate><input name="website"><button type="submit">Send</button></form><p>The form submits to the PHP endpoint on the website. The official recipient address must be configured on the hosting server before messages can be sent.</p>'
@@ -35,7 +35,13 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     const result = await buildNetlifySite({ root, outputDirectory });
     assert.equal(result.phpFilesPublished, 0);
     assert.equal(result.rootPages, 2);
-    assert.equal(await readFile(path.join(outputDirectory, "index.html"), "utf8"), "<!doctype html><title>SDC</title>");
+    const homepage = await readFile(path.join(outputDirectory, "index.html"), "utf8");
+    assert.match(homepage, /<title>SDC — Home<\\/title>/);
+    assert.match(homepage, /property="og:title" content="SDC — Home"/);
+    assert.match(homepage, /<span class="brand-name">SDC<span>\\.<\\/span><small>SOFTWARE DAMAGE CONTROL<\\/small><\\/span>/);
+    assert.match(homepage, /<span class="atlas-hub-mark">SDC<\\/span>/);
+    assert.match(homepage, /© <span id="year"><\\/span> SDC. All rights reserved/);
+    assert.doesNotMatch(homepage, /AGENCY<span>/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /margin: 0/);
     assert.match(await readFile(path.join(outputDirectory, "services", "software.html"), "utf8"), /Software/);
     assert.match(await readFile(path.join(outputDirectory, "robots.txt"), "utf8"), /User-agent/);
