@@ -42,11 +42,11 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
     assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
     assert.doesNotMatch(homepage, /AGENCY<span>/);
-    assert.match(homepage, /<form id="inquiry-form"[^>]*name="sdc-project-inquiry"/);
+    assert.match(homepage, /<form id="inquiry-form"[^>]*name="sdc-home-inquiry"/);
     assert.match(homepage, /data-netlify="true"/);
     assert.match(homepage, /data-delivery="netlify"/);
     assert.match(homepage, /netlify-honeypot="website"/);
-    assert.match(homepage, /name="form-name" value="sdc-project-inquiry"/);
+    assert.match(homepage, /name="form-name" value="sdc-home-inquiry"/);
     assert.ok(homepage.includes('action="/"'));
     assert.doesNotMatch(homepage, /action="contact\\.php"/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /margin: 0/);
@@ -55,14 +55,18 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.match(await readFile(path.join(outputDirectory, "_headers"), "utf8"), /nosniff/);
 
     const contact = await readFile(path.join(outputDirectory, "contact.html"), "utf8");
-    assert.match(contact, /name="sdc-project-inquiry"/);
+    assert.match(contact, /name="sdc-contact-inquiry"/);
     assert.match(contact, /data-netlify="true"/);
     assert.match(contact, /data-delivery="netlify"/);
     assert.match(contact, /netlify-honeypot="website"/);
-    assert.match(contact, /name="form-name" value="sdc-project-inquiry"/);
+    assert.match(contact, /name="form-name" value="sdc-contact-inquiry"/);
     assert.match(contact, /action="\/"/);
     assert.match(contact, /hosted form service/);
     assert.doesNotMatch(contact, /action="contact\.php"/);
+
+    const homeFormName = homepage.match(/<form[^>]*name="([^"]+)"/)?.[1];
+    const contactFormName = contact.match(/<form[^>]*name="([^"]+)"/)?.[1];
+    assert.ok(homeFormName && contactFormName && homeFormName !== contactFormName, "homepage and contact forms must have unique Netlify names");
 
     for (const forbidden of ["contact.php", "config.example.php", ".htaccess", "README.md", "scripts/internal.mjs"]) {
       await assert.rejects(access(path.join(outputDirectory, forbidden)));

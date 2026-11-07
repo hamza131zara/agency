@@ -28,7 +28,7 @@ function setAttribute(tag, name, value) {
   return attribute.test(tag) ? tag.replace(attribute, ` ${encoded}`) : tag.replace(/>$/, ` ${encoded}>`);
 }
 
-function configureNetlifyContactForm(html, { required = false } = {}) {
+function configureNetlifyContactForm(html, { required = false, formName = "sdc-project-inquiry" } = {}) {
   const formPattern = /<form\b(?=[^>]*\bid=["']inquiry-form["'])[^>]*>/i;
   const match = html.match(formPattern);
   if (!match) {
@@ -39,7 +39,7 @@ function configureNetlifyContactForm(html, { required = false } = {}) {
   }
 
   let openingTag = match[0];
-  openingTag = setAttribute(openingTag, "name", "sdc-project-inquiry");
+  openingTag = setAttribute(openingTag, "name", formName);
   openingTag = setAttribute(openingTag, "method", "post");
   openingTag = setAttribute(openingTag, "action", "/");
   openingTag = setAttribute(openingTag, "data-netlify", "true");
@@ -48,7 +48,7 @@ function configureNetlifyContactForm(html, { required = false } = {}) {
 
   let replacement = openingTag;
   if (!/\bname=["']form-name["']/i.test(html)) {
-    replacement += '<input type="hidden" name="form-name" value="sdc-project-inquiry">';
+    replacement += `<input type="hidden" name="form-name" value="${formName}">`;
   }
 
   let result = html.replace(formPattern, replacement);
@@ -100,7 +100,8 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
         } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) {
           let html = await readFile(filePath, "utf8");
           html = configureSdcBranding(html);
-          html = configureNetlifyContactForm(html, { required: childRelative === "contact.html" });
+          const formName = childRelative === "contact.html" ? "sdc-contact-inquiry" : "sdc-home-inquiry";
+          html = configureNetlifyContactForm(html, { required: childRelative === "contact.html", formName });
           await writeFile(filePath, html, "utf8");
         }
       }
