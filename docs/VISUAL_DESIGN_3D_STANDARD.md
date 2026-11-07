@@ -186,14 +186,15 @@ Do not invent dashboards, provider outputs, customer metrics or screenshots to f
 
 
 
-## 13. Owner-approved SDC identity — 8 November 2026
+## 13. Owner-supplied SDC artwork — 8 November 2026
 
-The owner has superseded the former ivory/gold/brown/blue identity with the Chrome-inspired four-colour shield identity.
-- Primary lockup: `assets/brand/sdc-logo.svg` — four-colour shield, charcoal SOFTWARE/CONTROL, red DAMAGE wordmark and yellow tagline rules.
-- Dark lockup: `assets/brand/sdc-logo-footer.svg` — same shield, white SOFTWARE/CONTROL and yellow DAMAGE on dark surfaces.
-- Standalone mark: `assets/favicon.svg` — four-colour shield only, on white; no wordmark.
-- Official accent palette: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`.
-- Core neutrals: charcoal `#171B22`, white `#FFFFFF`, with ivory `#FCFAF6` as the primary light canvas.
-- Use red for high-attention actions/active states, blue for links/focus/primary interactive accents, yellow for highlights and green for success/positive states. Do not use the former gold/brown/premium-blue palette or lime-green accent system.
-- Header uses the primary lockup on ivory. Footer uses the white/yellow wordmark lockup on dark surfaces. Keep the shield proportions and four-colour quadrant placement consistent across logo sizes.
-- Hover and scroll reveal transitions are progressive enhancement. Scroll reveals must remain readable with JavaScript disabled and become static under `prefers-reduced-motion: reduce`.
+The owner supplied the actual shield logo and favicon images. These are the only approved shield artwork; the earlier generated SVG approximations and alternative shields are retired.
+- Primary shield source: `assets/brand/sdc-logo.webp`, converted losslessly from the owner's supplied `sdc_logo.jpg` without cropping, recolouring, redrawing or changing decoded pixels.
+- Favicon source: `assets/favicon.png`, converted losslessly from the owner's supplied `favicon.jpg` without cropping, recolouring, redrawing or changing decoded pixels.
+- Keep the source aspect ratios. Use `object-fit: contain`, fluid sizing and the exact image assets at all breakpoints.
+- The adjacent SOFTWARE / DAMAGE / CONTROL wordmark is HTML text, not a replacement shield graphic. Keep the brand name readable on desktop and mobile.
+- Header uses the owner-supplied shield on the ivory canvas. Footer places the same unchanged shield on its original white canvas, with the wordmark in white/yellow on charcoal.
+- Brand accents: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`; neutrals: charcoal `#171B22`, white `#FFFFFF`, ivory `#FCFAF6`.
+- Use accessible darker red text (`#B3261E`) where small text would otherwise fail contrast; do not alter the supplied artwork's red.
+- Do not add alternative shield/monogram drawings, compact SVG logos, gradients, or recoloured logo variants. Favicon must use the supplied favicon image.
+- Preserve reduced-motion support and responsive header/footer behavior.
