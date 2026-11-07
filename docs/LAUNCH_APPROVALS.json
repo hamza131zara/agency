@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "releaseName": "Agency website launch candidate — 7 November 2026",
-  "reviewDate": "2026-11-06",
+  "releaseName": "Software Damage Control website launch candidate — 7 November 2026",
+  "reviewDate": "2026-11-07",
   "status": "blocked-pending-owner-inputs",
-  "canonicalOrigin": "https://REPLACE-WITH-APPROVED-CANONICAL-DOMAIN",
+  "canonicalOrigin": "https://softwaredamagecontrol.com",
   "brand": {
-    "publicDisplayName": "NOT-APPROVED",
+    "publicDisplayName": "Software Damage Control (SDC)",
     "logoAndBrandApproval": false,
     "approvedBy": null,
     "evidenceLocation": null
@@ -44,8 +44,8 @@
     "evidenceLocation": null
   },
   "searchAndIndexing": {
-    "canonicalDomainAppliedToSitemap": false,
-    "robotsSitemapUrlUpdated": false,
+    "canonicalDomainAppliedToSitemap": true,
+    "robotsSitemapUrlUpdated": true,
     "sitemapUploadedAndFetched": false,
     "searchConsolePropertyVerified": false,
     "indexingRequested": false
@@ -70,8 +70,10 @@
     "allProductsMustRemainAtTheirApprovedCatalogueAvailability": true
   },
   "notes": [
-    "This record deliberately contains no invented legal identity, domain, inbox or deployment configuration.",
+    "The owner supplied Software Damage Control (SDC) as the public name and softwaredamagecontrol.com as the purchased domain. Repository canonical URLs use the apex HTTPS host.",
+    "Domain registration was reported by the owner; DNS delegation/control, Hostinger mapping, HTTPS certificate, www-to-apex redirect and live sitemap fetch remain unverified.",
+    "Logo/brand-asset approval, legal operator, legal review, inbox, hosting and final publication approvals remain outstanding.",
     "The site can be published as an agency information/catalogue site after required owner approvals and production checks, while products remain public-tool/development listings and no checkout or installation offer is enabled.",
-    "A green CI run does not satisfy legal, inbox delivery, domain, hosting, accessibility or final owner approval."
+    "A green CI run does not satisfy legal, inbox delivery, DNS/TLS, hosting, accessibility or final owner approval."
   ]
 }
