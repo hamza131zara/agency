@@ -36,11 +36,11 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.equal(result.phpFilesPublished, 0);
     assert.equal(result.rootPages, 2);
     const homepage = await readFile(path.join(outputDirectory, "index.html"), "utf8");
-    assert.match(homepage, /<title>SDC — Home<\\/title>/);
+    assert.match(homepage, /<title>SDC — Home<\/title>/);
     assert.match(homepage, /property="og:title" content="SDC — Home"/);
-    assert.match(homepage, /<span class="brand-name">SDC<span>\\.<\\/span><small>SOFTWARE DAMAGE CONTROL<\\/small><\\/span>/);
-    assert.match(homepage, /<span class="atlas-hub-mark">SDC<\\/span>/);
-    assert.match(homepage, /© <span id="year"><\\/span> SDC. All rights reserved/);
+    assert.match(homepage, /<span class="brand-name">SDC<span>\.<\/span><small>SOFTWARE DAMAGE CONTROL<\/small><\/span>/);
+    assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
+    assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
     assert.doesNotMatch(homepage, /AGENCY<span>/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /margin: 0/);
     assert.match(await readFile(path.join(outputDirectory, "services", "software.html"), "utf8"), /Software/);
