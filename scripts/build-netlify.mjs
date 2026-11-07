@@ -104,6 +104,14 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
     }
     await transformPublicHtml(outputRoot);
 
+    const stylesheet = path.join(outputRoot, "assets", "css", "styles.css");
+    try {
+      const css = await readFile(stylesheet, "utf8");
+      await writeFile(stylesheet, css + "\\n/* Fit the SDC text mark inside the existing atlas hub. */\\n.atlas-hub-mark { font-size: clamp(13px, 1.25vw, 18px); }\\n", "utf8");
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
+
     const mainScript = path.join(outputRoot, "assets", "js", "main.js");
     try {
       const script = await readFile(mainScript, "utf8");
