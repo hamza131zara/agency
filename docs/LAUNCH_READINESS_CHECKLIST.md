@@ -1,7 +1,7 @@
 # Website Launch Readiness — 7 November 2026
 
 **Release target:** Saturday, 7 November 2026  
-**Current state:** NOT READY TO DEPLOY — code/CI is healthy, but owner, legal, domain, mail and hosting evidence are not supplied.  
+**Current state:** NOT READY TO DEPLOY — code/CI is healthy; Software Damage Control (SDC) and `softwaredamagecontrol.com` are owner-supplied and repository canonical SEO is configured, but DNS, Hostinger, SSL, mail, legal and manual release evidence remain outstanding.  
 **Release record:** `docs/LAUNCH_APPROVALS.json`  
 **Strict pre-deploy preflight:** `python scripts/validate_launch_readiness.py --strict-predeploy`  
 **Full post-deploy release gate:** `python scripts/validate_launch_readiness.py --strict`
@@ -15,7 +15,7 @@
 - Contact endpoint with CSRF validation, field validation, honeypot, per-session throttling and a safe “not sent” response when mail is unconfigured.
 - Server-side mail configuration is excluded from Git by `.gitignore`; `config.example.php` is a template only.
 - Legal pages are deliberately marked noindex and excluded from the sitemap while draft.
-- Sitemap and robots templates are present but still use `YOUR-DOMAIN.example`.
+- `sitemap.xml`, `robots.txt` and self-referencing canonical tags on all 26 indexable routes now use `https://softwaredamagecontrol.com`; live DNS/HTTPS/sitemap fetch remains unverified.
 - Hostinger deployment runbook is present; repository status remains NOT DEPLOYED.
 
 ## Launch blockers — owner action required
@@ -24,7 +24,8 @@ These details cannot safely be invented or inferred from the repository.
 
 ### 1. Brand and legal operator
 
-- [ ] Confirm the public brand name, official logo and visual identity.
+- [x] Owner supplied public display name: Software Damage Control (SDC).
+- [ ] Approve the official SDC wordmark/logo, brand usage and publication assets.
 - [ ] Confirm the legal operator's full name/entity, jurisdiction and business address.
 - [ ] Supply an official legal contact email.
 - [ ] Have the Privacy Notice reviewed against actual data collection, mail hosting, session cookies, server logs, third-party fonts and retention.
@@ -34,13 +35,13 @@ These details cannot safely be invented or inferred from the repository.
 
 ### 2. Domain, DNS and SEO
 
-- [ ] Confirm the final canonical domain (exact scheme and hostname).
+- [x] Owner supplied `softwaredamagecontrol.com`; repository uses `https://softwaredamagecontrol.com` (apex) as the canonical origin.
 - [ ] Point domain DNS to the selected Hostinger site and verify propagation.
 - [ ] Enable SSL; verify the certificate and HTTPS response.
 - [ ] Verify HTTP redirects to the chosen HTTPS canonical host and that www/non-www behavior is consistent.
-- [ ] Replace the sitemap host and robots Sitemap directive with the exact canonical domain.
-- [ ] Add canonical URL tags to indexable pages after the canonical domain is fixed.
-- [ ] Fetch the deployed sitemap over HTTPS; confirm 26 indexable URLs, no duplicates, no placeholders and no draft/noindex URLs.
+- [x] Replace the sitemap host and robots Sitemap directive with `https://softwaredamagecontrol.com`.
+- [x] Add and validate self-referencing canonical URL tags on all 26 indexable pages.
+- [ ] After DNS/SSL/deployment, fetch the live sitemap over HTTPS; confirm 26 indexable URLs, no duplicates, no placeholders and no draft/noindex URLs.
 - [ ] Verify the 404 page is noindex and absent from the sitemap.
 - [ ] Verify Search Console domain property ownership; request indexing only after final checks.
 
@@ -89,7 +90,7 @@ Until this is done, the contact endpoint intentionally returns a clear “Your i
 - [ ] Confirm all public claims, team bios/credentials, project attribution, screenshots, testimonials and outcome metrics are supported and consented.
 - [ ] Keep the editorial plan focused on helpful service guides, buyer questions, original project evidence and technical notes; do not publish scaled, thin or keyword-stuffed content.
 - [ ] Run `python scripts/validate_discoverability.py`; resolve duplicate/missing titles, descriptions, H1s and index/noindex conflicts.
-- [ ] After the canonical domain is approved, add and validate self-referencing canonical URLs for all 26 indexable pages.
+- [x] Add and validate source-level self-referencing canonical URLs for all 26 indexable pages. [ ] Verify the same URLs on the deployed domain after DNS/SSL.
 - [ ] Add approved Open Graph/social preview assets and ensure image rights/alt text are recorded.
 - [ ] Add Organization/LocalBusiness markup only when it accurately matches visible, approved identity/location information.
 - [ ] Verify the domain in Google Search Console and Bing Webmaster Tools after DNS/HTTPS checks; fetch sitemap and request indexing only after release acceptance.

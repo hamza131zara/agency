@@ -2,7 +2,7 @@
 
 **Status:** strategic working plan; not a public brand, market, budget or performance approval.  
 **Review date:** 7 November 2026  
-**Owner inputs still required:** approved public brand/name, target countries and service markets, legal operator, canonical domain, contact inbox, evidence/consent for portfolio and team claims.
+**Owner inputs still required:** logo/wordmark and brand-usage approval, target countries and service markets, legal operator, contact inbox, evidence/consent for portfolio and team claims. Owner has supplied Software Damage Control (SDC) and `softwaredamagecontrol.com`; the apex HTTPS host is configured in source, while DNS/TLS/redirect verification remains pending.
 
 ## 1. Executive direction
 
@@ -81,9 +81,8 @@ The objective is not to "put keywords everywhere." It is to make useful pages di
 ### Technical release requirements
 
 - Select one canonical HTTPS hostname and redirect alternate host/protocol variants to it.
-- Add a self-referencing canonical URL to each indexable page only after the final domain and route policy are approved.
-- Keep the XML sitemap limited to canonical, indexable, successful public pages; exclude legal drafts, 404s, operator pages and sandbox/API endpoints.
-- Update the robots.txt Sitemap directive to the exact approved sitemap URL.
+- Source implementation complete: all 26 indexable pages have self-referencing canonicals at `https://softwaredamagecontrol.com`; the XML sitemap lists those same 26 routes, and `robots.txt` references the apex sitemap.
+- Still required after DNS/SSL/deployment: verify redirects and fetch the live XML sitemap/robots files; legal drafts, 404s, operator pages and sandbox/API endpoints remain excluded.
 - Confirm robots.txt does not block required CSS, JavaScript or public page content.
 - Use unique, descriptive page titles, meta descriptions and one clear primary H1. The new `scripts/validate_discoverability.py` checks these structural signals.
 - Ensure core page content and service descriptions are available as crawlable text, not exclusively inside images or client-only JavaScript.

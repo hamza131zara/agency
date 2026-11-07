@@ -1,7 +1,7 @@
 # P6.6 — Owner Decision and Release Evidence Register
 
 **Status:** OPEN — repository readiness implementation is merged; production and public-release decisions are not approved.  
-**Baseline:** `main` at `0ab534c797fd3ac3ed007208ed740304f90decde` after PR #40. PR #40 merged the contact-origin/session/request-boundary and release-validator hardening; exact-head CI [#42306629958](https://github.com/hamza131zara/agency/actions/runs/42306629958) passed all three jobs. Earlier P6.6 implementation and documentation closeout evidence is recorded in `docs/PHASE_6_EXECUTION_PLAN.md`.  
+**Baseline:** `main` at `2278ae6bbdba2c38f042d23782b1f818b92b0b30` after PR #44. PR #44 added the CSS 3D atlas orbit/globe and passed exact-head CI; post-merge `main` CI [#42371541950](https://github.com/hamza131zara/agency/actions/runs/42371541950) passed all three jobs.
 **Purpose:** collect the real business, legal, security, infrastructure and operational decisions needed to move from a tested repository to a controlled release.
 
 This register is a decision aid, not a legal checklist or a claim that any approval has been granted. An item changes to APPROVED only when the decision-maker, date and evidence are recorded. Unknown values must remain unknown; do not infer them from a profile, development environment, repository URL or hosting account.
@@ -25,13 +25,13 @@ Record each decision in the table or link a dated decision record. Do not put pe
 
 | ID | Decision | Required input / evidence | Status |
 |---|---|---|---|
-| O-01 | Public brand | Approved public display name, logo, usage rules and approver | OPEN |
+| O-01 | Public brand | Owner supplied public name: Software Damage Control (SDC). Logo, usage rules, approval evidence and approver remain outstanding. | PARTIAL |
 | O-02 | Legal operator | Legal person/entity, jurisdiction, registered/business address and official privacy contact; verified by an appropriately qualified reviewer | OPEN |
 | O-03 | Primary market | Primary customer segment, target countries/regions and actual service coverage | OPEN |
 | O-04 | Primary offer | One primary lead-generation offer and at most one secondary offer for the first market test; scope, exclusions and capacity | OPEN |
 | O-05 | Commercial claims | Evidence and permission for team bios, credentials, project attribution, client names, screenshots, testimonials, outcome metrics, white-label claims and support promises | OPEN |
 | O-06 | Sales ownership | Business owner for enquiry monitoring, response, qualification, proposals and follow-up; realistic response commitment | OPEN |
-| O-07 | Canonical domain | Exact HTTPS origin, canonical host choice and DNS control evidence | OPEN |
+| O-07 | Canonical domain | Owner supplied purchased domain `softwaredamagecontrol.com`; repository uses `https://softwaredamagecontrol.com` (apex) as canonical. Verify registrar/DNS control, DNS delegation, Hostinger mapping, TLS certificate and www-to-apex redirect before release. | PARTIAL |
 | O-08 | Website hosting | Hostinger plan, document root, PHP version/extensions, .htaccess behavior, SSL, redirects and backup/restore evidence | OPEN |
 | O-09 | Contact delivery | Monitored inbox, verified sender, SPF/DKIM/DMARC evidence, private server config and real submission/receipt/Reply-To test | OPEN |
 | O-10 | Privacy purposes and roles | Per-data-flow purposes, controller/processor roles, legal basis, data minimization, disclosures and data-subject request route | OPEN |
@@ -65,8 +65,8 @@ Record each decision in the table or link a dated decision record. Do not put pe
 
 ### Search and local-discoverability rules
 
-- Keep canonical tags absent until the canonical HTTPS domain is approved.
-- After approval, use self-referencing canonicals and verify redirects, sitemap and robots over the deployed domain.
+- The owner supplied `softwaredamagecontrol.com`; the repository now uses `https://softwaredamagecontrol.com` as the apex canonical target and self-referencing canonical tags are present on all 26 indexable routes.
+- DNS delegation/control, Hostinger mapping, TLS certificate, www-to-apex redirect and deployed sitemap/robots fetch remain unverified; do not treat source configuration as production verification.
 - Add only structured data that matches visible, approved business facts.
 - Do not infer service locations from account profile or personal location. Add local pages or a Google Business Profile only after real eligibility and service-area evidence are confirmed.
 - Review Search Console and Bing Webmaster results after property verification; impressions/citations are not equivalent to qualified enquiries.

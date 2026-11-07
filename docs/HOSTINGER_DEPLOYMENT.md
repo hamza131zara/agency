@@ -4,7 +4,7 @@
 
 ## 1. Pre-deployment approvals
 
-1. Confirm the official agency name, approved logo/brand system and final domain.
+1. Public name supplied by owner: Software Damage Control (SDC); approve the official logo/wordmark and brand usage before publication. Domain supplied: `softwaredamagecontrol.com`.
 2. Confirm the monitored inquiry inbox, verified sender and legal operator details.
 3. Approve the public copy, all six service descriptions, team credentials, project contributions, screenshots and product statuses.
 4. Review the multi-page page inventory in `docs/INFORMATION_ARCHITECTURE.md`. Do not deploy with primary navigation links pointing to missing pages or misleading placeholders.
@@ -25,7 +25,7 @@
 3. Set `recipient_email` to the monitored inbox and `from_email` to a verified sender on the final domain.
 4. Never commit, publish or share `config.php` or its values.
 5. Configure mail/DNS records supplied by the host, including SPF/DKIM where available. PHP `mail()` returning true means the host accepted the message for processing; it does not guarantee final inbox delivery.
-6. Replace `YOUR-DOMAIN.example` in `robots.txt` and `sitemap.xml` with the approved canonical domain.
+6. Repository source now uses `https://softwaredamagecontrol.com` in `robots.txt`, `sitemap.xml` and 26 self-referencing canonical tags. Verify DNS, HTTPS, host redirects and deployed sitemap after domain mapping.
 7. Enable SSL, verify it works and then enforce HTTPS.
 8. Review the security headers and Content Security Policy. If an approved external integration is required, add only the required origin and test it; do not remove CSP wholesale.
 
@@ -76,4 +76,4 @@ CI runs the report-only audit so missing owner inputs remain visible without tre
 
 ## 7. Deployment authority
 
-Do not purchase a domain/plan, change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval. A successful GitHub Actions run or a passing strict static audit does not itself perform or authorize a deployment.
+The owner has reported purchasing `softwaredamagecontrol.com`. Do not change DNS, configure production email, connect customer credentials or publish the website without explicit owner approval. A successful GitHub Actions run or a passing strict static audit does not itself perform or authorize a deployment.
