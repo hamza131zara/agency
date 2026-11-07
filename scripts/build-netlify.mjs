@@ -28,12 +28,14 @@ function setAttribute(tag, name, value) {
   return attribute.test(tag) ? tag.replace(attribute, ` ${encoded}`) : tag.replace(/>$/, ` ${encoded}>`);
 }
 
-function configureNetlifyContactForm(html) {
+function configureNetlifyContactForm(html, { required = false } = {}) {
   const formPattern = /<form\b(?=[^>]*\bid=["']inquiry-form["'])[^>]*>/i;
   const match = html.match(formPattern);
   if (!match) {
-    throw new Error("Netlify build cannot find the #inquiry-form element in contact.html.");
-  }
+    if (required) {
+      throw new Error("Netlify build cannot find the #inquiry-form element in contact.html.");
+    }
+    return html;
 
   let openingTag = match[0];
   openingTag = setAttribute(openingTag, "name", "sdc-project-inquiry");
@@ -97,7 +99,7 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
         } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) {
           let html = await readFile(filePath, "utf8");
           html = configureSdcBranding(html);
-          if (childRelative === "contact.html") html = configureNetlifyContactForm(html);
+          html = configureNetlifyContactForm(html, { required: childRelative === "contact.html" });
           await writeFile(filePath, html, "utf8");
         }
       }
