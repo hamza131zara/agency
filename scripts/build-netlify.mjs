@@ -13,7 +13,7 @@ function setAttribute(tag, name, value) {
 }
 
 function configureNetlifyContactForm(html) {
-  const formPattern = /<form\\b(?=[^>]*\\bid=["']inquiry-form["'])[^>]*>/i;
+  const formPattern = /<form\b(?=[^>]*\bid=["']inquiry-form["'])[^>]*>/i;
   const match = html.match(formPattern);
   if (!match) {
     throw new Error("Netlify build cannot find the #inquiry-form element in contact.html.");
@@ -28,7 +28,7 @@ function configureNetlifyContactForm(html) {
   openingTag = setAttribute(openingTag, "netlify-honeypot", "website");
 
   let replacement = openingTag;
-  if (!/\\bname=["']form-name["']/i.test(html)) {
+  if (!/\bname=["']form-name["']/i.test(html)) {
     replacement += '<input type="hidden" name="form-name" value="sdc-project-inquiry">';
   }
 
@@ -81,7 +81,7 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       const childRelative = path.posix.join(relative, entry.name);
       if (entry.isDirectory()) {
         await inspect(path.join(directory, entry.name), childRelative);
-      } else if (/\\.(?:php|env)$/i.test(entry.name) || /(^|\\/)config(?:\\.|$)/i.test(childRelative)) {
+      } else if (/\.(?:php|env)$/i.test(entry.name) || /(^|\/)config(?:\.|$)/i.test(childRelative)) {
         forbidden.push(childRelative);
       }
     }
