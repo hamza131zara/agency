@@ -36,6 +36,7 @@ function configureNetlifyContactForm(html, { required = false } = {}) {
       throw new Error("Netlify build cannot find the #inquiry-form element in contact.html.");
     }
     return html;
+  }
 
   let openingTag = match[0];
   openingTag = setAttribute(openingTag, "name", "sdc-project-inquiry");
