@@ -21,7 +21,7 @@ Keep the account on Free and do not enable any paid add-ons or credit purchases.
 
 1. In the Netlify site dashboard, open **Forms** and enable automatic form detection.
 2. Trigger a new production deploy after enabling detection.
-3. Confirm that `sdc-project-inquiry` appears in the detected forms list.
+3. Confirm that both `sdc-home-inquiry` and `sdc-contact-inquiry` appear in the detected forms list.
 4. Add a submission notification to an inbox the owner can access. The destination mailbox is an owner-provided setting and must not be guessed.
 5. Submit a test inquiry using a controlled test identity. Verify it appears in Netlify Forms and the notification arrives.
 6. Verify that a failed request does not report success; the page offers a local copy/download fallback.
