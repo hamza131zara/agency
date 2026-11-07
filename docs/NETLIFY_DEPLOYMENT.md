@@ -40,7 +40,7 @@ Do not transfer the domain registration. The domain can remain with its current 
 
 ## Before public outreach
 
-- Replace provisional AGENCY wordmarks/page-title branding with the approved SDC identity.
+- The static build applies the owner-supplied SDC text wordmark and SDC page-title suffix. The official logo/artwork still needs separate approval; no new logo asset is invented.
 - Complete owner/legal review of Privacy, Terms and Disclaimer; they currently remain draft/noindex.
 - Review portfolio attribution, visual permissions, team-profile consent and every public commercial claim.
 - Confirm a monitored notification inbox and a realistic lead-follow-up process.
