@@ -151,6 +151,7 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
     await transformPublicHtml(outputRoot);
+    await rm(path.join(outputRoot, "assets", "favicon.svg"), { force: true });
 
     const stylesheet = path.join(outputRoot, "assets", "css", "styles.css");
     try {
