@@ -6,6 +6,22 @@ const PROJECT_ROOT = fileURLToPath(new URL("../", import.meta.url));
 const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
+function configureSdcBranding(html) {
+  let result = html.replace(
+    /<span class="brand-name">AGENCY<span>\.<\/span><small>SOFTWARE\s*·\s*AI\s*·\s*DESIGN<\/small><\/span>/g,
+    '<span class="brand-name">SDC<span>.</span><small>SOFTWARE DAMAGE CONTROL</small></span>'
+  );
+  result = result.replace(/(<title[^>]*>)([\s\S]*?)(<\/title>)/i, (whole, open, title, close) =>
+    open + title.replace(/\bAgency\b/g, "SDC") + close
+  );
+  result = result.replace(/(<meta\s+property=["']og:title["']\s+content=["'])([^"']*)(["'][^>]*>)/i, (whole, open, title, close) =>
+    open + title.replace(/\bAgency\b/g, "SDC") + close
+  );
+  result = result.replace(/(©\s*<span id="year"><\/span>\s*)Agency(\. All rights reserved\.)/i, "$1SDC$2");
+  result = result.replace('<span class="atlas-hub-mark">A.</span>', '<span class="atlas-hub-mark">SDC</span>');
+  return result;
+}
+
 function setAttribute(tag, name, value) {
   const attribute = new RegExp(`\\s+${name}=(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "i");
   const encoded = `${name}="${value}"`;
@@ -72,10 +88,34 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
   
-    const contactPath = path.join(outputRoot, "contact.html");
-    const contactHtml = await readFile(contactPath, "utf8");
-    await writeFile(contactPath, configureNetlifyContactForm(contactHtml), "utf8");
-  
+    async function transformPublicHtml(directory, relative = "") {
+      for (const entry of await readdir(directory, { withFileTypes: true })) {
+        const filePath = path.join(directory, entry.name);
+        const childRelative = path.posix.join(relative, entry.name);
+        if (entry.isDirectory()) {
+          await transformPublicHtml(filePath, childRelative);
+        } else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) {
+          let html = await readFile(filePath, "utf8");
+          html = configureSdcBranding(html);
+          if (childRelative === "contact.html") html = configureNetlifyContactForm(html);
+          await writeFile(filePath, html, "utf8");
+        }
+      }
+    }
+    await transformPublicHtml(outputRoot);
+
+    const mainScript = path.join(outputRoot, "assets", "js", "main.js");
+    try {
+      const script = await readFile(mainScript, "utf8");
+      await writeFile(
+        mainScript,
+        script.replaceAll("AGENCY — PROJECT INQUIRY", "SDC — PROJECT INQUIRY").replaceAll("agency-inquiry-", "sdc-inquiry-"),
+        "utf8"
+      );
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
+
     const forbidden = [];
     async function inspect(directory, relative = "") {
       for (const entry of await readdir(directory, { withFileTypes: true })) {
