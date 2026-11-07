@@ -19,9 +19,9 @@ def main():
     output = result.stdout + result.stderr
     assert result.returncode == 0, output
     assert "Indexable routes checked: 26" in output, output
-    assert "Canonical verification: intentionally deferred" in output, output
+    assert "Self-canonical pages verified: 26" in output, output
     assert "Discoverability validation: PASSED" in output, output
-    print("Discoverability tests passed: route inventory, metadata and deferred canonical gate.")
+    print("Discoverability tests passed: route inventory, metadata and all 26 SDC canonical URLs.")
 
 
 if __name__ == "__main__":
