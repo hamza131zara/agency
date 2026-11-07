@@ -268,6 +268,32 @@ test.describe('Phase I route and content checks', () => {
     await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
+  test('service atlas orbit and globe motion pause for interaction and respect reduced motion', async ({ page }) => {
+    await page.goto('/');
+    const atlas = page.locator('#service-atlas');
+    const orbit = atlas.locator('.atlas-orbit');
+    const globe = atlas.locator('.atlas-globe');
+
+    await expect(orbit).toBeVisible();
+    await expect(globe).toHaveAttribute('aria-hidden', 'true');
+    expect(await orbit.evaluate(el => getComputedStyle(el).animationName)).toBe('atlas-orbit-spin');
+    expect(await globe.evaluate(el => getComputedStyle(el, '::before').animationName)).toBe('atlas-globe-drift');
+
+    await atlas.hover();
+    expect(await orbit.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+
+    await page.mouse.move(0, 0);
+    const firstLink = atlas.locator('.atlas-node').first();
+    await firstLink.focus();
+    expect(await orbit.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+    expect(await firstLink.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    expect(await orbit.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+    expect(await globe.evaluate(el => getComputedStyle(el, '::before').animationName)).toBe('none');
+    expect(await atlas.locator('.atlas-ring-one').evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+  });
+
   test('all six service cards stay inside the spatial map at every review breakpoint', async ({ page }) => {
     const nodes = ['.atlas-software', '.atlas-ai', '.atlas-web3', '.atlas-ecommerce', '.atlas-design', '.atlas-growth'];
     for (const width of [320, 390, 768, 1440]) {
