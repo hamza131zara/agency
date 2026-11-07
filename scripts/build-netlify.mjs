@@ -7,8 +7,8 @@ const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
 function configureSdcBranding(html) {
-  const logo = '<picture class="brand-logo-picture"><source media="(max-width: 560px)" srcset="/assets/brand/sdc-logo-compact.svg"><img class="brand-logo" src="/assets/brand/sdc-logo.svg" alt="Software Damage Control" width="1000" height="320" fetchpriority="high"></picture>';
-  const footerLogo = '<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg" alt="Software Damage Control" width="1000" height="320" loading="lazy" decoding="async">';
+  const logo = '<span class="sdc-brand-lockup"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="976" height="1102" fetchpriority="high"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
+  const footerLogo = '<span class="sdc-brand-lockup sdc-brand-lockup--footer"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="976" height="1102" loading="lazy" decoding="async"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
   let result = html.replace(
     /(<a\b(?=[^>]*\bclass=["'][^"']*\bfooter-brand\b[^"']*["'])[^>]*>)[\s\S]*?(<\/a>)/g,
     `$1${footerLogo}$2`
@@ -31,7 +31,7 @@ function configureSdcBranding(html) {
   result = result.replace('<span class="atlas-hub-mark">A.</span>', '<span class="atlas-hub-mark">SDC</span>');
   result = result.replace(/<link rel="icon" type="image\/svg\+xml" href="assets\/favicon\.svg">/g, '<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">');
   if (/<meta name="theme-color"/i.test(result)) {
-    result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#fcfaf6">');
+    result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#FCFAF6">');
   } else {
     result = result.replace(/(<head\b[^>]*>)/i, '$1<meta name="theme-color" content="#fcfaf6">');
   }
