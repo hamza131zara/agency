@@ -26,13 +26,13 @@ The design direction is a premium digital studio aesthetic:
 - Consistent component geometry, spacing, borders, radii and icon treatment.
 - A balance of light information surfaces and darker/high-impact visual sections where they improve focus.
 
-The current implementation uses a working UI palette and typography system; this is a design baseline, not a confirmed legal/brand identity. Final logo treatment, official agency name and any brand-specific adjustments still require owner approval. Do not invent an official brand identity or logo.
+The owner-approved brand is Software Damage Control (SDC). The official lockup and standalone orbital favicon are stored in assets/brand/sdc-logo.svg and assets/favicon.svg. Use the approved ivory, black, gold, warm brown and premium blue palette consistently.
 
 Current implemented CSS tokens in `assets/css/styles.css`:
 
 | Token group | Values / purpose |
 |---|---|
-| Core colours | `--paper: #f4f3ee`, `--ink: #171b19`, `--muted: #747872`, `--line: #d8d9d1`, `--lime: #d7fc62`, `--orange: #f0784c`, `--white: #fff` |
+| Core colours | `--paper: #fcfaf6`, `--ink: #171b22`, `--muted: #626b78`, `--line: #e7ded4`, `--gold: #e1ad35`, `--brown: #88451f`, `--blue: #175edb`, `--white: #fff` |
 | Typography | `--sans: "Manrope", Arial, sans-serif`; `--mono: "DM Mono", monospace` |
 | Layout | `--max: 1220px` content width |
 | Spacing | `--space-1` through `--space-16` (4, 8, 12, 16, 20, 24, 32, 40, 48 and 64px) |
@@ -183,3 +183,13 @@ The current colour direction and “AGENCY.” mark are still provisional. PR #1
 Project previews are not production screenshots unless they are captured from a verified product build and approved for publication. The work index and project detail pages must label conceptual artwork clearly. The current project-by-project visual audit, evidence gaps and owner inputs are recorded in `docs/PHASE_2_VISUAL_EVIDENCE_AUDIT.md`.
 
 Do not invent dashboards, provider outputs, customer metrics or screenshots to fill a visual gap. A clearly labelled conceptual composition is preferable to a deceptive product screen. Keep a verified current live URL and development status close to each preview.
+
+
+## 13. Owner-approved SDC identity — 8 November 2026
+
+The official SDC visual identity is approved by the owner:
+- Primary logo: assets/brand/sdc-logo.svg.
+- Standalone symbol / favicon: assets/favicon.svg (no SDC lettering in the favicon).
+- Brand palette: ivory #fcfaf6, charcoal black #171b22, gold #e1ad35, warm brown #88451f, premium blue #175edb, and white #ffffff.
+- Gold and brown carry the premium brand character; black provides strong typography and contrast; blue is a controlled technology accent. Do not use the former neon-lime palette.
+- Hover and scroll reveal transitions are progressive enhancement. Scroll reveals must remain readable with JavaScript disabled and become static under prefers-reduced-motion: reduce.

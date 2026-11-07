@@ -10,7 +10,7 @@ async function createFixture() {
   await mkdir(path.join(root, "assets", "css"), { recursive: true });
   await mkdir(path.join(root, "services"), { recursive: true });
   await mkdir(path.join(root, "scripts"), { recursive: true });
-  await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"></head><a class="brand"><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer><form id="inquiry-form" action="contact.php" method="post"><input name="website"><button type="submit">Prepare inquiry</button></form>');
+  await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"></head><a class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer><form id="inquiry-form" action="contact.php" method="post"><input name="website"><button type="submit">Prepare inquiry</button></form>');
   await writeFile(
     path.join(root, "contact.html"),
     '<form id="inquiry-form" action="contact.php" method="post" novalidate><input name="website"><button type="submit">Send</button></form><p>The form submits to the PHP endpoint on the website. The official recipient address must be configured on the hosting server before messages can be sent.</p>'
@@ -38,7 +38,9 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     const homepage = await readFile(path.join(outputDirectory, "index.html"), "utf8");
     assert.match(homepage, /<title>SDC — Home<\/title>/);
     assert.match(homepage, /property="og:title" content="SDC — Home"/);
-    assert.match(homepage, /<span class="brand-name">SDC<span>\.<\/span><small>SOFTWARE DAMAGE CONTROL<\/small><\/span>/);
+    assert.ok(homepage.includes('<img class="brand-logo" src="/assets/brand/sdc-logo.svg"'));
+    assert.ok(homepage.includes('<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">'));
+    assert.ok(homepage.includes('theme-color" content="#fcfaf6"'));
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
     assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
     assert.doesNotMatch(homepage, /AGENCY<span>/);
