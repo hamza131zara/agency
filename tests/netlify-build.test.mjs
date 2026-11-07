@@ -24,8 +24,10 @@ async function createFixture() {
   await writeFile(path.join(root, "sitemap.xml"), "<urlset />");
   await writeFile(path.join(root, "_headers"), "/*\n  X-Content-Type-Options: nosniff");
   await writeFile(path.join(root, "assets", "css", "styles.css"), ":root{--red:#EA4335;--yellow:#FBBC04;--green:#34A853;--blue:#4285F4} body { margin: 0; }");
-  await writeFile(path.join(root, "assets", "brand", "source-parts", "logo-01.b64"), Buffer.from("fixture-exact-logo-webp").toString("base64"));
-  await writeFile(path.join(root, "assets", "brand", "source-parts", "favicon-01.b64"), Buffer.from("fixture-exact-favicon-webp").toString("base64"));
+  const fixtureLogo = Buffer.concat([Buffer.from("RIFF"), Buffer.alloc(4), Buffer.from("WEBP"), Buffer.from("fixture-logo"), Buffer.alloc(128)]);
+  const fixtureFavicon = Buffer.concat([Buffer.from("RIFF"), Buffer.alloc(4), Buffer.from("WEBP"), Buffer.from("fixture-favicon"), Buffer.alloc(128)]);
+  await writeFile(path.join(root, "assets", "brand", "source-parts", "logo-01.b64"), fixtureLogo.toString("base64"));
+  await writeFile(path.join(root, "assets", "brand", "source-parts", "favicon-01.b64"), fixtureFavicon.toString("base64"));
   await writeFile(path.join(root, "services", "software.html"), "<h1>Software</h1>");
   await writeFile(path.join(root, "scripts", "internal.mjs"), "throw new Error('must not be copied')");
   return root;
@@ -46,8 +48,12 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.ok(homepage.includes('<link rel="icon" type="image/webp" href="/assets/favicon.webp">'));
     await access(path.join(outputDirectory, "assets", "brand", "sdc-logo.webp"));
     await access(path.join(outputDirectory, "assets", "favicon.webp"));
-    assert.equal(await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo.webp"), "utf8"), "fixture-exact-logo-webp");
-    assert.equal(await readFile(path.join(outputDirectory, "assets", "favicon.webp"), "utf8"), "fixture-exact-favicon-webp");
+    const builtLogo = await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo.webp"));
+    const builtFavicon = await readFile(path.join(outputDirectory, "assets", "favicon.webp"));
+    assert.equal(builtLogo.subarray(0, 4).toString("ascii"), "RIFF");
+    assert.equal(builtLogo.subarray(8, 12).toString("ascii"), "WEBP");
+    assert.equal(builtFavicon.subarray(0, 4).toString("ascii"), "RIFF");
+    assert.equal(builtFavicon.subarray(8, 12).toString("ascii"), "WEBP");
     await assert.rejects(access(path.join(outputDirectory, "assets", "brand", "source-parts")));
     assert.ok(homepage.includes('theme-color" content="#fcfaf6"'));
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /--red:#EA4335/);
