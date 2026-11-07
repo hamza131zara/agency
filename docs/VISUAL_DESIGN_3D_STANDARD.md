@@ -185,11 +185,15 @@ Project previews are not production screenshots unless they are captured from a 
 Do not invent dashboards, provider outputs, customer metrics or screenshots to fill a visual gap. A clearly labelled conceptual composition is preferable to a deceptive product screen. Keep a verified current live URL and development status close to each preview.
 
 
+
 ## 13. Owner-approved SDC identity — 8 November 2026
 
-The official SDC visual identity is approved by the owner:
-- Primary logo: assets/brand/sdc-logo.svg.
-- Standalone symbol / favicon: assets/favicon.svg (no SDC lettering in the favicon).
-- Brand palette: ivory #fcfaf6, charcoal black #171b22, gold #e1ad35, warm brown #88451f, premium blue #175edb, and white #ffffff.
-- Gold and brown carry the premium brand character; black provides strong typography and contrast; blue is a controlled technology accent. Do not use the former neon-lime palette.
-- Hover and scroll reveal transitions are progressive enhancement. Scroll reveals must remain readable with JavaScript disabled and become static under prefers-reduced-motion: reduce.
+The owner has superseded the former ivory/gold/brown/blue identity with the Chrome-inspired four-colour shield identity.
+- Primary lockup: `assets/brand/sdc-logo.svg` — four-colour shield, charcoal SOFTWARE/CONTROL, red DAMAGE wordmark and yellow tagline rules.
+- Dark lockup: `assets/brand/sdc-logo-footer.svg` — same shield, white SOFTWARE/CONTROL and yellow DAMAGE on dark surfaces.
+- Standalone mark: `assets/favicon.svg` — four-colour shield only, on white; no wordmark.
+- Official accent palette: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`.
+- Core neutrals: charcoal `#171B22`, white `#FFFFFF`, with ivory `#FCFAF6` as the primary light canvas.
+- Use red for high-attention actions/active states, blue for links/focus/primary interactive accents, yellow for highlights and green for success/positive states. Do not use the former gold/brown/premium-blue palette or lime-green accent system.
+- Header uses the primary lockup on ivory. Footer uses the white/yellow wordmark lockup on dark surfaces. Keep the shield proportions and four-colour quadrant placement consistent across logo sizes.
+- Hover and scroll reveal transitions are progressive enhancement. Scroll reveals must remain readable with JavaScript disabled and become static under `prefers-reduced-motion: reduce`.
