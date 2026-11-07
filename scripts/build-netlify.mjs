@@ -10,7 +10,7 @@ function configureSdcBranding(html) {
   const logo = '<img class="brand-logo" src="/assets/brand/sdc-logo.svg" alt="Software Damage Control" width="1000" height="280">';
   const footerLogo = '<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg" alt="Software Damage Control" width="1000" height="280">';
   let result = html.replace(
-    /(<a\\b(?=[^>]*\\bclass=["\'][^"\']*\\bfooter-brand\\b[^"\']*["\'])[^>]*>)[\\s\\S]*?(<\\/a>)/g,
+    /(<a\b(?=[^>]*\bclass=["'][^"']*\bfooter-brand\b[^"']*["'])[^>]*>)[\s\S]*?(<\/a>)/g,
     `$1${footerLogo}$2`
   );
   result = result.replace(
