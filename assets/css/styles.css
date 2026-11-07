@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
-:root{--paper:#fcfaf6;--ink:#171b22;--muted:#747872;--line:#e7ded4;--lime:#e2ad36;--orange:#8a451f;--white:#fff;--mono:"DM Mono",monospace;--sans:"Manrope",Arial,sans-serif;--max:1220px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:2px;--radius-md:4px;--motion-fast:160ms ease}
+:root{--paper:#fcfaf6;--ink:#171b22;--muted:#626b78;--line:#e7ded4;--lime:#e1ad35;--orange:#88451f;--gold:#e1ad35;--brown:#88451f;--blue:#175edb;--blue-soft:#edf3ff;--white:#fff;--mono:"DM Mono",monospace;--sans:"Manrope",Arial,sans-serif;--max:1220px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--radius-sm:8px;--radius-md:14px;--motion-fast:180ms ease}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:95px}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
@@ -1343,8 +1343,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .work-section{background:#f5f1ea}
 .work-visual{border-radius:12px;box-shadow:0 7px 22px rgba(30,29,26,.05);transition:transform .28s ease,box-shadow .28s ease}
 .work-visual:hover{transform:translateY(-5px);box-shadow:0 17px 34px rgba(30,29,26,.12)}
-.work-meta h3,.section-heading h2,.phase-copy h2,.contact-copy h2{color:#171b22}
-.section-heading h2 em,.phase-copy h2 em,.contact-copy h2 em,.muted-heading{color:#8a451f}
+.work-meta h3,.section-heading h2,.contact-copy h2{color:#171b22}.phase-copy h2{color:#fff}
+.section-heading h2 em,.contact-copy h2 em,.muted-heading{color:#88451f}.phase-copy h2 em{color:#f4ce75}
 .phase-section{background:#22262d}
 .phase-section:before{border-color:rgba(226,173,54,.22);box-shadow:0 0 0 55px #22262d,0 0 0 56px rgba(226,173,54,.16),0 0 0 115px #22262d,0 0 0 116px rgba(226,173,54,.12)}
 .phase-copy .eyebrow span,.phase-kicker,.automation-row label{color:#f0c45f}
@@ -1374,3 +1374,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .reveal:nth-child(3n + 1){transition-delay:.02s}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.reveal.is-visible{opacity:1;transform:none;filter:none;transition:none!important;will-change:auto}.brand-logo,.button,.nav-cta,.service-card,.work-visual,.round-link,.principle-grid article,.service-detail,.project-item{transition:none!important;transform:none!important}}
 @media print{.reveal,.reveal.is-visible{opacity:1;transform:none;filter:none}}
+
+/* Contrast fixes verified by the existing axe WCAG checks. */
+.mixer-node-c small{color:#171b22}
+.phase-copy .button-light{background:#e1ad35;color:#171b22}
