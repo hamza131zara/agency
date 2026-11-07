@@ -28,7 +28,7 @@ function configureSdcBranding(html) {
   if (/<meta name="theme-color"/i.test(result)) {
     result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#fcfaf6">');
   } else {
-    result = result.replace(/(<meta name="viewport"[^>]*>)/i, '$1<meta name="theme-color" content="#fcfaf6">');
+    result = result.replace(/(<head\\b[^>]*>)/i, '$1<meta name="theme-color" content="#fcfaf6">');
   }
   return result;
 }
