@@ -8,7 +8,7 @@ import { buildNetlifySite } from "../scripts/build-netlify.mjs";
 async function createFixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "sdc-netlify-build-"));
   await mkdir(path.join(root, "assets", "css"), { recursive: true });
-  await mkdir(path.join(root, "assets", "brand"), { recursive: true });
+  await mkdir(path.join(root, "assets", "brand", "source-parts"), { recursive: true });
   await mkdir(path.join(root, "services"), { recursive: true });
   await mkdir(path.join(root, "scripts"), { recursive: true });
   await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"></head><a class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><a class="brand footer-brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer><form id="inquiry-form" action="contact.php" method="post"><input name="website"><button type="submit">Prepare inquiry</button></form>');
@@ -24,8 +24,8 @@ async function createFixture() {
   await writeFile(path.join(root, "sitemap.xml"), "<urlset />");
   await writeFile(path.join(root, "_headers"), "/*\n  X-Content-Type-Options: nosniff");
   await writeFile(path.join(root, "assets", "css", "styles.css"), ":root{--red:#EA4335;--yellow:#FBBC04;--green:#34A853;--blue:#4285F4} body { margin: 0; }");
-  await writeFile(path.join(root, "assets", "brand", "sdc-logo.webp"), Buffer.from("exact-logo-source-pixels"));
-  await writeFile(path.join(root, "assets", "favicon.png"), Buffer.from("exact-favicon-source-pixels"));
+  await writeFile(path.join(root, "assets", "brand", "source-parts", "logo-01.b64"), Buffer.from("fixture-exact-logo-webp").toString("base64"));
+  await writeFile(path.join(root, "assets", "brand", "source-parts", "favicon-01.b64"), Buffer.from("fixture-exact-favicon-webp").toString("base64"));
   await writeFile(path.join(root, "services", "software.html"), "<h1>Software</h1>");
   await writeFile(path.join(root, "scripts", "internal.mjs"), "throw new Error('must not be copied')");
   return root;
@@ -43,13 +43,13 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.match(homepage, /property="og:title" content="SDC — Home"/);
     assert.ok(homepage.includes('<img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp"'));
     assert.ok(homepage.includes('<span class="sdc-brand-lockup sdc-brand-lockup--footer">'));
-    assert.ok(homepage.includes('<link rel="icon" type="image/png" href="/assets/favicon.png">'));
+    assert.ok(homepage.includes('<link rel="icon" type="image/webp" href="/assets/favicon.webp">'));
     await access(path.join(outputDirectory, "assets", "brand", "sdc-logo.webp"));
-    await access(path.join(outputDirectory, "assets", "favicon.png"));
+    await access(path.join(outputDirectory, "assets", "favicon.webp"));
+    assert.equal(await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo.webp"), "utf8"), "fixture-exact-logo-webp");
+    assert.equal(await readFile(path.join(outputDirectory, "assets", "favicon.webp"), "utf8"), "fixture-exact-favicon-webp");
+    await assert.rejects(access(path.join(outputDirectory, "assets", "brand", "source-parts")));
     assert.ok(homepage.includes('theme-color" content="#fcfaf6"'));
-    assert.match(await readFile(path.join(outputDirectory, "assets", "favicon.svg"), "utf8"), /#EA4335/);
-    assert.match(await readFile(path.join(outputDirectory, "assets", "favicon.svg"), "utf8"), /#FBBC04/);
-    assert.match(await readFile(path.join(outputDirectory, "assets", "favicon.svg"), "utf8"), /#34A853/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /--red:#EA4335/);
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
     assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
