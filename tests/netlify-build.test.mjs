@@ -24,6 +24,7 @@ async function createFixture() {
   await writeFile(path.join(root, "sitemap.xml"), "<urlset />");
   await writeFile(path.join(root, "_headers"), "/*\n  X-Content-Type-Options: nosniff");
   await writeFile(path.join(root, "assets", "css", "styles.css"), ":root{--red:#EA4335;--yellow:#FBBC04;--green:#34A853;--blue:#4285F4} body { margin: 0; }");
+  await writeFile(path.join(root, "assets", "favicon.svg"), '<svg><image href="/assets/favicon.webp"/></svg>');
   const fixtureLogo = Buffer.concat([Buffer.from("RIFF"), Buffer.alloc(4), Buffer.from("WEBP"), Buffer.from("fixture-logo"), Buffer.alloc(128)]);
   const fixtureFavicon = Buffer.concat([Buffer.from("RIFF"), Buffer.alloc(4), Buffer.from("WEBP"), Buffer.from("fixture-favicon"), Buffer.alloc(128)]);
   await writeFile(path.join(root, "assets", "brand", "source-parts", "logo-01.b64"), fixtureLogo.toString("base64"));
@@ -55,6 +56,7 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.equal(builtFavicon.subarray(0, 4).toString("ascii"), "RIFF");
     assert.equal(builtFavicon.subarray(8, 12).toString("ascii"), "WEBP");
     await assert.rejects(access(path.join(outputDirectory, "assets", "brand", "source-parts")));
+    await assert.rejects(access(path.join(outputDirectory, "assets", "favicon.svg")));
     assert.ok(homepage.includes('theme-color" content="#fcfaf6"'));
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /--red:#EA4335/);
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
