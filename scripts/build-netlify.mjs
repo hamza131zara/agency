@@ -7,8 +7,8 @@ const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
 function configureSdcBranding(html) {
-  const logo = '<img class="brand-logo" src="/assets/brand/sdc-logo.svg" alt="Software Damage Control" width="1000" height="280">';
-  const footerLogo = '<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg" alt="Software Damage Control" width="1000" height="280">';
+  const logo = '<picture class="brand-logo-picture"><source media="(max-width: 560px)" srcset="/assets/brand/sdc-logo-compact.svg"><img class="brand-logo" src="/assets/brand/sdc-logo.svg" alt="Software Damage Control" width="1000" height="320" fetchpriority="high"></picture>';
+  const footerLogo = '<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg" alt="Software Damage Control" width="1000" height="320" loading="lazy" decoding="async">';
   let result = html.replace(
     /(<a\b(?=[^>]*\bclass=["'][^"']*\bfooter-brand\b[^"']*["'])[^>]*>)[\s\S]*?(<\/a>)/g,
     `$1${footerLogo}$2`
