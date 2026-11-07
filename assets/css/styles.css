@@ -1414,3 +1414,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .brief-preview-panel button:disabled{opacity:1;background:#3B414A!important;border:1px solid #68717D!important;color:#D6DAE0!important;box-shadow:none!important;cursor:not-allowed;transform:none!important}
 .brief-preview-panel button:disabled span{color:inherit!important}
 @media(prefers-reduced-motion:reduce){.brand-logo,.service-card,.work-visual,.button,.nav-cta{transition:none!important}}
+
+/* Responsive SDC lockups: full brand on desktop, legible compact mark on mobile. */
+.brand-logo-picture{display:block;flex:0 1 286px;width:min(286px,27vw);min-width:0;line-height:0}
+.brand-logo{display:block;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain;transition:transform .24s ease,filter .24s ease}
+.brand:hover .brand-logo,.brand:focus-visible .brand-logo{transform:translateY(-1px);filter:drop-shadow(0 4px 7px rgba(23,27,34,.12))}
+.site-header .brand{min-width:0;flex:0 1 auto}
+.footer-brand .brand-logo{display:block;width:min(300px,100%);max-width:100%;height:auto;max-height:none}
+@media(max-width:1050px) and (min-width:561px){
+ .brand-logo-picture{width:clamp(210px,25vw,260px);flex-basis:clamp(210px,25vw,260px)}
+ .site-header{gap:18px}
+ .primary-nav{gap:clamp(12px,1.6vw,20px)}
+}
+@media(max-width:760px){
+ .brand-logo-picture{width:156px;flex:0 1 156px}
+ .site-header .brand{flex:0 1 156px}
+ .footer-brand .brand-logo{width:min(270px,78vw)}
+ .footer-main{grid-template-columns:1fr;gap:24px}
+ .footer-links{justify-content:flex-start}
+}
+@media(max-width:380px){
+ .brand-logo-picture{width:140px;flex-basis:140px}
+ .site-header{padding-inline:14px;gap:10px}
+ .menu-toggle{flex:0 0 40px}
+}
+@media(prefers-reduced-motion:reduce){
+ .brand-logo{transition:none!important}
+ .brand:hover .brand-logo,.brand:focus-visible .brand-logo{transform:none;filter:none}
+}
