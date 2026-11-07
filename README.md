@@ -60,7 +60,8 @@ The current validated platform contains 30 HTML routes: 14 root pages, six servi
 - `docs/AGENCY_MARKETING_SEO_AEO_GEO_STRATEGY.md` — agency positioning hypotheses, 90-day marketing test and search-discoverability strategy.
 - `docs/P6_6_OWNER_DECISION_REGISTER.md` — unresolved owner decisions, evidence register and release-gate sequence.
 - `docs/PORTFOLIO_CONTENT_EVIDENCE.md` and `docs/PORTFOLIO_EVIDENCE_VISUAL_GOVERNANCE.md` — portfolio evidence, owner claims, asset permissions and publication safeguards.
-- `docs/HOSTINGER_DEPLOYMENT.md` — deployment runbook (owner approval required).
+- `docs/HOSTINGER_DEPLOYMENT.md` — PHP-enabled hosting runbook (owner approval required).
+- `docs/NETLIFY_DEPLOYMENT.md` — free static-hosting runbook, GitHub connection, form handling and custom-domain setup.
 
 ## Local preview and checks
 
@@ -70,7 +71,7 @@ For a local visual preview on Windows, macOS or Linux, install Node.js 22 or new
 npm run preview
 ```
 
-Open http://127.0.0.1:8000/ in your browser. Stop the server with Ctrl+C. The preview server uses Node's built-in modules, binds to localhost only, does not expose directory listings, and never executes PHP files. The contact endpoint therefore does not submit mail in this preview; use a PHP-enabled local or staging environment to test server-side form handling.
+Open http://127.0.0.1:8000/ in your browser. Stop the server with Ctrl+C. The preview server uses Node's built-in modules, binds to localhost only, does not expose directory listings, and never executes PHP files. The contact endpoint therefore does not submit mail in this preview; use a PHP-enabled local or staging environment to test the PHP contact endpoint. For the free Netlify static deployment, use `npm run build:netlify`; the generated `dist/` excludes PHP/private files and configures the static contact form for Netlify Forms.
 
 Run the repository checks with:
 
