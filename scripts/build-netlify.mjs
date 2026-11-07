@@ -29,7 +29,11 @@ function configureSdcBranding(html) {
   );
   result = result.replace(/(©\s*<span id="year"><\/span>\s*)Agency(\. All rights reserved\.)/i, "$1SDC$2");
   result = result.replace('<span class="atlas-hub-mark">A.</span>', '<span class="atlas-hub-mark">SDC</span>');
-  result = result.replace(/<link rel="icon" type="image\/svg\+xml" href="assets\/favicon\.svg">/g, '<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">');
+  if (/<link rel="icon"[^>]*>/i.test(result)) {
+    result = result.replace(/<link rel="icon"[^>]*>/i, '<link rel="icon" type="image/png" href="/assets/favicon.png">');
+  } else {
+    result = result.replace(/(<head\\b[^>]*>)/i, '$1<link rel="icon" type="image/png" href="/assets/favicon.png">');
+  }
   if (/<meta name="theme-color"/i.test(result)) {
     result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#FCFAF6">');
   } else {
