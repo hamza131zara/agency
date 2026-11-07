@@ -30,9 +30,9 @@ function configureSdcBranding(html) {
   result = result.replace(/(©\s*<span id="year"><\/span>\s*)Agency(\. All rights reserved\.)/i, "$1SDC$2");
   result = result.replace('<span class="atlas-hub-mark">A.</span>', '<span class="atlas-hub-mark">SDC</span>');
   if (/<link rel="icon"[^>]*>/i.test(result)) {
-    result = result.replace(/<link rel="icon"[^>]*>/i, '<link rel="icon" type="image/png" href="/assets/favicon.png">');
+    result = result.replace(/<link rel="icon"[^>]*>/i, '<link rel="icon" type="image/webp" href="/assets/favicon.webp">');
   } else {
-    result = result.replace(/(<head\\b[^>]*>)/i, '$1<link rel="icon" type="image/png" href="/assets/favicon.png">');
+    result = result.replace(/(<head\b[^>]*>)/i, '$1<link rel="icon" type="image/webp" href="/assets/favicon.webp">');
   }
   if (/<meta name="theme-color"/i.test(result)) {
     result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#FCFAF6">');
@@ -40,6 +40,28 @@ function configureSdcBranding(html) {
     result = result.replace(/(<head\b[^>]*>)/i, '$1<meta name="theme-color" content="#fcfaf6">');
   }
   return result;
+}
+
+async function assembleOwnerSuppliedBrandAssets(outputRoot) {
+  const sourceDirectory = path.join(outputRoot, "assets", "brand", "source-parts");
+  async function decodeParts(prefix) {
+    const names = (await readdir(sourceDirectory))
+      .filter((name) => name.startsWith(prefix + "-") && name.endsWith(".b64"))
+      .sort();
+    if (!names.length) throw new Error(`Missing owner-supplied ${prefix} image source parts.`);
+    let encoded = "";
+    for (const name of names) encoded += (await readFile(path.join(sourceDirectory, name), "utf8")).trim();
+    const bytes = Buffer.from(encoded, "base64");
+    if (bytes.length < 100) throw new Error(`Owner-supplied ${prefix} image did not decode correctly.`);
+    if (bytes.subarray(0, 4).toString("ascii") !== "RIFF" || bytes.subarray(8, 12).toString("ascii") !== "WEBP") {
+      throw new Error(`Owner-supplied ${prefix} asset is not a valid WebP image.`);
+    }
+    return bytes;
+  }
+  const [logoBytes, faviconBytes] = await Promise.all([decodeParts("logo"), decodeParts("favicon")]);
+  await writeFile(path.join(outputRoot, "assets", "brand", "sdc-logo.webp"), logoBytes);
+  await writeFile(path.join(outputRoot, "assets", "favicon.webp"), faviconBytes);
+  await rm(sourceDirectory, { recursive: true, force: true });
 }
 
 function setAttribute(tag, name, value) {
@@ -111,6 +133,8 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
   
+    await assembleOwnerSuppliedBrandAssets(outputRoot);
+
     async function transformPublicHtml(directory, relative = "") {
       for (const entry of await readdir(directory, { withFileTypes: true })) {
         const filePath = path.join(directory, entry.name);
