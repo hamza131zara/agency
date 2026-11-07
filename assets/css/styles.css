@@ -1246,19 +1246,27 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .service-atlas .atlas-orbit-slot {
   position: absolute;
-  left: calc(50% + var(--orbit-x) * cos(var(--angle)));
-  top: calc(50% + var(--orbit-y) * sin(var(--angle)));
+  left: var(--static-left);
+  top: var(--static-top);
   width: 166px;
   height: 68px;
   transform: translate(-50%, -50%) translateZ(var(--depth));
   transform-style: preserve-3d;
 }
+@supports (left: calc(50% + 10px * cos(45deg))) {
+  .service-atlas .atlas-orbit-slot {
+    left: calc(50% + var(--orbit-x) * cos(var(--angle)));
+    top: calc(50% + var(--orbit-y) * sin(var(--angle)));
+  }
+}
 .service-atlas .atlas-node {
   position: absolute;
   inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
   padding: 0;
   border: 0;
   background: transparent;
