@@ -188,13 +188,14 @@ Do not invent dashboards, provider outputs, customer metrics or screenshots to f
 
 ## 13. Owner-supplied SDC artwork — 8 November 2026
 
-The owner supplied the actual shield logo and favicon images. These are the only approved shield artwork; the earlier generated SVG approximations and alternative shields are retired.
-- Primary shield source: `assets/brand/sdc-logo.webp`, optimized from the owner's supplied `sdc_logo.jpg` to 512×578 WebP while preserving the full composition, aspect ratio and original colours; no cropping, recolouring or redrawing.
-- Favicon source: `assets/favicon.webp`, optimized from the owner's supplied `favicon.jpg` to 256×283 WebP while preserving the full composition, aspect ratio and original colours; no cropping, recolouring or redrawing.
-- Keep the source aspect ratios. Use `object-fit: contain`, fluid sizing and the exact image assets at all breakpoints.
-- The adjacent SOFTWARE / DAMAGE / CONTROL wordmark is HTML text, not a replacement shield graphic. Keep the brand name readable on desktop and mobile.
-- Header uses the owner-supplied shield on the ivory canvas. Footer places the same unchanged shield on its original white canvas, with the wordmark in white/yellow on charcoal.
+The owner supplied the actual shield logo and separate favicon images. These are the only approved shield artwork; generated SVG approximations and alternative shield styles are retired.
+- Primary shield source: `assets/brand/sdc-logo.webp`, optimized from the owner's supplied `sdc_logo.jpg` to 512×578 WebP while preserving the full composition and original aspect ratio. No cropping, recolouring, redrawing or alternative shield design.
+- Favicon source: `assets/favicon.webp`, optimized from the owner's supplied `favicon.jpg` to 256×283 WebP while preserving the full composition and original aspect ratio. No cropping, recolouring, redrawing or alternative favicon design.
+- The two final images are assembled during the Netlify static build from version-controlled base64 source parts in `assets/brand/source-parts/`; those parts are removed from the published artifact. The published assets are the decoded supplied images.
+- Keep the image geometry unchanged with `object-fit: contain`, fluid sizing and responsive dimensions.
+- The adjacent SOFTWARE / DAMAGE / CONTROL wordmark is live HTML text, not another shield drawing. Keep it readable at desktop, tablet and mobile sizes.
+- Header uses the owner-supplied shield and charcoal/red wordmark on ivory. Footer uses the same unchanged shield on its original white canvas with white/yellow wordmark text on charcoal.
 - Brand accents: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`; neutrals: charcoal `#171B22`, white `#FFFFFF`, ivory `#FCFAF6`.
-- Use accessible darker red text (`#B3261E`) where small text would otherwise fail contrast; do not alter the supplied artwork's red.
-- Do not add alternative shield/monogram drawings, compact SVG logos, gradients, or recoloured logo variants. Favicon must use the supplied favicon image.
+- Use accessible darker red text (`#B3261E`) where small UI text would otherwise fail contrast; do not alter the supplied artwork's red.
+- Do not add alternative shield/monogram drawings, compact SVG logos, gradients, or recoloured logo variants. Use the supplied image at every breakpoint.
 - Preserve reduced-motion support and responsive header/footer behavior.
