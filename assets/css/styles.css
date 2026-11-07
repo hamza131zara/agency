@@ -509,11 +509,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .preview-badge{border:1px solid #69785c;border-radius:99px;padding:5px 8px;color:#e0e8cc;font:8px var(--mono);letter-spacing:.07em}
 .brief-preview-panel h2{font-size:29px;letter-spacing:-.06em;margin:22px 0 9px}
 .brief-output-note{font-size:11px;line-height:1.7;color:#d0d7c9;margin:0 0 15px}
-.brief-preview-panel textarea{display:block;width:100%;min-width:0;min-height:390px;resize:vertical;border:1px solid #4b574a;border-radius:2px;background:#171d18;color:#e8eddf;padding:14px;font:10px/1.8 var(--mono);white-space:pre-wrap}
+.brief-preview-panel textarea{display:block;width:100%;min-width:0;min-height:390px;resize:vertical;border:1px solid #4b574a;border-radius:8px;background:#171d18;color:#e8eddf;padding:16px;font:12px/1.75 var(--mono);white-space:pre-wrap}
 .brief-preview-panel textarea::placeholder{color:#c2cabb;opacity:1}
 .brief-output-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
 .brief-preview-panel .button-dark{background:#e2ad36;color:#1c2419}.brief-preview-panel .button-dark span{color:#1c2419}.brief-preview-panel .button-outline{border-color:#737e6d;color:#fcfaf6}
-.brief-preview-panel button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.brief-preview-panel button:disabled{opacity:1;background:#3b433d!important;border:1px solid #59645a!important;color:#b8c0b5!important;box-shadow:none!important;cursor:not-allowed;transform:none!important}
+.brief-preview-panel button:disabled span{color:inherit!important}
+.brief-preview-panel .button-dark:disabled{background:#3b433d!important;color:#b8c0b5!important}
 .brief-privacy-note{font-size:10px;line-height:1.7;color:#c7d0bf;margin:20px 0}.brief-privacy-note strong{color:#fcfaf6}
 .brief-preview-panel>.text-link{display:inline-block;font-size:11px;color:#e0e8cc;text-decoration:underline;text-underline-offset:3px}
 .form-status[data-state="ready"]{color:#45652c}.form-status[data-state="error"]{color:#9c3927}
@@ -1320,10 +1322,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* SDC approved brand system — ivory, black, gold, warm brown and premium blue. */
 .site-header{background:rgba(252,250,246,.94);border-bottom-color:#e7ded4;backdrop-filter:saturate(140%) blur(14px)}
-.brand-logo{display:block;width:auto;height:48px;max-width:270px;object-fit:contain;transition:transform .24s ease,filter .24s ease}
-.brand:hover .brand-logo{transform:translateY(-1px);filter:drop-shadow(0 5px 9px rgba(23,27,34,.12))}
-.footer-brand .brand-logo{height:58px;max-width:285px}
-@media(max-width:760px){.brand-logo{height:39px;max-width:205px}.footer-brand .brand-logo{height:48px}}
+.brand-logo{display:block;width:min(300px,38vw);height:auto;max-height:68px;object-fit:contain;transition:transform .24s ease,filter .24s ease}
+.brand:hover .brand-logo,.brand:focus-visible .brand-logo{transform:translateY(-1px);filter:drop-shadow(0 5px 9px rgba(23,27,34,.12))}
+.footer-brand .brand-logo{width:min(310px,100%);max-height:62px}
+@media(max-width:760px){.brand-logo{width:min(210px,62vw);max-height:48px}.footer-brand .brand-logo{width:min(270px,76vw);max-height:52px}}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
 ::selection{background:#f0d18b;color:#171b22}
 .nav-cta{border-radius:8px;background:#171b22;border:1px solid #171b22;transition:background .22s ease,border-color .22s ease,transform .22s ease,box-shadow .22s ease}
