@@ -671,7 +671,9 @@ test.describe('Phase I route and content checks', () => {
     });
     const mobilePage = await context.newPage();
     await mobilePage.goto('/');
-    await mobilePage.locator('#service-atlas .atlas-software').tap();
+    // Keep pointer-action checks deterministic while the separate orbit tests cover motion.
+    await mobilePage.emulateMedia({ reducedMotion: 'reduce' });
+    await mobilePage.locator('#service-atlas .atlas-software .atlas-node').tap();
     await mobilePage.waitForURL(url => url.pathname === '/services/software-engineering.html');
     expect(new URL(mobilePage.url()).pathname).toBe('/services/software-engineering.html');
     await expect(mobilePage.locator('h1')).toContainText('Websites and platforms');
