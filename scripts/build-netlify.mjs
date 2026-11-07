@@ -50,55 +50,60 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
     throw new Error("Netlify output directory must be a child of the project root.");
   }
 
-  await rm(outputRoot, { recursive: true, force: true });
-  await mkdir(outputRoot, { recursive: true });
-
-  const entries = await readdir(projectRoot, { withFileTypes: true });
-  const publicRootFiles = entries
-    .filter((entry) => entry.isFile() && (entry.name.toLowerCase().endsWith(".html") || STATIC_ROOT_FILES.has(entry.name)))
-    .map((entry) => entry.name);
-
-  for (const name of publicRootFiles) {
-    await cp(path.join(projectRoot, name), path.join(outputRoot, name));
-  }
-
-  for (const name of STATIC_DIRECTORIES) {
-    const source = path.join(projectRoot, name);
-    try {
-      await cp(source, path.join(outputRoot, name), { recursive: true, force: true, errorOnExist: false });
-    } catch (error) {
-      if (error?.code !== "ENOENT") throw error;
+  try {
+    await rm(outputRoot, { recursive: true, force: true });
+    await mkdir(outputRoot, { recursive: true });
+  
+    const entries = await readdir(projectRoot, { withFileTypes: true });
+    const publicRootFiles = entries
+      .filter((entry) => entry.isFile() && (entry.name.toLowerCase().endsWith(".html") || STATIC_ROOT_FILES.has(entry.name)))
+      .map((entry) => entry.name);
+  
+    for (const name of publicRootFiles) {
+      await cp(path.join(projectRoot, name), path.join(outputRoot, name));
     }
-  }
-
-  const contactPath = path.join(outputRoot, "contact.html");
-  const contactHtml = await readFile(contactPath, "utf8");
-  await writeFile(contactPath, configureNetlifyContactForm(contactHtml), "utf8");
-
-  const forbidden = [];
-  async function inspect(directory, relative = "") {
-    for (const entry of await readdir(directory, { withFileTypes: true })) {
-      const childRelative = path.posix.join(relative, entry.name);
-      if (entry.isDirectory()) {
-        await inspect(path.join(directory, entry.name), childRelative);
-      } else if (/\.(?:php|env)$/i.test(entry.name) || /(^|\/)config(?:\.|$)/i.test(childRelative)) {
-        forbidden.push(childRelative);
+  
+    for (const name of STATIC_DIRECTORIES) {
+      const source = path.join(projectRoot, name);
+      try {
+        await cp(source, path.join(outputRoot, name), { recursive: true, force: true, errorOnExist: false });
+      } catch (error) {
+        if (error?.code !== "ENOENT") throw error;
       }
     }
-  }
-  await inspect(outputRoot);
-
-  if (forbidden.length) {
+  
+    const contactPath = path.join(outputRoot, "contact.html");
+    const contactHtml = await readFile(contactPath, "utf8");
+    await writeFile(contactPath, configureNetlifyContactForm(contactHtml), "utf8");
+  
+    const forbidden = [];
+    async function inspect(directory, relative = "") {
+      for (const entry of await readdir(directory, { withFileTypes: true })) {
+        const childRelative = path.posix.join(relative, entry.name);
+        if (entry.isDirectory()) {
+          await inspect(path.join(directory, entry.name), childRelative);
+        } else if (/\.(?:php|env)$/i.test(entry.name) || /(^|\/)config(?:\.|$)/i.test(childRelative)) {
+          forbidden.push(childRelative);
+        }
+      }
+    }
+    await inspect(outputRoot);
+  
+    if (forbidden.length) {
+      await rm(outputRoot, { recursive: true, force: true });
+      throw new Error(`Netlify output contains server/private files: ${forbidden.join(", ")}`);
+    }
+  
+    return {
+      outputDirectory: outputRoot,
+      rootPages: publicRootFiles.filter((name) => name.endsWith(".html")).length,
+      copiedDirectories: STATIC_DIRECTORIES.length,
+      phpFilesPublished: 0,
+    };
+  } catch (error) {
     await rm(outputRoot, { recursive: true, force: true });
-    throw new Error(`Netlify output contains server/private files: ${forbidden.join(", ")}`);
+    throw error;
   }
-
-  return {
-    outputDirectory: outputRoot,
-    rootPages: publicRootFiles.filter((name) => name.endsWith(".html")).length,
-    copiedDirectories: STATIC_DIRECTORIES.length,
-    phpFilesPublished: 0,
-  };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
