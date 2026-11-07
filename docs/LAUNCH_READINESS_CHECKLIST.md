@@ -25,7 +25,7 @@ These details cannot safely be invented or inferred from the repository.
 ### 1. Brand and legal operator
 
 - [x] Owner supplied public display name: Software Damage Control (SDC).
-- [x] Owner approved the Chrome-inspired four-colour SDC shield identity on 8 November 2026; primary and dark footer lockups, standalone shield favicon, and theme tokens are implemented on the review branch. Social-preview assets remain a separate approval item.
+- [x] Owner supplied the final SDC shield image and separate favicon on 8 November 2026. Use those exact artwork files only; prior generated SVG shield variations are retired. Social-preview assets remain a separate approval item.
 - [ ] Confirm the legal operator's full name/entity, jurisdiction and business address.
 - [ ] Supply an official legal contact email.
 - [ ] Have the Privacy Notice reviewed against actual data collection, mail hosting, session cookies, server logs, third-party fonts and retention.
