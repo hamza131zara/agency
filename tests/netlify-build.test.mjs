@@ -47,7 +47,7 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.match(homepage, /data-delivery="netlify"/);
     assert.match(homepage, /netlify-honeypot="website"/);
     assert.match(homepage, /name="form-name" value="sdc-project-inquiry"/);
-    assert.match(homepage, /action="\\/"/);
+    assert.ok(homepage.includes('action="/"'));
     assert.doesNotMatch(homepage, /action="contact\\.php"/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /margin: 0/);
     assert.match(await readFile(path.join(outputDirectory, "services", "software.html"), "utf8"), /Software/);
