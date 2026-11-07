@@ -189,8 +189,8 @@ Do not invent dashboards, provider outputs, customer metrics or screenshots to f
 ## 13. Owner-supplied SDC artwork — 8 November 2026
 
 The owner supplied the actual shield logo and favicon images. These are the only approved shield artwork; the earlier generated SVG approximations and alternative shields are retired.
-- Primary shield source: `assets/brand/sdc-logo.webp`, converted losslessly from the owner's supplied `sdc_logo.jpg` without cropping, recolouring, redrawing or changing decoded pixels.
-- Favicon source: `assets/favicon.png`, converted losslessly from the owner's supplied `favicon.jpg` without cropping, recolouring, redrawing or changing decoded pixels.
+- Primary shield source: `assets/brand/sdc-logo.webp`, optimized from the owner's supplied `sdc_logo.jpg` to 512×578 WebP while preserving the full composition, aspect ratio and original colours; no cropping, recolouring or redrawing.
+- Favicon source: `assets/favicon.webp`, optimized from the owner's supplied `favicon.jpg` to 256×283 WebP while preserving the full composition, aspect ratio and original colours; no cropping, recolouring or redrawing.
 - Keep the source aspect ratios. Use `object-fit: contain`, fluid sizing and the exact image assets at all breakpoints.
 - The adjacent SOFTWARE / DAMAGE / CONTROL wordmark is HTML text, not a replacement shield graphic. Keep the brand name readable on desktop and mobile.
 - Header uses the owner-supplied shield on the ivory canvas. Footer places the same unchanged shield on its original white canvas, with the wordmark in white/yellow on charcoal.
