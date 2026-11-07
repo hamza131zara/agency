@@ -133,7 +133,6 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
   
-    await assembleOwnerSuppliedBrandAssets(outputRoot);
 
     async function transformPublicHtml(directory, relative = "") {
       for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -151,6 +150,7 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
     await transformPublicHtml(outputRoot);
+    await assembleOwnerSuppliedBrandAssets(outputRoot);
     await rm(path.join(outputRoot, "assets", "favicon.svg"), { force: true });
 
     const stylesheet = path.join(outputRoot, "assets", "css", "styles.css");
