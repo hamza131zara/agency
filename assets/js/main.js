@@ -114,6 +114,7 @@ copyInquiryButton?.addEventListener('click', async () => {
 });
 
 if (form && status) {
+  const netlifyDelivery = form.dataset.delivery === 'netlify';
   let csrfToken = '';
   let ready = false;
   const submitButton = form.querySelector('button[type="submit"]');
@@ -141,7 +142,21 @@ if (form && status) {
   } catch (error) {
     // Storage can be disabled by the browser; the form stays usable without prefill.
   }
+
   async function initialize() {
+    if (netlifyDelivery) {
+      ready = true;
+      if (submitButton) submitButton.disabled = false;
+      showLocalInquiryTools(false);
+      setStatus(
+        briefHandoffLoaded
+          ? 'Your project summary is ready. Review the details before submitting your inquiry.'
+          : 'The hosted project inquiry form is ready. Your message has not been submitted.',
+        ''
+      );
+      return;
+    }
+
     if (submitButton) submitButton.disabled = true;
     setStatus('Connecting to the website inquiry service…');
     try {
@@ -169,10 +184,11 @@ if (form && status) {
       setLocalInquiryStatus('The form endpoint is unavailable. Copy or download stays in this browser and does not submit your message.', 'error');
     }
   }
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.reportValidity()) { setStatus('Please review the required fields and enter a valid email address.','error'); return; }
-    if (!ready || !csrfToken) { setStatus('The form is not connected to the server. Your inquiry has not been sent.','error'); return; }
+    if (!ready || (!netlifyDelivery && !csrfToken)) { setStatus('The form is not connected to the server. Your inquiry has not been sent.','error'); return; }
     const name = String(form.elements.namedItem('name')?.value || '').trim();
     const email = String(form.elements.namedItem('email')?.value || '').trim();
     const message = String(form.elements.namedItem('message')?.value || '').trim();
@@ -180,9 +196,24 @@ if (form && status) {
       setStatus('Please check your name, email and project details. The message must contain at least 20 characters.','error'); return;
     }
     if (submitButton) { submitButton.disabled = true; submitButton.textContent = 'Sending…'; }
-    setStatus('Submitting your inquiry securely…');
+    setStatus('Submitting your inquiry…');
     try {
       const data = new URLSearchParams(new FormData(form));
+      if (netlifyDelivery) {
+        data.set('form-name', form.getAttribute('name') || 'sdc-project-inquiry');
+        if (!data.has('website')) data.set('website', '');
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: {'Content-Type':'application/x-www-form-urlencoded'},
+          body: data.toString(),
+          cache: 'no-store'
+        });
+        if (!response.ok) throw new Error('The hosted form service did not accept the request.');
+        form.reset();
+        setStatus('Your inquiry was submitted to the hosted form service. This confirms platform acceptance, not that SDC has read or replied to it.', 'ready');
+        return;
+      }
+
       data.set('csrf_token', csrfToken);
       if (!data.has('website')) data.set('website','');
       const response = await fetch('contact.php',{method:'POST',credentials:'same-origin',headers:{Accept:'application/json','Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:data.toString(),cache:'no-store'});
@@ -200,7 +231,13 @@ if (form && status) {
       form.reset();
       setStatus(result.message || 'Your inquiry was accepted by the website mail service. This does not confirm final inbox delivery.','ready');
     } catch (err) {
-      setStatus('We could not confirm the submission. Your inquiry may not have been sent; please try again later.','error');
+      if (netlifyDelivery) {
+        showLocalInquiryTools(true, 'The hosted form service did not confirm your submission. You can keep a local copy; it will not be sent by the copy/download action.');
+        setStatus('We could not confirm that your inquiry was submitted. Please try again or keep a local copy.','error');
+        setLocalInquiryStatus('No submission was confirmed. Copy or download stays in this browser and does not submit your message.', 'error');
+      } else {
+        setStatus('We could not confirm the submission. Your inquiry may not have been sent; please try again later.','error');
+      }
     } finally {
       if (submitButton) { submitButton.disabled = false; submitButton.innerHTML = idleMarkup; }
     }
