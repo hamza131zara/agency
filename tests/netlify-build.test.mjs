@@ -38,7 +38,9 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     const homepage = await readFile(path.join(outputDirectory, "index.html"), "utf8");
     assert.match(homepage, /<title>SDC — Home<\/title>/);
     assert.match(homepage, /property="og:title" content="SDC — Home"/);
-    assert.match(homepage, /<span class="brand-name">SDC<span>\.<\/span><small>SOFTWARE DAMAGE CONTROL<\/small><\/span>/);
+    assert.match(homepage, /<img class="brand-logo" src="\\/assets\\/brand\\/sdc-logo\\.svg"/);
+    assert.match(homepage, /<link rel="icon" type="image\\/svg\\+xml" href="\\/assets\\/favicon\\.svg">/);
+    assert.match(homepage, /theme-color" content="#fcfaf6"/);
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
     assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
     assert.doesNotMatch(homepage, /AGENCY<span>/);
