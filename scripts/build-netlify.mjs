@@ -7,8 +7,8 @@ const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
 function configureSdcBranding(html) {
-  const logo = '<span class="sdc-brand-lockup"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="976" height="1102" fetchpriority="high"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
-  const footerLogo = '<span class="sdc-brand-lockup sdc-brand-lockup--footer"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="976" height="1102" loading="lazy" decoding="async"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
+  const logo = '<span class="sdc-brand-lockup"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="512" height="578" fetchpriority="high"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
+  const footerLogo = '<span class="sdc-brand-lockup sdc-brand-lockup--footer"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="512" height="578" loading="lazy" decoding="async"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
   let result = html.replace(
     /(<a\b(?=[^>]*\bclass=["'][^"']*\bfooter-brand\b[^"']*["'])[^>]*>)[\s\S]*?(<\/a>)/g,
     `$1${footerLogo}$2`
