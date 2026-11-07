@@ -25,7 +25,7 @@ These details cannot safely be invented or inferred from the repository.
 ### 1. Brand and legal operator
 
 - [x] Owner supplied public display name: Software Damage Control (SDC).
-- [ ] Approve the official SDC wordmark/logo, brand usage and publication assets.
+- [x] Owner approved the official SDC wordmark, standalone orbital favicon, and ivory/black/gold/brown/blue identity on 8 November 2026; header and white footer lockups are implemented. Social-preview assets remain a separate approval item.
 - [ ] Confirm the legal operator's full name/entity, jurisdiction and business address.
 - [ ] Supply an official legal contact email.
 - [ ] Have the Privacy Notice reviewed against actual data collection, mail hosting, session cookies, server logs, third-party fonts and retention.
