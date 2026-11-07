@@ -1231,3 +1231,305 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* Product release decision disclosure */
 .product-release-note{padding:13px 15px;margin:0 0 14px;border-left:2px solid #a66d3e;background:#f1ece4;color:#4e473c;font-size:10px;line-height:1.8}
 .product-release-note strong{display:block;margin-bottom:4px;color:#3b352d}
+
+
+/* Animated service atlas — scoped to the existing homepage hero graphic only. */
+.service-atlas .atlas-orbit {
+  --atlas-orbit-duration: 108s;
+  --orbit-x: clamp(90px, calc(33% - 8px), 280px);
+  --orbit-y: clamp(100px, calc(48% - 10px), 175px);
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  animation: atlas-orbit-turn var(--atlas-orbit-duration) linear infinite;
+}
+.service-atlas .atlas-orbit-slot {
+  position: absolute;
+  left: calc(50% + var(--orbit-x) * cos(var(--angle)));
+  top: calc(50% + var(--orbit-y) * sin(var(--angle)));
+  width: 166px;
+  height: 68px;
+  transform: translate(-50%, -50%) translateZ(var(--depth));
+  transform-style: preserve-3d;
+}
+.service-atlas .atlas-node {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #202820;
+  rotate: 0deg;
+  scale: 1;
+  opacity: 1;
+  transform-style: preserve-3d;
+  transform: none;
+  transition: transform .22s;
+  animation:
+    atlas-counter-turn var(--atlas-orbit-duration) linear infinite,
+    atlas-card-depth var(--atlas-orbit-duration) linear infinite;
+  animation-delay: 0s, var(--depth-delay);
+}
+.service-atlas .atlas-node-face {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-3) 13px;
+  background: #f8f9f3;
+  border: 1px solid #c8d0c3;
+  box-shadow: 0 10px 22px #1e30200d;
+  color: #202820;
+  transition: box-shadow .22s, border-color .22s;
+}
+.service-atlas .atlas-node small {
+  color: #727d6b;
+  font: 7px var(--mono);
+  letter-spacing: .08em;
+}
+.service-atlas .atlas-node strong {
+  font-size: 11px;
+  line-height: 1.35;
+}
+.service-atlas .atlas-node-face > span {
+  color: #788173;
+  font: 7px var(--mono);
+}
+.service-atlas .atlas-software {
+  --angle: -90deg;
+  --depth: 48px;
+  --depth-delay: 0s;
+  --static-left: 50%;
+  --static-top: 9%;
+}
+.service-atlas .atlas-ai {
+  --angle: -30deg;
+  --depth: 22px;
+  --depth-delay: -18s;
+  --static-left: 83%;
+  --static-top: 30%;
+}
+.service-atlas .atlas-web3 {
+  --angle: 30deg;
+  --depth: 38px;
+  --depth-delay: -36s;
+  --static-left: 78%;
+  --static-top: 76%;
+}
+.service-atlas .atlas-ecommerce {
+  --angle: 90deg;
+  --depth: 16px;
+  --depth-delay: -54s;
+  --static-left: 50%;
+  --static-top: 94%;
+}
+.service-atlas .atlas-design {
+  --angle: 150deg;
+  --depth: 42px;
+  --depth-delay: -72s;
+  --static-left: 22%;
+  --static-top: 76%;
+}
+.service-atlas .atlas-growth {
+  --angle: 210deg;
+  --depth: 24px;
+  --depth-delay: -90s;
+  --static-left: 17%;
+  --static-top: 30%;
+}
+
+/* The globe texture drifts inside a clipped sphere; its highlight remains still. */
+.service-atlas .atlas-hub-globe {
+  position: absolute;
+  inset: 5px;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.service-atlas .atlas-hub-globe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 24% 90% at 50% 50%, transparent 46%, rgba(215,252,98,.12) 47% 49%, transparent 51%),
+    radial-gradient(ellipse 44% 90% at 50% 50%, transparent 46%, rgba(255,255,255,.10) 47% 49%, transparent 51%),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(215,252,98,.11) 19px 20px, transparent 21px 38px),
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,.09) 19px 20px, transparent 21px 38px);
+  background-size: 100% 100%, 100% 100%, 76px 100%, 100% 76px;
+  background-repeat: no-repeat, no-repeat, repeat-x, repeat-y;
+  animation: atlas-globe-drift 50s linear infinite;
+}
+.service-atlas .atlas-hub-globe::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 35% 25%, rgba(255,255,255,.15), transparent 46%);
+  box-shadow: inset 0 0 18px rgba(7,11,8,.42);
+}
+.service-atlas .atlas-hub > :not(.atlas-hub-globe) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover/focus freezes all rotating layers together; card lift remains available. */
+.service-atlas:hover .atlas-orbit,
+.service-atlas:focus-within .atlas-orbit,
+.service-atlas:hover .atlas-node,
+.service-atlas:focus-within .atlas-node,
+.service-atlas:hover .atlas-ring,
+.service-atlas:focus-within .atlas-ring,
+.service-atlas:hover .atlas-hub-globe::before,
+.service-atlas:focus-within .atlas-hub-globe::before {
+  animation-play-state: paused;
+}
+.service-atlas .atlas-node:hover,
+.service-atlas .atlas-node:focus-visible {
+  transform: translateZ(28px) scale(1.035);
+}
+.service-atlas .atlas-node:hover .atlas-node-face,
+.service-atlas .atlas-node:focus-visible .atlas-node-face {
+  border-color: #7b9458;
+  box-shadow: 0 17px 28px #1e302021;
+}
+
+/* Very slow ring motion preserves each ellipse's original 3D tilt. */
+.service-atlas .atlas-ring-one {
+  animation: atlas-ring-one-spin 180s linear infinite;
+}
+.service-atlas .atlas-ring-two {
+  animation: atlas-ring-two-spin 195s linear infinite;
+}
+.service-atlas .atlas-ring-three {
+  animation: atlas-ring-three-spin 210s linear infinite;
+}
+@keyframes atlas-orbit-turn {
+  to { transform: rotateZ(360deg); }
+}
+@keyframes atlas-counter-turn {
+  to { rotate: -360deg; }
+}
+@keyframes atlas-card-depth {
+  0%, 100% { scale: .94; opacity: .78; }
+  25%, 75% { scale: .98; opacity: .90; }
+  50% { scale: 1; opacity: 1; }
+}
+@keyframes atlas-ring-one-spin {
+  from { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(-12deg); }
+  to { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(348deg); }
+}
+@keyframes atlas-ring-two-spin {
+  from { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(27deg); }
+  to { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(-333deg); }
+}
+@keyframes atlas-ring-three-spin {
+  from { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(78deg); }
+  to { transform: translate(-50%, -50%) rotateX(68deg) rotateZ(438deg); }
+}
+@keyframes atlas-globe-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 0 0, 0 0, 76px 0, 0 0; }
+}
+
+/* Orbit radii and slots respond at the existing hero breakpoints. */
+@media (max-width: 1050px) {
+  .service-atlas .atlas-orbit {
+    --orbit-x: clamp(90px, calc(33% - 8px), 240px);
+  }
+  .service-atlas .atlas-orbit-slot {
+    width: 150px;
+  }
+  .service-atlas .atlas-node-face { padding: 10px 11px; }
+}
+@media (max-width: 850px) and (min-width: 761px) {
+  .service-atlas .atlas-orbit {
+    --orbit-x: clamp(90px, calc(33% - 8px), 220px);
+    --orbit-y: clamp(100px, calc(48% - 10px), 165px);
+  }
+  .service-atlas .atlas-orbit-slot { width: 118px; height: 60px; }
+  .service-atlas .atlas-node-face { padding: 8px; }
+  .service-atlas .atlas-node strong { font-size: 8px; line-height: 1.25; }
+  .service-atlas .atlas-node small,
+  .service-atlas .atlas-node-face > span { font-size: 6px; }
+  .service-atlas .atlas-ai,
+  .service-atlas .atlas-web3 { --static-left: 79%; }
+  .service-atlas .atlas-growth,
+  .service-atlas .atlas-design { --static-left: 21%; }
+}
+@media (max-width: 760px) {
+  .service-atlas .atlas-orbit {
+    --orbit-x: clamp(90px, calc(33% - 8px), 240px);
+    --orbit-y: clamp(100px, calc(48% - 10px), 165px);
+  }
+  .service-atlas .atlas-orbit-slot { width: 137px; height: 62px; }
+  .service-atlas .atlas-node-face { padding: 9px; }
+  .service-atlas .atlas-node strong { font-size: 9px; }
+  .service-atlas .atlas-node small,
+  .service-atlas .atlas-node-face > span { font-size: 6px; }
+  .service-atlas .atlas-software { --static-top: 10%; }
+  .service-atlas .atlas-ai { --static-left: 82%; --static-top: 31%; }
+  .service-atlas .atlas-web3 { --static-left: 80%; --static-top: 75%; }
+  .service-atlas .atlas-ecommerce { --static-top: 91%; }
+  .service-atlas .atlas-design { --static-left: 20%; --static-top: 75%; }
+  .service-atlas .atlas-growth { --static-left: 18%; --static-top: 31%; }
+}
+@media (max-width: 390px) {
+  .service-atlas .atlas-orbit {
+    --orbit-x: clamp(90px, calc(33% - 8px), 220px);
+    --orbit-y: clamp(100px, calc(48% - 10px), 155px);
+  }
+  .service-atlas .atlas-orbit-slot { width: 123px; height: 62px; }
+  .service-atlas .atlas-node-face { padding: 8px; }
+  .service-atlas .atlas-hub-globe { inset: 4px; }
+}
+@media (max-width: 380px) {
+  .service-atlas .atlas-orbit,
+  .service-atlas .atlas-node {
+    animation: none;
+  }
+  .service-atlas .atlas-orbit { transform: none; }
+  .service-atlas .atlas-orbit-slot {
+    left: var(--static-left);
+    top: var(--static-top);
+    width: 123px;
+    height: 58px;
+  }
+  .service-atlas .atlas-node { rotate: 0deg; scale: 1; opacity: 1; }
+  .service-atlas .atlas-node-face { padding: 7px 8px; }
+  .service-atlas .atlas-node strong { font-size: 9px; }
+  .service-atlas .atlas-node small,
+  .service-atlas .atlas-node-face > span { font-size: 6px; }
+  .service-atlas .atlas-software { --static-left: 50%; --static-top: 10%; }
+  .service-atlas .atlas-ai { --static-left: 75%; --static-top: 24%; }
+  .service-atlas .atlas-web3 { --static-left: 75%; --static-top: 82%; }
+  .service-atlas .atlas-ecommerce { --static-left: 50%; --static-top: 90%; }
+  .service-atlas .atlas-design { --static-left: 25%; --static-top: 82%; }
+  .service-atlas .atlas-growth { --static-left: 25%; --static-top: 24%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-atlas .atlas-orbit,
+  .service-atlas .atlas-ring,
+  .service-atlas .atlas-node,
+  .service-atlas .atlas-hub-globe::before {
+    animation: none !important;
+  }
+  .service-atlas .atlas-orbit { transform: none; }
+  .service-atlas .atlas-orbit-slot {
+    left: var(--static-left);
+    top: var(--static-top);
+  }
+  .service-atlas .atlas-node {
+    rotate: 0deg;
+    scale: 1;
+    opacity: 1;
+    transition: none !important;
+  }
+  .service-atlas .atlas-node-face { transition: none !important; }
+}
