@@ -26,6 +26,7 @@ async function createFixture() {
   await writeFile(path.join(root, "assets", "css", "styles.css"), ":root{--red:#EA4335;--yellow:#FBBC04;--green:#34A853;--blue:#4285F4} body { margin: 0; }");
   await writeFile(path.join(root, "assets", "brand", "sdc-logo.svg"), "<svg><path fill=\"#4285F4\"/></svg>");
   await writeFile(path.join(root, "assets", "brand", "sdc-logo-footer.svg"), "<svg><path fill=\"#FFFFFF\"/></svg>");
+  await writeFile(path.join(root, "assets", "brand", "sdc-logo-compact.svg"), "<svg><text>SDC</text></svg>");
   await writeFile(path.join(root, "assets", "favicon.svg"), "<svg><path fill=\"#4285F4\"/><path fill=\"#EA4335\"/><path fill=\"#FBBC04\"/><path fill=\"#34A853\"/></svg>");
   await writeFile(path.join(root, "services", "software.html"), "<h1>Software</h1>");
   await writeFile(path.join(root, "scripts", "internal.mjs"), "throw new Error('must not be copied')");
@@ -42,8 +43,9 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     const homepage = await readFile(path.join(outputDirectory, "index.html"), "utf8");
     assert.match(homepage, /<title>SDC — Home<\/title>/);
     assert.match(homepage, /property="og:title" content="SDC — Home"/);
-    assert.ok(homepage.includes('<img class="brand-logo" src="/assets/brand/sdc-logo.svg"'));
+    assert.ok(homepage.includes('<picture class="brand-logo-picture"><source media="(max-width: 560px)" srcset="/assets/brand/sdc-logo-compact.svg"><img class="brand-logo" src="/assets/brand/sdc-logo.svg"'));
     assert.ok(homepage.includes('<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg"'));
+    assert.match(await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo-compact.svg"), "utf8"), /SDC/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo-footer.svg"), "utf8"), /#FFFFFF/i);
     assert.match(await readFile(path.join(outputDirectory, "assets", "favicon.svg"), "utf8"), /#4285F4/);
     assert.ok(homepage.includes('<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">'));
