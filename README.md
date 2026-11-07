@@ -35,7 +35,7 @@ Existing pages and features include:
 - PHP inquiry endpoint with validation and safe unsent fallback behavior.
 - SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
 
-The current validated platform contains 30 HTML routes: 14 root pages, six service detail pages, five portfolio project-note pages and five product detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap template currently contains 26 URLs, including five product detail pages; it still uses a placeholder host and must be updated with the owner-approved canonical domain before launch. Not every planned product module is implemented yet.
+The current validated platform contains 30 HTML routes: 14 root pages, six service detail pages, five portfolio project-note pages and five product detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap contains 26 indexable URLs, including five product detail pages, and now uses the owner-supplied apex canonical host `https://softwaredamagecontrol.com`; all 26 routes have self-referencing canonical tags and `robots.txt` points to the same sitemap. DNS, TLS, redirects and the deployed sitemap fetch still require production verification. Not every planned product module is implemented yet.
 
 ## Documentation index
 
@@ -102,6 +102,6 @@ The master roadmap is in docs/PLATFORM_MASTER_PLAN.md.
 A merge or green CI run is evidence of repository implementation and automated verification, not legal acceptance, production readiness, public release or customer demand.
 ## Hosting and release
 
-The site is not considered deployed merely because CI passes. Domain, branding, legal operator, monitored inbox, verified sender and final content require owner confirmation. Follow `docs/HOSTINGER_DEPLOYMENT.md` only after explicit launch approval.
+The site is not considered deployed merely because CI passes. The owner supplied Software Damage Control (SDC) and `softwaredamagecontrol.com`; DNS/hosting, logo approval, legal operator, monitored inbox, verified sender and final content still require confirmation and production evidence. Follow `docs/HOSTINGER_DEPLOYMENT.md` only after explicit launch approval.
 
 Never commit `config.php`, credentials, API keys, private customer data or production secrets.
