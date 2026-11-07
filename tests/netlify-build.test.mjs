@@ -10,7 +10,7 @@ async function createFixture() {
   await mkdir(path.join(root, "assets", "css"), { recursive: true });
   await mkdir(path.join(root, "services"), { recursive: true });
   await mkdir(path.join(root, "scripts"), { recursive: true });
-  await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"></head><a class="brand"><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer>');
+  await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"></head><a class="brand"><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer><form id="inquiry-form" action="contact.php" method="post"><input name="website"><button type="submit">Prepare inquiry</button></form>');
   await writeFile(
     path.join(root, "contact.html"),
     '<form id="inquiry-form" action="contact.php" method="post" novalidate><input name="website"><button type="submit">Send</button></form><p>The form submits to the PHP endpoint on the website. The official recipient address must be configured on the hosting server before messages can be sent.</p>'
@@ -42,6 +42,13 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
     assert.match(homepage, /© <span id="year"><\/span> SDC\. All rights reserved/);
     assert.doesNotMatch(homepage, /AGENCY<span>/);
+    assert.match(homepage, /<form id="inquiry-form"[^>]*name="sdc-project-inquiry"/);
+    assert.match(homepage, /data-netlify="true"/);
+    assert.match(homepage, /data-delivery="netlify"/);
+    assert.match(homepage, /netlify-honeypot="website"/);
+    assert.match(homepage, /name="form-name" value="sdc-project-inquiry"/);
+    assert.ok(homepage.includes('action="/"'));
+    assert.doesNotMatch(homepage, /action="contact\\.php"/);
     assert.match(await readFile(path.join(outputDirectory, "assets", "css", "styles.css"), "utf8"), /margin: 0/);
     assert.match(await readFile(path.join(outputDirectory, "services", "software.html"), "utf8"), /Software/);
     assert.match(await readFile(path.join(outputDirectory, "robots.txt"), "utf8"), /User-agent/);
