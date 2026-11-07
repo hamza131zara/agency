@@ -245,10 +245,15 @@ if (form && status) {
   initialize();
 }
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const nodes = document.querySelectorAll('.service-card,.work-card,.approach-list article,.automation-row,.faq-list details');
-  nodes.forEach(n => n.classList.add('reveal'));
-  const observer = new IntersectionObserver((entries, obs) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } }), {threshold:.08});
-  nodes.forEach(n => observer.observe(n));
+  const nodes = document.querySelectorAll('.intro-band,.section-heading,.service-card,.work-card,.approach-list article,.automation-row,.faq-list details,.phase-copy,.contact-copy,.contact-form,.principle-grid article,.service-detail,.project-item');
+  nodes.forEach(node => node.classList.add('reveal'));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      // Toggle in both directions so elements animate on scroll-down and scroll-up.
+      entry.target.classList.toggle('is-visible', entry.isIntersecting);
+    });
+  }, { threshold: .1, rootMargin: '0px 0px -7% 0px' });
+  nodes.forEach(node => observer.observe(node));
 }
 
 
