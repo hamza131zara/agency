@@ -36,7 +36,7 @@ Current implemented CSS tokens in `assets/css/styles.css`:
 | Typography | `--sans: "Manrope", Arial, sans-serif`; `--mono: "DM Mono", monospace` |
 | Layout | `--max: 1220px` content width |
 | Spacing | `--space-1` through `--space-16` (4, 8, 12, 16, 20, 24, 32, 40, 48 and 64px) |
-| Shape/motion | `--radius-sm: 2px`, `--radius-md: 4px`, `--motion-fast: 160ms ease` |
+| Shape/motion | `--radius-sm: 8px`, `--radius-md: 14px`, `--motion-fast: 180ms ease` |
 
 Use these shared tokens for new page components and extend them only when a real component need is documented. Existing established page styles may retain a one-off value where changing it would harm layout or regression stability.
 
