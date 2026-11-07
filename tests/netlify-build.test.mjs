@@ -8,6 +8,7 @@ import { buildNetlifySite } from "../scripts/build-netlify.mjs";
 async function createFixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "sdc-netlify-build-"));
   await mkdir(path.join(root, "assets", "css"), { recursive: true });
+  await mkdir(path.join(root, "assets", "brand"), { recursive: true });
   await mkdir(path.join(root, "services"), { recursive: true });
   await mkdir(path.join(root, "scripts"), { recursive: true });
   await writeFile(path.join(root, "index.html"), '<!doctype html><head><title>Agency — Home</title><meta property="og:title" content="Agency — Home"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"></head><a class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><a class="brand footer-brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-name">AGENCY<span>.</span><small>SOFTWARE · AI · DESIGN</small></span></a><span class="atlas-hub-mark">A.</span><footer>© <span id="year"></span> Agency. All rights reserved.</footer><form id="inquiry-form" action="contact.php" method="post"><input name="website"><button type="submit">Prepare inquiry</button></form>');
@@ -23,6 +24,9 @@ async function createFixture() {
   await writeFile(path.join(root, "sitemap.xml"), "<urlset />");
   await writeFile(path.join(root, "_headers"), "/*\n  X-Content-Type-Options: nosniff");
   await writeFile(path.join(root, "assets", "css", "styles.css"), "body { margin: 0; }");
+  await writeFile(path.join(root, "assets", "brand", "sdc-logo.svg"), "<svg><text fill=\"#171b22\">SDC</text></svg>");
+  await writeFile(path.join(root, "assets", "brand", "sdc-logo-footer.svg"), "<svg><text fill=\"#ffffff\">SDC</text></svg>");
+  await writeFile(path.join(root, "assets", "favicon.svg"), "<svg><g transform=\"translate(22 106) scale(1.18)\"></g></svg>");
   await writeFile(path.join(root, "services", "software.html"), "<h1>Software</h1>");
   await writeFile(path.join(root, "scripts", "internal.mjs"), "throw new Error('must not be copied')");
   return root;
@@ -41,6 +45,7 @@ test("builds a static Netlify artifact without PHP, private config or developer 
     assert.ok(homepage.includes('<img class="brand-logo" src="/assets/brand/sdc-logo.svg"'));
     assert.ok(homepage.includes('<img class="brand-logo brand-logo-footer" src="/assets/brand/sdc-logo-footer.svg"'));
     assert.match(await readFile(path.join(outputDirectory, "assets", "brand", "sdc-logo-footer.svg"), "utf8"), /fill="#ffffff"/);
+    assert.match(await readFile(path.join(outputDirectory, "assets", "favicon.svg"), "utf8"), /translate\(22 106\) scale\(1\.18\)/);
     assert.ok(homepage.includes('<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">'));
     assert.ok(homepage.includes('theme-color" content="#fcfaf6"'));
     assert.match(homepage, /<span class="atlas-hub-mark">SDC<\/span>/);
