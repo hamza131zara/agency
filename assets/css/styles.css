@@ -2211,6 +2211,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .sdc-chat-send:hover:not(:disabled) { background: #4285F4; border-color: #4285F4; transform: translateY(-1px); }
 .sdc-chat-send:disabled { opacity: .55; cursor: wait; }
 .sdc-chat-compose-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 1px 0; color: #7B8491; font-size: 9px; }
+.sdc-chat-shortcuts { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.sdc-chat-shortcuts a { color: #175EDB; font-size: 10px; font-weight: 800; text-decoration: none; }
+.sdc-chat-shortcuts a:hover { color: #B3261E; text-decoration: underline; text-underline-offset: 3px; }
 .sdc-chat-compose-meta button {
   padding: 3px 0; border: 0; background: transparent; color: #175EDB; cursor: pointer; font-size: 10px; font-weight: 800;
 }
