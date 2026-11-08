@@ -685,3 +685,19 @@ if (briefForm) {
   });
   if (output) output.value='';
 }
+
+
+// The chatbot is a separate, progressively-enhanced module shared by every public page.
+// Its API key and model calls remain server-side in the Netlify Function.
+(() => {
+  if (document.querySelector('script[data-sdc-chatbot="true"]')) return;
+  const currentScript = document.currentScript;
+  const base = currentScript && currentScript.src
+    ? currentScript.src
+    : new URL('/assets/js/main.js', window.location.origin).href;
+  const chatScript = document.createElement('script');
+  chatScript.src = new URL('sdc-chatbot.js', base).href;
+  chatScript.dataset.sdcChatbot = 'true';
+  chatScript.async = true;
+  document.head.appendChild(chatScript);
+})();

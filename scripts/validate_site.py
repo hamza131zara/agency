@@ -48,6 +48,8 @@ for file in html_files:
  if parser.missing_alt: errors.append(f"{file.name}: image alt is missing {parser.missing_alt}")
 for source,parser in pages.items():
  source_content=Path(source).read_text(encoding="utf-8")
+ if "assets/js/main.js" not in source_content:
+  errors.append(f"{Path(source).name}: sitewide SDC chatbot loader (assets/js/main.js) is missing")
  if 'src="/assets/brand/sdc-logo.webp"' not in source_content:
   errors.append(f"{Path(source).name}: owner-supplied SDC shield image is missing from the page brand")
  if 'href="/assets/favicon.webp"' not in source_content:
@@ -66,7 +68,7 @@ for source,parser in pages.items():
   target=target.resolve()
   if not target.exists(): errors.append(f"{Path(source).name}: broken local {kind} {raw}"); continue
   if url.fragment and target in pages and url.fragment not in pages[target].ids: errors.append(f"{Path(source).name}: missing fragment target {raw}")
-required=["index.html","services.html","work.html","about.html","approach.html","team.html","products.html","automation.html","contact.html","brief-builder.html","privacy.html","terms.html","disclaimer.html","404.html","services/software-engineering.html","services/ai-automation.html","services/blockchain-web3.html","services/creative-design.html","services/digital-growth.html","services/ecommerce-operations.html","products/strideto.html","products/regexlab.html","products/jotjson.html","products/siteintel-pulse.html","products/free-ai-mixer.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/favicon.webp","assets/brand/sdc-logo.webp",".github/workflows/quality.yml"]
+required=["index.html","services.html","work.html","about.html","approach.html","team.html","products.html","automation.html","contact.html","brief-builder.html","privacy.html","terms.html","disclaimer.html","404.html","services/software-engineering.html","services/ai-automation.html","services/blockchain-web3.html","services/creative-design.html","services/digital-growth.html","services/ecommerce-operations.html","products/strideto.html","products/regexlab.html","products/jotjson.html","products/siteintel-pulse.html","products/free-ai-mixer.html","contact.php","config.example.php",".htaccess","robots.txt","sitemap.xml","assets/css/styles.css","assets/js/main.js","assets/js/sdc-chatbot.js","netlify/functions/sdc-chat.mjs","netlify/functions/knowledge.mjs","assets/favicon.webp","assets/brand/sdc-logo.webp",".github/workflows/quality.yml"]
 for rel in required:
  path=ROOT/rel
  if not path.is_file() or not path.stat().st_size: errors.append(f"required file missing or empty: {rel}")

@@ -2,7 +2,7 @@
 
 The agency website is a multi-page portfolio, services, products and automation platform. It is not intended to be a one-page landing site.
 
-The current implementation uses semantic HTML, CSS, browser JavaScript and a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger. Keep this lightweight architecture unless a documented feature need justifies a change.
+The current implementation uses semantic HTML, CSS and browser JavaScript for the public pages, a PHP inquiry endpoint for PHP-enabled hosting such as Hostinger, and a single Netlify Function for the optional SDC AI Assistant. Keep this lightweight architecture unless a documented feature need justifies a change.
 
 ## Public language and positioning
 
@@ -33,11 +33,14 @@ Existing pages and features include:
 - Service Finder and portfolio search/filter controls.
 - Browser-local Project Brief Builder with copy/export/print actions.
 - PHP inquiry endpoint with validation and safe unsent fallback behavior.
+- SDC AI Assistant widget with a curated six-service knowledge base, same-origin Netlify Function and explicit Contact-form handoff.
 - SEO metadata, sitemap/robots templates, 404 page, security headers and GitHub Actions checks.
 
 The current validated platform contains 30 HTML routes: 14 root pages, six service detail pages, five portfolio project-note pages and five product detail pages. The expanded page hierarchy, six service divisions, visual/3D system and product/automation lifecycle are defined in `docs/`. Privacy, Terms and Disclaimer are draft-only, marked noindex and excluded from the sitemap until owner/legal review; the 404 page is also noindex and excluded. The sitemap contains 26 indexable URLs, including five product detail pages, and now uses the owner-supplied apex canonical host `https://softwaredamagecontrol.com`; all 26 routes have self-referencing canonical tags and `robots.txt` points to the same sitemap. DNS, TLS, redirects and the deployed sitemap fetch still require production verification. Not every planned product module is implemented yet.
 
 ## Documentation index
+
+- `docs/SDC_AI_ASSISTANT_SPEC.md` — customer-facing SDC AI assistant scope, knowledge boundaries, data flow, secrets and launch checks.
 
 - `docs/PLATFORM_MASTER_PLAN.md` — vision, six services, platform modules and all phases.
 - `docs/INFORMATION_ARCHITECTURE.md` — navigation, page inventory, page settings and content models.
