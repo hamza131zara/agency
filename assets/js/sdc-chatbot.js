@@ -63,7 +63,11 @@
         </form>
         <div class="sdc-chat-compose-meta">
           <span>Shift + Enter for a new line</span>
-          <button type="button" data-action="handoff">Prepare a project brief ↗</button>
+          <span class="sdc-chat-shortcuts">
+            <a href="/services.html">Explore services</a>
+            <a href="/contact.html">Contact SDC</a>
+            <button type="button" data-action="handoff">Prepare a project brief ↗</button>
+          </span>
         </div>
         <p class="sdc-chat-privacy-note">This chat stays in this browser tab and is sent to our AI provider to generate replies. Don't share passwords, API keys or confidential data.</p>
       </footer>
