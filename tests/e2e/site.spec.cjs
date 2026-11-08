@@ -295,45 +295,95 @@ test.describe('Phase I route and content checks', () => {
     await expect.poll(() => filter.evaluate(el => getComputedStyle(el).color)).toBe('rgb(23, 27, 34)');
   });
 
-  test('service atlas orbit and globe motion pause for interaction and respect reduced motion', async ({ page }) => {
+  test('service atlas keeps skill cards fixed while orbital lines animate and respects reduced motion', async ({ page }) => {
     await page.goto('/');
     const atlas = page.locator('#service-atlas');
     const orbit = atlas.locator('.atlas-orbit');
+    const ring = atlas.locator('.atlas-ring-one');
     const globe = atlas.locator('.atlas-globe');
+    const cardPosition = atlas.locator('.atlas-design');
 
     await expect(orbit).toBeVisible();
     await expect(globe).toHaveAttribute('aria-hidden', 'true');
-    expect(await orbit.evaluate(el => getComputedStyle(el).animationName)).toBe('atlas-orbit-spin');
+    expect(await orbit.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+    expect(await ring.evaluate(el => getComputedStyle(el).animationName)).toBe('atlas-ring-spin');
+    expect(await cardPosition.evaluate(el => getComputedStyle(el).animationName)).toBe('atlas-card-float');
     expect(await globe.evaluate(el => getComputedStyle(el, '::before').animationName)).toBe('atlas-globe-drift');
 
     await atlas.hover();
-    expect(await orbit.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+    expect(await ring.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+    expect(await cardPosition.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
 
     await page.mouse.move(0, 0);
     const firstLink = atlas.locator('.atlas-node').first();
     await firstLink.focus();
-    expect(await orbit.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
-    expect(await firstLink.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
+    expect(await ring.evaluate(el => getComputedStyle(el).animationPlayState)).toBe('paused');
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    expect(await orbit.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+    expect(await ring.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
     expect(await globe.evaluate(el => getComputedStyle(el, '::before').animationName)).toBe('none');
-    expect(await atlas.locator('.atlas-ring-one').evaluate(el => getComputedStyle(el).animationName)).toBe('none');
+    expect(await cardPosition.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
   });
 
-  test('all six service cards stay inside the spatial map at every review breakpoint', async ({ page }) => {
+  test('all six service cards stay inside the map without overlapping one another or the hub', async ({ page }) => {
     const nodes = ['.atlas-software', '.atlas-ai', '.atlas-web3', '.atlas-ecommerce', '.atlas-design', '.atlas-growth'];
-    for (const width of [320, 390, 768, 1440]) {
-      await page.setViewportSize({ width, height: 900 });
+    const intersects = (a, b) =>
+      a.x < b.x + b.width - 1 &&
+      a.x + a.width > b.x + 1 &&
+      a.y < b.y + b.height - 1 &&
+      a.y + a.height > b.y + 1;
+
+    for (const width of [320, 360, 390, 500, 501, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
       await page.goto('/');
-      const frame = await page.locator('#service-atlas').boundingBox();
+      const atlas = page.locator('#service-atlas');
+      const frame = await atlas.boundingBox();
+      const hub = await atlas.locator('.atlas-hub').boundingBox();
       expect(frame, 'map frame should be measurable at ' + width + 'px').not.toBeNull();
+      expect(hub, 'central hub should be measurable at ' + width + 'px').not.toBeNull();
+
+      const cards = [];
       for (const selector of nodes) {
-        const card = await page.locator('#service-atlas ' + selector).boundingBox();
+        const card = await atlas.locator(selector).boundingBox();
         expect(card, selector + ' should have a visible layout box at ' + width + 'px').not.toBeNull();
         expect(card.x, selector + ' should not be clipped on the left at ' + width + 'px').toBeGreaterThanOrEqual(frame.x - 1);
         expect(card.x + card.width, selector + ' should not be clipped on the right at ' + width + 'px').toBeLessThanOrEqual(frame.x + frame.width + 1);
+        expect(card.y, selector + ' should not be clipped at the top at ' + width + 'px').toBeGreaterThan(frame.y);
+        expect(card.y + card.height, selector + ' should not be clipped at the bottom at ' + width + 'px').toBeLessThan(frame.y + frame.height - 1);
+        expect(intersects(card, hub), selector + ' should not overlap the central hub at ' + width + 'px').toBe(false);
+        cards.push({selector, box:card});
       }
+
+      for (let i = 0; i < cards.length; i++) {
+        for (let j = i + 1; j < cards.length; j++) {
+          expect(
+            intersects(cards[i].box, cards[j].box),
+            cards[i].selector + ' must not overlap ' + cards[j].selector + ' at ' + width + 'px'
+          ).toBe(false);
+        }
+      }
+    }
+  });
+
+  test('service atlas skill cards stay spatially stable while orbit paths animate', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+    const atlas = page.locator('#service-atlas');
+    const selectors = ['.atlas-software', '.atlas-ai', '.atlas-web3', '.atlas-ecommerce', '.atlas-design', '.atlas-growth'];
+    const initial = {};
+    for (const selector of selectors) {
+      const card = atlas.locator(selector);
+      const box = await card.boundingBox();
+      initial[selector] = box;
+      expect(await card.evaluate(el => getComputedStyle(el).opacity)).toBe('1');
+      expect(await card.evaluate(el => getComputedStyle(el).filter)).toBe('none');
+    }
+
+    await page.waitForTimeout(1400);
+    for (const selector of selectors) {
+      const current = await atlas.locator(selector).boundingBox();
+      expect(Math.abs(current.x - initial[selector].x), selector + ' horizontal position must remain fixed').toBeLessThan(2);
+      expect(Math.abs(current.y - initial[selector].y), selector + ' must not orbit around the hub').toBeLessThan(6);
     }
   });
 

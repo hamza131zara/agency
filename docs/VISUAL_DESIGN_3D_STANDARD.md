@@ -212,3 +212,14 @@ The owner supplied the actual shield logo and separate favicon images. These are
 - The homepage 3D service map uses the exact supplied shield file at its centre; no A. monogram or alternate brand mark. Its orbit palette uses restrained blue, red and yellow lines with white/charcoal cards.
 - Keep the orbit and scroll reveals subtle. The existing service-map interaction pauses on hover/focus and all motion must stop or simplify under `prefers-reduced-motion: reduce`.
 - Verify both default and hover states in Playwright, including button text/background contrast. White text on the brand blue is not acceptable for small button text; use charcoal on blue.
+
+
+## 15. Responsive six-discipline service atlas — 8 November 2026
+
+- The homepage service map is a stable 2 × 3 constellation at wide container sizes: Creative Design / Digital Marketing; E-commerce Operations / Software & Websites; Blockchain & Web3 / AI & Automation.
+- The six skill cards must never be children of a rotating parent. Their position, opacity and text sharpness remain stable while decorative orbital paths move independently around the centre shield.
+- Keep the exact owner-supplied SDC shield centred. Leave a visible clearance between the hub and all six cards; do not allow the card bounding boxes to overlap the hub or one another.
+- At service-atlas container widths of 500px or less, switch to a compact hub-above / two-column, three-row card layout. Container width—not only viewport width—determines the responsive mode because the map can sit inside a narrow hero column on tablets.
+- Only the three decorative orbital lines and a restrained 3px card float may animate. The lines pause on hover/focus; all movement stops under `prefers-reduced-motion: reduce`.
+- Preserve readable card text, consistent padding, comfortable gaps and visible outer margins. Do not use opacity fades, blur overlays, scaling or counter-rotation on skill text/cards.
+- Verify no clipping and no card-to-card or card-to-hub overlap at 320, 360, 390, 500, 501, 768, 1024 and 1440px viewport widths. Also assert that card bounding boxes remain stable while the orbital paths animate.
