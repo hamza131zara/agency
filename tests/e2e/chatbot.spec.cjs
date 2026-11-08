@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 
 test('SDC AI assistant loads on the homepage and guides a visitor through a service question', async ({ page }) => {
   await page.goto('/');
-  const trigger = page.getByRole('button', { name: 'Open SDC AI Assistant' });
+  const trigger = page.getByRole('button', { name: /Ask SDC/ });
   await expect(trigger).toBeVisible();
   await trigger.click();
 
@@ -38,7 +38,7 @@ test('chat messages are rendered as text and never interpreted as HTML', async (
     });
   });
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await page.getByRole('button', { name: /Ask SDC/ }).click();
   const input = page.getByLabel('Message the SDC AI Assistant');
   await input.fill('Can you explain your service options?');
   await page.getByRole('button', { name: 'Send message' }).click();
@@ -50,7 +50,7 @@ test('chat messages are rendered as text and never interpreted as HTML', async (
 
 test('explicit chat handoff pre-fills an editable Contact draft without submitting it', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await page.getByRole('button', { name: /Ask SDC/ }).click();
   const input = page.getByLabel('Message the SDC AI Assistant');
   await input.fill('I want to build a multi-vendor booking marketplace for local service providers.');
   await page.getByRole('button', { name: 'Send message' }).click();
@@ -76,7 +76,7 @@ test('assistant replies make only exact SDC website links clickable', async ({ p
     });
   });
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await page.getByRole('button', { name: /Ask SDC/ }).click();
   await page.getByLabel('Message the SDC AI Assistant').fill('Where can I read about AI automation?');
   await page.getByRole('button', { name: 'Send message' }).click();
   const bubble = page.locator('.sdc-chat-message--assistant .sdc-chat-bubble').last();
@@ -89,21 +89,21 @@ test('chat panel remains inside the viewport on narrow mobile screens', async ({
   for (const width of [320, 360, 390, 560, 768]) {
     await page.setViewportSize({ width, height: 820 });
     await page.goto('/');
-    await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+    await page.getByRole('button', { name: /Ask SDC/ }).click();
     const panel = await page.locator('#sdc-chat-panel').boundingBox();
     expect(panel, 'chat panel should have a layout box at ' + width + 'px').not.toBeNull();
     expect(panel.x).toBeGreaterThanOrEqual(-1);
     expect(panel.y).toBeGreaterThanOrEqual(-1);
     expect(panel.x + panel.width).toBeLessThanOrEqual(width + 1);
-    expect(panel.y + panel.height).toBeLessThanOrEqual(820 + 1);
+    expect(panel.y + panel.height).toBeLessThanOrEqual((await page.evaluate(() => window.innerHeight)) + 1);
     await expect(page.getByLabel('Message the SDC AI Assistant')).toBeVisible();
   }
 });
 
 test('the chatbot asset loads on nested service pages as well as root pages', async ({ page }) => {
   await page.goto('/services/ai-automation.html');
-  await expect(page.getByRole('button', { name: 'Open SDC AI Assistant' })).toBeVisible();
-  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await expect(page.getByRole('button', { name: /Ask SDC/ })).toBeVisible();
+  await page.getByRole('button', { name: /Ask SDC/ }).click();
   await expect(page.getByRole('dialog', { name: 'SDC AI Assistant' })).toBeVisible();
   await expect(page.getByLabel('Message the SDC AI Assistant')).toBeVisible();
 });
