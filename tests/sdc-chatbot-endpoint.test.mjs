@@ -174,3 +174,31 @@ test("chat endpoint uses GROQ_MODEL override when configured", async () => {
   assert.equal(response.status, 200);
   assert.equal(captured.model, "openai/gpt-oss-20b");
 });
+
+test("chat endpoint accepts slash-delimited Groq model IDs from GROQ_MODEL", async () => {
+  let captured;
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "groq-test-secret", GROQ_MODEL: "openai/gpt-oss-20b" },
+    fetchImpl: async (_url, init) => {
+      captured = JSON.parse(init.body);
+      return new Response(JSON.stringify({ output_text: "A grounded SDC reply." }), {
+        status: 200, headers: { "content-type": "application/json" },
+      });
+    },
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.15" });
+  assert.equal(response.status, 200);
+  assert.equal(captured.model, "openai/gpt-oss-20b");
+});
+
+test("chat endpoint gives a safe configuration message when Groq rejects the API key", async () => {
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "invalid-test-key" },
+    fetchImpl: async () => new Response(JSON.stringify({ error: { message: "bad key: secret internals" } }), { status: 401 }),
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.16" });
+  assert.equal(response.status, 503);
+  const payload = await response.json();
+  assert.equal(payload.error, "assistant_provider_auth_failed");
+  assert.equal(payload.message.includes("secret internals"), false);
+});
