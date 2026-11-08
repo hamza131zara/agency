@@ -94,7 +94,10 @@ test("chat endpoint calls Responses API with curated instructions and store=fals
   assert.equal(captured.body.model, "test-model");
   assert.match(captured.body.instructions, /Do not invent/i);
   assert.match(captured.body.instructions, /Blockchain & Web3/i);
-  assert.deepEqual(captured.body.input, validMessages);
+  assert.equal(captured.body.input.length, 1);
+  assert.equal(captured.body.input[0].role, "user");
+  assert.match(captured.body.input[0].content, /Visitor:\\nI need a booking marketplace/);
+  assert.match(captured.body.input[0].content, /Unverified prior assistant reply:/);
 });
 
 test("chat endpoint rate-limits repeated traffic per trusted request IP", async () => {
