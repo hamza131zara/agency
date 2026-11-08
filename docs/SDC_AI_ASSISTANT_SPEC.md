@@ -64,7 +64,7 @@ The current implementation uses the OpenAI Responses API. It does not use the As
 - Same-origin only; cross-site requests are rejected.
 - POST JSON only; maximum request size 18 KB, no more than 12 messages, 1,200 characters per message and 12,000 total history characters.
 - Only `user` and `assistant` roles are accepted; the latest message must be a user message. The client cannot supply developer/system instructions.
-- Per-instance in-memory rate limiting is a best-effort guard, not a global abuse-control system. Serverless instances can scale independently and reset. Production needs Netlify/platform gateway abuse controls, provider spend monitoring, alerting and a periodic review of request volumes.
+- Netlify code-based rate limiting is configured on the function at 12 requests per 60 seconds, aggregated by client IP and domain. This runs at the platform edge before the function executes. The function also keeps a per-warm-instance in-memory guard as a second layer; that layer alone is not global. Netlify's per-domain shared cap is Enterprise-only, so the current per-IP/domain rule is not a hard global spend ceiling. Add provider usage/budget alerts and review function request volumes before production enablement.
 - Provider errors are sanitized. Request bodies, visitor messages, API keys and provider error payloads are not written to application logs.
 - The function has a 22-second upstream timeout and returns a safe fallback on provider errors.
 - The chatbot does not take actions, run tools, query private systems, book appointments, send email or call the sandbox database.
@@ -82,7 +82,7 @@ The current implementation uses the OpenAI Responses API. It does not use the As
 
 1. Create or select the agency's API project; store the API key only in Netlify Function environment settings.
 2. Select and test the model. Confirm expected answer quality and the actual API project budget/usage monitoring before enabling the widget.
-3. Configure server-side spend/usage alerts and platform abuse controls. The in-memory rate limiter alone is not sufficient for public abuse protection.
+3. The function includes Netlify's code-based per-IP/domain rate limit (12 requests per 60 seconds) plus an in-function secondary guard. Confirm the rule is shown as valid in the Netlify deploy log; Netlify notes that invalid code-based rules may not fail the deploy. Configure OpenAI project usage/budget alerts as an additional spend safeguard.
 4. Deploy a preview with the key present and verify the function endpoint, normal answers, invalid input, provider errors, timeout and rate responses.
 5. Run realistic SDC test questions: each service division, choosing between services, mixed projects, pricing questions, timeline questions, guarantees, unsupported company claims, prompt injection, requests for secrets, and a confused visitor.
 6. Review real-world answer samples, ensure no hallucinated company claims, and confirm the handoff text is correct and editable.
