@@ -1474,3 +1474,328 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .sdc-brand-image{transition:none!important}
  .sdc-brand-lockup:hover .sdc-brand-image{transform:none!important}
 }
+
+
+/* SDC theme consistency pass — shared controls, surfaces, states and 3D service map. */
+:root {
+  --surface-card: #FFFFFF;
+  --surface-muted: #F5F6F8;
+  --border-subtle: #E0E4EA;
+  --border-strong: #C8D0DC;
+  --blue-soft: #EAF2FF;
+  --green-soft: #F1F6F2;
+  --red-soft: #FCEDEA;
+  --yellow-soft: #FFF6D8;
+}
+
+/* Consistent button geometry and interaction feedback. */
+.button {
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  transition: transform .22s cubic-bezier(.2,.8,.2,1), background-color .22s ease,
+    color .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.button:hover:not(:disabled) { transform: translateY(-2px); }
+.button:active:not(:disabled) { transform: translateY(0) scale(.99); }
+.button-dark { background: #171B22; border-color: #171B22; color: #FFFFFF; }
+.button-dark:hover:not(:disabled) {
+  background: #B3261E; border-color: #B3261E; color: #FFFFFF;
+  box-shadow: 0 9px 22px #EA43352B;
+}
+.button-light { background: #FBBC04; border-color: #FBBC04; color: #171B22; }
+.button-light:hover:not(:disabled) {
+  background: #4285F4; border-color: #4285F4; color: #171B22;
+  box-shadow: 0 9px 22px #4285F42B;
+}
+.button-outline {
+  background: #FFFFFF; border: 1px solid #626B78; color: #171B22;
+  transition: transform .22s ease, background-color .22s ease, border-color .22s ease,
+    box-shadow .22s ease, color .22s ease;
+}
+.button-outline:hover:not(:disabled) {
+  background: #EAF2FF; border-color: #4285F4; color: #171B22;
+  box-shadow: 0 7px 18px #4285F41A; transform: translateY(-2px);
+}
+.button:disabled, button:disabled { cursor: not-allowed; }
+.nav-cta { background: #171B22; border: 1px solid #171B22; border-radius: 8px; color: #FFFFFF; }
+.nav-cta:hover { background: #B3261E; border-color: #B3261E; color: #FFFFFF; box-shadow: 0 8px 20px #EA43352B; }
+.nav-cta:active { transform: translateY(0) scale(.99); }
+.primary-nav>a:not(.nav-cta):hover,
+.primary-nav a[aria-current="page"]:not(.nav-cta) { color: #4285F4; }
+.primary-nav a[aria-current="page"]:not(.nav-cta) { text-decoration-color: #4285F4; }
+.text-link:hover, .card-link:hover, .product-card-links a:hover,
+.product-detail-nav>a:hover, .breadcrumb a:hover { color: #4285F4; }
+.text-link span, .card-link span { color: #4285F4; }
+.round-link:hover { background: #FBBC04; border-color: #FBBC04; color: #171B22; }
+
+/* Search/filter controls share the same neutral surface and blue interaction state. */
+.portfolio-filter-buttons button,
+.product-filter-buttons button {
+  border: 1px solid #C8D0DC;
+  background: #FFFFFF;
+  color: #171B22;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease,
+    box-shadow .18s ease, transform .18s ease;
+}
+.portfolio-filter-buttons button:hover:not([aria-pressed="true"]),
+.product-filter-buttons button:hover:not([aria-pressed="true"]) {
+  background: #EAF2FF; border-color: #4285F4; color: #171B22;
+  transform: translateY(-1px);
+}
+.portfolio-filter-buttons button[aria-pressed="true"],
+.product-filter-buttons button[aria-pressed="true"] {
+  background: #171B22; border-color: #171B22; color: #FFFFFF;
+  box-shadow: inset 0 -2px 0 #FBBC04;
+}
+.portfolio-filter-buttons button:focus-visible,
+.product-filter-buttons button:focus-visible,
+.product-search-row input:focus-visible,
+.product-search-row select:focus-visible,
+.automation-search-row input:focus-visible,
+.automation-search-row select:focus-visible,
+.portfolio-search-row input:focus-visible,
+.portfolio-search-row select:focus-visible,
+.brief-form input:focus-visible,
+.brief-form select:focus-visible,
+.brief-form textarea:focus-visible {
+  outline: 3px solid #4285F4; outline-offset: 3px;
+}
+.product-search-row input, .product-search-row select,
+.automation-search-row input, .automation-search-row select,
+.portfolio-search-row input, .portfolio-search-row select {
+  background: #FFFFFF; border-color: #C8D0DC; color: #171B22; border-radius: 7px;
+}
+.product-search-row input:focus-visible, .product-search-row select:focus-visible,
+.automation-search-row input:focus-visible, .automation-search-row select:focus-visible {
+  border-color: #4285F4; box-shadow: 0 0 0 3px #4285F41A;
+}
+
+/* Replace legacy sage-tinted application panels with SDC neutral surfaces. */
+.subpage-side, .portfolio-explorer, .product-explorer, .automation-explorer {
+  background: #F5F6F8; border-color: #E0E4EA;
+}
+.service-division, .product-card, .automation-roadmap-grid article,
+.automation-integration-grid article, .product-detail-facts, .product-detail-panel,
+.service-detail-aside, .service-detail-fit {
+  background: #FFFFFF; border-color: #E0E4EA;
+}
+.service-division:nth-child(3n+1), .product-card:nth-child(3n+1),
+.automation-integration-grid article:nth-child(3n+1) { background: #F5F6F8; }
+.service-division p, .product-card p, .automation-roadmap-grid p,
+.automation-integration-grid p, .automation-integration-grid small,
+.product-detail-summary, .product-detail-main p, .product-detail-panel>p:not(.eyebrow),
+.product-capability-list, .product-limit-list, .product-detail-panel ul,
+.service-detail-lead, .service-detail-aside li, .service-detail-fit p,
+.breadcrumb { color: #4B5563; }
+.product-detail-facts dt, .product-detail-panel dt,
+.product-detail-facts>small, .product-detail-nav>span,
+.service-detail-aside>small, .service-detail-fit>small,
+.service-division>small, .product-card-top small { color: #626B78; }
+.product-detail-facts dt, .product-detail-panel dt { border-top-color: #E0E4EA; }
+.product-detail-nav>a, .product-card-links a, .service-division>a,
+.breadcrumb a, .service-detail-fit a { color: #175EDB; text-decoration-color: #4285F4; }
+.product-detail-disclosure, .automation-directory-note, .automation-availability-note,
+.service-division .service-note, .service-detail-note, .brief-prompt {
+  background: #F5F6F8; border-color: #4285F4; color: #4B5563;
+}
+.product-detail-disclosure strong, .product-audience strong { color: #171B22; }
+.product-audience { background: #EAF2FF; border-left-color: #4285F4; }
+.product-evidence-note { background: #F5F6F8; border-color: #E0E4EA; }
+
+/* Status colours use the approved green/yellow/red with readable foregrounds. */
+.automation-delivery-status, .product-status {
+  border-color: #C8D0DC; background: #F5F6F8; color: #344054;
+}
+.automation-status-service, .status-live, .project-status-chip.is-live {
+  border-color: #34A853; background: #F1F6F2; color: #1E6B38;
+}
+.automation-status-planned, .status-planned {
+  border-color: #C8D0DC; background: #F5F6F8; color: #4B5563;
+}
+.automation-status-unverified, .status-development, .project-status-chip.is-development {
+  border-color: #FBBC04; background: #FFF6D8; color: #704F00;
+}
+.status-unavailable { border-color: #EA4335; background: #FCEDEA; color: #8F241A; }
+.form-status[data-state="ready"], .local-inquiry-status[data-state="ready"],
+.service-finder-status[data-state="ready"] { color: #1E6B38; }
+.form-status[data-state="error"], .local-inquiry-status[data-state="error"],
+.service-finder-status[data-state="error"] { color: #B3261E; }
+
+/* Forms use the same border, blue focus ring and type colours on every page. */
+.contact-form { background: #FFFFFF; border-color: #E0E4EA; }
+.contact-form label { color: #171B22; }
+.contact-form input, .contact-form select, .contact-form textarea {
+  background: #FFFFFF; color: #171B22; border-color: #C8D0DC; border-radius: 7px;
+}
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus,
+.contact-form input:focus-visible, .contact-form select:focus-visible,
+.contact-form textarea:focus-visible {
+  border-color: #4285F4; outline: 3px solid #4285F41A; outline-offset: 1px;
+  box-shadow: 0 0 0 3px #4285F41A;
+}
+
+/* Brief preview retains its useful dark workspace, but now uses SDC charcoal/blue/gold. */
+.brief-preview-panel {
+  background: #171B22; color: #FFFFFF; border-color: #343A45;
+  box-shadow: 0 16px 38px #171B221A;
+}
+.brief-preview-header small, .brief-output-note, .brief-privacy-note { color: #CCD2DC; }
+.brief-privacy-note strong { color: #FFFFFF; }
+.preview-badge { border-color: #4285F4; background: #4285F41A; color: #FFFFFF; }
+.brief-preview-panel textarea {
+  background: #0F1319; color: #FFFFFF; border-color: #4B5563;
+}
+.brief-preview-panel textarea::placeholder { color: #AEB8C5; }
+.brief-preview-panel .button-dark { background: #FBBC04; border-color: #FBBC04; color: #171B22; }
+.brief-preview-panel .button-dark span { color: #171B22; }
+.brief-preview-panel .button-dark:hover:not(:disabled) {
+  background: #4285F4; border-color: #4285F4; color: #171B22;
+}
+.brief-preview-panel .button-outline { background: transparent; border-color: #AEB8C5; color: #FFFFFF; }
+.brief-preview-panel .button-outline:hover:not(:disabled) {
+  background: #4285F41A; border-color: #4285F4; color: #FFFFFF;
+}
+.brief-preview-panel button:disabled, .brief-preview-panel .button-dark:disabled {
+  background: #3B414A !important; border-color: #68717D !important;
+  color: #D6DAE0 !important; opacity: 1; box-shadow: none !important;
+  cursor: not-allowed; transform: none !important;
+}
+.brief-preview-panel .button-dark:disabled span { color: inherit !important; }
+.brief-preview-panel>.text-link { color: #FFFFFF; }
+
+/* Chrome-inspired 3D service atlas: the central mark is the supplied shield itself. */
+.service-atlas {
+  background: radial-gradient(ellipse at 50% 45%, #FFFFFF 0%, #F5F6F8 58%, #EAF2FF 100%);
+  border-color: #E0E4EA;
+}
+.service-atlas:before {
+  background-image: linear-gradient(#171B220A 1px, transparent 1px),
+    linear-gradient(90deg, #171B220A 1px, transparent 1px);
+}
+.atlas-heading, .atlas-footer { color: #626B78; }
+.atlas-ring-one { border-color: #4285F480; }
+.atlas-ring-two { border-color: #EA433566; }
+.atlas-ring-three { border-color: #FBBC0480; }
+.atlas-hub {
+  background: radial-gradient(circle at 32% 22%, #343A45 0%, #171B22 72%);
+  border-color: #FFFFFF; color: #FFFFFF;
+  box-shadow: 0 18px 38px #171B2233, 0 0 0 1px #4285F466;
+}
+.atlas-hub:before { border-color: #4285F4; box-shadow: 0 0 0 6px #4285F41A; }
+.atlas-hub:after { border-color: #FBBC04; }
+.atlas-hub-logo {
+  display: block; width: 44px; height: 50px; object-fit: contain;
+  background: #FFFFFF; border-radius: 4px; padding: 2px;
+  box-shadow: 0 5px 14px #070B0870;
+}
+.atlas-hub strong { max-width: 100px; font-size: 10px; line-height: 1.1; letter-spacing: -.02em; }
+.atlas-hub small { color: #CCD2DC; }
+.atlas-node {
+  background: #FFFFFF; border-color: #E0E4EA; color: #171B22;
+  box-shadow: 0 10px 22px #171B2212, inset 0 1px 0 #FFFFFF;
+}
+.atlas-node small, .atlas-node span { color: #626B78; }
+.atlas-node:hover, .atlas-node:focus-visible {
+  border-color: #4285F4; box-shadow: 0 17px 30px #4285F42B, inset 0 1px 0 #FFFFFF;
+}
+.atlas-node:focus-visible { outline: 3px solid #4285F4; outline-offset: 4px; }
+.atlas-node:active { box-shadow: 0 6px 14px #171B2220; }
+@media (max-width: 760px) {
+  .atlas-hub-logo { width: 38px; height: 43px; }
+  .atlas-hub strong { font-size: 9px; }
+}
+@media (max-width: 390px) {
+  .atlas-hub-logo { width: 34px; height: 38px; }
+  .atlas-hub strong { font-size: 8px; }
+}
+
+/* Motion remains restrained; all transitions/3D animation respect reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+  .button, .nav-cta, .button-outline, .portfolio-filter-buttons button,
+  .product-filter-buttons button, .round-link, .atlas-node {
+    transition: none !important;
+  }
+  .button:hover, .nav-cta:hover, .round-link:hover,
+  .portfolio-filter-buttons button:hover, .product-filter-buttons button:hover {
+    transform: none !important;
+  }
+  .atlas-hub-logo { filter: none !important; }
+}
+
+
+/* Additional global discovery, brief and information-card surfaces. */
+.brief-priorities { background: #F5F6F8; border-color: #E0E4EA; }
+.brief-priorities legend, .brief-priorities label { color: #344054; }
+.brief-priorities input { accent-color: #4285F4; }
+.service-finder-shell { background: #F5F6F8; border-color: #E0E4EA; }
+.service-finder-heading h2 em { color: #4285F4; }
+.service-finder-heading>p, .service-finder-status { color: #4B5563; }
+.service-finder-form legend { color: #171B22; }
+.service-finder-option {
+  background: #FFFFFF; border-color: #C8D0DC; color: #171B22;
+  transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.service-finder-option:hover { border-color: #4285F4; background: #EAF2FF; }
+.service-finder-option:has(input:checked) {
+  background: #EAF2FF; border-color: #4285F4; box-shadow: inset 0 0 0 1px #4285F4;
+}
+.service-finder-option input { accent-color: #4285F4; }
+.service-finder-option strong { color: #171B22; }
+.service-finder-option small { color: #626B78; }
+.service-finder-result { background: #171B22; border-color: #343A45; color: #FFFFFF; }
+.service-finder-result-top small, .service-finder-result>p,
+.service-finder-related p, .service-finder-result .service-finder-disclaimer { color: #CCD2DC; }
+.service-finder-result-top span { color: #FBBC04; }
+.service-finder-related { border-top-color: #4B5563; }
+.service-finder-related strong { color: #FFFFFF; }
+.service-finder-result .button-light { background: #FBBC04; color: #171B22; }
+.service-finder-result .button-light:hover:not(:disabled) { background: #4285F4; color: #171B22; }
+.service-finder-result .text-link { color: #FFFFFF; }
+.service-finder-related-links a { border-color: #68717D; color: #FFFFFF; text-decoration-color: #4285F4; }
+.service-finder-related-links a:hover, .service-finder-related-links a:focus-visible {
+  background: #4285F41A; border-color: #4285F4; outline: 2px solid #4285F4; outline-offset: 2px;
+}
+
+.card-top, .card-top small, .service-card .tags span { color: #626B78; }
+.service-card p, .service-featured p, .service-roadmap p { color: #4B5563; }
+.service-roadmap>.card-top>small, .service-roadmap>p { color: #4B5563 !important; }
+.service-card .tags span { border-color: #E0E4EA; }
+.service-featured .tags span { border-color: #FBBC04; color: #704F00; }
+.service-roadmap .tags span { border-color: #34A853; color: #1E6B38; }
+.service-detail:not(.service-detail-roadmap) { background: #FFFFFF; border-color: #E0E4EA; }
+.service-detail>small, .service-detail p, .service-detail ul { color: #4B5563; }
+.service-detail-roadmap>small, .service-detail-roadmap p, .service-detail-roadmap ul { color: #CCD2DC; }
+.service-detail-roadmap h4 { color: #FFFFFF; }
+.service-detail-roadmap>a { color: #FBBC04; }
+.principle-grid article, .project-item { background: #FFFFFF; border-color: #E0E4EA; }
+.principle-grid article>small, .principle-grid p, .project-copy>small, .project-copy p { color: #4B5563; }
+.team-profile-note { background: #EAF2FF; border-left-color: #4285F4; color: #344054; }
+.faq-section { background: #F5F6F8; }
+.faq-list details { border-color: #E0E4EA; }
+.faq-list summary:hover { color: #4285F4; }
+.contact-section { background: linear-gradient(130deg, #FCFAF6 0%, #F5F6F8 100%); }
+.contact-form .form-top, .form-bottom p { color: #626B78; }
+
+@media (prefers-reduced-motion: reduce) {
+  .service-finder-option { transition: none !important; }
+}
+
+
+/* Final contrast/state precedence: use an accessible deep blue for small link text. */
+.primary-nav>a:not(.nav-cta):hover,
+.primary-nav a[aria-current="page"]:not(.nav-cta) { color: #175EDB; }
+.primary-nav a[aria-current="page"]:not(.nav-cta) { text-decoration-color: #175EDB; }
+.text-link, .card-link, .product-card-links a,
+.product-detail-nav>a, .breadcrumb a, .service-division>a,
+.service-detail-fit a { color: #175EDB; }
+.text-link span, .card-link span { color: #4285F4; }
+/* The dark roadmap has its own surface, but secondary CTAs still follow the SDC blue hover rule. */
+.phase-copy .button-light:hover:not(:disabled) {
+  background: #4285F4; border-color: #4285F4; color: #171B22;
+  box-shadow: 0 9px 22px #4285F42B;
+}
+
+
+/* Retire the pre-Chrome warm-brown heading accent; use accessible SDC red instead. */
+.muted-heading { color: #B3261E; }

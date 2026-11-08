@@ -199,3 +199,16 @@ The owner supplied the actual shield logo and separate favicon images. These are
 - Use accessible darker red text (`#B3261E`) where small UI text would otherwise fail contrast; do not alter the supplied artwork's red.
 - Do not add alternative shield/monogram drawings, compact SVG logos, gradients, or recoloured logo variants. Use the supplied image at every breakpoint.
 - Preserve reduced-motion support and responsive header/footer behavior.
+
+
+## 14. SDC theme consistency audit — 8 November 2026
+
+- Use the Chrome-inspired identity consistently: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`, charcoal `#171B22`, white `#FFFFFF` and ivory `#FCFAF6`.
+- Use Manrope for interface/body/headline typography and DM Mono only for compact technical labels. Standard body copy remains readable; micro-labels are reserved for metadata and diagrams.
+- Neutral UI surfaces use white, ivory and cool light grey. Avoid the previous sage/olive palette on site chrome, shared forms, filter controls, product/service detail panels and discovery tools. Preserve product-specific preview artwork where it intentionally represents a separate product identity.
+- Primary actions are charcoal with accessible dark-red hover. Secondary actions are yellow with blue hover and charcoal text. Outline actions use white/neutral surfaces and blue hover/focus. Active filter chips are charcoal with a yellow accent; inactive hover uses pale blue.
+- Interactive focus indicators use the approved premium blue. Status feedback uses green for success, amber/yellow for planned or unverified, and red for errors, with readable dark foreground text.
+- The brief preview retains a charcoal workspace with white text, yellow primary action, blue interaction accents and neutral disabled controls.
+- The homepage 3D service map uses the exact supplied shield file at its centre; no A. monogram or alternate brand mark. Its orbit palette uses restrained blue, red and yellow lines with white/charcoal cards.
+- Keep the orbit and scroll reveals subtle. The existing service-map interaction pauses on hover/focus and all motion must stop or simplify under `prefers-reduced-motion: reduce`.
+- Verify both default and hover states in Playwright, including button text/background contrast. White text on the brand blue is not acceptable for small button text; use charcoal on blue.
