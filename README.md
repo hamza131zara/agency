@@ -39,6 +39,8 @@ The current validated platform contains 30 HTML routes: 14 root pages, six servi
 
 ## Documentation index
 
+- `docs/SDC_AI_ASSISTANT_SPEC.md` — customer-facing SDC AI assistant scope, knowledge boundaries, data flow, secrets and launch checks.
+
 - `docs/PLATFORM_MASTER_PLAN.md` — vision, six services, platform modules and all phases.
 - `docs/INFORMATION_ARCHITECTURE.md` — navigation, page inventory, page settings and content models.
 - `docs/VISUAL_DESIGN_3D_STANDARD.md` — theme direction, 3D interaction, accessibility and performance.
