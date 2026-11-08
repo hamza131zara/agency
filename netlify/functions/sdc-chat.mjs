@@ -236,8 +236,8 @@ export function createSdcChatHandler({
       const wasCutOff = payload?.status === "incomplete" &&
         payload?.incomplete_details?.reason === "max_output_tokens";
       if (wasCutOff && reply) {
-        reply = reply.replace(/[\\s,;:—-]+$/, "") +
-          "\\n\\nI reached the response-length limit before finishing. Reply \\"continue\\" and I’ll complete the remaining points.";
+        reply = reply.replace(/[\s,;:—-]+$/, "") +
+          "\n\nI reached the response-length limit before finishing. Reply \"continue\" and I’ll complete the remaining points.";
       }
       if (!reply) {
         return json(502, {
