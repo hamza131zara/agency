@@ -42,27 +42,6 @@ function configureSdcBranding(html) {
   return result;
 }
 
-async function assembleOwnerSuppliedBrandAssets(outputRoot) {
-  const sourceDirectory = path.join(outputRoot, "assets", "brand", "source-parts");
-  async function decodeParts(prefix) {
-    const names = (await readdir(sourceDirectory))
-      .filter((name) => name.startsWith(prefix + "-") && name.endsWith(".b64"))
-      .sort();
-    if (!names.length) throw new Error(`Missing owner-supplied ${prefix} image source parts.`);
-    let encoded = "";
-    for (const name of names) encoded += (await readFile(path.join(sourceDirectory, name), "utf8")).trim();
-    const bytes = Buffer.from(encoded, "base64");
-    if (bytes.length < 100) throw new Error(`Owner-supplied ${prefix} image did not decode correctly.`);
-    if (bytes.subarray(0, 4).toString("ascii") !== "RIFF" || bytes.subarray(8, 12).toString("ascii") !== "WEBP") {
-      throw new Error(`Owner-supplied ${prefix} asset is not a valid WebP image.`);
-    }
-    return bytes;
-  }
-  const [logoBytes, faviconBytes] = await Promise.all([decodeParts("logo"), decodeParts("favicon")]);
-  await writeFile(path.join(outputRoot, "assets", "brand", "sdc-logo.webp"), logoBytes);
-  await writeFile(path.join(outputRoot, "assets", "favicon.webp"), faviconBytes);
-  await rm(sourceDirectory, { recursive: true, force: true });
-}
 
 function setAttribute(tag, name, value) {
   const attribute = new RegExp(`\\s+${name}=(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "i");
@@ -150,7 +129,6 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
     await transformPublicHtml(outputRoot);
-    await assembleOwnerSuppliedBrandAssets(outputRoot);
     await rm(path.join(outputRoot, "assets", "favicon.svg"), { force: true });
 
     const stylesheet = path.join(outputRoot, "assets", "css", "styles.css");
