@@ -142,3 +142,14 @@ The default launch-readiness run is report-only and lists blockers. `--strict-pr
 ## Rollback
 
 Before launch, store a complete backup of the current web root and private configuration. If any critical route, contact, SSL, security header or asset fails, restore the previous verified release and investigate before retrying. Do not overwrite the only backup during a rollback.
+
+
+## Theme and interaction acceptance — 8 November 2026
+
+- [ ] Confirm the approved Chrome-inspired palette is applied consistently to site chrome, service/product panels, forms, filter chips and status labels.
+- [ ] Verify primary, secondary and outline buttons in default, hover, active, focus-visible and disabled states.
+- [ ] Verify blue hover uses charcoal foreground text for contrast; do not use white on `#4285F4` for small button labels.
+- [ ] Confirm the 3D service hub uses `assets/brand/sdc-logo.webp`, not a monogram or alternate logo.
+- [ ] Confirm 3D orbit/scroll reveal pauses on interaction and respects `prefers-reduced-motion`.
+- [ ] Keep product-specific preview artwork intact; apply the SDC palette to surrounding interface chrome rather than overwriting distinct product identities.
+- [ ] Run the full Playwright, responsive and WCAG suites after theme changes.
