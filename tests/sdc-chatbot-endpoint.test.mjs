@@ -96,7 +96,7 @@ test("chat endpoint calls Responses API with curated instructions and store=fals
   assert.match(captured.body.instructions, /Blockchain & Web3/i);
   assert.equal(captured.body.input.length, 1);
   assert.equal(captured.body.input[0].role, "user");
-  assert.match(captured.body.input[0].content, /Visitor:\\nI need a booking marketplace/);
+  assert.match(captured.body.input[0].content, /Visitor:\nI need a booking marketplace/);
   assert.match(captured.body.input[0].content, /Unverified prior assistant reply:/);
 });
 
