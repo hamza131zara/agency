@@ -59,8 +59,8 @@ test('explicit chat handoff pre-fills an editable Contact draft without submitti
   await page.getByRole('button', { name: 'Prepare a project brief' }).click();
   await expect(page).toHaveURL(/contact\.html\?from=chatbot/);
   const message = page.locator('#message');
-  await expect(message).toContainText('PROJECT CONTEXT FROM SDC AI ASSISTANT');
-  await expect(message).toContainText('multi-vendor booking marketplace');
+  await expect(message).toHaveValue(/PROJECT CONTEXT FROM SDC AI ASSISTANT/);
+  await expect(message).toHaveValue(/multi-vendor booking marketplace/);
   await expect(page.getByText(/editable draft.*Nothing has been sent yet/i)).toBeVisible();
   await expect(page.locator('#inquiry-form')).toBeVisible();
 });
@@ -78,4 +78,12 @@ test('chat panel remains inside the viewport on narrow mobile screens', async ({
     expect(panel.y + panel.height).toBeLessThanOrEqual(820 + 1);
     await expect(page.getByLabel('Message the SDC AI Assistant')).toBeVisible();
   }
+});
+
+test('the chatbot asset loads on nested service pages as well as root pages', async ({ page }) => {
+  await page.goto('/services/ai-automation.html');
+  await expect(page.getByRole('button', { name: 'Open SDC AI Assistant' })).toBeVisible();
+  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await expect(page.getByRole('dialog', { name: 'SDC AI Assistant' })).toBeVisible();
+  await expect(page.getByLabel('Message the SDC AI Assistant')).toBeVisible();
 });
