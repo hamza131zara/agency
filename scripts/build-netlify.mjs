@@ -7,15 +7,7 @@ const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
 function configureSdcBranding(html) {
-  const logo = '<img class="brand-logo" src="/assets/brand/sdc-logo.svg" alt="Software Damage Control" width="1000" height="280">';
-  let result = html.replace(
-    /<span class="brand-mark" aria-hidden="true">[\s\S]*?<\/span>\s*<span class="brand-name">AGENCY<span>\.<\/span><small>SOFTWARE\s*·\s*AI\s*·\s*DESIGN<\/small><\/span>/g,
-    logo
-  );
-  result = result.replace(
-    /<span class="brand-name">AGENCY<span>\.<\/span><small>SOFTWARE\s*·\s*AI\s*·\s*DESIGN<\/small><\/span>/g,
-    '<span class="brand-name">SDC<span>.</span><small>SOFTWARE DAMAGE CONTROL</small></span>'
-  );
+  let result = html;
   result = result.replace(/(<title[^>]*>)([\s\S]*?)(<\/title>)/i, (whole, open, title, close) =>
     open + title.replace(/\bAgency\b/g, "SDC") + close
   );
@@ -24,14 +16,19 @@ function configureSdcBranding(html) {
   );
   result = result.replace(/(©\s*<span id="year"><\/span>\s*)Agency(\. All rights reserved\.)/i, "$1SDC$2");
   result = result.replace('<span class="atlas-hub-mark">A.</span>', '<span class="atlas-hub-mark">SDC</span>');
-  result = result.replace(/<link rel="icon" type="image\/svg\+xml" href="assets\/favicon\.svg">/g, '<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">');
+  if (/<link rel="icon"[^>]*>/i.test(result)) {
+    result = result.replace(/<link rel="icon"[^>]*>/i, '<link rel="icon" type="image/webp" href="/assets/favicon.webp">');
+  } else {
+    result = result.replace(/(<head\b[^>]*>)/i, '$1<link rel="icon" type="image/webp" href="/assets/favicon.webp">');
+  }
   if (/<meta name="theme-color"/i.test(result)) {
-    result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#fcfaf6">');
+    result = result.replace(/<meta name="theme-color" content="[^"]*">/i, '<meta name="theme-color" content="#FCFAF6">');
   } else {
     result = result.replace(/(<head\b[^>]*>)/i, '$1<meta name="theme-color" content="#fcfaf6">');
   }
   return result;
 }
+
 
 function setAttribute(tag, name, value) {
   const attribute = new RegExp(`\\s+${name}=(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "i");
@@ -102,6 +99,7 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
   
+
     async function transformPublicHtml(directory, relative = "") {
       for (const entry of await readdir(directory, { withFileTypes: true })) {
         const filePath = path.join(directory, entry.name);

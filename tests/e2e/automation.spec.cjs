@@ -73,7 +73,7 @@ test.describe('Phase 6 automation catalogue', () => {
   });
 
   test('automation route remains valid in the main navigation', async ({ page }) => {
-    await expect(page).toHaveTitle('Business & AI Automation — Agency');
+    await expect(page).toHaveTitle('Business & AI Automation — SDC');
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('nav[aria-label="Main navigation"] a[aria-current="page"]')).toHaveAttribute('href', 'automation.html');
     await expect(page.getByRole('link', { name: /Discuss automation/i })).toHaveAttribute('href', /contact\.html\?service=/);

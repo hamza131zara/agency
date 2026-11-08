@@ -185,11 +185,17 @@ Project previews are not production screenshots unless they are captured from a 
 Do not invent dashboards, provider outputs, customer metrics or screenshots to fill a visual gap. A clearly labelled conceptual composition is preferable to a deceptive product screen. Keep a verified current live URL and development status close to each preview.
 
 
-## 13. Owner-approved SDC identity — 8 November 2026
 
-The official SDC visual identity is approved by the owner:
-- Primary logo: assets/brand/sdc-logo.svg.
-- Standalone symbol / favicon: assets/favicon.svg (no SDC lettering in the favicon).
-- Brand palette: ivory #fcfaf6, charcoal black #171b22, gold #e1ad35, warm brown #88451f, premium blue #175edb, and white #ffffff.
-- Gold and brown carry the premium brand character; black provides strong typography and contrast; blue is a controlled technology accent. Do not use the former neon-lime palette.
-- Hover and scroll reveal transitions are progressive enhancement. Scroll reveals must remain readable with JavaScript disabled and become static under prefers-reduced-motion: reduce.
+## 13. Owner-supplied SDC artwork — 8 November 2026
+
+The owner supplied the actual shield logo and separate favicon images. These are the only approved shield artwork; generated SVG approximations and alternative shield styles are retired.
+- Primary shield source: `assets/brand/sdc-logo.webp`, the owner-supplied 512×578 WebP image, preserving the full composition and original aspect ratio. No cropping, recolouring, redrawing or alternative shield design.
+- Favicon source: `assets/favicon.webp`, the owner-supplied 256×283 WebP image, preserving the full composition and original aspect ratio. No cropping, recolouring, redrawing or alternative favicon design.
+- The final optimized WebP images are stored directly in the repository at `assets/brand/sdc-logo.webp` and `assets/favicon.webp`. They are copied unchanged into the published artifact.
+- Keep the image geometry unchanged with `object-fit: contain`, fluid sizing and responsive dimensions.
+- The adjacent SOFTWARE / DAMAGE / CONTROL wordmark is live HTML text, not another shield drawing. Keep it readable at desktop, tablet and mobile sizes.
+- Header uses the owner-supplied shield and charcoal/red wordmark on ivory. Footer uses the same unchanged shield on its original white canvas with white/yellow wordmark text on charcoal.
+- Brand accents: blue `#4285F4`, red `#EA4335`, yellow `#FBBC04`, green `#34A853`; neutrals: charcoal `#171B22`, white `#FFFFFF`, ivory `#FCFAF6`.
+- Use accessible darker red text (`#B3261E`) where small UI text would otherwise fail contrast; do not alter the supplied artwork's red.
+- Do not add alternative shield/monogram drawings, compact SVG logos, gradients, or recoloured logo variants. Use the supplied image at every breakpoint.
+- Preserve reduced-motion support and responsive header/footer behavior.

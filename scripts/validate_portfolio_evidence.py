@@ -87,7 +87,14 @@ def main():
             parser = ImageSourceParser()
             parser.feed(page_text)
             approved = set(visual["approvedAssets"])
-            unapproved = [src for src in parser.sources if src not in approved]
+            # The global agency shield is navigational brand chrome, not case-study evidence.
+            # It is approved centrally as the official SDC identity, so keep portfolio media
+            # permissions focused on project-specific imagery.
+            global_brand_assets = {"/assets/brand/sdc-logo.webp"}
+            unapproved = [
+                src for src in parser.sources
+                if src not in approved and src not in global_brand_assets
+            ]
             if unapproved:
                 fail(f"{project_id}: unapproved image source(s): {', '.join(unapproved)}")
 
