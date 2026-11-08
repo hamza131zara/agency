@@ -40,6 +40,13 @@ jobs:
           python tests/test_discoverability.py
       - name: Check JavaScript syntax
         run: node --check assets/js/main.js
+      - name: Check chatbot JavaScript and Netlify function syntax
+        run: |
+          node --check assets/js/sdc-chatbot.js
+          node --check netlify/functions/sdc-chat.mjs
+          node --check netlify/functions/knowledge.mjs
+      - name: Test chatbot endpoint security and Responses API contract
+        run: npm run test:chatbot
       - name: Test local Node preview server
         run: npm run test:preview
       - name: Build and test Netlify static deployment artifact
