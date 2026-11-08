@@ -2228,8 +2228,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .sdc-chat-trigger { right: max(13px, env(safe-area-inset-right)); bottom: max(13px, env(safe-area-inset-bottom)); min-height: 54px; padding-right: 14px; }
   .sdc-chat-trigger-icon { width: 35px; height: 35px; }
   .sdc-chat-panel {
-    inset: max(7px, env(safe-area-inset-top)) max(7px, env(safe-area-inset-right)) max(7px, env(safe-area-inset-bottom)) max(7px, env(safe-area-inset-left));
-    width: auto; height: auto; min-height: 0; max-height: none; border-radius: 16px;
+    top: max(7px, env(safe-area-inset-top));
+    right: max(7px, env(safe-area-inset-right));
+    bottom: auto;
+    left: max(7px, env(safe-area-inset-left));
+    width: auto;
+    height: calc(100dvh - max(14px, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+    min-height: 0;
+    max-height: calc(100dvh - max(14px, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+    border-radius: 16px;
     transform-origin: bottom center;
   }
   .sdc-chat-header { min-height: 66px; padding: 10px 12px; }
