@@ -71,13 +71,6 @@
   `;
   document.body.appendChild(root);
 
-  const stylesheet = document.createElement("link");
-  stylesheet.rel = "stylesheet";
-  stylesheet.href = "/assets/css/styles.css";
-  // The main site stylesheet is already loaded. Keep this assignment as a guard
-  // for pages using the widget before the shared stylesheet finishes loading.
-  stylesheet.dataset.sdcChatStyles = "true";
-  // No duplicate stylesheet is inserted; chatbot styles live in the shared file.
   const trigger = root.querySelector(".sdc-chat-trigger");
   const panel = root.querySelector(".sdc-chat-panel");
   const messagesElement = root.querySelector(".sdc-chat-messages");
