@@ -53,7 +53,7 @@ Add these variables in the **Netlify site/project UI**, scoped to the deployed F
 |---|---:|---|
 | `OPENAI_API_KEY` | Yes | Secret API key used only by `netlify/functions/sdc-chat.mjs` |
 | `OPENAI_MODEL` | No | Model override; default is `gpt-6.1-terra` |
-| `SDC_CHAT_RATE_LIMIT_PER_MINUTE` | No | Per-instance soft limit; default 12 requests/minute |
+| `SDC_CHAT_RATE_LIMIT_PER_MINUTE` | No | Secondary in-function per-instance guard; default 12 requests/minute. The Netlify edge limit is separately fixed at 12 per 60 seconds per IP/domain in the function config. |
 
 The current implementation uses the OpenAI Responses API. It does not use the Assistants API. See the OpenAI Responses/API migration documentation and test the selected model with the actual SDC project before launch.
 
@@ -62,7 +62,7 @@ The current implementation uses the OpenAI Responses API. It does not use the As
 ## Security and abuse boundaries
 
 - Same-origin only; cross-site requests are rejected.
-- POST JSON only; maximum request size 18 KB, no more than 12 messages, 1,200 characters per message and 12,000 total history characters.
+- POST JSON only; maximum request size 18 KB, no more than 12 messages, 1,600 characters per message and 12,000 total history characters.
 - Only `user` and `assistant` roles are accepted; the latest message must be a user message. The client cannot supply developer/system instructions.
 - Netlify code-based rate limiting is configured on the function at 12 requests per 60 seconds, aggregated by client IP and domain. This runs at the platform edge before the function executes. The function also keeps a per-warm-instance in-memory guard as a second layer; that layer alone is not global. Netlify's per-domain shared cap is Enterprise-only, so the current per-IP/domain rule is not a hard global spend ceiling. Add provider usage/budget alerts and review function request volumes before production enablement.
 - Provider errors are sanitized. Request bodies, visitor messages, API keys and provider error payloads are not written to application logs.
