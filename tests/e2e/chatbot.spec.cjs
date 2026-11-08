@@ -65,6 +65,26 @@ test('explicit chat handoff pre-fills an editable Contact draft without submitti
   await expect(page.locator('#inquiry-form')).toBeVisible();
 });
 
+test('assistant replies make only exact SDC website links clickable', async ({ page }) => {
+  await page.route('**/.netlify/functions/sdc-chat', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        reply: 'For AI automation, see https://softwaredamagecontrol.com/services/ai-automation.html and https://example.com/pretend-sdc.'
+      })
+    });
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open SDC AI Assistant' }).click();
+  await page.getByLabel('Message the SDC AI Assistant').fill('Where can I read about AI automation?');
+  await page.getByRole('button', { name: 'Send message' }).click();
+  const bubble = page.locator('.sdc-chat-message--assistant .sdc-chat-bubble').last();
+  await expect(bubble.locator('a')).toHaveCount(1);
+  await expect(bubble.locator('a')).toHaveAttribute('href', 'https://softwaredamagecontrol.com/services/ai-automation.html');
+  await expect(bubble).toContainText('https://example.com/pretend-sdc.');
+});
+
 test('chat panel remains inside the viewport on narrow mobile screens', async ({ page }) => {
   for (const width of [320, 360, 390, 560, 768]) {
     await page.setViewportSize({ width, height: 820 });
