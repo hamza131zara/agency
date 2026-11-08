@@ -1722,3 +1722,61 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   }
   .atlas-hub-logo { filter: none !important; }
 }
+
+
+/* Additional global discovery, brief and information-card surfaces. */
+.brief-priorities { background: #F5F6F8; border-color: #E0E4EA; }
+.brief-priorities legend, .brief-priorities label { color: #344054; }
+.brief-priorities input { accent-color: #4285F4; }
+.service-finder-shell { background: #F5F6F8; border-color: #E0E4EA; }
+.service-finder-heading h2 em { color: #4285F4; }
+.service-finder-heading>p, .service-finder-status { color: #4B5563; }
+.service-finder-form legend { color: #171B22; }
+.service-finder-option {
+  background: #FFFFFF; border-color: #C8D0DC; color: #171B22;
+  transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.service-finder-option:hover { border-color: #4285F4; background: #EAF2FF; }
+.service-finder-option:has(input:checked) {
+  background: #EAF2FF; border-color: #4285F4; box-shadow: inset 0 0 0 1px #4285F4;
+}
+.service-finder-option input { accent-color: #4285F4; }
+.service-finder-option strong { color: #171B22; }
+.service-finder-option small { color: #626B78; }
+.service-finder-result { background: #171B22; border-color: #343A45; color: #FFFFFF; }
+.service-finder-result-top small, .service-finder-result>p,
+.service-finder-related p, .service-finder-result .service-finder-disclaimer { color: #CCD2DC; }
+.service-finder-result-top span { color: #FBBC04; }
+.service-finder-related { border-top-color: #4B5563; }
+.service-finder-related strong { color: #FFFFFF; }
+.service-finder-result .button-light { background: #FBBC04; color: #171B22; }
+.service-finder-result .button-light:hover:not(:disabled) { background: #4285F4; color: #171B22; }
+.service-finder-result .text-link { color: #FFFFFF; }
+.service-finder-related-links a { border-color: #68717D; color: #FFFFFF; text-decoration-color: #4285F4; }
+.service-finder-related-links a:hover, .service-finder-related-links a:focus-visible {
+  background: #4285F41A; border-color: #4285F4; outline: 2px solid #4285F4; outline-offset: 2px;
+}
+
+.card-top, .card-top small, .service-card .tags span { color: #626B78; }
+.service-card p, .service-featured p, .service-roadmap p { color: #4B5563; }
+.service-roadmap>.card-top>small, .service-roadmap>p { color: #4B5563 !important; }
+.service-card .tags span { border-color: #E0E4EA; }
+.service-featured .tags span { border-color: #FBBC04; color: #704F00; }
+.service-roadmap .tags span { border-color: #34A853; color: #1E6B38; }
+.service-detail:not(.service-detail-roadmap) { background: #FFFFFF; border-color: #E0E4EA; }
+.service-detail>small, .service-detail p, .service-detail ul { color: #4B5563; }
+.service-detail-roadmap>small, .service-detail-roadmap p, .service-detail-roadmap ul { color: #CCD2DC; }
+.service-detail-roadmap h4 { color: #FFFFFF; }
+.service-detail-roadmap>a { color: #FBBC04; }
+.principle-grid article, .project-item { background: #FFFFFF; border-color: #E0E4EA; }
+.principle-grid article>small, .principle-grid p, .project-copy>small, .project-copy p { color: #4B5563; }
+.team-profile-note { background: #EAF2FF; border-left-color: #4285F4; color: #344054; }
+.faq-section { background: #F5F6F8; }
+.faq-list details { border-color: #E0E4EA; }
+.faq-list summary:hover { color: #4285F4; }
+.contact-section { background: linear-gradient(130deg, #FCFAF6 0%, #F5F6F8 100%); }
+.contact-form .form-top, .form-bottom p { color: #626B78; }
+
+@media (prefers-reduced-motion: reduce) {
+  .service-finder-option { transition: none !important; }
+}
