@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createSdcChatHandler } from "../netlify/functions/sdc-chat.mjs";
+import { config, createSdcChatHandler } from "../netlify/functions/sdc-chat.mjs";
 
 const origin = "https://sdc.example";
 const request = (messages, options = {}) => new Request(origin + "/.netlify/functions/sdc-chat", {
@@ -130,4 +130,13 @@ test("provider failures return a safe handoff and never expose upstream details"
   const payload = await response.json();
   assert.equal(payload.error, "assistant_upstream_error");
   assert.equal(payload.message.includes("sensitive upstream detail"), false);
+});
+
+test("Netlify enforces per-IP chatbot rate limits before function invocation", () => {
+  assert.equal(config.path, "/.netlify/functions/sdc-chat");
+  assert.deepEqual(config.rateLimit, {
+    windowLimit: 12,
+    windowSize: 60,
+    aggregateBy: ["ip", "domain"],
+  });
 });
