@@ -103,6 +103,37 @@
     statusElement.dataset.tone = tone;
   };
 
+  const renderApprovedLinks = (element, content) => {
+    const pattern = /https:\/\/softwaredamagecontrol\.com\/[^\s<>"']+/g;
+    let cursor = 0;
+    let match;
+    while ((match = pattern.exec(content)) !== null) {
+      let candidate = match[0];
+      let suffix = "";
+      while (/[.,!?;:]$/.test(candidate)) {
+        suffix = candidate.slice(-1) + suffix;
+        candidate = candidate.slice(0, -1);
+      }
+      let approved = false;
+      try {
+        const parsed = new URL(candidate);
+        approved = parsed.protocol === "https:" && parsed.hostname === "softwaredamagecontrol.com";
+      } catch {
+        approved = false;
+      }
+      if (!approved || !candidate) continue;
+      element.appendChild(document.createTextNode(content.slice(cursor, match.index)));
+      const link = document.createElement("a");
+      link.href = candidate;
+      link.textContent = candidate;
+      link.rel = "noopener noreferrer";
+      element.appendChild(link);
+      if (suffix) element.appendChild(document.createTextNode(suffix));
+      cursor = match.index + match[0].length;
+    }
+    element.appendChild(document.createTextNode(content.slice(cursor)));
+  };
+
   const appendMessage = (message, options = {}) => {
     const article = document.createElement("article");
     article.className = "sdc-chat-message sdc-chat-message--" + message.role;
@@ -121,7 +152,7 @@
     }
     const body = document.createElement("div");
     body.className = "sdc-chat-bubble";
-    body.textContent = message.content;
+    renderApprovedLinks(body, message.content);
     article.append(avatar, body);
     messagesElement.appendChild(article);
 
