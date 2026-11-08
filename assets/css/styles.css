@@ -2064,7 +2064,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .atlas-hub strong { max-width: 78px; font-size: 8px; }
   .atlas-hub small { display: none; }
   .atlas-card-position {
-    width: clamp(130px, 44cqw, 220px);
+    width: clamp(108px, 43cqw, 210px);
     min-height: 68px;
     animation-duration: 9s;
   }
