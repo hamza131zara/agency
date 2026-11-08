@@ -14,13 +14,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .section-wrap{width:min(var(--max),calc(100% - 80px));margin:0 auto}
 .site-header{height:91px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(40px,calc((100% - var(--max))/2));position:relative;z-index:10}
 .brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0}
-.brand-mark{width:33px;height:33px;display:grid;grid-template-columns:1fr 1fr;gap:3px;transform:rotate(-7deg)}
-.brand-mark i{border-radius:2px;background:var(--ink)}
-.brand-mark i:nth-child(2){background:var(--brown)}
-.brand-mark i:nth-child(3){background:var(--gold);border:1px solid var(--ink)}
-.brand-name{font-size:15px;font-weight:800;letter-spacing:.04em;line-height:1.15}
-.brand-name>span{color:var(--brown)}
-.brand-name small{display:block;margin-top:6px;font:9px/1 var(--mono);letter-spacing:.1em;color:var(--muted)}
 .primary-nav{display:flex;align-items:center;gap:30px;font-size:12px;font-weight:700}
 .primary-nav>a:not(.nav-cta){color:#515650;transition:color .2s}
 .primary-nav>a:not(.nav-cta):hover{color:var(--ink)}
