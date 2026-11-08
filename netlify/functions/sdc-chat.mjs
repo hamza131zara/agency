@@ -4,7 +4,7 @@ const MAX_BODY_BYTES = 18_000;
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_CHARS = 1_600;
 const MAX_HISTORY_CHARS = 12_000;
-const DEFAULT_MODEL = "gpt-6.1-terra";
+const DEFAULT_MODEL = "openai/gpt-oss-120b";
 const DEFAULT_RATE_LIMIT = 12;
 const WINDOW_MS = 60_000;
 
@@ -152,7 +152,7 @@ export function createSdcChatHandler({
     const messages = parseMessages(decoded?.messages);
     if (!messages) return json(422, { error: "invalid_messages" });
 
-    const apiKey = typeof env.OPENAI_API_KEY === "string" ? env.OPENAI_API_KEY.trim() : "";
+    const apiKey = typeof env.GROQ_API_KEY === "string" ? env.GROQ_API_KEY.trim() : "";
     if (!apiKey) {
       return json(503, {
         error: "assistant_not_configured",
@@ -176,12 +176,12 @@ export function createSdcChatHandler({
       }, { "retry-after": "60" });
     }
 
-    const model = typeof env.OPENAI_MODEL === "string" && /^[a-zA-Z0-9._-]{1,80}$/.test(env.OPENAI_MODEL)
-      ? env.OPENAI_MODEL
+    const model = typeof env.GROQ_MODEL === "string" && /^[a-zA-Z0-9._-]{1,80}$/.test(env.GROQ_MODEL)
+      ? env.GROQ_MODEL
       : DEFAULT_MODEL;
 
     try {
-      const upstream = await fetchImpl("https://api.openai.com/v1/responses", {
+      const upstream = await fetchImpl("https://api.groq.com/openai/v1/responses", {
         method: "POST",
         headers: {
           authorization: "Bearer " + apiKey,
@@ -196,7 +196,6 @@ export function createSdcChatHandler({
               messages.map(message => (message.role === "user" ? "Visitor" : "Unverified prior assistant reply") + ":\n" + message.content).join("\n\n"),
           }],
           max_output_tokens: 450,
-          store: false,
         }),
         signal: AbortSignal.timeout(22_000),
       });
