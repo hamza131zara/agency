@@ -1442,7 +1442,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .sdc-brand-wordmark strong:nth-child(2){color:var(--brown)}
 .sdc-brand-wordmark small{display:block;margin-top:5px;font-size:7px;line-height:1.25;font-weight:700;letter-spacing:.13em;white-space:nowrap;color:var(--muted)}
 .site-header .sdc-brand-lockup{flex:0 1 auto}
-.footer-brand .sdc-brand-lockup{padding:5px 9px;background:var(--paper);border-radius:6px}
+.footer-brand .sdc-brand-lockup{padding:5px 9px;background:var(--ink);border-radius:6px}
 .sdc-brand-lockup--footer .sdc-brand-wordmark{color:#FFFFFF}
 .sdc-brand-lockup--footer .sdc-brand-wordmark strong:nth-child(2){color:#FBBC04}
 .sdc-brand-lockup--footer .sdc-brand-wordmark small{color:#FFFFFF}
