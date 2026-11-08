@@ -1,6 +1,6 @@
 # SDC AI Assistant — Product, knowledge and release specification
 
-**Status:** Implementation PR / first production candidate. The UI and server-side function are implemented, but AI generation remains disabled until an owner adds the OpenAI API key to Netlify's private environment settings and verifies the deployed function.
+**Status:** Groq provider migration candidate. The owner has configured `GROQ_API_KEY` in Netlify for Production and Deploy Previews. This PR updates the server function to use it; live provider connectivity must be verified after the new deploy preview is available.
 
 ## Product purpose
 
@@ -39,23 +39,23 @@ The prompt is versioned with `SDC_CHAT_KNOWLEDGE_VERSION`. Update the knowledge 
 2. The widget is rendered client-side and uses the shared `assets/css/styles.css` theme tokens. It is keyboard accessible, uses text-only message rendering and has a narrow-screen full-panel layout.
 3. Conversation turns are held in the current tab's `sessionStorage` so the chat can continue across page navigation. The visitor can clear it. Closing the tab ends the browser session.
 4. The browser posts the latest bounded conversation turns to `/.netlify/functions/sdc-chat`.
-5. The Netlify Function validates method, same-origin request, content type, request size, message roles/length and a per-instance request rate. It calls the OpenAI Responses API from the server and returns only the reply and non-secret metadata.
-6. The function sets `store: false`, sends only the recent turns required for the answer and does not create a persistent provider Conversation object or persist the conversation to an SDC database.
+5. The Netlify Function validates method, same-origin request, content type, request size, message roles/length and a per-instance request rate. It calls Groq's OpenAI-compatible Responses API from the server and returns only the reply and non-secret metadata.
+6. The function omits Groq's unsupported `store` parameter, sends only recent turns required for the answer and does not create a persistent provider Conversation object or persist conversation history to an SDC database.
 7. If the visitor chooses the handoff action, a shortened transcript is temporarily written to a separate sessionStorage key and pre-filled into the Contact form. That key is immediately removed when the Contact page consumes it. The visitor edits and submits the form independently.
 
 No API key or provider credential is included in browser JavaScript, HTML, source-control assets, localStorage or the chat payload.
 
-## OpenAI API configuration
+## Groq API configuration
 
 Add these variables in the **Netlify site/project UI**, scoped to the deployed Functions runtime. Do not commit real values into Git or expose them as public/build variables.
 
 | Variable | Required | Purpose |
 |---|---:|---|
-| `OPENAI_API_KEY` | Yes | Secret API key used only by `netlify/functions/sdc-chat.mjs` |
-| `OPENAI_MODEL` | No | Model override; default is `gpt-6.1-terra` |
+| `GROQ_API_KEY` | Yes | Secret Groq API key used only by `netlify/functions/sdc-chat.mjs` |
+| `GROQ_MODEL` | No | Model override; default is `openai/gpt-oss-120b` |
 | `SDC_CHAT_RATE_LIMIT_PER_MINUTE` | No | Secondary in-function per-instance guard; default 12 requests/minute. The Netlify edge limit is separately fixed at 12 per 60 seconds per IP/domain in the function config. |
 
-The current implementation uses the OpenAI Responses API. It does not use the Assistants API. See the OpenAI Responses/API migration documentation and test the selected model with the actual SDC project before launch.
+The current implementation calls `https://api.groq.com/openai/v1/responses`. Groq documents this OpenAI-compatible Responses API as beta. The default `openai/gpt-oss-120b` model is listed on Groq's Free Plan limits table. Published base limits show 30 RPM, 1,000 RPD, 8,000 TPM and 200,000 TPD; the actual organisation limits shown in the Groq console take precedence. Groq's Responses API does not support the `store` parameter, so this request omits it.
 
 **No key is present in this repository or this PR.** Until the owner configures the key, the function deliberately returns a truthful 503 response and the widget directs visitors to Contact. It must never simulate an AI answer or imply the AI is active.
 
@@ -74,7 +74,7 @@ The current implementation uses the OpenAI Responses API. It does not use the As
 
 - The browser keeps the conversation only in the tab's sessionStorage until the visitor clears it or the tab session ends.
 - The SDC chatbot function does not write conversation history to the agency lead database or the internal P6.4/P6.5 sandbox.
-- Messages are sent to OpenAI's API to generate the response. The request uses `store: false`, which asks the API not to store the response as a reusable response object. This is not a guarantee of zero provider-side retention: applicable provider security/abuse monitoring, data controls and terms still apply.
+- Messages are sent to GroqCloud's API for inference. Groq states that inference inputs and outputs are not retained by default, but may be temporarily logged for platform-reliability troubleshooting or suspected-abuse investigations for up to 30 days unless the organisation opts out through Data Controls. Usage metadata that does not contain customer inputs or outputs is collected. This is not a zero-retention guarantee; Groq's current data-handling policy and terms apply.
 - The Contact form is a separate workflow. Handoff pre-fills a draft; the visitor controls whether to submit it.
 - The privacy notice includes this flow and must receive the owner's final legal/operator review before public launch.
 
@@ -82,7 +82,7 @@ The current implementation uses the OpenAI Responses API. It does not use the As
 
 1. Create or select the agency's API project; store the API key only in Netlify Function environment settings.
 2. Select and test the model. Confirm expected answer quality and the actual API project budget/usage monitoring before enabling the widget.
-3. The function includes Netlify's code-based per-IP/domain rate limit (12 requests per 60 seconds) plus an in-function secondary guard. Confirm the rule is shown as valid in the Netlify deploy log; Netlify notes that invalid code-based rules may not fail the deploy. Configure OpenAI project usage/budget alerts as an additional spend safeguard.
+3. The function includes Netlify's code-based per-IP/domain rate limit (12 requests per 60 seconds) plus an in-function secondary guard. Confirm the rule is shown as valid in the Netlify deploy log; Netlify notes that invalid code-based rules may not fail the deploy. Review Groq organisation rate limits and usage in the console as an availability safeguard; the selected GPT-OSS model's published free limits are subject to organisation-specific account limits.
 4. Deploy a preview with the key present and verify the function endpoint, normal answers, invalid input, provider errors, timeout and rate responses.
 5. Run realistic SDC test questions: each service division, choosing between services, mixed projects, pricing questions, timeline questions, guarantees, unsupported company claims, prompt injection, requests for secrets, and a confused visitor.
 6. Review real-world answer samples, ensure no hallucinated company claims, and confirm the handoff text is correct and editable.
@@ -102,6 +102,6 @@ Each deferred capability needs its own data flow, authority, approval, security 
 
 ## Automated verification
 
-- `npm run test:chatbot` covers request validation, same-origin enforcement, payload bounds, no-key fallback, Responses API payload shape with `store: false`, rate-limiting and safe upstream error handling.
+- `npm run test:chatbot` covers request validation, same-origin enforcement, payload bounds, no-key fallback, Groq Responses API payload shape without the unsupported `store` parameter, rate-limiting and safe upstream error handling.
 - `npm run test:chatbot:browser` covers conversation flow, safe rendering, explicit contact handoff and viewport containment.
 - The full CI browser suite runs these new tests with existing page, responsive and WCAG checks.
