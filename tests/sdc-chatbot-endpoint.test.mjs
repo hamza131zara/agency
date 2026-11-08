@@ -120,6 +120,42 @@ test("chat endpoint rate-limits repeated traffic per trusted request IP", async 
   assert.equal(calls, 1);
 });
 
+test("chat endpoint uses a larger concise-response budget and low reasoning effort", async () => {
+  let captured;
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "groq-test-secret" },
+    fetchImpl: async (_url, init) => {
+      captured = JSON.parse(init.body);
+      return new Response(JSON.stringify({ output_text: "A complete short answer." }), {
+        status: 200, headers: { "content-type": "application/json" },
+      });
+    },
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.17" });
+  assert.equal(response.status, 200);
+  assert.equal(captured.max_output_tokens, 900);
+  assert.deepEqual(captured.reasoning, { effort: "low" });
+  assert.match(captured.instructions, /Finish all sentences and lists/i);
+});
+
+test("chat endpoint transparently marks a response cut off by the output-token limit", async () => {
+  const partial = "Before we scope this, we should confirm your target users and payment requirements.";
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "groq-test-secret" },
+    fetchImpl: async () => new Response(JSON.stringify({
+      status: "incomplete",
+      incomplete_details: { reason: "max_output_tokens" },
+      output_text: partial,
+    }), { status: 200, headers: { "content-type": "application/json" } }),
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.18" });
+  assert.equal(response.status, 200);
+  const payload = await response.json();
+  assert.match(payload.reply, /payment requirements/);
+  assert.match(payload.reply, /response-length limit/i);
+  assert.match(payload.reply, /continue/i);
+});
+
 test("provider failures return a safe handoff and never expose upstream details", async () => {
   const handler = createSdcChatHandler({
     env: { GROQ_API_KEY: "test-key" },
