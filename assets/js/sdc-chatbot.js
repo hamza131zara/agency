@@ -4,7 +4,7 @@
   const HISTORY_KEY = "sdc-chat-history-v1";
   const HANDOFF_KEY = "sdc-chat-contact-draft-v1";
   const MAX_CLIENT_MESSAGES = 18;
-  const MAX_TEXT_LENGTH = 1200;
+  const MAX_TEXT_LENGTH = 1600;
   const WELCOME = "Hello, I'm the SDC AI Assistant. I can help you understand our six services, compare practical options and shape a project brief. What are you hoping to build or improve?";
   const starters = [
     "Help me choose the right service",
