@@ -31,7 +31,7 @@
   const root = document.createElement("div");
   root.id = "sdc-chatbot";
   root.innerHTML = `
-    <button class="sdc-chat-trigger" type="button" aria-label="Open SDC AI Assistant" aria-expanded="false" aria-controls="sdc-chat-panel">
+    <button class="sdc-chat-trigger" type="button" aria-label="Ask SDC — open AI Assistant" aria-expanded="false" aria-controls="sdc-chat-panel">
       <span class="sdc-chat-trigger-icon" aria-hidden="true">✳</span>
       <span class="sdc-chat-trigger-label">Ask SDC</span>
     </button>
@@ -56,7 +56,7 @@
       <footer class="sdc-chat-compose">
         <form class="sdc-chat-form">
           <label class="sdc-chat-sr-only" for="sdc-chat-input">Message the SDC AI Assistant</label>
-          <textarea id="sdc-chat-input" name="message" rows="1" maxlength="1200" placeholder="Tell us what you're trying to achieve…" required></textarea>
+          <textarea id="sdc-chat-input" name="chat-message" rows="1" maxlength="1200" placeholder="Tell us what you're trying to achieve…" required></textarea>
           <button class="sdc-chat-send" type="submit" aria-label="Send message">
             <span aria-hidden="true">↑</span>
           </button>
