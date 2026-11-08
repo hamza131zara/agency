@@ -163,7 +163,7 @@ export function createSdcChatHandler({
 
     const ip = typeof context.ip === "string" && context.ip
       ? context.ip
-      : request.headers.get("x-nf-client-connection-ip");
+      : request.headers.get("x-nf-client-connection-ip") || "unattributed";
     const maxPerMinute = Number(env.SDC_CHAT_RATE_LIMIT_PER_MINUTE || rateLimit);
     const safeLimit = Number.isSafeInteger(maxPerMinute) && maxPerMinute >= 1 && maxPerMinute <= 60
       ? maxPerMinute
