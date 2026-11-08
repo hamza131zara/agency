@@ -21,7 +21,7 @@ const validMessages = [
 test("chat endpoint rejects non-POST methods without calling the provider", async () => {
   let calls = 0;
   const handler = createSdcChatHandler({
-    env: { OPENAI_API_KEY: "test-key" },
+    env: { GROQ_API_KEY: "test-key" },
     fetchImpl: async () => { calls += 1; throw new Error("unexpected"); },
   });
   const response = await handler(new Request(origin + "/.netlify/functions/sdc-chat", { method: "GET" }));
@@ -31,7 +31,7 @@ test("chat endpoint rejects non-POST methods without calling the provider", asyn
 });
 
 test("chat endpoint rejects cross-origin requests", async () => {
-  const handler = createSdcChatHandler({ env: { OPENAI_API_KEY: "test-key" }, fetchImpl: async () => { throw new Error("unexpected"); } });
+  const handler = createSdcChatHandler({ env: { GROQ_API_KEY: "test-key" }, fetchImpl: async () => { throw new Error("unexpected"); } });
   const response = await handler(request(validMessages, { origin: "https://attacker.example" }));
   assert.equal(response.status, 403);
   assert.equal((await response.json()).error, "origin_rejected");
@@ -69,10 +69,10 @@ test("chat endpoint enforces request body size and content type", async () => {
   assert.equal(wrongType.status, 415);
 });
 
-test("chat endpoint calls Responses API with curated instructions and store=false", async () => {
+test("chat endpoint calls Groq Responses API with curated instructions", async () => {
   let captured;
   const handler = createSdcChatHandler({
-    env: { OPENAI_API_KEY: "test-secret", OPENAI_MODEL: "test-model" },
+    env: { GROQ_API_KEY: "test-secret", GROQ_MODEL: "test-model" },
     fetchImpl: async (url, init) => {
       captured = { url, init, body: JSON.parse(init.body) };
       return new Response(JSON.stringify({
@@ -88,9 +88,9 @@ test("chat endpoint calls Responses API with curated instructions and store=fals
   const payload = await response.json();
   assert.match(payload.reply, /marketplace/i);
   assert.equal(payload.model, "test-model");
-  assert.equal(captured.url, "https://api.openai.com/v1/responses");
+  assert.equal(captured.url, "https://api.groq.com/openai/v1/responses");
   assert.equal(captured.init.headers.authorization, "Bearer test-secret");
-  assert.equal(captured.body.store, false);
+  assert.equal(Object.hasOwn(captured.body, "store"), false);
   assert.equal(captured.body.model, "test-model");
   assert.match(captured.body.instructions, /Do not invent/i);
   assert.match(captured.body.instructions, /Blockchain & Web3/i);
@@ -103,7 +103,7 @@ test("chat endpoint calls Responses API with curated instructions and store=fals
 test("chat endpoint rate-limits repeated traffic per trusted request IP", async () => {
   let calls = 0;
   const handler = createSdcChatHandler({
-    env: { OPENAI_API_KEY: "test-key" },
+    env: { GROQ_API_KEY: "test-key" },
     now: () => 1_000,
     rateLimit: 1,
     fetchImpl: async () => {
@@ -122,7 +122,7 @@ test("chat endpoint rate-limits repeated traffic per trusted request IP", async 
 
 test("provider failures return a safe handoff and never expose upstream details", async () => {
   const handler = createSdcChatHandler({
-    env: { OPENAI_API_KEY: "test-key" },
+    env: { GROQ_API_KEY: "test-key" },
     fetchImpl: async () => new Response(JSON.stringify({ error: { message: "sensitive upstream detail" } }), { status: 500 }),
   });
   const response = await handler(request(validMessages), { ip: "203.0.113.12" });
@@ -139,4 +139,38 @@ test("Netlify enforces per-IP chatbot rate limits before function invocation", (
     windowSize: 60,
     aggregateBy: ["ip", "domain"],
   });
+});
+
+test("chat endpoint defaults to the supported Groq free-plan model when no override is supplied", async () => {
+  let captured;
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "groq-test-secret" },
+    fetchImpl: async (url, init) => {
+      captured = { url, body: JSON.parse(init.body) };
+      return new Response(JSON.stringify({ output_text: "A grounded SDC reply." }), {
+        status: 200, headers: { "content-type": "application/json" },
+      });
+    },
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.13" });
+  assert.equal(response.status, 200);
+  assert.equal(captured.url, "https://api.groq.com/openai/v1/responses");
+  assert.equal(captured.body.model, "openai/gpt-oss-120b");
+  assert.equal(Object.hasOwn(captured.body, "store"), false);
+});
+
+test("chat endpoint uses GROQ_MODEL override when configured", async () => {
+  let captured;
+  const handler = createSdcChatHandler({
+    env: { GROQ_API_KEY: "groq-test-secret", GROQ_MODEL: "openai/gpt-oss-20b" },
+    fetchImpl: async (_url, init) => {
+      captured = JSON.parse(init.body);
+      return new Response(JSON.stringify({ output_text: "A grounded SDC reply." }), {
+        status: 200, headers: { "content-type": "application/json" },
+      });
+    },
+  });
+  const response = await handler(request(validMessages), { ip: "203.0.113.14" });
+  assert.equal(response.status, 200);
+  assert.equal(captured.model, "openai/gpt-oss-20b");
 });
