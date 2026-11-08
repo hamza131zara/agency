@@ -1795,3 +1795,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   background: #4285F4; border-color: #4285F4; color: #171B22;
   box-shadow: 0 9px 22px #4285F42B;
 }
+
+
+/* Retire the pre-Chrome warm-brown heading accent; use accessible SDC red instead. */
+.muted-heading { color: #B3261E; }
