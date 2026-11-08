@@ -17,7 +17,9 @@
     "automation:demo": "node automation-runtime/scripts/send-synthetic.mjs",
     "automation:operator-hash": "node automation-runtime/scripts/create-operator-password-hash.mjs",
     "build:netlify": "node scripts/build-netlify.mjs",
-    "test:netlify-build": "node --test tests/netlify-build.test.mjs"
+    "test:netlify-build": "node --test tests/netlify-build.test.mjs",
+    "test:chatbot": "node --test tests/sdc-chatbot-endpoint.test.mjs",
+    "test:chatbot:browser": "playwright test tests/e2e/chatbot.spec.cjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
