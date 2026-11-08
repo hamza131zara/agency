@@ -7,20 +7,7 @@ const STATIC_DIRECTORIES = ["assets", "products", "services", "work"];
 const STATIC_ROOT_FILES = new Set(["_headers", "robots.txt", "sitemap.xml"]);
 
 function configureSdcBranding(html) {
-  const logo = '<span class="sdc-brand-lockup"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="512" height="578" fetchpriority="high"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
-  const footerLogo = '<span class="sdc-brand-lockup sdc-brand-lockup--footer"><img class="sdc-brand-image" src="/assets/brand/sdc-logo.webp" alt="" aria-hidden="true" width="512" height="578" loading="lazy" decoding="async"><span class="sdc-brand-wordmark"><strong>SOFTWARE</strong><strong>DAMAGE</strong><strong>CONTROL</strong><small>DIGITAL ENGINEERING AGENCY</small></span></span>';
-  let result = html.replace(
-    /(<a\b(?=[^>]*\bclass=["'][^"']*\bfooter-brand\b[^"']*["'])[^>]*>)[\s\S]*?(<\/a>)/g,
-    `$1${footerLogo}$2`
-  );
-  result = result.replace(
-    /<span class="brand-mark" aria-hidden="true">[\s\S]*?<\/span>\s*<span class="brand-name">AGENCY<span>\.<\/span><small>SOFTWARE\s*·\s*AI\s*·\s*DESIGN<\/small><\/span>/g,
-    logo
-  );
-  result = result.replace(
-    /<span class="brand-name">AGENCY<span>\.<\/span><small>SOFTWARE\s*·\s*AI\s*·\s*DESIGN<\/small><\/span>/g,
-    '<span class="brand-name">SDC<span>.</span><small>SOFTWARE DAMAGE CONTROL</small></span>'
-  );
+  let result = html;
   result = result.replace(/(<title[^>]*>)([\s\S]*?)(<\/title>)/i, (whole, open, title, close) =>
     open + title.replace(/\bAgency\b/g, "SDC") + close
   );
@@ -129,7 +116,6 @@ export async function buildNetlifySite({ root = PROJECT_ROOT, outputDirectory = 
       }
     }
     await transformPublicHtml(outputRoot);
-    await rm(path.join(outputRoot, "assets", "favicon.svg"), { force: true });
 
     const stylesheet = path.join(outputRoot, "assets", "css", "styles.css");
     try {
