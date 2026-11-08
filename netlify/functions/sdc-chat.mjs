@@ -238,3 +238,14 @@ export default async function handler(request, context) {
   const run = createSdcChatHandler();
   return run(request, context);
 }
+
+// Netlify-enforced per-IP rate limiting protects provider spend before the function runs.
+// The in-function limiter remains a second guard within each warm function instance.
+export const config = {
+  path: "/.netlify/functions/sdc-chat",
+  rateLimit: {
+    windowLimit: 12,
+    windowSize: 60,
+    aggregateBy: ["ip", "domain"],
+  },
+};
