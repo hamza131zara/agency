@@ -40,7 +40,7 @@
         <img src="/assets/brand/sdc-logo.webp" alt="" width="42" height="48">
         <div class="sdc-chat-heading">
           <strong>SDC AI Assistant</strong>
-          <span><i aria-hidden="true"></i> Here to help you decide</span>
+          <span>Service guidance · Project planning</span>
         </div>
         <div class="sdc-chat-header-actions">
           <button class="sdc-chat-icon-button" type="button" data-action="clear" aria-label="Clear conversation" title="Clear conversation">↻</button>
