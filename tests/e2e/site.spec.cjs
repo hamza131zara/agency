@@ -268,6 +268,33 @@ test.describe('Phase I route and content checks', () => {
     await expect(atlas).toContainText('INTERACTIVE CSS 3D MAP');
   });
 
+  test('SDC 3D hub uses the official shield and the primary button follows the approved hover palette', async ({ page }) => {
+    await page.goto('/');
+    const atlasLogo = page.locator('#service-atlas .atlas-hub-logo');
+    await expect(atlasLogo).toHaveAttribute('src', '/assets/brand/sdc-logo.webp');
+    await expect(atlasLogo).toHaveAttribute('alt', 'Software Damage Control shield');
+    expect(await atlasLogo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+    await expect(page.locator('#service-atlas .atlas-hub-mark')).toHaveCount(0);
+
+    const primary = page.locator('.button-light').first();
+    await primary.hover();
+    expect(await primary.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(66, 133, 244)');
+    expect(await primary.evaluate(el => getComputedStyle(el).color)).toBe('rgb(23, 27, 34)');
+    const dark = page.locator('.button-dark').first();
+    await dark.hover();
+    expect(await dark.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(179, 38, 30)');
+    expect(await dark.evaluate(el => getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
+  });
+
+  test('portfolio filter hover uses the approved blue interaction state', async ({ page }) => {
+    await page.goto('/work.html');
+    const filter = page.getByRole('button', { name: 'Developer tools' });
+    await filter.hover();
+    expect(await filter.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(234, 242, 255)');
+    expect(await filter.evaluate(el => getComputedStyle(el).borderColor)).toBe('rgb(66, 133, 244)');
+    expect(await filter.evaluate(el => getComputedStyle(el).color)).toBe('rgb(23, 27, 34)');
+  });
+
   test('service atlas orbit and globe motion pause for interaction and respect reduced motion', async ({ page }) => {
     await page.goto('/');
     const atlas = page.locator('#service-atlas');
