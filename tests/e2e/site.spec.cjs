@@ -104,6 +104,13 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+  test('homepage explains hosted inquiry acceptance without claiming an offline inbox', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByText(/hosted form service will confirm whether your submission was accepted/i)).toBeVisible();
+    await expect(page.getByText(/it does not mean an SDC team member has read or replied/i)).toBeVisible();
+    await expect(page.getByText(/until the official inbox is configured/i)).toHaveCount(0);
+  });
+
   test('inquiry page labels fields and reports missing mail configuration honestly', async ({ page }) => {
     await page.goto('/contact.html');
     await expect(page.getByLabel('Your name')).toBeVisible();
