@@ -94,6 +94,7 @@ test("chat endpoint calls Groq Responses API with curated instructions", async (
   assert.equal(captured.body.model, "test-model");
   assert.match(captured.body.instructions, /Do not invent/i);
   assert.match(captured.body.instructions, /Blockchain & Web3/i);
+  assert.match(captured.body.instructions, /ONE direct follow-up question per reply/i);
   assert.equal(captured.body.input.length, 1);
   assert.equal(captured.body.input[0].role, "user");
   assert.match(captured.body.input[0].content, /Visitor:\nI need a booking marketplace/);
