@@ -365,6 +365,28 @@ test.describe('Phase I route and content checks', () => {
     }
   });
 
+  test('service atlas skill cards stay spatially stable while orbit paths animate', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+    const atlas = page.locator('#service-atlas');
+    const selectors = ['.atlas-software', '.atlas-ai', '.atlas-web3', '.atlas-ecommerce', '.atlas-design', '.atlas-growth'];
+    const initial = {};
+    for (const selector of selectors) {
+      const card = atlas.locator(selector);
+      const box = await card.boundingBox();
+      initial[selector] = box;
+      expect(await card.evaluate(el => getComputedStyle(el).opacity)).toBe('1');
+      expect(await card.evaluate(el => getComputedStyle(el).filter)).toBe('none');
+    }
+
+    await page.waitForTimeout(1400);
+    for (const selector of selectors) {
+      const current = await atlas.locator(selector).boundingBox();
+      expect(Math.abs(current.x - initial[selector].x), selector + ' horizontal position must remain fixed').toBeLessThan(2);
+      expect(Math.abs(current.y - initial[selector].y), selector + ' must not orbit around the hub').toBeLessThan(6);
+    }
+  });
+
   test('tablet navigation collapses cleanly and remains usable at 768px', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto('/');
