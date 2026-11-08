@@ -176,7 +176,7 @@ export function createSdcChatHandler({
       }, { "retry-after": "60" });
     }
 
-    const model = typeof env.GROQ_MODEL === "string" && /^[a-zA-Z0-9._-]{1,80}$/.test(env.GROQ_MODEL)
+    const model = typeof env.GROQ_MODEL === "string" && /^[a-zA-Z0-9._/-]{1,120}$/.test(env.GROQ_MODEL)
       ? env.GROQ_MODEL
       : DEFAULT_MODEL;
 
@@ -201,9 +201,30 @@ export function createSdcChatHandler({
       });
 
       if (!upstream.ok) {
-        // Avoid forwarding provider error details, which may contain operational data.
-        return json(upstream.status === 429 ? 503 : 502, {
-          error: upstream.status === 429 ? "assistant_busy" : "assistant_upstream_error",
+        // Never expose provider diagnostics, key state or raw upstream error payloads to visitors.
+        if (upstream.status === 429) {
+          return json(503, {
+            error: "assistant_busy",
+            message: "The assistant is receiving too many requests right now. Please wait a moment and try again.",
+            contactUrl: "/contact.html",
+          }, { "retry-after": upstream.headers.get("retry-after") || "30" });
+        }
+        if (upstream.status === 401 || upstream.status === 403) {
+          return json(503, {
+            error: "assistant_provider_auth_failed",
+            message: "The assistant connection needs attention. Please try again later or contact the SDC team.",
+            contactUrl: "/contact.html",
+          });
+        }
+        if (upstream.status === 400 || upstream.status === 404) {
+          return json(503, {
+            error: "assistant_provider_configuration",
+            message: "The assistant is temporarily unavailable while its model configuration is checked. Please contact the SDC team.",
+            contactUrl: "/contact.html",
+          });
+        }
+        return json(502, {
+          error: "assistant_upstream_error",
           message: "The assistant could not complete that reply. Please try again or contact the SDC team.",
           contactUrl: "/contact.html",
         });
